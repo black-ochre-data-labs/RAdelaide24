@@ -24,6 +24,7 @@ format:
     slide-number: c
     show-slide-number: all
   html: 
+    css: [bodl.scss, extra.css]
     output-file: intro.html
     embed-resources: true    
     toc: true
@@ -58,7 +59,9 @@ knitr::opts_chunk$set(
 
 <br><br><br>
 
-### http://blackochrelabs.au/RAdelaide24
+::: {.r-fit-text}
+http://blackochrelabs.au/RAdelaide24
+:::
 
 
 # Introduction {background-color="#3c3c44"}
@@ -93,9 +96,20 @@ Make sure to acknowledge Kaurna Land!!!
 - Senior Author of 7 Bioconductor Packages 
     + `ngsReports`, `extraChIPs`, `motifTestR`, `transmogR`
     + `strandCheckR`, `sSNAPPY`, `tadar`
-- Member of Bioconductor Community Advisory Board
+
+![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute top=300 right=70 width='120px'}
+
+![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute top=50 right=70 width='120px'}
+
+![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute top=180 right=0 width='120px'}
+
+
+
+![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute top=420 right=0 width='120px'}
 
 . . .
+
+<br>
 
 *Made countless typos, horrible decisions and catastrophic errors*
 
@@ -295,10 +309,15 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 
 ![](assets/RTerminal.png){width="50%"}
 
+::: {.notes}
+- This is the 'ugly, old-school' way of using R
+- Still very useful, e.g. testing code on a HPC
+:::
+
 ## The R Console
 
 - This is often referred to as the `R Console` 
-- At it's simplest is just a calculator
+- At it's simplest `R` is just a calculator (Press Enter)
 
 ```{r}
 1 + 1
@@ -334,29 +353,26 @@ x <- 5
 . . .
 
 - We have just created an object called `x`
-- View the contents of the object by entering it's name in the `Console`
-
-```{r}
-x
-```
-
-. . .
-
-- The `<-` symbol is like an arrow $\implies$ "put the value `5` into `x`"
+- The `<-` symbol is like an arrow i.e. "put the value `5` into `x`"
     - Was a single key on keyboards in the 1970s
-
-. . .
 
 ![*An APL Keyboard from the 1970s*](assets/APL-keybd2.png){width=60% fig-align="left"}
 
 
 ## The R Console
 
+- View the contents of the object by entering it's name in the `Console`
+
+```{r}
+x
+```
+
+
 - The object `x` only exists in the `R Environment`
 
 . . .
 
-- We can pass objects to functions and perform operations on the
+- We can pass objects to functions and perform operations on them
 
 ```{r}
 x + 1
@@ -377,3 +393,287 @@ x > 1
 
 - A common strategy is to record our code as an *R Script*
 - `R Studio` makes that easy & convenient
+- Many people now use RMarkdown to combine analysis, results and figures
+
+# { background-color="#3c3c44" background-image=https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png background-size="60%" background-opacity="0.5" background-position="50% 50%"}
+
+## Introduction to RStudio
+
+`R` and `RStudio` are **two separate but connected things**
+
+- `R` is like the engine of your car
+    
+. . .
+
+- `RStudio` is the 'cabin' we use to control the engine
+    + Comes with extra features un-related to `R` that improve our 'journey'
+    + Known as an IDE (Integrated Development Environment)
+    
+. . .
+
+- `R` *does all the calculations, manages the data, generates plots*
+    + i.e. the heavy lifting
+    
+. . .
+
+- `RStudio` *helps manage our code, display the plots etc*
+    + i.e. makes our journey easier to navigate
+
+
+## What is RStudio
+
+- RStudio is product of a **for profit** company (Posit)
+    + RStudio (Desktop) is free
+    + RStudio Server has annual licence fee of \$'000s
+- Posit employs many of the best & brightest package developers
+    + e.g. `tidyverse`, `bookdown`, `reticulate`, `roxygen2` etc.
+    + The CEO (JJ Allaire) is still an active developer
+- Other IDEs also exist (e.g. emacs, VSCode)
+
+::: {.notes}
+- I remember being at the launch of RStudio (Coventry, 2011). It was a room full of R programmers thinking "holy crap, this changes everything"
+- RStudio/Posit is a corporation whilst R is an academic-led volunteer community. So far relatively good relationship
+- Heard JJ Allaire present some of his latest work a few weeks ago
+:::
+
+## Some very helpful features of `RStudio`
+
+- We can write scripts and **execute code** interactively
+- Predictive auto-completion 
+- We can see **everything** we need (directories, plots, code, history etc.)
+
+. . .
+
+- Use `R Projects` to manage each analysis
+- Integration with other languages
+    + markdown, $\LaTeX$, bash, python, C++, git etc.
+- Numerous add-ons to simplify larger tasks
+
+
+## Important Setup 
+
+1. Create a directory on your computer for today's material
+    + We recommend `RAdelaide24` in your home directory
+
+. . .
+    
+2. Now open `RStudio`
+    + `RStudio` will always open in a directory somewhere
+    + Look in the `Files` pane (bottom-right) to see where it's looking
+    + This is also the working directory for `R`
+
+. . . 
+
+We want RStudio to be looking in our new directory (`RAdelaide24`) <br>$\implies$R Projects make this easy
+
+
+## Create an R Project
+
+(Not needed for any using the Posit cloud)
+
+`File` > `New Project` > `Existing Directory` <br>
+
+```{r, echo = FALSE, fig.align='center', out.width='40%'}
+knitr::include_graphics("assets/RProject.png")
+```
+
+
+- Browse to your `RAdelaide24` directory $\implies$ `Create Project`
+
+## Create an R Project
+
+- The `R Project` name is **always** the directory name
+- Not essential, but *good practice* and *extremely useful*
+- The Project Menu is in the **top-right** of RStudio
+
+::: {.notes}
+
+- `R Projects` are simply a wrapper for keeping an analysis organised
+    - Will always open in the R Project directory
+    - You can easily navigate to a directory with all scripts and data
+    - Makes managing file paths from your code **very simple**
+- R Projects can be particularly helpful when loading external files
+- Also when saving/exporting lots of files as part of your analysis
+:::
+
+
+## Create An Empty R Script
+
+1. `File` > `New File` > `R Script`
+2. Save As `DataImport.R`
+
+## RStudio
+
+```{r, echo = FALSE, include=TRUE, results='asis', fig.show='asis', out.width="100%"}
+knitr::include_graphics("assets/RStudio.png")
+```
+
+This is the basic layout we often work with
+
+## The Script Window
+
+- This is just a text editor.
+- We enter our commands here but they are *not executed*
+- Forms a record of __everything__ we've done
+    + Can repeat our analysis exactly
+- We'll return here later [$\implies$ but first a quick tour]{.fragment .fade-in}
+
+## The R Console
+
+```{r, echo = FALSE, include=TRUE, results='asis', fig.show='asis', out.width=900}
+knitr::include_graphics("assets/RStudio.png")
+```
+
+## The R Console
+
+- This is the R Console *within* the RStudio IDE
+- We've already explored this briefly
+
+. . .
+
+- In the same grouping we also have **Terminal** 
+    + An approximation of a `bash` terminal (or PowerShell for Windows)
+    
+. . .
+
+- **Background Jobs** shows progress when compiling RMarkdown & Quarto
+   + Not super relevant
+
+
+## The R Console
+
+As well as performing simple calculations:
+
+- `R` has what we call an `Environment` (i.e. a Workspace)
+- We can define objects here or import data
+   - Similar to a workbook in Excel with multiple worksheets
+   - **Much more** flexible & powerful
+   - Objects aren't forced to be spreadsheets
+   
+::: {.notes}
+- When we create a new sheet in Excel, we're actually creating an object.
+- Most commonly, it's named Sheet1 or something similar
+- Has fixed dimensions for memory management
+:::
+
+
+## The R Environment 
+
+Like we did earlier, in the R Console type:
+
+```{r}
+x <- 5
+```
+
+. . .
+
+*__Where have we created the object `x`?__*
+
+- Is it on your hard drive somewhere?
+- Is it in a file somewhere?
+
+. . .
+
+- We have placed `x` in our `R Environment`
+- Formally known as your `Global Environment`
+
+![](assets/EnvironmentTab.png)
+
+
+## The R Environment
+
+- The `R Environment` is like your desktop
+- We keep all our relevant objects here 
+    + Multiple objects are usually created during an analysis
+    + Can save all the objects in your environment as a single `.RData` object
+    + `R` can be set to automatically save your environment on exit
+
+## The **History** Tab
+
+- Next to the Environment Tab is the **History** Tab
+- Keeps a record of the last ~200 lines of code
+    + Very useful for remembering steps during exploration
+    + Best practice is to enter + execute code from the Script Window
+    
+. . .
+
+- We can generally ignore the **Connections** and any other tabs
+    + A `git` tab will also appear for those who use git in their project
+
+
+## Accessing Help
+
+```{r, eval=FALSE}
+?sqrt
+```
+
+- This will take you to the `Help` pane for the `sqrt()` function
+    + Contents may look confusing at this point but will become clearer
+    
+. . .    
+    
+- Many inbuilt functions are organised into a package called `base`
+    - Packages group similar/related functions together
+    - `base` is always installed and loaded with `R`
+- Click on the underlined word `Index` at the bottom for a list of functions in the `base` packages
+   + **Absolutely no need to learn any of these**
+    
+::: {.notes}
+- May be issues with `URL '/help/library/base/html/00Index.html' not found`
+- The examples in this help page are a bit rubbish...
+:::
+
+## Additional Sources For Help
+
+- Help pages in `R` can be hit & miss
+    + Some are excellent and informative $\implies$ some aren't
+- Bioconductor has a support forum for Bioconductor packages
+    + All packages have a vignette (again varying quality)
+    
+. . .
+
+- Google is your friend [$\implies$ maybe ChatGPT?]{.fragment .fade-in}
+    
+
+
+::: {.notes}
+As a package author, I'm always reading my own help pages.
+I simply can't remember everything I've written
+:::
+
+## The **Plots** Pane
+
+- We've already seen the **Files** pane
+- Plots appear in the **Plots** pane
+
+```{r, eval = FALSE}
+plot(cars)
+```
+
+## Other Panes
+
+- The **Packages** Pane is *a bad idea*
+    + Can be disabled by popular request (I always do)
+    + Temptation to click is strong
+    + Very bad for **reproducible research**!!!
+
+. . .
+
+- **Viewer** Pane is used when compiling HTML documents from RMarkdown
+
+. . .
+
+- Every tab can be minimised/maximised using the buttons on the top right
+- Window separators can be be moved to resize panes manually
+
+## Cheatsheet and Shortcuts
+
+`Help > Cheatsheets > RStudio IDE Cheat Sheet`
+
+Page 2 has lots of hints:
+
+- `Ctrl + 1` places focus on the Script Window
+- `Ctrl + 2` places focus on the Console
+- `Ctrl + 3` places focus on the Help Tab
+    
+

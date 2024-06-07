@@ -13,21 +13,23 @@ This will be a three day course to enable researchers to develop their
 capabilities using the language `R`. Beginners are welcome and
 intermediate users will also gain a great deal from attending.
 
-## Course Outline
+## Provisional Course Outline
 
-| Day1  | Topic                                          |
-|:------|:-----------------------------------------------|
-| 9:00  | Welcome                                        |
-| 9:30  | Introducing R & RStudio                        |
-| 10:00 | Spreadsheet-Like Data                          |
-| 10:30 | *Morning Tea*                                  |
-| 11:00 | Using `dplyr` To Perform Excel-Like Operations |
-| 12:30 | *Lunch*                                        |
-| 1:30  | Visualising Your Data with `ggplot2`           |
-| 3:00  | *Afternoon Tea*                                |
-| 3:30  | Using `stringr` to Modify Text                 |
+| Day 1 | Topic                                          | Notes                      | Duration |
+|:------|:-----------------------------------------------|:---------------------------|:---------|
+| 9:00  | Welcome To Country                             |                            | 15min    |
+| 9:15  | Installation Help                              |                            | 15min    |
+| 9:30  | Introducing R & RStudio                        | [Introduction](intro.html) | 34min    |
+| 10:00 | Spreadsheet-Like Data                          |                            |          |
+| 10:30 | *Morning Tea*                                  |                            |          |
+| 11:00 | Using `dplyr` To Perform Excel-Like Operations |                            |          |
+| 12:30 | *Lunch*                                        |                            |          |
+| 1:15  | Visualising Your Data with `ggplot2`           |                            |          |
+| 2:30  | *Afternoon Tea*                                |                            |          |
+| 2:50  | Using `stringr` to Modify Text                 |                            |          |
+| 4:00  | Recap and Bring Your Own Data                  |                            |          |
 
-| Day2  | Topic                              |
+| Day 2 | Topic                              |
 |:------|:-----------------------------------|
 | 9:00  | Vectors and Data Structures in `R` |
 | 10:30 | *Morning Tea*                      |
@@ -37,7 +39,7 @@ intermediate users will also gain a great deal from attending.
 | 3:00  | *Afternoon Tea*                    |
 | 3:30  | Functions                          |
 
-| Day3  | Topic                 |
+| Day 3 | Topic                 |
 |:------|:----------------------|
 | 9:00  | Bioconductor          |
 | 10:30 | *Morning Tea*         |

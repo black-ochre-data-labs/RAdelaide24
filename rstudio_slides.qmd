@@ -1,0 +1,638 @@
+---
+title: "RStudio"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3c3c44"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center"
+)
+```
+
+# { background-color="#3c3c44" background-image=https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png background-size="60%" background-opacity="0.5" background-position="50% 50%"}
+
+## Introduction to RStudio
+
+`R` and `RStudio` are **two separate but connected things**
+
+- `R` is like the engine of your car
+    
+. . .
+
+- `RStudio` is the 'cabin' we use to control the engine
+    + Comes with extra features not related to `R`
+    + Known as an IDE (Integrated Development Environment)
+    
+. . .
+
+- `R` *does all the calculations, manages the data, generates plots*
+- `RStudio` *helps manage our code, display the plots etc*
+
+
+## What is RStudio
+
+- RStudio is product of a **for profit** company (Posit)
+    + RStudio (Desktop) is free
+    + RStudio Server has annual licence fee of \$'000s
+- Posit employs many of the best & brightest package developers
+    + e.g. `tidyverse`, `bookdown`, `reticulate`, `roxygen2`etc
+    + The CEO (JJ Allaire) is still an active developer
+- Other IDEs also exist (e.g. emacs, VSCode)
+
+::: {.notes}
+- I remember being at the launch of RStudio (Coventry, 2011). It was a room full of R programmers thinking "holy crap, this changes everything"
+- RStudio/Posit is a corporation whilst R is an academic-led volunteer community. So far relatively good relationship
+- Heard JJ Allaire present some of his latest work a few weeks ago
+:::
+
+## Some very helpful features of `RStudio`
+
+- We can write scripts and **execute code** interactively
+- Auto-completion by hitting the `<tab>` key
+- Use of `R Projects` to manage code/data for each project/analysis
+- We can see **everything** we need (directories, plots, code, history etc.)
+- Integration with other langauges
+    + markdown, $\LaTeX$, bash, python, C++, git etc.
+- Numerous add-ons to simplify larger tasks
+
+
+## Important Setup 
+
+1. Create a directory on your computer for today's material
+    + We recommend `R_Training` in your home directory
+
+. . .
+    
+2. Now open `RStudio`
+    + `RStudio` will always open in a directory somewhere
+    + Look in the `Files` pane (bottom-right) to see where it's looking
+    + This is also the working directory for `R`
+
+. . . 
+
+We want RStudio to be looking in our new directory (`R_Training`) <br>$\implies$R Projects make this easy
+
+
+## Create an R Project
+
+(Not needed for any using the Posit cloud)
+
+`File` > `New Project` > `Existing Directory` <br>
+
+```{r, echo = FALSE, fig.align='left'}
+knitr::include_graphics("assets/RProject.png")
+```
+
+
+- Browse to the `R_Training` directory $\implies$ `Create Project`
+
+. . .
+
+- The `R Project` name is **always** the directory name
+- Not essential, but *good practice* and *extremely useful*
+- The Project Menu is in the **top-right** of RStudio
+
+::: {.notes}
+
+- `R Projects` are simply a wrapper for keeping an analysis organised
+    - Will always open in the R Project directory
+    - You can easily navigate to a directory with all scripts and data
+    - Makes managing file paths from your code **very simple**
+- R Projects can be particularly helpful when loading external files
+- Also when saving/exporting lots of files as part of your analysis
+:::
+
+
+## Create An Empty R Script
+
+1. `File` > `New File` > `R Script`
+2. Save As `Introduction.R`
+
+## RStudio
+
+```{r, echo = FALSE, include=TRUE, results='asis', fig.show='asis', out.width="100%"}
+knitr::include_graphics("assets/RStudio.png")
+```
+
+
+## The Script Window
+
+- This is just a text editor.
+- We enter our commands here but they are *not executed*
+    - We can keep a record of __everything__ we've done
+    - We can add comments to our code
+    - Comments start with the `#` symbol
+- We'll return here later [$\implies$ but first a quick tour]{.fragment .fade-in}
+
+## The R Console
+
+```{r, echo = FALSE, include=TRUE, results='asis', fig.show='asis', out.width=900}
+knitr::include_graphics("assets/RStudio.png")
+```
+
+## The R Console
+
+- This is the R Console *within* the RStudio IDE
+- We've already explored this briefly
+
+. . .
+
+- In the same grouping we also have **Terminal** 
+    + An approximation of a `bash` terminal (or PowerShell for Windows)
+- **Background Jobs** is used when compiling RMarkdown & Quarto
+    + Probably won't get that far in this workshop
+
+
+## The R Console
+
+As well as performing simple calculations:
+
+- `R` has what we call an `Environment` (i.e. a Workspace)
+- We can define objects here or import data
+   - Similar to a workbook in Excel with multiple worksheets
+   - Or maybe a desktop in your study with crap everywhere
+   - **Much more** flexible & powerful
+   
+::: {.notes}
+When we create a new sheet in Excel, we're actually creating an object.
+Most commonly, it's named Sheet1 or something similar
+:::
+
+. . .   
+   
+- Objects can look like spreadsheets, be a single number or even empty
+   - 'omics data often has more complicated but defined structures
+- `R` performs calculations & runs processes on these objects
+
+
+## The R Environment 
+
+In the R Console type:
+
+```{r}
+x <- 5
+```
+
+. . .
+
+*__Where have we created the object `x`?__*
+
+- Is it on your hard drive somewhere?
+- Is it in a file somewhere?
+
+. . .
+
+- We have placed `x` in our `R Workspace`
+- Formally known as your `Global Environment`
+
+![](assets/EnvironmentTab.png)
+
+
+## The R Environment
+
+- The `R Environment` is like your desktop
+- We keep all our relevant objects here 
+    + Multiple objects are usually created during an analysis
+    + Can save all the objects in your workspace as a single `.RData` object
+    + `R` can be set to automatically save your environment on exit
+
+## The **History** Tab
+
+- Next to the Environment Tab is the **History** Tab
+- Keeps a record of the last ~200 lines of code
+    + Very useful for remembering steps during exploration
+    + Best practice is to enter + execute code from the Script Window
+    
+. . .
+
+- We can generally ignore the **Connections** and any other tabs
+    + A `git` tab will also appear for those who use git in their project
+
+
+## Accessing Help
+
+```{r, eval=FALSE}
+?sqrt
+```
+
+- This will take you to the `Help` pane for the `sqrt()` function
+    + Contents may look confusing at this point but will become clearer
+    
+. . .    
+    
+- Many inbuilt functions are organised into a package called `base`
+    - Packages group similar/related functions together
+    - `base` is always installed and loaded with `R`
+- Click on the underlined word `Index` at the bottom for a list of functions in the `base` packages
+   + **Absolutely no need to learn any of these**
+    
+::: {.notes}
+- May be issues with `URL '/help/library/base/html/00Index.html' not found`
+- The examples in this help page are a bit rubbish...
+:::
+
+## Additional Sources For Help
+
+- Help pages in `R` can be hit & miss
+    + Some are excellent and informative $\implies$ some aren't
+- Bioconductor has a support forum for Bioconductor packages
+    + All packages have a vignette (again varying quality)
+    
+. . .
+
+- Google is your friend [$\implies$ maybe ChatGPT?]{.fragment .fade-in}
+    
+. . .
+
+- StackOverflow is usually very helpful
+- Some blog posts showing how to do something
+- YouTube channels
+
+::: {.notes}
+As a package author, I'm always reading my own help pages.
+I simply can't remember everything I've written
+:::
+
+## The **Plots** Pane
+
+- We've already seen the **Files** pane
+- Plots appear in the **Plots** pane
+
+```{r, eval = FALSE}
+plot(cars)
+```
+
+## Other Panes
+
+- The **Packages** Pane is *dangerous*
+    + Temptation to click is strong
+    + Very bad for **reproducible research**!!!
+    + Can be disabled by popular request (I always do)
+
+. . .
+
+- **Viewer** Pane is used when compiling HTML documents from RMarkdown
+
+. . .
+
+- Every tab can be minimised/maximised using the buttons on the top right
+- Window separators can be be moved to resize panes manually
+
+## Cheatsheet and Shortcuts
+
+`Help > Cheatsheets > RStudio IDE Cheat Sheet`
+
+Page 2 has lots of hints:
+
+- `Ctrl + 1` places focus on the Script Window
+- `Ctrl + 2` places focus on the Console
+- `Ctrl + 3` places focus on the Help Tab
+    
+
+# The Script Window {background-color="#3c3c44"}
+
+## RStudio: The Script Window
+
+Best practice for analysis is to enter all code in the Script Window
+
+- This is a plain text editor $\implies$ `RStudio` will:
+    - highlight syntax for us
+    - help manage indenting
+    - enable auto-completion (it can be slower than your typing)
+- Enter code in your script and *send it to the R Console*    
+- We save this file as a record of what we've done
+    - Code is the important object $\implies$ can recreate all results
+
+## RStudio: The Script Window
+
+- We can write comments by starting a line with the `#`
+    - Anything following this symbol will not be executed
+    - Can write notes to ourselves and collaborators
+    - We can also place this at the end of a line with a comment
+- Enter the following in your script `Introduction.R` **but don't do anything else**
+
+```{r}
+# Create an object called x
+x <- 1:5
+```
+
+## RStudio: The Script Window
+
+
+```{r}
+# Create an object called x
+x <- 1:5
+```
+
+To send this to the Console:
+
+::: {.incremental}
+
+- Place the cursor on the line with `x <- 1:5` then `Ctrl+Enter` (`Cmd+Enter` on OSX), or
+- Select one or more entire lines using the mouse then `Ctrl+Enter` (or `Cmd+Enter`)
+- Or after selecting one or more lines you can click the `Run` button
+    - Be careful to select all the correct text though
+    + It's very easy to miss the first character
+
+:::
+
+::: {.notes}
+- This will have overwritten our previous object.
+- Check the Environment Tab to see the changes
+:::
+
+## RStudio: The Script Window
+
+As well as creating objects, we can write general code
+
+```{r}
+# x is a vector. How many values are in the vector?
+length(x)
+```
+
+Enter this in your Script Window then send to the Console
+
+. . .
+
+Sometimes, we copy the output back to the Script Window if it's important
+
+```{r, eval = FALSE}
+length(x) 
+# [1] 5
+```
+
+Including comments describing your intention, is **highly advisable**
+
+## RStudio: The Script Window
+
+**When we executed `length(x)` did we create a new object?**
+
+. . .
+
+No, we just called the function `length()` and executed it on `x`
+
+The output of the function was simply printed to the console
+
+. . .
+
+## Vectors
+
+- The object `x` is a `vector` $\implies$ fundamental structure in `R`
+    + Like a single column in a spreadsheet
+- In `R` when we pass a `vector` to a function, the entire vector is evaluated
+    + No need to select a column from your spreadsheet
+
+. . .
+
+Add the following to your script 
+
+```{r}
+# Are any values of x are greater than one?
+x > 1
+```
+
+. . .
+
+Notice we have a value returned for each element of `x`
+
+
+## Vectors
+
+- Enter the following in your script with your own comments
+    + Execute in the Console
+    + Some will return `r length(x)` values, others will be single values
+
+```{r, eval = FALSE}
+x^2
+sqrt(x)
+max(x)
+sum(x)
+mean(x)
+sd(x)
+typeof(x)
+```
+
+*Discuss what you think the values mean as you write your comments*
+
+## Vectors
+
+- `x` clearly contains numbers (i.e. integers)
+    + Can be checked using `typeof(x)`
+    + A vector only contains one *type* of value
+- Vectors can also contain characters
+    + We cannot perform calculations on these vectors
+    + Some functions *do work* though
+
+. . .
+
+- Enter the following in your script then execute
+
+```{r, eval = FALSE}
+# R has an inbuilt vector with the lower case letters of the alphabet
+letters
+# How many letters are in this vector?
+length(letters)
+# Can characters have a maximum value?
+max(letters)
+# Can we add characters to find a sum?
+sum(letters)
+```
+
+## Subsetting Vectors
+
+- We can subset vectors using square brackets `[]`
+
+```{r}
+# What are the first 5 letters of the alphabet?
+letters[1:5]
+```
+
+
+## Vector Types
+
+`R` has 6 types of **atomic** vectors [$\implies$ only 4 are commonly used]{.fragment fragment-index=1}
+
+. . .
+
+1. `logical`: Can only contain `TRUE` or `FALSE`
+    + Are binary (i.e. single-bit) values
+    
+. . .
+    
+2. `integer`: Only contains whole numbers
+    + 32 bit upper limit
+
+. . .
+
+3. `numeric`: Contains numbers with decimal points (aka `doubles`)
+    + Larger memory requirements than integers
+
+. . .
+
+4. `character`
+
+    
+::: {.notes}
+Remaining types are:
+
+- `complex` (sqrt(-1))
+- `raw` holds raw bytes `charToRaw("abc")`
+:::
+
+## Examples
+
+A logical vector is returned by a logical test
+
+```{r}
+# This returns a logical vector the same length as x
+# Let's save the output as a new vector using the <- symbol
+logi_vec <- x > 1
+logi_vec
+typeof(logi_vec)
+```
+
+. . .
+
+Taking square roots will return values with decimal points
+
+```{r}
+# The square roots have decimal points so they are doubles
+dbl_vec <- sqrt(x)
+dbl_vec
+typeof(dbl_vec)
+```
+
+## Coercion
+
+- Vectors can be coerced to other types
+
+```{r}
+# Coercing x to a character vector will show every element with quotation marks
+char_vec <- as.character(x)
+char_vec
+typeof(char_vec)
+```
+
+. . .
+
+- Can easily coerce in order of complexity without information loss
+- Information is lost going backwards
+
+```{r}
+as.integer(logi_vec)
+as.logical(x)
+```
+
+## Advanced Subsetting
+
+- We could use our results from the logical test to subset `x`
+
+```{r}
+# These two commands return the same vector
+x[x > 1]
+x[logi_vec]
+# This returns the positions within logi_vec which are TRUE
+which(logi_vec)
+```
+
+## Creating Vectors
+
+- Normally to create vectors we use `c()`
+    + Stands for *combine* (i.e. we combine vectors)
+    + Is an empty vector (i.e. NULL) by default
+    
+```{r}
+c()
+```
+
+. . .
+
+- Add your own comments to describe the following
+
+```{r, eval = FALSE}
+# Make a vector of doubles with names for each value
+rnd <- c(a = 1, b = 5.2, c = 100, d = 3.1)
+rnd
+length(rnd)
+typeof(rnd)
+rnd > 5
+which(rnd > 5)
+rnd[rnd > 5]
+names(rnd)
+rnd["b"]
+```
+
+
+## Conclusion
+
+- Make sure you save the file `Introduction.R`
+- This is now a complete R Script
+    + Can be re-run at any time in the same order
+    + Will always produce identical results
+
+. . .
+
+- We've also (accidentally) learned about vectors
+    + Will be super helpful for the rest of the workshop
+    + Also the most fundamental structure in `R`
+
+. . .
+
+- Other languages (e.g. `python`, `C`, `C++`) don't use vectors
+    + Step through the entire vector one value at a time
+    
+```r
+for (i in 1:5) print(sqrt(x[i]))
+```
+
+::: {.notes}
+- Clearly these vectors were trivial
+- In reality, often dealing with thousands or millions of values
+:::
