@@ -437,7 +437,7 @@ Dr Stevie Pederson
 <ul>
 <li>PhD (2008-2018) was a Bayesian Model for Transcript-Level Analysis
 <ul>
-<li>MCMC Engine written in C &amp; R (No Rstudio. No <code>Rcpp</code>. No <code>RStan</code>)</li>
+<li>MCMC Engine written in C &amp; R (No R Studio. No <code>Rcpp</code>)</li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -466,12 +466,11 @@ Dr Stevie Pederson
 <li><code>strandCheckR</code>, <code>sSNAPPY</code>, <code>tadar</code></li>
 </ul></li>
 </ul>
-<p><img data-src="https://smped.github.io/motifTestR/reference/figures/favicon.png" class="absolute" style="top: 300px; right: 70px; width: 120px; "></p>
-<p><img data-src="https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true" class="absolute" style="top: 50px; right: 70px; width: 120px; "></p>
-<p><img data-src="https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true" class="absolute" style="top: 180px; right: 0px; width: 120px; "></p>
-<p><img data-src="https://smped.github.io/transmogR/reference/figures/transmogR.png" class="absolute" style="top: 420px; right: 0px; width: 120px; "></p>
+<p><img data-src="https://smped.github.io/motifTestR/reference/figures/favicon.png" class="absolute" style="left: 0px; bottom: 0px; width: 120px; "></p>
+<p><img data-src="https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true" class="absolute" style="left: 180px; bottom: 0px; width: 120px; "></p>
+<p><img data-src="https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true" class="absolute" style="left: 360px; bottom: 0px; width: 120px; "></p>
+<p><img data-src="https://smped.github.io/transmogR/reference/figures/transmogR.png" class="absolute" style="left: 540px; bottom: 0px; width: 120px; "></p>
 <div class="fragment">
-<p><br></p>
 <p><em>Made countless typos, horrible decisions and catastrophic errors</em></p>
 </div>
 <div class="fragment">
@@ -484,13 +483,14 @@ Dr Stevie Pederson
 <li>Dr Jimmy Breen, Dr Liza Kretzschmar &amp; Dr Alastair Ludington (Black Ochre Data Labs)</li>
 <li>Dr Paul Wang, Dr John Salomon (SAGC)</li>
 </ul>
-</section>
-<section id="housekeeping" class="slide level2">
-<h2>Housekeeping</h2>
+<div class="fragment">
+<!-- -->
+<h3 id="housekeeping">Housekeeping</h3>
 <ul>
 <li>Toilets</li>
 <li>Catering</li>
 </ul>
+</div>
 </section>
 <section id="homepage-and-material" class="slide level2">
 <h2>Homepage and Material</h2>
@@ -503,8 +503,21 @@ Dr Stevie Pederson
 <li>Links to notes available
 <ul>
 <li>Slides are directly re-formatted as a simple webpage</li>
-<li>Also in presentation style by clicking the <code>RevealJS</code> link below the TOC<br>(Top RH Corner)</li>
+<li>Slides are visible by clicking the <code>RevealJS</code> link below the TOC</li>
 </ul></li>
+</ul>
+</section>
+<section id="course-aims" class="slide level2">
+<h2>Course Aims</h2>
+<ul>
+<li>Provide a deep understanding of how to work with data in R
+<ul>
+<li>Importing Data</li>
+<li>Visualising Data</li>
+<li>Understanding Data</li>
+</ul></li>
+<li>Enable use of modern analytic approaches <br><span class="math inline">\(\implies\)</span> reproducible research</li>
+<li>Not just <em>how</em> <span class="math inline">\(\implies\)</span> a deep understanding of underlying structures</li>
 </ul>
 </section></section>
 <section>
@@ -520,7 +533,7 @@ Dr Stevie Pederson
 <li>Can handle extremely large datasets<br>
 </li>
 <li>Packages explicitly designed for complex analysis</li>
-<li>Huge user base of biological researchers (www.bioconductor.org)</li>
+<li>Huge user base of biological researchers</li>
 <li>(Can be) very fast</li>
 </ul></li>
 <li>Very easy to <em>dynamically interact</em> with large datasets
@@ -556,7 +569,7 @@ Dr Stevie Pederson
 <p>Experience is the best teacher <span class="math inline">\(\implies\)</span> please practice your skills</p>
 <aside class="notes">
 <ul>
-<li>Discuss column sorting</li>
+<li>Discuss column sorting with Simon</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -625,7 +638,7 @@ Dr Stevie Pederson
 <li>Mostly academics</li>
 <li>John Chambers is <em>still</em> a member</li>
 </ul></li>
-<li>Annual release schedule with patches as required
+<li>Annual release schedule + patches
 <ul>
 <li>Most recent is R 4.4.1 (Jun 14)</li>
 </ul></li>
@@ -663,12 +676,14 @@ Dr Stevie Pederson
 <ul>
 <li>Packages are the key to R’s flexibility and power
 <ul>
-<li>Are collections (or libraries) of related functions</li>
+<li>Collections (or libraries) of <em>related functions</em></li>
 <li><code>ggplot2</code> <span class="math inline">\(\implies\)</span> Generating plots</li>
 <li><code>edgeR</code> <span class="math inline">\(\implies\)</span> Differential Gene Expression (DGE) for RNA-Seq</li>
 </ul></li>
 </ul>
-<div class="fragment">
+</section>
+<section id="r-packages-1" class="slide level2">
+<h2>R Packages</h2>
 <ul>
 <li><span class="math inline">\(&gt;\)</span> 16,000 packages are stored on CRAN (https://cran.r-project.org)
 <ul>
@@ -676,7 +691,6 @@ Dr Stevie Pederson
 <li>Automated testing for successful installation</li>
 </ul></li>
 </ul>
-</div>
 <div class="fragment">
 <ul>
 <li>Bioconductor is a secondary repository (https://www.bioconductor.org)
@@ -907,8 +921,8 @@ Dr Stevie Pederson
 </div>
 </section></section>
 <section>
-<section id="section" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="60%" data-background-opacity="0.5" data-background-position="50% 50%">
-<h1></h1>
+<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<h1>R Studio</h1>
 
 </section>
 <section id="introduction-to-rstudio" class="slide level2">

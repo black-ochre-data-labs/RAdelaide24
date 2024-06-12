@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="rstudio_slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="rstudio_slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="rstudio_slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="rstudio_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="rstudio_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="rstudio_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="rstudio_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="rstudio_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="import_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="import_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="import_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="import_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="import_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="import_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="import_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="import_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Dr Stevie Pederson">
   <meta name="dcterms.date" content="2024-07-11">
-  <title>RStudio</title>
+  <title>Spreadsheet-Like Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="rstudio_slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="rstudio_slides_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="import_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="import_slides_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -96,11 +96,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="rstudio_slides_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="rstudio_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="rstudio_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="rstudio_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="rstudio_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="import_slides_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="import_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="import_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="import_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="import_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -391,7 +391,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#3c3c44" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
-  <h1 class="title">RStudio</h1>
+  <h1 class="title">Spreadsheet-Like Data</h1>
   <p class="subtitle">RAdelaide 2024</p>
 
 <div class="quarto-title-authors">
@@ -409,455 +409,55 @@ Dr Stevie Pederson
   <p class="date">July 11, 2024</p>
 </section>
 <section>
-<section id="section" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="60%" data-background-opacity="0.5" data-background-position="50% 50%">
-<h1></h1>
+<section id="loading-data-into-r" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Loading Data Into R</h1>
 
 </section>
-<section id="introduction-to-rstudio" class="slide level2">
-<h2>Introduction to RStudio</h2>
-<p><code>R</code> and <code>RStudio</code> are <strong>two separate but connected things</strong></p>
+<section id="data-in-r" class="slide level2">
+<h2>Data In R</h2>
 <ul>
-<li><code>R</code> is like the engine of your car</li>
-</ul>
-<div class="fragment">
+<li>Working with data in R is <strong>very different</strong> to Excel</li>
+<li>Can have complicated structures or be simple (e.g.&nbsp;<code>x &lt;- 1:5</code>)</li>
+<li>Spreadsheet-like data is very common
 <ul>
-<li><code>RStudio</code> is the ‘cabin’ we use to control the engine
-<ul>
-<li>Comes with extra features not related to <code>R</code></li>
-<li>Known as an IDE (Integrated Development Environment)</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><code>R</code> <em>does all the calculations, manages the data, generates plots</em></li>
-<li><code>RStudio</code> <em>helps manage our code, display the plots etc</em></li>
-</ul>
-</div>
-</section>
-<section id="what-is-rstudio" class="slide level2">
-<h2>What is RStudio</h2>
-<ul>
-<li>RStudio is product of a <strong>for profit</strong> company (Posit)
-<ul>
-<li>RStudio (Desktop) is free</li>
-<li>RStudio Server has annual licence fee of $’000s</li>
-</ul></li>
-<li>Posit employs many of the best &amp; brightest package developers
-<ul>
-<li>e.g.&nbsp;<code>tidyverse</code>, <code>bookdown</code>, <code>reticulate</code>, <code>roxygen2</code>etc</li>
-<li>The CEO (JJ Allaire) is still an active developer</li>
-</ul></li>
-<li>Other IDEs also exist (e.g.&nbsp;emacs, VSCode)</li>
-</ul>
-<aside class="notes">
-<ul>
-<li>I remember being at the launch of RStudio (Coventry, 2011). It was a room full of R programmers thinking “holy crap, this changes everything”</li>
-<li>RStudio/Posit is a corporation whilst R is an academic-led volunteer community. So far relatively good relationship</li>
-<li>Heard JJ Allaire present some of his latest work a few weeks ago</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="some-very-helpful-features-of-rstudio" class="slide level2">
-<h2>Some very helpful features of <code>RStudio</code></h2>
-<ul>
-<li>We can write scripts and <strong>execute code</strong> interactively</li>
-<li>Auto-completion by hitting the <code>&lt;tab&gt;</code> key</li>
-<li>Use of <code>R Projects</code> to manage code/data for each project/analysis</li>
-<li>We can see <strong>everything</strong> we need (directories, plots, code, history etc.)</li>
-<li>Integration with other langauges
-<ul>
-<li>markdown, <span class="math inline">\(\LaTeX\)</span>, bash, python, C++, git etc.</li>
-</ul></li>
-<li>Numerous add-ons to simplify larger tasks</li>
-</ul>
-</section>
-<section id="important-setup" class="slide level2">
-<h2>Important Setup</h2>
-<ol type="1">
-<li>Create a directory on your computer for today’s material
-<ul>
-<li>We recommend <code>R_Training</code> in your home directory</li>
-</ul></li>
-</ol>
-<div class="fragment">
-<ol start="2" type="1">
-<li>Now open <code>RStudio</code>
-<ul>
-<li><code>RStudio</code> will always open in a directory somewhere</li>
-<li>Look in the <code>Files</code> pane (bottom-right) to see where it’s looking</li>
-<li>This is also the working directory for <code>R</code></li>
-</ul></li>
-</ol>
-</div>
-<div class="fragment">
-<p>We want RStudio to be looking in our new directory (<code>R_Training</code>) <br><span class="math inline">\(\implies\)</span>R Projects make this easy</p>
-</div>
-</section>
-<section id="create-an-r-project" class="slide level2">
-<h2>Create an R Project</h2>
-<p>(Not needed for any using the Posit cloud)</p>
-<p><code>File</code> &gt; <code>New Project</code> &gt; <code>Existing Directory</code> <br></p>
-
-<img data-src="assets/RProject.png" width="266" class="r-stretch quarto-figure-left"><ul>
-<li>Browse to the <code>R_Training</code> directory <span class="math inline">\(\implies\)</span> <code>Create Project</code></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>The <code>R Project</code> name is <strong>always</strong> the directory name</li>
-<li>Not essential, but <em>good practice</em> and <em>extremely useful</em></li>
-<li>The Project Menu is in the <strong>top-right</strong> of RStudio</li>
-</ul>
-<aside class="notes">
-<ul>
-<li><code>R Projects</code> are simply a wrapper for keeping an analysis organised
-<ul>
-<li>Will always open in the R Project directory</li>
-<li>You can easily navigate to a directory with all scripts and data</li>
-<li>Makes managing file paths from your code <strong>very simple</strong></li>
-</ul></li>
-<li>R Projects can be particularly helpful when loading external files</li>
-<li>Also when saving/exporting lots of files as part of your analysis</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="create-an-empty-r-script" class="slide level2">
-<h2>Create An Empty R Script</h2>
-<ol type="1">
-<li><code>File</code> &gt; <code>New File</code> &gt; <code>R Script</code></li>
-<li>Save As <code>Introduction.R</code></li>
-</ol>
-</section>
-<section id="rstudio" class="slide level2">
-<h2>RStudio</h2>
-
-<img data-src="assets/RStudio.png" style="width:100.0%" class="r-stretch quarto-figure-center"></section>
-<section id="the-script-window" class="slide level2">
-<h2>The Script Window</h2>
-<ul>
-<li>This is just a text editor.</li>
-<li>We enter our commands here but they are <em>not executed</em>
-<ul>
-<li>We can keep a record of <strong>everything</strong> we’ve done</li>
-<li>We can add comments to our code</li>
-<li>Comments start with the <code>#</code> symbol</li>
-</ul></li>
-<li>We’ll return here later <span class="fragment fade-in"><span class="math inline">\(\implies\)</span> but first a quick tour</span></li>
-</ul>
-</section>
-<section id="the-r-console" class="slide level2">
-<h2>The R Console</h2>
-
-<img data-src="assets/RStudio.png" width="900" class="r-stretch quarto-figure-center"></section>
-<section id="the-r-console-1" class="slide level2">
-<h2>The R Console</h2>
-<ul>
-<li>This is the R Console <em>within</em> the RStudio IDE</li>
-<li>We’ve already explored this briefly</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>In the same grouping we also have <strong>Terminal</strong>
-<ul>
-<li>An approximation of a <code>bash</code> terminal (or PowerShell for Windows)</li>
-</ul></li>
-<li><strong>Background Jobs</strong> is used when compiling RMarkdown &amp; Quarto
-<ul>
-<li>Probably won’t get that far in this workshop</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="the-r-console-2" class="slide level2">
-<h2>The R Console</h2>
-<p>As well as performing simple calculations:</p>
-<ul>
-<li><code>R</code> has what we call an <code>Environment</code> (i.e.&nbsp;a Workspace)</li>
-<li>We can define objects here or import data
-<ul>
-<li>Similar to a workbook in Excel with multiple worksheets</li>
-<li>Or maybe a desktop in your study with crap everywhere</li>
-<li><strong>Much more</strong> flexible &amp; powerful</li>
-</ul></li>
-</ul>
-<aside class="notes">
-<p>When we create a new sheet in Excel, we’re actually creating an object. Most commonly, it’s named Sheet1 or something similar</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div class="fragment">
-<ul>
-<li>Objects can look like spreadsheets, be a single number or even empty
-<ul>
-<li>’omics data often has more complicated but defined structures</li>
-</ul></li>
-<li><code>R</code> performs calculations &amp; runs processes on these objects</li>
-</ul>
-</div>
-</section>
-<section id="the-r-environment" class="slide level2">
-<h2>The R Environment</h2>
-<p>In the R Console type:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p><em><strong>Where have we created the object <code>x</code>?</strong></em></p>
-<ul>
-<li>Is it on your hard drive somewhere?</li>
-<li>Is it in a file somewhere?</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>We have placed <code>x</code> in our <code>R Workspace</code></li>
-<li>Formally known as your <code>Global Environment</code></li>
-</ul>
-<p><img data-src="assets/EnvironmentTab.png"></p>
-</div>
-</section>
-<section id="the-r-environment-1" class="slide level2">
-<h2>The R Environment</h2>
-<ul>
-<li>The <code>R Environment</code> is like your desktop</li>
-<li>We keep all our relevant objects here
-<ul>
-<li>Multiple objects are usually created during an analysis</li>
-<li>Can save all the objects in your workspace as a single <code>.RData</code> object</li>
-<li><code>R</code> can be set to automatically save your environment on exit</li>
+<li>The <code>R</code> equivalent is known as a <code>data.frame</code></li>
+<li>A common subtype is known as a <code>tibble</code></li>
+<li>These were originally called <code>tbl_df</code> objects referring to SQL tables</li>
+<li>Is just a <code>data.frame</code> with pretty bows &amp; ribbons</li>
 </ul></li>
 </ul>
 </section>
-<section id="the-history-tab" class="slide level2">
-<h2>The <strong>History</strong> Tab</h2>
+<section id="data-in-r-1" class="slide level2">
+<h2>Data In R</h2>
 <ul>
-<li>Next to the Environment Tab is the <strong>History</strong> Tab</li>
-<li>Keeps a record of the last ~200 lines of code
+<li>We import the data as an <code>R</code> object
 <ul>
-<li>Very useful for remembering steps during exploration</li>
-<li>Best practice is to enter + execute code from the Script Window</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>We can generally ignore the <strong>Connections</strong> and any other tabs
-<ul>
-<li>A <code>git</code> tab will also appear for those who use git in their project</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="accessing-help" class="slide level2">
-<h2>Accessing Help</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>This will take you to the <code>Help</code> pane for the <code>sqrt()</code> function
-<ul>
-<li>Contents may look confusing at this point but will become clearer</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Many inbuilt functions are organised into a package called <code>base</code>
-<ul>
-<li>Packages group similar/related functions together</li>
-<li><code>base</code> is always installed and loaded with <code>R</code></li>
-</ul></li>
-<li>Click on the underlined word <code>Index</code> at the bottom for a list of functions in the <code>base</code> packages
-<ul>
-<li><strong>Absolutely no need to learn any of these</strong></li>
-</ul></li>
-</ul>
-<aside class="notes">
-<ul>
-<li>May be issues with <code>URL '/help/library/base/html/00Index.html' not found</code></li>
-<li>The examples in this help page are a bit rubbish…</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="additional-sources-for-help" class="slide level2">
-<h2>Additional Sources For Help</h2>
-<ul>
-<li>Help pages in <code>R</code> can be hit &amp; miss
-<ul>
-<li>Some are excellent and informative <span class="math inline">\(\implies\)</span> some aren’t</li>
-</ul></li>
-<li>Bioconductor has a support forum for Bioconductor packages
-<ul>
-<li>All packages have a vignette (again varying quality)</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Google is your friend <span class="fragment fade-in"><span class="math inline">\(\implies\)</span> maybe ChatGPT?</span></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>StackOverflow is usually very helpful</li>
-<li>Some blog posts showing how to do something</li>
-<li>YouTube channels</li>
-</ul>
-<aside class="notes">
-<p>As a package author, I’m always reading my own help pages. I simply can’t remember everything I’ve written</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="the-plots-pane" class="slide level2">
-<h2>The <strong>Plots</strong> Pane</h2>
-<ul>
-<li>We’ve already seen the <strong>Files</strong> pane</li>
-<li>Plots appear in the <strong>Plots</strong> pane</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="other-panes" class="slide level2">
-<h2>Other Panes</h2>
-<ul>
-<li>The <strong>Packages</strong> Pane is <em>dangerous</em>
-<ul>
-<li>Temptation to click is strong</li>
-<li>Very bad for <strong>reproducible research</strong>!!!</li>
-<li>Can be disabled by popular request (I always do)</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li><strong>Viewer</strong> Pane is used when compiling HTML documents from RMarkdown</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>Every tab can be minimised/maximised using the buttons on the top right</li>
-<li>Window separators can be be moved to resize panes manually</li>
-</ul>
-</div>
-</section>
-<section id="cheatsheet-and-shortcuts" class="slide level2">
-<h2>Cheatsheet and Shortcuts</h2>
-<p><code>Help &gt; Cheatsheets &gt; RStudio IDE Cheat Sheet</code></p>
-<p>Page 2 has lots of hints:</p>
-<ul>
-<li><code>Ctrl + 1</code> places focus on the Script Window</li>
-<li><code>Ctrl + 2</code> places focus on the Console</li>
-<li><code>Ctrl + 3</code> places focus on the Help Tab</li>
-</ul>
-</section></section>
-<section>
-<section id="the-script-window-1" class="title-slide slide level1 center" data-background-color="#3c3c44">
-<h1>The Script Window</h1>
-
-</section>
-<section id="rstudio-the-script-window" class="slide level2">
-<h2>RStudio: The Script Window</h2>
-<p>Best practice for analysis is to enter all code in the Script Window</p>
-<ul>
-<li>This is a plain text editor <span class="math inline">\(\implies\)</span> <code>RStudio</code> will:
-<ul>
-<li>highlight syntax for us</li>
-<li>help manage indenting</li>
-<li>enable auto-completion (it can be slower than your typing)</li>
-</ul></li>
-<li>Enter code in your script and <em>send it to the R Console</em><br>
-</li>
-<li>We save this file as a record of what we’ve done
-<ul>
-<li>Code is the important object <span class="math inline">\(\implies\)</span> can recreate all results</li>
+<li>All analysis is performed on the <code>R</code> object</li>
+<li><strong>Almost never</strong> modify the source file</li>
 </ul></li>
 </ul>
 </section>
-<section id="rstudio-the-script-window-1" class="slide level2">
-<h2>RStudio: The Script Window</h2>
-<ul>
-<li>We can write comments by starting a line with the <code>#</code>
-<ul>
-<li>Anything following this symbol will not be executed</li>
-<li>Can write notes to ourselves and collaborators</li>
-<li>We can also place this at the end of a line with a comment</li>
-</ul></li>
-<li>Enter the following in your script <code>Introduction.R</code> <strong>but don’t do anything else</strong></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an object called x</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="rstudio-the-script-window-2" class="slide level2">
-<h2>RStudio: The Script Window</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an object called x</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To send this to the Console:</p>
+<section id="importing-data" class="slide level2">
+<h2>Importing Data</h2>
 <div>
 <ul>
-<li class="fragment">Place the cursor on the line with <code>x &lt;- 1:5</code> then <code>Ctrl+Enter</code> (<code>Cmd+Enter</code> on OSX), or</li>
-<li class="fragment">Select one or more entire lines using the mouse then <code>Ctrl+Enter</code> (or <code>Cmd+Enter</code>)</li>
-<li class="fragment">Or after selecting one or more lines you can click the <code>Run</code> button
+<li class="fragment"><em>Cell formatting will be ignored by R</em></li>
+<li class="fragment"><em>Plots will also be ignored</em></li>
+<li class="fragment">Blank rows/columns are not fatal, just annoying</li>
+<li class="fragment">Mixtures of numbers and text in a column
 <ul>
-<li class="fragment">Be careful to select all the correct text though</li>
-<li class="fragment">It’s very easy to miss the first character</li>
+<li class="fragment"><code>data.frame</code>s are structured with vectors as columns</li>
+</ul></li>
+<li class="fragment">Deleted cells are sometimes imported as blank rows/columns</li>
+<li class="fragment">Comma-separated or tab-separated files are favoured for <code>R</code>
+<ul>
+<li class="fragment">i.e.&nbsp;plain text, or <em>just the data</em></li>
 </ul></li>
 </ul>
 </div>
 <aside class="notes">
 <ul>
-<li>This will have overwritten our previous object.</li>
-<li>Check the Environment Tab to see the changes</li>
+<li>Can also import data from Stata, SPSS or other statistical languages</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -871,160 +471,262 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="rstudio-the-script-window-3" class="slide level2">
-<h2>RStudio: The Script Window</h2>
-<p>As well as creating objects, we can write general code</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x is a vector. How many values are in the vector?</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
-</div>
-</div>
-<p>Enter this in your Script Window then send to the Console</p>
-<div class="fragment">
-<p>Sometimes, we copy the output back to the Script Window if it’s important</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x) </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Including comments describing your intention, is <strong>highly advisable</strong></p>
-</div>
-</section>
-<section id="rstudio-the-script-window-4" class="slide level2">
-<h2>RStudio: The Script Window</h2>
-<p><strong>When we executed <code>length(x)</code> did we create a new object?</strong></p>
-<div class="fragment">
-<p>No, we just called the function <code>length()</code> and executed it on <code>x</code></p>
-<p>The output of the function was simply printed to the console</p>
-</div>
-</section>
-<section id="vectors" class="slide level2">
-<h2>Vectors</h2>
-<ul>
-<li>The object <code>x</code> is a <code>vector</code> <span class="math inline">\(\implies\)</span> fundamental structure in <code>R</code>
-<ul>
-<li>Like a single column in a spreadsheet</li>
-</ul></li>
-<li>In <code>R</code> when we pass a <code>vector</code> to a function, the entire vector is evaluated
-<ul>
-<li>No need to select a column from your spreadsheet</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<p>Add the following to your script</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Are any values of x are greater than one?</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Notice we have a value returned for each element of <code>x</code></p>
-</div>
-</section>
-<section id="vectors-1" class="slide level2">
-<h2>Vectors</h2>
-<ul>
-<li>Enter the following in your script with your own comments
-<ul>
-<li>Execute in the Console</li>
-<li>Some will return 5 values, others will be single values</li>
-</ul></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(x)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><em>Discuss what you think the values mean as you write your comments</em></p>
-</section>
-<section id="vectors-2" class="slide level2">
-<h2>Vectors</h2>
-<ul>
-<li><code>x</code> clearly contains numbers (i.e.&nbsp;integers)
-<ul>
-<li>Can be checked using <code>typeof(x)</code></li>
-<li>A vector only contains one <em>type</em> of value</li>
-</ul></li>
-<li>Vectors can also contain characters
-<ul>
-<li>We cannot perform calculations on these vectors</li>
-<li>Some functions <em>do work</em> though</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Enter the following in your script then execute</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R has an inbuilt vector with the lower case letters of the alphabet</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>letters</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># How many letters are in this vector?</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Can characters have a maximum value?</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(letters)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Can we add characters to find a sum?</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="subsetting-vectors" class="slide level2">
-<h2>Subsetting Vectors</h2>
-<ul>
-<li>We can subset vectors using square brackets <code>[]</code></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the first 5 letters of the alphabet?</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "a" "b" "c" "d" "e"</code></pre>
-</div>
-</div>
-</section>
-<section id="vector-types" class="slide level2">
-<h2>Vector Types</h2>
-<p><code>R</code> has 6 types of <strong>atomic</strong> vectors <span class="fragment" data-fragment-index="1"><span class="math inline">\(\implies\)</span> only 4 are commonly used</span></p>
-<div class="fragment">
+<section id="other-common-excel-issues" class="slide level2">
+<h2>Other Common Excel Issues</h2>
+<p>If we’re not careful:</p>
+<div>
 <ol type="1">
-<li><code>logical</code>: Can only contain <code>TRUE</code> or <code>FALSE</code>
+<li class="fragment">Excel thinks everything is a date:
 <ul>
-<li>Are binary (i.e.&nbsp;single-bit) values</li>
+<li class="fragment">Septin genes are now officially named <em>SEPTIN2</em> etc (not <em>SEPT2</em>)</li>
+<li class="fragment">Fractions are also not dates…</li>
+</ul></li>
+<li class="fragment">Excel will remove leading zeroes (e.g.&nbsp;phone numbers, catalog ids)</li>
+<li class="fragment">No record of any steps we’ve performed by clicking on something</li>
+</ol>
+</div>
+<div class="fragment">
+<ul>
+<li>Very common sources of broken data <span class="math inline">\(\implies\)</span> may need fixing</li>
+<li>’000s of publications with dates for gene names or results</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Mention my former collaborator who would often have completely different results in the ones I’d send him - To sort by p-value, he’d select the p-value column &amp; sort (just that column) - There was no record of this. Only discovered by sitting down with him</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="preparation" class="slide level2">
+<h2>Preparation</h2>
+<ol type="1">
+<li><code>File</code> &gt; <code>New File</code> &gt; <code>R Script</code> (Or <code>Ctrl+Shift+N</code>)</li>
+<li>Save as <code>DataImport.R</code></li>
+</ol>
+</section>
+<section id="preparation-1" class="slide level2">
+<h2>Preparation</h2>
+<p>Then get the data for this exercise.</p>
+<ol type="1">
+<li>Download the file <code>data.zip</code> from the workshop homepage</li>
+<li>Place in your directory <code>RAdelaide24</code></li>
+<li>Extract to create a folder named <code>data</code></li>
+<li>This should contain all of today’s files</li>
+<li>Navigate to the <code>data</code> directory using the <code>Files</code> pane</li>
+</ol>
+<p>(You should see <code>pigs.csv</code> in there)</p>
+<aside class="notes">
+<p>(Make sure people haven’t accidentally created <code>data/data</code>)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="import-using-the-gui" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Import Using the GUI</h1>
+
+</section>
+<section id="importing-data-1" class="slide level2">
+<h2>Importing Data</h2>
+<ol type="1">
+<li>Preview the file <code>pigs.csv</code> by clicking on it (<code>View File</code>)
+<ul>
+<li>Try in Excel if you prefer, but <strong>DO NOT</strong> save anything from Excel</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<ul>
+<li>The data measures tooth (i.e.&nbsp;odontoblast) length in guinea pigs
+<ul>
+<li>Using 3 dose levels of Vitamin C (“Low”, “Med”, “High”)</li>
+</ul></li>
+<li>Vitamin C was given in drinking water or using orange juice
+<ul>
+<li>“OJ” or “VC”</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="importing-data-2" class="slide level2">
+<h2>Importing Data</h2>
+<ul>
+<li>This type of data is very easy to manage in <code>R</code>
+<ul>
+<li>Plain text with comma delimiters</li>
+<li>Simple column structure with column names</li>
+<li>No blank rows at the top or separating sub-tables</li>
+<li>No blank columns</li>
+<li>No rownames</li>
+</ul></li>
+</ul>
+</section>
+<section id="using-the-gui-to-load-data" class="slide level2">
+<h2>Using the GUI To Load Data</h2>
+<div style="font-size:95%">
+<p>Click on the <code>pigs.csv</code> and choose <code>Import Dataset</code> then <strong>stop</strong>! 🛑</p>
+<p><img data-src="assets/importGUI.png" width="1000"></p>
+<p style="text-align: center;">
+(Click <code>Update</code> if you don’t see this)
+</p>
+</div>
+</section>
+<section id="the-preview-window" class="slide level2">
+<h2>The Preview Window</h2>
+<p><br></p>
+
+<img data-src="assets/importGUI_preview.png" width="1000" class="r-stretch quarto-figure-center"><p class="caption">We have a preview of the data</p><aside class="notes">
+<ul>
+<li>This is another preview of the data before we import it</li>
+<li>There are 3 columns: <code>len</code>, <code>supp</code> and <code>dose</code>
+<ul>
+<li><code>len</code> is a double (numeric)</li>
+<li>The other two are character columns</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-preview-window-1" class="slide level2">
+<h2>The Preview Window</h2>
+<p><br></p>
+
+<img data-src="assets/importGUI_code.png" width="1000" class="r-stretch quarto-figure-center"><p class="caption">We also have a preview of the code we’re about to execute</p></section>
+<section id="the-preview-window-2" class="slide level2">
+<h2>The Preview Window</h2>
+<ol type="1">
+<li>Select and copy all the code in the <code>Code Preview</code> Box
+<ul>
+<li>We’ll paste this somewhere in a minute…</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Click <code>Import</code></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li>Magic happens!!!
+<ul>
+<li>Ignore the red/blue text. This is just ‘helpful’ information</li>
 </ul></li>
 </ol>
 </div>
 <div class="fragment">
-<ol start="2" type="1">
-<li><code>integer</code>: Only contains whole numbers
+<p><br></p>
+<p><em>Now paste the copied code at the top of your script</em></p>
+</div>
+</section>
+<section id="what-just-happened" class="slide level2">
+<h2>What just happened?</h2>
+<p>The code we copied has 3 lines:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">View</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ul>
-<li>32 bit upper limit</li>
+<li><code>library(readr)</code> loads the package <code>readr</code>
+<ul>
+<li>Packages are collections (i.e.&nbsp;libraries) of related functions</li>
+<li>All <code>readr</code> functions are about importing data</li>
+</ul></li>
+<li><code>readr</code> contains the function <code>read_csv()</code></li>
+<li><code>read_csv()</code> tells R what to do with a csv file</li>
+</ul>
+</section>
+<section id="what-just-happened-1" class="slide level2">
+<h2>What just happened?</h2>
+<p>The code we copied has 3 lines:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">View</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This line actually loads the data into your <code>R Environment</code></li>
+<li>It created an object named <code>pigs</code> by using the file name (pigs.csv)</li>
+<li>Can change this name if we wish</li>
+</ul>
+</section>
+<section id="what-just-happened-2" class="slide level2">
+<h2>What just happened?</h2>
+<p>The code we copied has 3 lines:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">View</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Opens a preview in a familiar <code>Excel-like</code> format
+<ul>
+<li>I personally never use this</li>
+</ul></li>
+</ul>
+<p>Close the preview by clicking the cross</p>
+</section>
+<section id="what-just-happened-3" class="slide level2">
+<h2>What just happened?</h2>
+<ul>
+<li>We have just loaded data using the default settings of <code>read_csv()</code></li>
+<li>The object <code>pigs</code> is now in our <code>R Environment</code>
+<ul>
+<li>The original file remains on our HDD <strong>without modification</strong>!!!</li>
+</ul></li>
+<li>The code is saved in our script <br> <span class="math inline">\(\implies\)</span> <strong>we don’t need the GUI for this operation again!</strong></li>
+</ul>
+</section>
+<section id="lets-demonstrate" class="slide level2">
+<h2>Let’s Demonstrate</h2>
+<ol type="1">
+<li>In the <code>Environment Tab</code> click the broom 🧹
+<ul>
+<li>This will delete everything from your <code>R Environment</code></li>
+<li>It won’t unload the packages</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Highlight the code we’ve just pasted and click <code>Run</code>
+<ul>
+<li>Reloading the packages won’t hurt</li>
 </ul></li>
 </ol>
 </div>
 <div class="fragment">
 <ol start="3" type="1">
-<li><code>numeric</code>: Contains numbers with decimal points (aka <code>doubles</code>)
-<ul>
-<li>Larger memory requirements than integers</li>
-</ul></li>
+<li>Check the <code>Environment Tab</code> again and <code>pigs</code> is back</li>
 </ol>
 </div>
 <div class="fragment">
-<ol start="4" type="1">
-<li><code>character</code></li>
-</ol>
+<p>You can delete the line <code>View(pigs)</code></p>
 <aside class="notes">
-<p>Remaining types are:</p>
-<ul>
-<li><code>complex</code> (sqrt(-1))</li>
-<li><code>raw</code> holds raw bytes <code>charToRaw("abc")</code></li>
-</ul>
+<p>Realistically we only need to preview it the first time. Having that preview open every time actually ends up being really annoying</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1038,159 +740,226 @@ Dr Stevie Pederson
       }</style></aside>
 </div>
 </section>
-<section id="examples" class="slide level2">
-<h2>Examples</h2>
-<p>A logical vector is returned by a logical test</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This returns a logical vector the same length as x</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's save the output as a new vector using the &lt;- symbol</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>logi_vec <span class="ot">&lt;-</span> x <span class="sc">&gt;</span> <span class="dv">1</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>logi_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(logi_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "logical"</code></pre>
-</div>
-</div>
-<div class="fragment">
-<p>Taking square roots will return values with decimal points</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The square roots have decimal points so they are doubles</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dbl_vec <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>dbl_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(dbl_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "double"</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="coercion" class="slide level2">
-<h2>Coercion</h2>
+<section id="our-first-r-script" class="slide level2">
+<h2>Our First R Script</h2>
 <ul>
-<li>Vectors can be coerced to other types</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coercing x to a character vector will show every element with quotation marks</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>char_vec <span class="ot">&lt;-</span> <span class="fu">as.character</span>(x)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>char_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "1" "2" "3" "4" "5"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(char_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "character"</code></pre>
-</div>
-</div>
-<div class="fragment">
+<li>This is now our first R script
 <ul>
-<li>Can easily coerce in order of complexity without information loss</li>
-<li>Information is lost going backwards</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.integer</span>(logi_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 1 1 1 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="advanced-subsetting" class="slide level2">
-<h2>Advanced Subsetting</h2>
-<ul>
-<li>We could use our results from the logical test to subset <code>x</code></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># These two commands return the same vector</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>x[x <span class="sc">&gt;</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 3 4 5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>x[logi_vec]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 3 4 5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This returns the positions within logi_vec which are TRUE</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(logi_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 3 4 5</code></pre>
-</div>
-</div>
-</section>
-<section id="creating-vectors" class="slide level2">
-<h2>Creating Vectors</h2>
-<ul>
-<li>Normally to create vectors we use <code>c()</code>
-<ul>
-<li>Stands for <em>combine</em> (i.e.&nbsp;we combine vectors)</li>
-<li>Is an empty vector (i.e.&nbsp;NULL) by default</li>
-</ul></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>Add your own comments to describe the following</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a vector of doubles with names for each value</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>rnd <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="fl">5.2</span>, <span class="at">c =</span> <span class="dv">100</span>, <span class="at">d =</span> <span class="fl">3.1</span>)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>rnd</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rnd)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rnd)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>rnd <span class="sc">&gt;</span> <span class="dv">5</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(rnd <span class="sc">&gt;</span> <span class="dv">5</span>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>rnd[rnd <span class="sc">&gt;</span> <span class="dv">5</span>]</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rnd)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>rnd[<span class="st">"b"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="conclusion" class="slide level2">
-<h2>Conclusion</h2>
-<ul>
-<li>Make sure you save the file <code>Introduction.R</code></li>
-<li>This is now a complete R Script
-<ul>
-<li>Can be re-run at any time in the same order</li>
-<li>Will always produce identical results</li>
+<li>These are plain text files</li>
+<li>No objects are stored</li>
 </ul></li>
 </ul>
 <div class="fragment">
 <ul>
-<li>We’ve also (accidentally) learned about vectors
+<li>Individual lines can be run using <code>Ctrl/Cmd + Enter</code></li>
+<li>Can select multiple lines &amp; run</li>
+</ul>
+</div>
+</section>
+<section id="our-first-r-script-1" class="slide level2">
+<h2>Our First R Script</h2>
 <ul>
-<li>Will be super helpful for the rest of the workshop</li>
-<li>Also the most fundamental structure in <code>R</code></li>
+<li>Insert a new line before <code>library(readr)</code> then type</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load packages first</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<ul>
+<li>This is a comment <span class="math inline">\(\implies\)</span> no executable code
+<ul>
+<li>Communicates to “future” you what you’re doing</li>
+<li>Only needs a single <code>#</code> to be a comment</li>
 </ul></li>
 </ul>
 </div>
-<div class="fragment">
+</section>
+<section id="our-first-r-script-2" class="slide level2">
+<h2>Our First R Script</h2>
 <ul>
-<li>Other languages (e.g.&nbsp;<code>python</code>, <code>C</code>, <code>C++</code>) don’t use vectors
+<li>Insert a line after <code>library(readr)</code> then enter</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Now load the file "pigs.csv"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## This contains odontoblast lengths from guinea pigs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
+<section id="data-frame-objects" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Data Frame Objects</h1>
+
+</section>
+<section id="data-frame-objects-1" class="slide level2">
+<h2>Data Frame Objects</h2>
 <ul>
-<li>Step through the entire vector one value at a time</li>
+<li>The object <code>pigs</code> is known as a <code>data.frame</code>
+<ul>
+<li>Very similar to an SQL table</li>
+</ul></li>
+<li><code>R</code> equivalent to a spreadsheet
+<ul>
+<li>Missing values (blank cells) are usually filled with <code>NA</code></li>
+<li><strong>Must</strong> have column names <span class="math inline">\(\implies\)</span> row names becoming less common</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="fu">print</span>(<span class="fu">sqrt</span>(x[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data-frame-objects-2" class="slide level2">
+<h2>Data Frame Objects</h2>
+<p>Instead of <code>View()</code> <span class="math inline">\(\implies\)</span> preview by typing the object name</p>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pigs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 3
+     len supp  dose 
+   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1   4.2 VC    Low  
+ 2  11.5 VC    Low  
+ 3   7.3 VC    Low  
+ 4   5.8 VC    Low  
+ 5   6.4 VC    Low  
+ 6  10   VC    Low  
+ 7  11.2 VC    Low  
+ 8  11.2 VC    Low  
+ 9   5.2 VC    Low  
+10   7   VC    Low  
+# ℹ 50 more rows</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="fragment">
+<p>Gives a preview up to 10 lines with:</p>
+</div>
+<div>
+<ul>
+<li class="fragment">The object type: <code>A tibble</code></li>
+<li class="fragment">The full dimensions: <code>60 X 3</code></li>
+<li class="fragment">Column names: <code>len</code>, <code>supp</code>, <code>dose</code></li>
+<li class="fragment">Data types: <code>&lt;dbl&gt;</code>, <code>&lt;chr&gt;</code>, <code>&lt;chr&gt;</code></li>
+</ul>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>I personally find this more informative than <code>View()</code></p>
+</div>
+</section>
+<section id="tibble-objects" class="slide level2">
+<h2>Tibble Objects</h2>
+<ul>
+<li><code>readr</code> uses a variant called a <code>tbl_df</code> or <code>tbl</code> (pronounced tibble)
+<ul>
+<li>A <code>data.frame</code> with convenient features</li>
+<li>Similar to a SQL table</li>
+<li>Can <em>only have row numbers for row names</em></li>
+<li>Is a foundational structure in the <code>tidyverse</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-tidyverse" class="slide level2">
+<h2>The Tidyverse</h2>
+<ul>
+<li>The <code>tidyverse</code> is a collection of <em>thematically-linked</em> packages
+<ul>
+<li>Produced by developers from RStudio/Posit</li>
+<li>Often referred to as <em>tidy</em>-programming or similar</li>
+</ul></li>
+<li>Calling <code>library(tidyverse)</code> loads <strong>all</strong> of these packages
+<ul>
+<li><span class="math inline">\(&gt;\)</span> 30 convenient packages in one line</li>
+<li><code>readr</code> is one of these <span class="math inline">\(\implies\)</span> usually just load the tidyverse</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidyverse_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "broom"         "conflicted"    "cli"           "dbplyr"       
+ [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
+ [9] "googledrive"   "googlesheets4" "haven"         "hms"          
+[13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
+[17] "modelr"        "pillar"        "purrr"         "ragg"         
+[21] "readr"         "readxl"        "reprex"        "rlang"        
+[25] "rstudioapi"    "rvest"         "stringr"       "tibble"       
+[29] "tidyr"         "xml2"          "tidyverse"    </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-tidyverse-1" class="slide level2">
+<h2>The Tidyverse</h2>
+<ol type="1">
+<li>Replace <code>library(readr)</code> with <code>library(tidyverse)</code></li>
+<li>Execute this line</li>
+</ol>
+<div class="fragment">
+<ul>
+<li>This will load all 31 packages which form the tidyverse</li>
+<li>Reloading a package has no effect (is ignored)</li>
+</ul>
+</div>
+</section>
+<section id="tibble-objects-1" class="slide level2">
+<h2>Tibble Objects</h2>
+<ul>
+<li>Some additional ways to inspect tibbles are:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>glimpse</code> is from the package (<code>pillar</code>)
+<ul>
+<li>Loaded with <code>library(tidyverse)</code></li>
+</ul></li>
+</ul>
+<p><strong>What were the differences between each method?</strong></p>
+</div>
+</section></section>
+<section>
+<section id="functions" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Functions</h1>
+
+</section>
+<section id="functions-in-r" class="slide level2">
+<h2>Functions in <code>R</code></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Here we have called the functions 1) <code>head()</code> and 2) <code>glimpse()</code>
+<ul>
+<li>They were both executed on the object <code>pigs</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Call the help page for <code>head()</code></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>?head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(if you get multiple options, choose the one from <code>utils</code>)</p>
+</div>
+</section>
+<section id="functions-in-r-1" class="slide level2">
+<h2>Functions in <code>R</code></h2>
+<ul>
+<li>The key place to look at is</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x, ...)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Default S3 method:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x, <span class="at">n =</span> 6L, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>there are two arguments to <code>head()</code> <span class="math inline">\(\implies\)</span> <code>x</code> and <code>n</code>
+<ul>
+<li><code>x</code> has no default value <span class="math inline">\(\implies\)</span> <strong>we need to provide something</strong></li>
+<li><code>n = 6L</code> means <code>n</code> has a default value of 6 (L <span class="math inline">\(\implies\)</span> <code>integer</code>)</li>
+</ul></li>
+</ul>
 <aside class="notes">
-<ul>
-<li>Clearly these vectors were trivial</li>
-<li>In reality, often dealing with thousands or millions of values</li>
-</ul>
+<p>Execute <code>head()</code> to show the error!!!</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1202,6 +971,265 @@ Dr Stevie Pederson
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="functions-in-r-2" class="slide level2">
+<h2>Functions in <code>R</code></h2>
+<p>Lower down the page you’ll see</p>
+<p><strong>Arguments</strong></p>
+<p><code>x</code> &nbsp;&nbsp; an object<br> <code>n</code> &nbsp;&nbsp; an integer vector of length up to dim(x) (or 1, for non-dimensioned objects). <em>Blah, blah, blah…</em></p>
+<div class="fragment">
+<ul>
+<li>Some of the rest is technical detail (sometimes <em>very helpful</em>)</li>
+</ul>
+</div>
+</section>
+<section id="function-arguments" class="slide level2">
+<h2>Function Arguments</h2>
+<ul>
+<li><code>head()</code> prints the <em>first part</em> of an object</li>
+<li>Useful for very large objects (e.g.&nbsp;if we had 1000 pigs)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We can change the number of rows shown to us</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+    len supp  dose 
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1   4.2 VC    Low  
+2  11.5 VC    Low  
+3   7.3 VC    Low  
+4   5.8 VC    Low  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="function-arguments-1" class="slide level2">
+<h2>Function Arguments</h2>
+<ul>
+<li>Notice we didn’t provide these as named arguments</li>
+<li>If passing values <em>in order</em> <span class="math inline">\(\implies\)</span> no need for names</li>
+</ul>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+    len supp  dose 
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1   4.2 VC    Low  
+2  11.5 VC    Low  
+3   7.3 VC    Low  
+4   5.8 VC    Low  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">x =</span> pigs, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+    len supp  dose 
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1   4.2 VC    Low  
+2  11.5 VC    Low  
+3   7.3 VC    Low  
+4   5.8 VC    Low  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="function-arguments-2" class="slide level2">
+<h2>Function Arguments</h2>
+<ul>
+<li>If we explicitly name arguments <span class="math inline">\(\implies\)</span> can pass <em>in any order</em></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>, <span class="at">x =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+    len supp  dose 
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1   4.2 VC    Low  
+2  11.5 VC    Low  
+3   7.3 VC    Low  
+4   5.8 VC    Low  </code></pre>
+</div>
+</div>
+</section>
+<section id="function-arguments-3" class="slide level2">
+<h2>Function Arguments</h2>
+<ul>
+<li>Check the help page for <code>glimpse()</code>
+<ul>
+<li>This is from the package <code>pillar</code></li>
+</ul></li>
+<li>Try changing the <code>width</code> argument to see what happens</li>
+</ul>
+</section>
+<section id="understanding-read_csv" class="slide level2">
+<h2>Understanding <code>read_csv()</code></h2>
+<ul>
+<li>Earlier we called the <code>R</code> function <code>read_csv()</code></li>
+<li>Check the help page</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>?read_csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>We have four functions shown but stick to <code>read_csv()</code></li>
+</ul>
+</section>
+<section id="understanding-read_csv-1" class="slide level2">
+<h2>Understanding <code>read_csv()</code></h2>
+<div style="font-size: 85%;">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  file,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="cn">TRUE</span>, <span class="at">col_types =</span> <span class="cn">NULL</span>, <span class="at">col_select =</span> <span class="cn">NULL</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="cn">NULL</span>, <span class="at">locale =</span> <span class="fu">default_locale</span>(), </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>), <span class="at">quoted_na =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">comment =</span> <span class="st">""</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">trim_ws =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">0</span>, <span class="at">n_max =</span> <span class="cn">Inf</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">guess_max =</span> <span class="fu">min</span>(<span class="dv">1000</span>, n_max),</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">name_repair =</span> <span class="st">"unique"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_threads =</span> <span class="fu">readr_threads</span>(),</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">progress =</span> <span class="fu">show_progress</span>(),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="fu">should_show_types</span>(),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">lazy =</span> <span class="fu">should_read_lazy</span>()</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>This function has <span class="math inline">\(\approx \infty\)</span> <em>arguments</em> (<code>file</code>, <code>col_names</code> etc.)</li>
+<li>Most have default values given
+<ul>
+<li>All were defined <em>somewhere in the GUI</em></li>
+<li>Default assumes column names are the first row (<code>col_names = TRUE</code>)</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="understanding-read_csv-2" class="slide level2">
+<h2>Understanding <code>read_csv()</code></h2>
+<p>All <code>arguments</code> were defined somewhere in the GUI.</p>
+<ol type="1">
+<li>Open the GUI Preview by clicking on the file again</li>
+<li>Uncheck the <code>First Row as Names</code> checkbox</li>
+</ol>
+
+<img data-src="assets/importGUI.png" width="900" class="r-stretch"></section>
+<section id="understanding-read_csv-3" class="slide level2">
+<h2>Understanding <code>read_csv()</code></h2>
+<p>All <code>arguments</code> were defined somewhere in the GUI.</p>
+<ol type="1">
+<li>Open the GUI Preview by clicking on the file again</li>
+<li>Uncheck the <code>First Row as Names</code> checkbox
+<ul>
+<li><em>What happened to the code?</em></li>
+<li><em>How did the columns change?</em></li>
+</ul></li>
+</ol>
+<div class="fragment">
+<p>Try clicking/unclicking a few more &amp; try understand the consequences</p>
+</div>
+</section>
+<section id="understanding-read_csv-4" class="slide level2">
+<h2>Understanding <code>read_csv()</code></h2>
+<ul>
+<li>Column types can also be set using shorthand
+<ul>
+<li>“ncc” is number, character, character</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>, <span class="at">col_types =</span> <span class="st">"ncc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Changing one of the character columns to “n” will lead to <code>NA</code>s</li>
+<li>Changing the numeric column to character would mean … ?</li>
+</ul>
+</section></section>
+<section>
+<section id="closing-comments" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Closing Comments</h1>
+
+</section>
+<section id="read_csv-vs-read.csv" class="slide level2">
+<h2><code>read_csv()</code> Vs <code>read.csv()</code></h2>
+<ul>
+<li><code>RStudio</code> now uses <code>read_csv()</code> from <code>readr</code> <strong>by default</strong></li>
+<li>You will often see <code>read.csv()</code> in older scripts (from <code>utils</code>)</li>
+<li>The newer (<code>readr</code>) version is:
+<ul>
+<li>slightly faster</li>
+<li><strong>more user-friendly</strong></li>
+<li>gives informative messages</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Earlier functions in <code>utils</code> are <code>read.*()</code> (csv, delim etc.)</li>
+<li><code>readr</code> has the functions <code>read_*()</code> (csv, tsv, delim etc.)</li>
+<li>I <em>always</em> use the newer ones</li>
+</ul>
+</div>
+</section>
+
+<section id="loading-excel-files" class="slide level2">
+<h2>Loading Excel Files</h2>
+<ul>
+<li>The package <code>readxl</code> is for loading <code>.xls</code> and <code>xlsx</code> files.</li>
+<li>Not part of the core tidyverse but <strong>very</strong> compatible</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>The main function is <code>read_excel()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>?read_excel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="loading-excel-files-1" class="slide level2">
+<h2>Loading Excel Files</h2>
+<ul>
+<li>This file contains multiple sheets</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">excel_sheets</span>(<span class="st">"data/RealTimeData.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sheet1" "Sheet2" "Sheet3"</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>I found this file after a random Google search for RT-PCR and Excel about 10 years ago. I didn’t keep track of who created it…</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="fragment">
+<ul>
+<li>Once again we can click on the file <span class="math inline">\(\implies\)</span> <code>Import Dataset</code>
+<ul>
+<li><code>Sheet1</code> looks pretty simple</li>
+<li>First column has no name</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Use the drop-down menu to look at the <code>Sheet2</code> &amp; <code>Sheet3</code></li>
+<li>We’ll learn how to manage this in the next session</li>
+</ul>
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
@@ -1212,19 +1240,19 @@ Dr Stevie Pederson
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="rstudio_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="import_slides_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="rstudio_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="rstudio_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="rstudio_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="import_slides_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

@@ -1,0 +1,692 @@
+---
+title: "Spreadsheet-Like Data"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3c3c44"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: import.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+---
+
+# Loading Data Into R {background-color="#3c3c44"}
+
+## Data In R
+
+- Working with data in R is **very different** to Excel
+- Can have complicated structures or be simple (e.g. `x <- 1:5`)
+- Spreadsheet-like data is very common
+    - The `R` equivalent is known as a `data.frame`
+    - A common subtype is known as a `tibble` 
+    + These were originally called `tbl_df` objects referring to SQL tables
+    + Is just a `data.frame` with pretty bows & ribbons
+    
+## Data In R
+
+- We import the data as an `R` object
+    - All analysis is performed on the `R` object
+    - **Almost never** modify the source file
+
+
+## Importing Data
+
+
+::: {.incremental}
+
+- *Cell formatting will be ignored by R*
+- *Plots will also be ignored*
+- Blank rows/columns are not fatal, just annoying
+- Mixtures of numbers and text in a column
+    + `data.frame`s are structured with vectors as columns
+- Deleted cells are sometimes imported as blank rows/columns
+- Comma-separated or tab-separated files are favoured for `R`
+    + i.e. plain text, or *just the data*
+    
+:::    
+
+::: {.notes}
+- Can also import data from Stata, SPSS or other statistical languages
+:::
+    
+## Other Common Excel Issues
+
+If we're not careful:
+
+::: {.incremental}
+
+1. Excel thinks everything is a date:
+    + Septin genes are now officially named *SEPTIN2* etc (not *SEPT2*)
+    + Fractions are also not dates...
+2. Excel will remove leading zeroes (e.g. phone numbers, catalog ids)
+3. No record of any steps we've performed by clicking on something
+
+:::
+
+::: {.fragment}
+
+- Very common sources of broken data $\implies$ may need fixing
+- '000s of publications with dates for gene names or results
+
+:::
+
+::: {.notes}
+Mention my former collaborator who would often have completely different results in the ones I'd send him
+- To sort by p-value, he'd select the p-value column & sort (just that column)
+- There was no record of this. Only discovered by sitting down with him
+:::
+
+## Preparation
+
+1. `File` > `New File` > `R Script` (Or `Ctrl+Shift+N`)
+2. Save as `DataImport.R`
+
+## Preparation
+
+Then get the data for this exercise.
+
+1. Download the file `data.zip` from the workshop homepage
+2. Place in your directory `RAdelaide24`
+3. Extract to create a folder named `data`
+4. This should contain all of today's files
+5. Navigate to the `data` directory using the `Files` pane
+
+(You should see `pigs.csv` in there)
+
+::: {.notes}
+(Make sure people haven't accidentally created `data/data`)
+:::
+
+# Import Using the GUI {background-color="#3c3c44"}
+
+## Importing Data
+
+1. Preview the file `pigs.csv` by clicking on it (`View File`)
+    + Try in Excel if you prefer, but **DO NOT** save anything from Excel
+    
+. . .
+
+- The data measures tooth (i.e. odontoblast) length in guinea pigs
+    + Using 3 dose levels of Vitamin C ("Low", "Med", "High")
+- Vitamin C was given in drinking water or using orange juice
+    + "OJ" or "VC"
+
+## Importing Data
+
+- This type of data is very easy to manage in `R`
+    - Plain text with comma delimiters
+    - Simple column structure with column names
+    - No blank rows at the top or separating sub-tables
+    - No blank columns
+    - No rownames
+
+
+## Using the GUI To Load Data 
+
+::: {style="font-size:95%"}
+
+Click on the `pigs.csv` and choose `Import Dataset` then **stop**! &#128721;
+
+![](assets/importGUI.png){width="1000px"}
+
+
+<p style="text-align: center;">(Click `Update` if you don't see this)</p>
+
+:::
+
+## The Preview Window
+
+<br>
+
+![We have a preview of the data](assets/importGUI_preview.png){width="1000px"}
+
+::: {.notes}
+- This is another preview of the data before we import it
+- There are 3 columns: `len`, `supp` and `dose`
+    + `len` is a double (numeric)
+    + The other two are character columns
+:::
+
+## The Preview Window
+
+<br>
+
+![We also have a preview of the code we're about to execute](assets/importGUI_code.png){width="1000px"}
+
+
+## The Preview Window
+
+1. Select and copy all the code in the `Code Preview` Box
+    + We'll paste this somewhere in a minute...
+    
+. . .
+
+2. Click `Import`
+
+. . .
+
+3. Magic happens!!!
+    + Ignore the red/blue text. This is just 'helpful' information
+    
+. . . 
+
+<br>
+
+*Now paste the copied code at the top of your script*
+
+## What just happened? 
+
+The code we copied has 3 lines:
+
+```{r import-code, eval=FALSE}
+#| code-line-numbers: '1'
+library(readr)
+pigs <- read_csv("data/pigs.csv")
+View(pigs)
+```
+
+- `library(readr)` loads the package `readr` 
+    + Packages are collections (i.e. libraries) of related functions
+    + All `readr` functions are about importing data
+- `readr` contains the function `read_csv()`
+- `read_csv()` tells R what to do with a csv file
+    
+## What just happened? 
+
+The code we copied has 3 lines:
+
+```{r import-code2, eval=FALSE}
+#| code-line-numbers: '2'
+library(readr)
+pigs <- read_csv("data/pigs.csv")
+View(pigs)
+```
+
+- This line actually loads the data into your `R Environment`
+- It created an object named `pigs` by using the file name (pigs.csv)
+- Can change this name if we wish
+
+
+## What just happened?
+
+The code we copied has 3 lines:
+
+```{r import-code3, eval=FALSE}
+#| code-line-numbers: '3'
+library(readr)
+pigs <- read_csv("data/pigs.csv")
+View(pigs)
+```
+
+- Opens a preview in a familiar `Excel-like` format
+    + I personally never use this
+
+Close the preview by clicking the cross
+
+## What just happened?
+
+- We have just loaded data using the default settings of `read_csv()`
+- The object `pigs` is now in our `R Environment`
+    + The original file remains on our HDD **without modification**!!!
+- The code is saved in our script <br> $\implies$ **we don't need the GUI for this operation again!**
+
+## Let's Demonstrate
+
+1. In the `Environment Tab` click the broom &#129529;
+    + This will delete everything from your `R Environment`
+    + It won't unload the packages
+    
+. . .    
+    
+2. Highlight the code we've just pasted and click `Run`
+    + Reloading the packages won't hurt
+    
+. . .    
+    
+3. Check the `Environment Tab` again and `pigs` is back
+
+. . .
+
+You can delete the line `View(pigs)`
+
+::: {.notes}
+Realistically we only need to preview it the first time. Having that preview open every time actually ends up being really annoying
+:::
+
+## Our First R Script
+
+- This is now our first R script
+    + These are plain text files
+    + No objects are stored
+    
+. . .    
+    
+- Individual lines can be run using `Ctrl/Cmd + Enter`
+- Can select multiple lines & run 
+
+## Our First R Script
+
+- Insert a new line before `library(readr)` then type
+
+``` r
+## Load packages first
+```
+
+. . .
+
+- This is a comment $\implies$ no executable code
+    + Communicates to "future" you what you're doing
+    + Only needs a single `#` to be a comment
+    
+## Our First R Script
+
+- Insert a line after `library(readr)` then enter
+
+``` r
+## Now load the file "pigs.csv"
+## This contains odontoblast lengths from guinea pigs
+```
+
+
+# Data Frame Objects {background-color="#3c3c44"}
+
+## Data Frame Objects
+
+- The object `pigs` is known as a `data.frame`
+    + Very similar to an SQL table
+- `R` equivalent to a spreadsheet
+    - Missing values (blank cells) are usually filled with `NA`
+    - **Must** have column names $\implies$ row names becoming less common
+
+## Data Frame Objects
+
+Instead of `View()` $\implies$ preview by typing the object name
+
+<br>
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r import-pigs, echo=FALSE, include=FALSE}
+library(readr)
+pigs <- read_csv(here::here("data/pigs.csv"))
+```
+
+
+```{r print-pigs}
+pigs
+```
+
+:::
+
+::: {.column width='60%'}
+
+::: {.fragment}
+
+Gives a preview up to 10 lines with:
+
+:::
+
+::: {.incremental}
+
+- The object type: `A tibble`
+- The full dimensions: `60 X 3`
+- Column names: `len`, `supp`, `dose`
+- Data types: `<dbl>`, `<chr>`, `<chr>`
+
+:::
+
+:::
+
+::::
+
+<br>
+
+::: {.fragment}
+I personally find this more informative than `View()`
+:::
+
+## Tibble Objects
+
+- `readr` uses a variant called a `tbl_df` or `tbl` (pronounced tibble) 
+    + A `data.frame` with convenient features
+    + Similar to a SQL table
+    + Can *only have row numbers for row names*
+    + Is a foundational structure in the `tidyverse`
+
+
+## The Tidyverse
+
+- The `tidyverse` is a collection of *thematically-linked* packages
+    + Produced by developers from RStudio/Posit
+    + Often referred to as *tidy*-programming or similar
+- Calling `library(tidyverse)` loads **all** of these packages
+    + $>$ 30 convenient packages in one line
+    + `readr` is one of these $\implies$ usually just load the tidyverse
+    
+. . .
+
+```{r load-tidyverse}
+library(tidyverse)
+tidyverse_packages()
+```
+
+
+## The Tidyverse
+
+1. Replace `library(readr)` with `library(tidyverse)`
+2. Execute this line
+
+. . .
+
+- This will load all `r length(tidyverse_packages())` packages which form the tidyverse
+- Reloading a package has no effect (is ignored)
+
+## Tibble Objects
+
+- Some additional ways to inspect tibbles are:
+
+```{r, eval=FALSE}
+head(pigs)
+glimpse(pigs)
+```
+
+. . .
+
+- `glimpse` is from the package (`pillar`)
+    + Loaded with `library(tidyverse)`
+
+**What were the differences between each method?**
+
+
+# Functions {background-color="#3c3c44"}
+
+## Functions in `R`
+
+```{r, eval=FALSE}
+head(pigs)
+glimpse(pigs)
+```
+
+- Here we have called the functions 1) `head()` and 2) `glimpse()`
+    + They were both executed on the object `pigs`
+
+. . .
+
+- Call the help page for `head()`
+
+```r
+?head
+```
+
+(if you get multiple options, choose the one from `utils`)
+
+## Functions in `R`
+
+- The key place to look at is
+
+```r
+head(x, ...)
+## Default S3 method:
+head(x, n = 6L, ...)
+```
+
+- there are two arguments to `head()` $\implies$ `x` and `n`
+    + `x` has no default value $\implies$ **we need to provide something**
+    + `n = 6L` means `n` has a default value of 6 (L $\implies$ `integer`)
+    
+::: {.notes}
+Execute `head()` to show the error!!!
+:::
+
+## Functions in `R`
+
+Lower down the page you'll see
+
+**Arguments**
+
+`x`	&nbsp;&nbsp; an object<br>
+`n` &nbsp;&nbsp; an integer vector of length up to dim(x) (or 1, for non-dimensioned objects). *Blah, blah, blah...*
+
+. . .
+
+- Some of the rest is technical detail (sometimes *very helpful*)
+
+
+## Function Arguments
+
+- `head()` prints the *first part* of an object
+- Useful for very large objects (e.g. if we had 1000 pigs)
+
+. . .
+
+- We can change the number of rows shown to us
+
+```{r}
+head(pigs, 4)
+```
+
+## Function Arguments
+
+- Notice we didn't provide these as named arguments
+- If passing values *in order* $\implies$ no need for names
+
+. . .
+
+```{r}
+head(pigs, 4)
+head(x = pigs, n = 4)
+```
+
+## Function Arguments
+
+- If we explicitly name arguments $\implies$ can pass *in any order*
+
+```{r}
+head(n = 4, x = pigs)
+```
+
+## Function Arguments
+
+- Check the help page for `glimpse()`
+    + This is from the package `pillar`
+- Try changing the `width` argument to see what happens
+
+
+## Understanding `read_csv()` 
+
+- Earlier we called the `R` function `read_csv()`
+- Check the help page
+
+```{r, eval = FALSE}
+?read_csv
+```
+
+- We have four functions shown but stick to `read_csv()`
+
+## Understanding `read_csv()` 
+
+::: {style="font-size: 85%;"}
+
+```r
+read_csv(
+  file,
+  col_names = TRUE, col_types = NULL, col_select = NULL,
+  id = NULL, locale = default_locale(), 
+  na = c("", "NA"), quoted_na = TRUE,
+  quote = "\"", comment = "",
+  trim_ws = TRUE,
+  skip = 0, n_max = Inf,
+  guess_max = min(1000, n_max),
+  name_repair = "unique",
+  num_threads = readr_threads(),
+  progress = show_progress(),
+  show_col_types = should_show_types(),
+  skip_empty_rows = TRUE,
+  lazy = should_read_lazy()
+)
+```
+
+- This function has $\approx \infty$ *arguments* (`file`, `col_names` etc.)
+- Most have default values given
+    + All were defined *somewhere in the GUI*
+    + Default assumes column names are the first row (`col_names = TRUE`)
+
+:::
+
+## Understanding `read_csv()` 
+
+All `arguments` were defined somewhere in the GUI.
+
+1. Open the GUI Preview by clicking on the file again
+2. Uncheck the `First Row as Names` checkbox
+
+
+![](assets/importGUI.png){width="900px"}
+
+## Understanding `read_csv()` 
+
+All `arguments` were defined somewhere in the GUI.
+
+1. Open the GUI Preview by clicking on the file again
+2. Uncheck the `First Row as Names` checkbox
+    + *What happened to the code?*
+    + *How did the columns change?*
+    
+. . . 
+
+Try clicking/unclicking a few more & try understand the consequences
+
+## Understanding `read_csv()` 
+
+- Column types can also be set using shorthand
+   + "ncc" is number, character, character
+
+```{r}
+pigs <- read_csv("data/pigs.csv", col_types = "ncc")
+```
+
+- Changing one of the character columns to "n" will lead to `NA`s
+- Changing the numeric column to character would mean ... ?
+
+
+
+# Closing Comments  {background-color="#3c3c44"}
+
+## `read_csv()` Vs `read.csv()`
+
+- `RStudio` now uses `read_csv()` from `readr` **by default**
+- You will often see `read.csv()` in older scripts (from `utils`)
+- The newer (`readr`) version is:
+    + slightly faster
+    + **more user-friendly**
+    + gives informative messages
+    
+. . .    
+    
+- Earlier functions in `utils` are `read.*()` (csv, delim etc.)
+- `readr` has the functions `read_*()` (csv, tsv, delim etc.)
+- I *always* use the newer ones
+
+
+## Reading Help Pages: Bonus Slide {visibility='hidden'}
+
+- The bottom three functions are simplified wrappers to `read_delim()`
+- `read_csv()` calls `read_delim()` using `delim = ","`
+- `read_csv2()` calls `read_delim()` using `delim = ";"`
+- `read_tsv()` calls `read_delim()` using `delim = "\t"`
+
+<br>
+__What function would we call for *space-delimited* files?__
+
+## Loading Excel Files
+
+- The package `readxl` is for loading `.xls` and `xlsx` files.
+- Not part of the core tidyverse but **very** compatible
+
+```{r}
+library(readxl)
+```
+
+. . .
+
+- The main function is `read_excel()`
+
+```{r, eval=FALSE}
+?read_excel
+```
+
+
+## Loading Excel Files
+
+- This file contains multiple sheets
+
+```{r}
+excel_sheets("data/RealTimeData.xlsx")
+```
+
+::: {.notes}
+I found this file after a random Google search for RT-PCR and Excel about 10 years ago.
+I didn't keep track of who created it...
+:::
+
+. . .
+
+- Once again we can click on the file $\implies$ `Import Dataset`
+    + `Sheet1` looks pretty simple
+    + First column has no name
+    
+    
+. . .
+
+- Use the drop-down menu to look at the `Sheet2` & `Sheet3`
+- We'll learn how to manage this in the next session
+    
+

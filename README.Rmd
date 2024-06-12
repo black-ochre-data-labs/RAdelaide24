@@ -27,13 +27,14 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 
 ## Provisional Course Outline
 
-| Day 1 | Topic | Notes | Duration |
+| Day 1 | Topic | Notes | Estimated Duration |
 |:----- |:----- |:----- |:-------- |
 | 9:00  | Welcome To Country |     | 15min    |
 | 9:15  | Installation Help  |     | 15min    |
 | 9:30  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 0.9)`|
-| 10:00 | Spreadsheet-Like Data   | | |
+| 10:00 | Spreadsheet-Like Data   | [Data Import](import.html) | `r getTiming("import_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
+| 11:00 | Spreadsheet-Like Data (continued) | | |
 | 11:00 | Using `dplyr` To Perform Excel-Like Operations | | |
 | 12:30 | *Lunch* | | |
 | 1:15  | Visualising Your Data with `ggplot2` | | |

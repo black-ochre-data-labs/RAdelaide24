@@ -82,7 +82,7 @@ http://blackochrelabs.au/RAdelaide24
 . . .
 
 - PhD (2008-2018) was a Bayesian Model for Transcript-Level Analysis
-    + MCMC Engine written in C & R (No Rstudio. No `Rcpp`. No `RStan`)
+    + MCMC Engine written in C & R (No R Studio. No `Rcpp`)
     
 ::: {.notes}
 Make sure to acknowledge Kaurna Land!!!
@@ -97,19 +97,18 @@ Make sure to acknowledge Kaurna Land!!!
     + `ngsReports`, `extraChIPs`, `motifTestR`, `transmogR`
     + `strandCheckR`, `sSNAPPY`, `tadar`
 
-![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute top=300 right=70 width='120px'}
+![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute bottom=0 left=0 width='120px'}
 
-![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute top=50 right=70 width='120px'}
+![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute bottom=0 left=180 width='120px'}
 
-![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute top=180 right=0 width='120px'}
+![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute bottom=0 left=360 width='120px'}
 
 
-
-![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute top=420 right=0 width='120px'}
+![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute bottom=0 left=540 width='120px'}
 
 . . .
 
-<br>
+
 
 *Made countless typos, horrible decisions and catastrophic errors*
 
@@ -122,12 +121,14 @@ Make sure to acknowledge Kaurna Land!!!
 - Dr Jimmy Breen, Dr Liza Kretzschmar & Dr Alastair Ludington (Black Ochre Data Labs)
 - Dr Paul Wang, Dr John Salomon (SAGC)
 
+::: {.fragment}
 
-## Housekeeping
+### Housekeeping
 
 - Toilets
 - Catering
 
+:::
     
 ## Homepage and Material
 
@@ -136,8 +137,16 @@ Make sure to acknowledge Kaurna Land!!!
     + Will stay live *in perpetuity*
 - Links to notes available
     + Slides are directly re-formatted as a simple webpage
-    + Also in presentation style by clicking the `RevealJS` link below the TOC<br>(Top RH Corner)
+    + Slides are visible by clicking the `RevealJS` link below the TOC
 
+## Course Aims
+
+- Provide a deep understanding of how to work with data in R
+    + Importing Data
+    + Visualising Data
+    + Understanding Data
+- Enable use of modern analytic approaches <br>$\implies$ reproducible research
+- Not just *how* $\implies$ a deep understanding of underlying structures
 
 # A Brief Introduction to R {background-color="#3c3c44" background-image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png background-size="40%" background-opacity="0.5" background-position='80% 50%'}
 
@@ -147,7 +156,7 @@ Make sure to acknowledge Kaurna Land!!!
 - Heavily used for analysis of biological data (along with Python)
     - Can handle extremely large datasets  
     - Packages explicitly designed for complex analysis
-    - Huge user base of biological researchers (www.bioconductor.org)
+    - Huge user base of biological researchers 
     - (Can be) very fast
 - Very easy to *dynamically interact* with large datasets
     - Can also run as static scripts on HPC clusters
@@ -168,7 +177,7 @@ I regularly work with data containing millions of lines
 Experience is the best teacher $\implies$ please practice your skills
 
 ::: {.notes}
-- Discuss column sorting
+- Discuss column sorting with Simon
 :::
 
 ## What is R?
@@ -207,7 +216,7 @@ Experience is the best teacher $\implies$ please practice your skills
 - `R` is formally run by a volunteer committee (**R Core**)
     + Mostly academics
     + John Chambers is *still* a member
-- Annual release schedule with patches as required
+- Annual release schedule + patches 
     + Most recent is R 4.4.1 (Jun 14)
 ::::
 
@@ -229,11 +238,11 @@ Experience is the best teacher $\implies$ please practice your skills
 ## R Packages
 
 - Packages are the key to R's flexibility and power
-    - Are collections (or libraries) of related functions
+    - Collections (or libraries) of *related functions*
     - `ggplot2` $\implies$ Generating plots
     - `edgeR` $\implies$ Differential Gene Expression (DGE) for RNA-Seq 
     
-. . .    
+## R Packages  
     
 - $>$ 16,000 packages are stored on CRAN (https://cran.r-project.org)
     - Not curated for statistical quality or documentation
@@ -395,7 +404,7 @@ x > 1
 - `R Studio` makes that easy & convenient
 - Many people now use RMarkdown to combine analysis, results and figures
 
-# { background-color="#3c3c44" background-image=https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png background-size="60%" background-opacity="0.5" background-position="50% 50%"}
+# R Studio { background-color="#3c3c44" background-image=https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png background-size="40%" background-opacity="0.5" background-position="75% 30%"}
 
 ## Introduction to RStudio
 

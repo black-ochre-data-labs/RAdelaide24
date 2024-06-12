@@ -15,19 +15,20 @@ intermediate users will also gain a great deal from attending.
 
 ## Provisional Course Outline
 
-| Day 1 | Topic                                          | Notes                      | Duration |
-|:------|:-----------------------------------------------|:---------------------------|:---------|
-| 9:00  | Welcome To Country                             |                            | 15min    |
-| 9:15  | Installation Help                              |                            | 15min    |
-| 9:30  | Introducing R & RStudio                        | [Introduction](intro.html) | 34min    |
-| 10:00 | Spreadsheet-Like Data                          |                            |          |
-| 10:30 | *Morning Tea*                                  |                            |          |
-| 11:00 | Using `dplyr` To Perform Excel-Like Operations |                            |          |
-| 12:30 | *Lunch*                                        |                            |          |
-| 1:15  | Visualising Your Data with `ggplot2`           |                            |          |
-| 2:30  | *Afternoon Tea*                                |                            |          |
-| 2:50  | Using `stringr` to Modify Text                 |                            |          |
-| 4:00  | Recap and Bring Your Own Data                  |                            |          |
+| Day 1 | Topic                                          | Notes                      | Estimated Duration |
+|:------|:-----------------------------------------------|:---------------------------|:-------------------|
+| 9:00  | Welcome To Country                             |                            | 15min              |
+| 9:15  | Installation Help                              |                            | 15min              |
+| 9:30  | Introducing R & RStudio                        | [Introduction](intro.html) | 35min              |
+| 10:00 | Spreadsheet-Like Data                          | [Data Import](import.html) | 55min              |
+| 10:30 | *Morning Tea*                                  |                            |                    |
+| 11:00 | Spreadsheet-Like Data (continued)              |                            |                    |
+| 11:00 | Using `dplyr` To Perform Excel-Like Operations |                            |                    |
+| 12:30 | *Lunch*                                        |                            |                    |
+| 1:15  | Visualising Your Data with `ggplot2`           |                            |                    |
+| 2:30  | *Afternoon Tea*                                |                            |                    |
+| 2:50  | Using `stringr` to Modify Text                 |                            |                    |
+| 4:00  | Recap and Bring Your Own Data                  |                            |                    |
 
 | Day 2 | Topic                              |
 |:------|:-----------------------------------|
