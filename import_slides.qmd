@@ -8,7 +8,7 @@ institute: |
 date: "2024-07-11"
 date-format: long
 title-slide-attributes:
-    data-background-color: "#3c3c44"
+    data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
     data-background-opacity: "0.3"
     data-background-size: "90%"
@@ -56,7 +56,7 @@ knitr:
     fig.align: center  
 ---
 
-# Loading Data Into R {background-color="#3c3c44"}
+# Loading Data Into R {background-color="#3d3d40"}
 
 ## Data In R
 
@@ -125,7 +125,7 @@ Mention my former collaborator who would often have completely different results
 ## Preparation
 
 1. `File` > `New File` > `R Script` (Or `Ctrl+Shift+N`)
-2. Save as `DataImport.R`
+2. Save as `GuineaPigs.R`
 
 ## Preparation
 
@@ -143,7 +143,7 @@ Then get the data for this exercise.
 (Make sure people haven't accidentally created `data/data`)
 :::
 
-# Import Using the GUI {background-color="#3c3c44"}
+# Import Using the GUI {background-color="#3d3d40"}
 
 ## Importing Data
 
@@ -334,7 +334,7 @@ Realistically we only need to preview it the first time. Having that preview ope
 ```
 
 
-# Data Frame Objects {background-color="#3c3c44"}
+# Data Frame Objects {background-color="#3d3d40"}
 
 ## Data Frame Objects
 
@@ -446,7 +446,7 @@ glimpse(pigs)
 **What were the differences between each method?**
 
 
-# Functions {background-color="#3c3c44"}
+# Functions {background-color="#3d3d40"}
 
 ## Functions in `R`
 
@@ -618,7 +618,7 @@ pigs <- read_csv("data/pigs.csv", col_types = "ncc")
 
 
 
-# Closing Comments  {background-color="#3c3c44"}
+# Closing Comments  {background-color="#3d3d40"}
 
 ## `read_csv()` Vs `read.csv()`
 
