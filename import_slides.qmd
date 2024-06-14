@@ -56,7 +56,7 @@ knitr:
     fig.align: center  
 ---
 
-# Loading Data Into R {background-color="#3d3d40"}
+# Importing Data {background-color="#3d3d40" background-image=https://github.com/rstudio/hex-stickers/blob/main/PNG/readr.png?raw=true background-size="30%" background-opacity="0.4" background-position='70% 50%'}
 
 ## Data In R
 
@@ -334,7 +334,7 @@ Realistically we only need to preview it the first time. Having that preview ope
 ```
 
 
-# Data Frame Objects {background-color="#3d3d40"}
+# Data Frame Objects {background-color="#3d3d40" background-image=https://github.com/rstudio/hex-stickers/blob/main/PNG/tibble.png?raw=true background-size="30%" background-opacity="0.4" background-position='70% 50%'}
 
 ## Data Frame Objects
 
