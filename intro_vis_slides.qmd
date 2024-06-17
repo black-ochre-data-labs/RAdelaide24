@@ -1,0 +1,243 @@
+---
+title: "Visualisation With `ggplot2`"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro_vis.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+```{r load-pigs, echo=FALSE}
+library(tidyverse)
+pigs <- read_csv("data/pigs.csv")
+```
+
+## The Grammar of Graphics
+
+- `ggplot2` has become the industry standard for visualisation
+- Core & essential part of the `tidyverse`
+- Developed by Hadley Wickham as his PhD thesis
+- An implementation of *The Grammar of Graphics* ^[Wilkinson L. The Grammar of Graphics. Springer New York; 18 p.]
+    + Breaks visualisation into *layers*
+
+![](https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png){.absolute bottom=0 right=0 width="250"}
+
+## The Grammar of Graphics
+
+![](assets/gg_cover.png){.absolute left=0 width="375"}
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png){.absolute right=0 width="630"}
+
+::: {.aside}
+Layers image taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html
+:::
+
+## The Grammar of Graphics 
+
+Everything is added in layers
+
+:::: {.columns}
+
+
+::: {.column}
+
+::: {style="font-size: 80%;"}
+
+::: {.fragment}
+
+1. Data
+    + Usually a data.frame (or `tibble`)
+    + Can be *piped in* $\implies$ modify *on the fly*
+    
+:::
+    
+::: {.fragment}
+
+2. Aesthetics
+    + `x` & `y` co-ordinates 
+    + `colour`, `fill`, `shape`, `size`, `linetype`
+    + grouping & transparency (`alpha`)
+    
+:::
+
+
+:::
+
+:::
+
+::: {.column}
+
+::: {style="font-size: 85%;"}
+
+
+::: {.fragment}
+
+3. Geometric Objects
+    + points, lines, boxplot, histogram, bars etc
+    
+:::
+
+::: {.fragment}
+    
+4. Facets: Panels within plots
+
+:::
+
+::: {.fragment}
+    
+5. Statistics: Computed summaries
+
+:::
+
+::: {.fragment}
+    
+6. Coordinates
+    + polar, map, cartesian
+
+:::
+
+::: {.fragment}
+    
+7. Themes: overall layout
+
+:::
+
+:::
+
+:::
+
+::::
+
+## An Initial Example
+
+- Using the example dataset `cars`
+- Two columns:
+    + `speed` (mph)
+    + `distance` to stop
+- We can make a classic `x` vs `y` plot using points
+
+. . . 
+
+- The *predictor* (x) would be `speed`
+- The *response* (y) would be `distance`
+
+
+## An Initial Example
+
+- We may as well start by piping our data in
+
+```{r}
+#| fig-show: hide
+cars %>% 
+  ggplot(aes(x = speed, y = dist))
+```
+
+. . .
+
+- We have defined the plotting *aesthetics*
+    + `x` & `y`
+    + Don't need to name if passing *in order*
+- Axis limits match the data
+
+. . .
+
+- No geometry has been specified $\implies$ nothing was drawn
+
+::: {.notes}
+- The package is `ggplot2` but the function is `ggplot()`
+:::
+
+## An Initial Example
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+    + Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| fig-show: hide
+cars %>%
+  ggplot(aes(x = speed, y = dist)) + 
+  geom_point() 
+```
+
+## An Initial Example
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+    + Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| fig-show: hide
+cars %>% # Layer 1: Data
+  ggplot(aes(x = speed, y = dist)) + # Layer 2: Aesthetics
+  geom_point() # Layer 3: Geometry
+```
+
+. . .
+
+- By default:
+    + Layer 4: No facets
+    + Layer 5: No summary statistics
+    + Layer 6: Cartesian co-ordinate system
+    + Layer 7: Crappy theme with grey background [&#129326;]{.fragment}
+    
+::: {.notes}
+Axis limits are automatically determined
+:::
+
+## Visualising Our Guinea Pig Data
+
+What visualisations could we produce to inspect `pigs`?
+
+::: {.notes}
+- Obviously a boxplot
+:::

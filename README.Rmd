@@ -37,7 +37,7 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | 11:00 | Spreadsheet-Like Data (continued) | | |
 | 11:30 | Exploring & Manipulating Data | [Data Exploration](exploring.html) | `r getTiming("exploring_slides.qmd", 1)` |
 | 12:30 | *Lunch* | | |
-| 1:15  | Visualising Your Data with `ggplot2` | | |
+| 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1)` |
 | 2:30  | *Afternoon Tea* | | |
 | 3:00  | Using `stringr` to Modify Text | | |
 | 4:00  | Recap and Bring Your Own Data  | | |
