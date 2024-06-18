@@ -25,7 +25,7 @@ intermediate users will also gain a great deal from attending.
 | 11:00 | Spreadsheet-Like Data (continued)    |                                              |                    |
 | 11:30 | Exploring & Manipulating Data        | [Data Exploration](exploring.html)           | 57min              |
 | 12:30 | *Lunch*                              |                                              |                    |
-| 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 8min               |
+| 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 29min              |
 | 2:30  | *Afternoon Tea*                      |                                              |                    |
 | 3:00  | Using `stringr` to Modify Text       |                                              |                    |
 | 4:00  | Recap and Bring Your Own Data        |                                              |                    |

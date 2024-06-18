@@ -240,4 +240,309 @@ What visualisations could we produce to inspect `pigs`?
 
 ::: {.notes}
 - Obviously a boxplot
+- We can also create a plot using points
 :::
+
+## Creating Our Boxplot
+
+- A starting point might be to choose `dose` as the predictor
+- `len` will always be the response variable
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  ggplot(aes(dose, len)) +
+  geom_boxplot()
+```
+
+
+## Creating Our Boxplot
+
+- To incorporate the supp methods $\implies$ add a fill aesthetic
+    + `colour` is generally applied to shape outlines
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot()
+```
+
+
+. . .
+
+- `ggplot2` will always separate multiple values/category
+
+## Creating Our Boxplot
+
+- We could also separate by supp
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  facet_wrap(~supp)
+```
+
+. . .
+
+- Only one value/category so no shifting
+
+## Layering Geometries
+
+- We're not restricted to one geometry
+- The following will add points *after* drawing the boxplots
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  geom_point() +
+  facet_wrap(~supp)
+```
+
+## Layering Geometries
+
+- `geom_jitter()` will add a small amount of noise to separate points
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1, height = 0) +
+  facet_wrap(~supp)
+```
+
+## Modifying Data Prior to Plotting
+
+- We can also plot percentiles with a few prior steps
+- First rank the `len` values
+- Then turn into quantiles
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  )
+```
+
+## Modifying Data Prior to Plotting
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point()
+```
+
+
+## Modifying Data Prior to Plotting
+
+- Now we could colour points by `supp`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q, colour = supp)) +
+  geom_point()
+```
+
+## Different Layers
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png)
+
+::: {.notes}
+We've already seen everything up to facets so let's try a summary statistic
+:::
+
+## Modifying Data Prior to Plotting
+
+- `geom_smooth()` will add a line of best fit
+    + Almost identical to `stat_smooth()`
+- Automatically chosen but can be `lm`, `loess` or `gam`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q, colour = supp)) +
+  geom_point() +
+  geom_smooth()
+```
+
+## Modifying Geoms
+
+- Any `aesthetic` set in the call to `ggplot()` is passed to every subsequent layer
+- We can set aesthetics in a layer-specific manner
+- Shifting `colour = supp` to `geom_point()` will only colour points
+- The line of best fit will now be a single line
+
+## Modifying Geoms
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth()
+```
+
+## Modifying Geoms
+
+- Aesthetics can also be set *outside* of a call to `aes()`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth(colour = "black")
+```
+
+## Modifying Geoms
+
+- Geoms are just regular functions with multiple arguments
+- The below turns off the `se` bands and switches to `lm`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth(colour = "black", se = FALSE, method = "lm")
+```
+
+## Choosing Point Shapes
+
+- Shapes have numeric codes in `R`
+- Examples are on the `?pch` page
+- The default is 19
+- Can also be set as an `aesthetic`
+- `size` can also work either way
+
+![](assets/pch.png)
+
+## Choosing Point Shapes
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp), shape = 1, size = 3) +
+  geom_smooth(colour = "black", se = FALSE, method = "lm")
+```
+
+## Setting Scales
+
+- Default scales are set for x & y axes
+- Can also set scales for colours, shapes, fill etc
+- Let's simplify by removing the regression line
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") 
+```
+
+
+
+## Setting Scales
+
+- `scale_colour_brewer()` allows pre-defined palettes
+    + From the package `RColorBrewer`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## RColorBrewer Palettes
+
+```{r echo=FALSE}
+RColorBrewer::display.brewer.all()
+```
+
+## Setting Scales
+
+- `scale_colour_viridis_d()` provides colour-blind palettes
+    + comes in biined (`*_b()`), continuous (`*_c()`) or discrete (`*_d()`)
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_viridis_d()
+```
+
+## Setting Scales
+
+- `scale_colour_manual()` takes a vector of colours
+    + Vectors are formed using `c()`
+
+```{r}
+#| fig-show: hide
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_manual(values = c("blue", "red"))
+```
