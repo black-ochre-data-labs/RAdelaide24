@@ -656,7 +656,10 @@ Dr Stevie Pederson
 <section id="creating-our-boxplot-2" class="slide level2">
 <h2>Creating Our Boxplot</h2>
 <ul>
-<li>We could also separate by supp</li>
+<li>We could also separate by supp using <code>facet_wrap()</code>
+<ul>
+<li>Can also set the number of rows/columns</li>
+</ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
@@ -873,10 +876,14 @@ Dr Stevie Pederson
 </section>
 <section id="setting-scales" class="slide level2">
 <h2>Setting Scales</h2>
+<div style="font-size: 95%;">
 <ul>
-<li>Default scales are set for x &amp; y axes</li>
-<li>Can also set scales for colours, shapes, fill etc</li>
-<li>Let’s simplify by removing the regression line</li>
+<li>Default scales are set for x &amp; y axes
+<ul>
+<li><code>scale_x_continuous()</code> &amp; <code>scale_y_continuous()</code></li>
+<li>Only needed when tweaking axis names, limits, labels, breaks etc</li>
+</ul></li>
+<li>Also set scales for colours, shapes, fill etc</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
@@ -889,6 +896,22 @@ Dr Stevie Pederson
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Odontoblast Length"</span>) <span class="sc">+</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Quantile"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<aside class="notes">
+<ul>
+<li>Let’s simplify by removing the regression line</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="setting-scales-1" class="slide level2">
 <h2>Setting Scales</h2>
@@ -908,7 +931,7 @@ Dr Stevie Pederson
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> supp)) <span class="sc">+</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Odontoblast Length"</span>) <span class="sc">+</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Quantile"</span>) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="rcolorbrewer-palettes" class="slide level2">
@@ -918,9 +941,11 @@ Dr Stevie Pederson
 <section id="setting-scales-2" class="slide level2">
 <h2>Setting Scales</h2>
 <ul>
-<li><code>scale_colour_viridis_d()</code> provides colour-blind palettes
+<li><code>scale_colour_viridis_b/c/d()</code>
 <ul>
-<li>comes in biined (<code>*_b()</code>), continuous (<code>*_c()</code>) or discrete (<code>*_d()</code>)</li>
+<li>colour-blind friendly palettes</li>
+<li>comes in binned (<code>_b()</code>), continuous (<code>_c()</code>) or discrete (<code>_d()</code>)</li>
+<li>excellent for heatmaps or showing differences across large range</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -942,6 +967,7 @@ Dr Stevie Pederson
 <li><code>scale_colour_manual()</code> takes a vector of colours
 <ul>
 <li>Vectors are formed using <code>c()</code></li>
+<li>RStudio helpfully shows you the colour!!!</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -954,13 +980,231 @@ Dr Stevie Pederson
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> supp)) <span class="sc">+</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Odontoblast Length"</span>) <span class="sc">+</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Quantile"</span>) <span class="sc">+</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-<img src="assets/bodl_logo_white_background.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
-
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"navyblue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section>
+<section id="themes" class="title-slide slide level1 center" data-background-color="#3d3d40">
+<h1>Themes</h1>
+
+</section>
+<section id="themes-1" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>We can modify the overall appearance of the plot using <code>theme()</code></li>
+<li>Set panel colours, fonts, legend position etc</li>
+<li>Hide any features we don’t want</li>
+</ul>
+</section>
+<section id="themes-2" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>To help us focus on the <code>theme()</code> <br><span class="math inline">\(\implies\)</span> save the plot as the object <code>p</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">q =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(len, q)) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> supp)) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Odontoblast Length"</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Quantile"</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"navyblue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>We can regenerate the plot by typing it’s name</li>
+</ul>
+</section>
+<section id="themes-3" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li><code>ggplot2</code> supplies several complete themes</li>
+<li>Applies <code>theme_grey()</code> by default</li>
+<li>Try add <code>theme_bw()</code> after <code>p</code>
+<ul>
+<li>This is my default</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Try a few others
+<ul>
+<li><code>theme_void()</code>, <code>theme_classic()</code>, <code>theme_minimal()</code></li>
+</ul></li>
+<li>Some are for specific use cases</li>
+</ul>
+</div>
+</section>
+<section id="themes-4" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>We can also modify manually</li>
+<li>Theme elements are modified using <code>element_*()</code> functions
+<ul>
+<li>Text elements use <code>element_text()</code></li>
+<li>Line elements use <code>element_line()</code></li>
+<li>Box (or rectangle) elements use <code>element_rect()</code></li>
+<li>Can disable an element entirely using <code>element_blank()</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="themes-5" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>The panel background is set using <code>element_rect()</code>
+<ul>
+<li><code>colour</code> sets the rectangle outline colour</li>
+<li><code>fill</code> sets the rectangle fill</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="themes-6" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>We can set <em>global</em> text parameters using <code>text = element_text()</code>
+<ul>
+<li>family, colour, size, face etc</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">size =</span> <span class="dv">14</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="themes-7" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>Individual text-based parameters can be set similarly</li>
+<li>Will over-ride any global setting</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="themes-8" class="slide level2">
+<h2>Themes</h2>
+<ul>
+<li>Can also set a theme then modify further</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Enormous range of setting can be controlled here</li>
+</ul>
+</div>
+</section>
+<section id="themes-9" class="slide level2">
+<h2>Themes</h2>
+<div style="font-size: 95%;">
+<ul>
+<li>Spend a few minutes playing with the following</li>
+<li>Try commenting out lines or changing values</li>
+<li>Aesthetic names can be set manually using <code>labs()</code>
+<ul>
+<li>Won’t over-write anything set in <code>scale_x/y_continuous()</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Odontoblast Length in Guinea Pigs"</span>) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rect =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#204080"</span>),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"grey80"</span>, <span class="at">family =</span> <span class="st">"Palatino"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"steelblue4"</span>, <span class="at">colour =</span> <span class="st">"grey80"</span>),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey80"</span>, <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"grey80"</span>),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"steelblue4"</span>, <span class="at">colour =</span> <span class="st">"grey80"</span>),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="cn">NA</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"inside"</span>, </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+<aside class="notes">
+<p>Mention <code>colours()</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="themes-9-output" class="slide level2 output-location-slide"><h2>Themes</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="intro_vis_slides_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="saving-images" class="slide level2">
+<h2>Saving Images</h2>
+<ul>
+<li>The simple way is click <code>Export</code> in the <code>Plots</code> pane</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The way to save using code is</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"myplot.png"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">"in"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>This will always save the most recent plot by default</li>
+<li>Output format is determined by the suffix</li>
+<li>Try saving as a pdf…</li>
+</ul>
+</div>
+</section>
+<section id="saving-images-1" class="slide level2">
+<h2>Saving Images</h2>
+<ul>
+<li>I think saving using code is preferable</li>
+<li>Modify an analysis or data <span class="math inline">\(\implies\)</span> saved figures will also update
+<ul>
+<li>This saves time &amp; ensures reproducibility</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<p><img data-src="https://r-graphics.org/cover.jpg" width="400"></p>
+<p>A fabulous resource: https://r-graphics.org/</p>
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</section></section>
 
     </div>
   </div>
