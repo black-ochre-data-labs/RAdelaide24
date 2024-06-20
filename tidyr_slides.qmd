@@ -1,0 +1,111 @@
+---
+title: "Extending Data Frame Manipulation"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: tidyr.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Using `tidyr` {background-color="#3d3d40" background-image=https://github.com/rstudio/hex-stickers/blob/main/PNG/tidyr.png?raw=true background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## The package `tidyr`
+
+- Is the next logical step from `dplyr`
+- Instead of working with data *within columns* <br>$\implies$ manipulate entire columns
+- Analogous to some pivot table operations in Excel
+- Also a core `tidyverse` package
+
+. . .
+
+- Start a new script: `TidyR.R`
+
+## A New Dataset
+
+- For this we'll use the PCR data we glimpsed earlier ^[source unknown]
+
+```{r}
+library(tidyverse)
+library(readxl)
+pcr <- read_excel("data/RealTimeData.xlsx") %>% 
+  rename(Sample = `...1`)
+```
+
+- `rename` is another `dplyr` function
+- The default empty column name `..1` is a bit weird
+    + Starting `...` makes it a bit special
+    + Needs to be enclosed within backticks
+
+## A New Dataset
+
+- These values represent *Ct* values from a RT-PCR analysis
+    + Is the PCR cycle at which the machine detects 'signal'
+    + Low numbers mean more of the RNA molecule
+- Two genes: *SLAM* & *GAPDH*
+    + *GAPDH* is a housekeeper gene
+    + Should be consistent across treatments, conditions etc
+
+## A New Dataset
+
+- The sample column also contains two pieces of information
+    + `C/INF` probably mean control or infected cells
+    + Timepoints are 24h, 72h or 120h
+- Looks like some data entry errors
+
+. . .
+
+- How to separate the cell group (C/INF) from the timepoint?
+- If wanting to make boxplots, how would we fill by gene
+    + Should have a column with gene names
+    + Another with Ct values

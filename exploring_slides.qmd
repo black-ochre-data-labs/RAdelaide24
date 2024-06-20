@@ -719,3 +719,28 @@ band_members %>%
 ```
 
 :::
+
+## Closing Comments
+
+::: {style="font-size: 90%;"}
+
+- Many functions here have common names:
+    + `select()`, `filter()` etc
+    + Based on SQL processes
+    
+::: {.fragment}
+
+- Other package developers have also used these names
+- Can create conflicts $\implies$ code 'inexplicably' stops working
+
+::: 
+
+::: {.fragment}
+
+- Call directly from the package using the `namespace`
+    + `dplyr::filter()` instead of `filter()`
+    + `dplyr::select()` instead of `select()`
+    
+:::
+
+:::

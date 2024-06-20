@@ -319,7 +319,43 @@ pigs %>%
 
 ## Modifying Data Prior to Plotting
 
-- We can also plot percentiles with a few prior steps
+- `dose` is a clearly a categorical variable with an order
+- In `R` these are known as `factors`
+    + Categories referred to as `levels`
+    + Will learn in detail tomorrow
+
+. . .
+
+- `ggplot()` will automatically place character columns in alphanumeric order
+- Manually set the order by explicitly setting as a `factor` with `levels`
+
+## Modifying Data Prior to Plotting
+
+- Notice when we do this, the column is now `fct`
+
+```{r}
+pigs %>% 
+  mutate(dose = factor(dose, levels = c("Low", "Med", "High")))
+```
+
+
+. . .
+
+- Now boxplots will appear in order
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(dose = factor(dose, levels = c("Low", "Med", "High"))) %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot()
+```
+
+
+
+## Modifying Data Prior to Plotting
+
+- We can also plot quanntiles with a few prior steps
 - First rank the `len` values
 - Then turn into quantiles
 

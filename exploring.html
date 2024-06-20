@@ -4385,6 +4385,33 @@ display: none;
 </div>
 </div>
 </section>
+<section id="closing-comments" class="level2">
+<h2 class="anchored" data-anchor-id="closing-comments">Closing Comments</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>Many functions here have common names:
+<ul>
+<li><code>select()</code>, <code>filter()</code> etc</li>
+<li>Based on SQL processes</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Other package developers have also used these names</li>
+<li>Can create conflicts <span class="math inline">\(\implies\)</span> code ‘inexplicably’ stops working</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Call directly from the package using the <code>namespace</code>
+<ul>
+<li><code>dplyr::filter()</code> instead of <code>filter()</code></li>
+<li><code>dplyr::select()</code> instead of <code>select()</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
 </section>
 
 </main>
