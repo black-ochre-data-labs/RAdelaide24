@@ -40,6 +40,7 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
 | 2:30  | *Afternoon Tea* | | |
 | 3:00  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd")` |
+|       | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
 | 4:00  | Recap and Bring Your Own Data  | | |
 
 

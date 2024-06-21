@@ -452,7 +452,7 @@ Dr Stevie Pederson
 <ul>
 <li>These values represent <em>Ct</em> values from a RT-PCR analysis
 <ul>
-<li>Is the PCR cycle at which the machine detects ‘signal’</li>
+<li><em>Ct</em> is the PCR cycle at which the machine detects ‘signal’</li>
 <li>Low numbers mean more of the RNA molecule</li>
 </ul></li>
 <li>Two genes: <em>SLAM</em> &amp; <em>GAPDH</em>
@@ -461,7 +461,9 @@ Dr Stevie Pederson
 <li>Should be consistent across treatments, conditions etc</li>
 </ul></li>
 </ul>
-<div class="fragment">
+</section>
+<section id="a-new-dataset-2" class="slide level2">
+<h2>A New Dataset</h2>
 <ul>
 <li>The sample column also contains two pieces of information
 <ul>
@@ -470,14 +472,480 @@ Dr Stevie Pederson
 </ul></li>
 <li>Looks like some data entry errors</li>
 </ul>
-</div>
-</section>
-<section id="a-new-dataset-2" class="slide level2">
-<h2>A New Dataset</h2>
+<div class="fragment">
 <ul>
 <li>How to separate the cell group (C/INF) from the timepoint?</li>
-<li>If wanting to make boxplots, how would we fill by</li>
+<li>If wanting to make boxplots, how would we fill by gene
+<ul>
+<li>Should have a column with gene names</li>
+<li>Another with Ct values</li>
+</ul></li>
 </ul>
+</div>
+</section>
+<section id="cleaning-data-entry-errors" class="slide level2">
+<h2>Cleaning Data Entry Errors</h2>
+<p>There are multiple ways &amp; steps to clean-up the <code>Sample</code> column</p>
+<div>
+<ol type="1">
+<li class="fragment">Could use <code>str_extract()</code> to ‘grab out’ the information</li>
+<li class="fragment">Could add spaces where needed then use <code>separate()</code></li>
+<li class="fragment">Also need to correct the ‘hours’ format</li>
+</ol>
+</div>
+</section>
+<section id="adding-a-space" class="slide level2">
+<h2>Adding A Space</h2>
+<ul>
+<li>The pattern we need can be written multiple ways</li>
+</ul>
+<div>
+<ul>
+<li class="fragment">Find where C or F are <em>not</em> followed by a space then add one</li>
+<li class="fragment">Find where 1 or 7 are <em>not</em> preceded by a space then add one</li>
+<li class="fragment">Could capture text &amp; numbers then restructure
+<ul>
+<li class="fragment">Let’s try this method</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="matching-patterns" class="slide level2">
+<h2>Matching Patterns</h2>
+<ul>
+<li>First we can capture the text at the beginning of each entry
+<ul>
+<li>NB: Using <code>pull()</code> to grab out a single column</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_view</span>(<span class="st">"^[CINF]+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] │ &lt;C&gt; 24h
+ [2] │ &lt;C&gt; 24h
+ [3] │ &lt;C&gt; 24h
+ [4] │ &lt;INF&gt; 24h
+ [5] │ &lt;INF&gt; 24h
+ [6] │ &lt;INF&gt; 24h
+ [7] │ &lt;C&gt;72h
+ [8] │ &lt;C&gt;72h
+ [9] │ &lt;C&gt;72h
+[10] │ &lt;INF&gt;72H
+[11] │ &lt;INF&gt; 72H
+[12] │ &lt;INF&gt;72H
+[13] │ &lt;C&gt; 120H
+[14] │ &lt;C&gt;120H
+[15] │ &lt;C&gt;120H
+[16] │ &lt;INF&gt; 120H
+[17] │ &lt;INF&gt; 120H
+[18] │ &lt;INF&gt; 120H</code></pre>
+</div>
+</div>
+</section>
+<section id="matching-patterns-1" class="slide level2">
+<h2>Matching Patterns</h2>
+<ul>
+<li>Now let’s see if we can capture numbers</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_view</span>(<span class="st">"[0-9]+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] │ C &lt;24&gt;h
+ [2] │ C &lt;24&gt;h
+ [3] │ C &lt;24&gt;h
+ [4] │ INF &lt;24&gt;h
+ [5] │ INF &lt;24&gt;h
+ [6] │ INF &lt;24&gt;h
+ [7] │ C&lt;72&gt;h
+ [8] │ C&lt;72&gt;h
+ [9] │ C&lt;72&gt;h
+[10] │ INF&lt;72&gt;H
+[11] │ INF &lt;72&gt;H
+[12] │ INF&lt;72&gt;H
+[13] │ C &lt;120&gt;H
+[14] │ C&lt;120&gt;H
+[15] │ C&lt;120&gt;H
+[16] │ INF &lt;120&gt;H
+[17] │ INF &lt;120&gt;H
+[18] │ INF &lt;120&gt;H</code></pre>
+</div>
+</div>
+</section>
+<section id="combining-patterns" class="slide level2">
+<h2>Combining Patterns</h2>
+<div style="font-size: 95%;">
+<ul>
+<li>The key is what we place between the captures</li>
+<li>The pattern I chose was <code>" *"</code> <span class="math inline">\(\implies\)</span> match <em>zero or more</em> spaces</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 3
+   Sample    SLAM GAPDH
+   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
+ 1 C 24h     23.9  17.7
+ 2 C 24h     23.5  17.4
+ 3 C 24h     23.7  17.8
+ 4 INF 24h   23.4  15.7
+ 5 INF 24h   23.3  15.4
+ 6 INF 24h   23.4  15.8
+ 7 C 72h     24.7  18.4
+ 8 C 72h     24.3  18.6
+ 9 C 72h     24.5  18.7
+10 INF 72H   23.4  15.9
+11 INF 72H   23.3  15.8
+12 INF 72H   23.2  15.4
+13 C 120H    24.4  18.5
+14 C 120H    24.7  18.2
+15 C 120H    25.1  18.3
+16 INF 120H  22.8  16.7
+17 INF 120H  22.8  17.0
+18 INF 120H  22.5  16.5</code></pre>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Notice we didn’t capture the optional space</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="combining-patterns-1" class="slide level2">
+<h2>Combining Patterns</h2>
+<div style="font-size: 95%;">
+<ul>
+<li>Next we can tidy the final character (H/h)
+<ul>
+<li>Not in the initial pattern <span class="math inline">\(\implies\)</span> ignored during replacement</li>
+</ul></li>
+<li>Don’t need to capture, just to match</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)[Hh]"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2hr"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 3
+   Sample     SLAM GAPDH
+   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 C 24hr     23.9  17.7
+ 2 C 24hr     23.5  17.4
+ 3 C 24hr     23.7  17.8
+ 4 INF 24hr   23.4  15.7
+ 5 INF 24hr   23.3  15.4
+ 6 INF 24hr   23.4  15.8
+ 7 C 72hr     24.7  18.4
+ 8 C 72hr     24.3  18.6
+ 9 C 72hr     24.5  18.7
+10 INF 72hr   23.4  15.9
+11 INF 72hr   23.3  15.8
+12 INF 72hr   23.2  15.4
+13 C 120hr    24.4  18.5
+14 C 120hr    24.7  18.2
+15 C 120hr    25.1  18.3
+16 INF 120hr  22.8  16.7
+17 INF 120hr  22.8  17.0
+18 INF 120hr  22.5  16.5</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="separating-columns" class="slide level2">
+<h2>Separating Columns</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>Now we’ve (finally) cleaned up the data-entry erors<br><span class="math inline">\(\implies\)</span> can use <code>separate()</code> to split into two columns
+<ul>
+<li>Will automatically separate using any non-alpha-numeric characters</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)[Hh]"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2hr"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Sample, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"timepoint"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 4
+   treatment timepoint  SLAM GAPDH
+   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 C         24hr       23.9  17.7
+ 2 C         24hr       23.5  17.4
+ 3 C         24hr       23.7  17.8
+ 4 INF       24hr       23.4  15.7
+ 5 INF       24hr       23.3  15.4
+ 6 INF       24hr       23.4  15.8
+ 7 C         72hr       24.7  18.4
+ 8 C         72hr       24.3  18.6
+ 9 C         72hr       24.5  18.7
+10 INF       72hr       23.4  15.9
+11 INF       72hr       23.3  15.8
+12 INF       72hr       23.2  15.4
+13 C         120hr      24.4  18.5
+14 C         120hr      24.7  18.2
+15 C         120hr      25.1  18.3
+16 INF       120hr      22.8  16.7
+17 INF       120hr      22.8  17.0
+18 INF       120hr      22.5  16.5</code></pre>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Notice that we used a character vector to provide the new colnames</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="separating-columns-1" class="slide level2">
+<h2>Separating Columns</h2>
+<ul>
+<li>These look like categorical values <span class="math inline">\(\implies\)</span> <code>factor()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)[Hh]"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2hr"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Sample, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"timepoint"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">timepoint =</span> <span class="fu">factor</span>(timepoint, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"24hr"</span>, <span class="st">"72hr"</span>, <span class="st">"120hr"</span>)),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">factor</span>(treatment, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"INF"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fct_recode</span>(<span class="at">Control =</span> <span class="st">"C"</span>, <span class="at">Infected =</span> <span class="st">"INF"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="adding-replicate-information" class="slide level2">
+<h2>Adding Replicate Information</h2>
+<ul>
+<li>We don’t really know which replicates may be related but
+<ul>
+<li>using the <code>.by</code> argument nests the data invisibly</li>
+<li>This is why it was done in a separate call to <code>mutate()</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)[Hh]"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2hr"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Sample, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"timepoint"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">timepoint =</span> <span class="fu">factor</span>(timepoint, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"24hr"</span>, <span class="st">"72hr"</span>, <span class="st">"120hr"</span>)),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">factor</span>(treatment, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"INF"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fct_recode</span>(<span class="at">Control =</span> <span class="st">"C"</span>, <span class="at">Infected =</span> <span class="st">"INF"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">replicate =</span> <span class="fu">seq_along</span>(SLAM), <span class="at">.by =</span> <span class="fu">c</span>(treatment, timepoint)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p><strong>I would usually do this when I load the data</strong></p>
+</div>
+</section>
+<section id="rewrite-the-loading-steps" class="slide level2">
+<h2>Rewrite the Loading Steps</h2>
+<ul>
+<li>Re-load the data to make our life easier from here on</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/RealTimeData.xlsx"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Sample =</span> <span class="st">`</span><span class="at">...1</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> <span class="fu">str_replace_all</span>(Sample, <span class="st">"^([CINF]+) *([0-9]+)[Hh]"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2hr"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Sample, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"timepoint"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">timepoint =</span> <span class="fu">factor</span>(timepoint, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"24hr"</span>, <span class="st">"72hr"</span>, <span class="st">"120hr"</span>)),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">factor</span>(treatment, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"INF"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fct_recode</span>(<span class="at">Control =</span> <span class="st">"C"</span>, <span class="at">Infected =</span> <span class="st">"INF"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">replicate =</span> <span class="fu">seq_along</span>(SLAM), <span class="at">.by =</span> <span class="fu">c</span>(treatment, timepoint)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merging-columns" class="slide level2">
+<h2>Merging Columns</h2>
+<p>The converse to <code>separate()</code> is <code>unite()</code> + The below shows manually setting the separator + Also tells <code>unite()</code> not to remove the original columns</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"merged"</span>, <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"treatment"</span>,<span class="st">"timepoint"</span>, <span class="st">"replicate"</span>)),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">":"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 6
+   merged           treatment timepoint  SLAM GAPDH replicate
+   &lt;chr&gt;            &lt;fct&gt;     &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;
+ 1 Control:24hr:1   Control   24hr       23.9  17.7         1
+ 2 Control:24hr:2   Control   24hr       23.5  17.4         2
+ 3 Control:24hr:3   Control   24hr       23.7  17.8         3
+ 4 Infected:24hr:1  Infected  24hr       23.4  15.7         1
+ 5 Infected:24hr:2  Infected  24hr       23.3  15.4         2
+ 6 Infected:24hr:3  Infected  24hr       23.4  15.8         3
+ 7 Control:72hr:1   Control   72hr       24.7  18.4         1
+ 8 Control:72hr:2   Control   72hr       24.3  18.6         2
+ 9 Control:72hr:3   Control   72hr       24.5  18.7         3
+10 Infected:72hr:1  Infected  72hr       23.4  15.9         1
+11 Infected:72hr:2  Infected  72hr       23.3  15.8         2
+12 Infected:72hr:3  Infected  72hr       23.2  15.4         3
+13 Control:120hr:1  Control   120hr      24.4  18.5         1
+14 Control:120hr:2  Control   120hr      24.7  18.2         2
+15 Control:120hr:3  Control   120hr      25.1  18.3         3
+16 Infected:120hr:1 Infected  120hr      22.8  16.7         1
+17 Infected:120hr:2 Infected  120hr      22.8  17.0         2
+18 Infected:120hr:3 Infected  120hr      22.5  16.5         3</code></pre>
+</div>
+</div>
+</section>
+<section id="long-form" class="slide level2">
+<h2>Long Form</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>If we want to plot the values of <em>SLAM</em> &amp; <em>GAPDH</em> <span class="math inline">\(\implies\)</span> <code>pivot_longer()</code>
+<ul>
+<li>Colloquially known as <em>long form</em></li>
+<li>Very helpful for regression models &amp; visualisation in <code>R</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"SLAM"</span>, <span class="st">"GAPDH"</span>)), <span class="at">names_to =</span> <span class="st">"gene"</span>, <span class="at">values_to =</span> <span class="st">"Ct"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 36 × 5
+   treatment timepoint replicate gene     Ct
+   &lt;fct&gt;     &lt;fct&gt;         &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1 Control   24hr              1 SLAM   23.9
+ 2 Control   24hr              1 GAPDH  17.7
+ 3 Control   24hr              2 SLAM   23.5
+ 4 Control   24hr              2 GAPDH  17.4
+ 5 Control   24hr              3 SLAM   23.7
+ 6 Control   24hr              3 GAPDH  17.8
+ 7 Infected  24hr              1 SLAM   23.4
+ 8 Infected  24hr              1 GAPDH  15.7
+ 9 Infected  24hr              2 SLAM   23.3
+10 Infected  24hr              2 GAPDH  15.4
+# ℹ 26 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="visualising-the-data" class="slide level2">
+<h2>Visualising The Data</h2>
+<ul>
+<li>Now we can plot each gene by timepoint and treatment
+<ul>
+<li>Faceting by gene</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"SLAM"</span>, <span class="st">"GAPDH"</span>)), <span class="at">names_to =</span> <span class="st">"gene"</span>, <span class="at">values_to =</span> <span class="st">"Ct"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(timepoint, Ct, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="from-long-to-wide" class="slide level2">
+<h2>From Long To Wide</h2>
+<ul>
+<li>The alternative is <code>pivot_wider()</code>
+<ul>
+<li>Not so great for plotting</li>
+<li>Can be useful for tables</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dCt =</span> SLAM <span class="sc">-</span> GAPDH) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"replicate"</span>, <span class="at">values_from =</span> <span class="st">"dCt"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> <span class="fu">starts_with</span>(<span class="st">"t"</span>), <span class="at">names_prefix =</span> <span class="st">"rep"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  treatment timepoint  rep1  rep2  rep3
+  &lt;fct&gt;     &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Control   24hr       6.17  6.04  5.92
+2 Infected  24hr       7.72  7.9   7.6 
+3 Control   72hr       6.35  5.74  5.83
+4 Infected  72hr       7.5   7.55  7.79
+5 Control   120hr      5.88  6.46  6.79
+6 Infected  120hr      6.08  5.79  6.02</code></pre>
+</div>
+</div>
+</section>
+<section id="closing-comments" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>The <code>tidyverse</code> is under constant development
+<ul>
+<li><code>gather()</code> <span class="math inline">\(\implies\)</span> <code>pivot_longer()</code></li>
+<li><code>spread</code>() <span class="math inline">\(\implies\)</span> <code>pivot_wider()</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>separate()</code> is now superseded
+<ul>
+<li><code>separate_wider_delim()</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-1" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>Additional functions are more advanced than our knowledge just yet</li>
+<li>Often rely on more sophisticated data structures</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"SLAM"</span>, <span class="st">"GAPDH"</span>, <span class="st">"replicate"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  treatment timepoint data            
+  &lt;fct&gt;     &lt;fct&gt;     &lt;list&gt;          
+1 Control   24hr      &lt;tibble [3 × 3]&gt;
+2 Infected  24hr      &lt;tibble [3 × 3]&gt;
+3 Control   72hr      &lt;tibble [3 × 3]&gt;
+4 Infected  72hr      &lt;tibble [3 × 3]&gt;
+5 Control   120hr     &lt;tibble [3 × 3]&gt;
+6 Infected  120hr     &lt;tibble [3 × 3]&gt;</code></pre>
+</div>
+</div>
 
 <img src="assets/bodl_logo_white_background.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 

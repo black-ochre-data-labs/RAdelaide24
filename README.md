@@ -28,6 +28,7 @@ intermediate users will also gain a great deal from attending.
 | 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 60min                           |
 | 2:30  | *Afternoon Tea*                      |                                              |                                 |
 | 3:00  | Using `stringr` to Modify Text       | [Working With Text](text.html)               | 30min                           |
+|       | Reshaping Data With `tidyr`          | [Reshaping Data](tidyr.html)                 | 20min                           |
 | 4:00  | Recap and Bring Your Own Data        |                                              |                                 |
 
 | Day 2 | Topic                              |
