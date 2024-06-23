@@ -31,15 +31,15 @@ intermediate users will also gain a great deal from attending.
 |       | Reshaping Data With `tidyr`          | [Reshaping Data](tidyr.html)                 | 20min                           |
 | 4:00  | Recap and Bring Your Own Data        |                                              |                                 |
 
-| Day 2 | Topic                              |
-|:------|:-----------------------------------|
-| 9:00  | Vectors and Data Structures in `R` |
-| 10:30 | *Morning Tea*                      |
-| 11:00 | Basic Statistical Analysis         |
-| 12:30 | *Lunch*                            |
-| 1:30  | Using Rmarkdown                    |
-| 3:00  | *Afternoon Tea*                    |
-| 3:30  | Functions                          |
+| Day 2 | Topic                              | Notes                         | Estimated Duration <br>(approx) |
+|:------|:-----------------------------------|:------------------------------|:--------------------------------|
+| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | 80min                           |
+| 10:30 | *Morning Tea*                      |                               |                                 |
+| 11:00 | Basic Statistical Analysis         |                               |                                 |
+| 12:30 | *Lunch*                            |                               |                                 |
+| 1:30  | Using Rmarkdown                    |                               |                                 |
+| 3:00  | *Afternoon Tea*                    |                               |                                 |
+| 3:30  | Functions                          |                               |                                 |
 
 | Day 3 | Topic                 |
 |:------|:----------------------|

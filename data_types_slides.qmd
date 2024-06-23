@@ -1,0 +1,889 @@
+---
+title: "Understanding How R Sees Data"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: data_types.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# `R` Objects {background-color="#3d3d40"}
+
+
+## Recap Of Day 1
+
+We learned how to:
+
+1. Load a csv using `readr::read_csv()`
+2. Look through & summarise a `data.frame`
+3. Use the magrittr (`%>%`)
+4. Generate plots with `ggplot2`
+5. Wrangle text
+6. Write reports with `rmarkdown`
+
+## Today's Material
+
+- Understand what we did yesterday
+- How does R *really* see data?
+- Statistical Analysis
+
+. . . 
+
+- Build a strong foundation for our own work
+
+
+
+## `R` Objects
+
+- Main data type so far has been a `data.frame` 
+    - `tibble` $\equiv$ `data.frame` with nice wrapping paper
+- Each column has *the same type of data*, <br>e.g. `numeric`, `character` etc.
+- The columns can be different types to each other
+- In `R` each column is a `vector`
+
+::: {.notes}
+Went to considerable effort to avoid referring to vectors
+:::
+
+# Vectors {background-color="#3d3d40"}
+
+## Vectors
+
+The key building blocks for `R` objects: **Vectors**
+
+- There is no such thing as a *scalar* in `R`
+- Everything is based around the concept of a *vector*
+
+**What is a vector?**
+
+::: {.fragment}
+
+Definition
+
+> A vector is zero or more values of the **same type**
+
+:::
+
+## Vectors
+
+A simple vector would be
+
+```{r, echo=FALSE, include=TRUE, results='markup'}
+1:10
+```
+
+__What type of values are in this vector?__
+
+## Vectors 
+
+Another vector might be
+
+```{r, echo=FALSE, include=TRUE, results='markup'}
+c("a", "cat", "video")
+```
+
+__What type of values are in this vector?__
+
+## Vectors 
+
+
+```{r, echo=FALSE, include=TRUE, results='markup'}
+c(742, "Evergreen", "Tce")
+```
+
+__What type of values are in this vector?__
+
+## The 4 Atomic Vector Types
+
+- *Atomic Vectors* are the building blocks for everything in `R`
+- There are four main types
+- Plus two we can ignore
+
+## Logical Vectors
+
+1. **logical**: Can only hold the values `TRUE` or `FALSE`
+
+```{r}
+logi_vec <- c(TRUE, TRUE, FALSE)
+print(logi_vec)
+```
+
+
+::: {.notes}
+- Spell out that when you type an object's name, you're calling `print()`
+- Also mention that in the 70's we didn't have printers so it means print the object to screen
+:::
+
+## Integer Vectors
+
+1. logical
+2. **integer**: Counts, ranks or indexing positions 
+
+```{r}
+int_vec <- 1:5
+print(int_vec)
+```
+
+
+## Double Precision Vectors
+
+1. logical
+2. integer
+3. **double**: Often (& *lazily*) referred to as `numeric`
+
+```{r, results='hide'}
+dbl_vec <- c(0.618, 1.414, 2)
+print(dbl_vec)
+```
+
+**Why are these called doubles?**
+
+## Character Vectors
+
+1. logical
+2. integer
+3. double
+4. **character**
+
+```{r, include=TRUE, results='hide'}
+char_vec <- c("blue", "red", "green")
+print(char_vec)
+```
+
+## The 4 Atomic Vector Types
+
+These are the basic building blocks for all `R` objects
+
+1. logical
+2. integer
+3. double
+4. character
+
+. . .
+
+- There are two more rare types we'll ignore: `complex` & `raw`
+- All `R` data structures are built on these
+
+
+## Properties of a vector 
+
+What *four* defining properties might a vector have?
+
+::: {.incremental}
+
+1. The actual *values*
+2. *Length*, accessed by the function `length()`
+3. The *type*, accessed by the function `typeof()`
+    + Similar but preferable to `class()`
+4. Any optional & additional *attributes* $\implies$ `attributes()`
+    + Holds data such as `names` etc.
+
+:::
+
+
+## Properties of a vector
+
+__Let's try them on our vectors__
+
+```{r, results='hide'}
+typeof(char_vec)
+length(int_vec)
+attributes(logi_vec)
+class(dbl_vec)
+typeof(dbl_vec)
+```
+
+__Were you surprised by any of the results?__
+
+## Working with Vectors
+
+We can *combine* two vectors in `R`, using the function `c()`
+
+```{r}
+c(1, 2)
+```
+
+- The numbers `1` & `2` were both vectors with `length` 1
+- We have combined two vectors of length 1, to make a vector of length 2
+
+## Working with Vectors 
+
+__What would happen if we combined two vectors of different types?__
+
+. . .
+
+```{r, results='hide'}
+new_vec <- c(logi_vec, int_vec)
+print(new_vec)
+typeof(new_vec)
+```
+
+## Working with Vectors
+
+__Q: What happened to the `logical` values?__
+
+. . .
+
+Answer: `R` will **coerce** them into a common type (i.e. integers).
+
+# Coercion {background-color="#3d3d40"}
+
+## Coercion 
+
+**What other types could `logical` vectors be coerced into?**
+
+. . .
+
+Try using the functions:
+`as.integer()`, `as.double()` & `as.character()` on `logi_vec`
+
+## Coercion
+
+::: {.incrementa}
+
+1. Can `numeric` vectors be coerced into `logical` vectors?
+2. Can `character` vectors be coerced into `numeric` vectors?
+
+```{r}
+#| output-location: fragment
+simp_vec <- c(742, "Evergreen", "Terrace")
+simp_vec
+as.numeric(simp_vec)
+```
+
+:::
+
+# Subsetting Vectors {background-color="#3d3d40"}
+
+## Subsetting Vectors
+
+One or more elements of a vector can be called using `[]`
+
+```{r}
+y <- c("A", "B", "C", "D", "E")
+y[2]
+y[1:3]
+```
+
+## Subsetting Vectors
+
+Double brackets (`[[]]`) can be used to return __single elements__ only
+
+```{r}
+y[[2]]
+```
+
+If you tried `y[[1:3]]` you would receive an error message
+
+## Subsetting Vectors
+
+If a vector has name attributes, we can call values by name
+
+```{r}
+head(euro)
+euro["ESP"]
+```
+
+## Subsetting Vectors 
+
+*Try repeating the* call-by-name *approach using double brackets*
+
+```{r, results='hide'}
+euro["ESP"]
+euro[["ESP"]]
+```
+
+. . .
+
+__What was the difference in the output?__
+
+. . .
+
+1. Using `[]` returned the vector with the identical structure
+2. Using `[[]]` removed the `attributes` & just gave the value
+
+::: {.notes}
+Ask about `Seurat` & mention it's unconventional behaviour
+:::
+
+## Subsetting Vectors 
+
+__Is it better to call by position, or by name?__
+
+Things to consider:
+
+- Which is easier to type on the fly?
+- Which is easier to read?
+- Which is more robust to undocumented changes in an object?
+
+## Extracting Multiple Values 
+
+**What is really happening in this line?**
+
+```{r}
+euro[1:3]
+```
+
+. . .
+
+We are using the integer vector `1:3` to extract values from `euro`
+
+. . .
+
+```{r}
+int_vec
+euro[int_vec]
+```
+
+
+## Vector Operations
+
+`R` Functions are designed to work on vectors
+
+```{r, results='hide'}
+dbl_vec - 1
+dbl_vec > 1
+dbl_vec^2
+mean(dbl_vec)
+sd(dbl_vec)
+sqrt(int_vec)
+```
+
+This is one of the real strengths of `R`
+
+## Vector Operations 
+
+We can also combine the above logical test and subsetting
+
+```{r}
+dbl_vec
+dbl_vec > 1
+```
+
+. . .
+
+```{r, results='hide'}
+dbl_vec[dbl_vec > 1]
+```
+
+
+## Vector Operations
+
+An additional logical test: `%in%` (read as: "*is in*")
+
+```{r}
+dbl_vec
+int_vec
+```
+
+```{r, results='hide'}
+dbl_vec %in% int_vec
+```
+
+. . .
+
+Returns `TRUE/FALSE` for each value in `dbl_vec` if it **is in** `int_vec`
+
+NB: `int_vec` was coerced silently to a `double` vector
+
+# Matrices {background-color="#3d3d40"}
+
+## Matrices
+
+- Vectors are strictly one dimensional and have a `length` attribute.
+- A `matrix` is the **two dimensional** equivalent
+
+```{r, results='hide'}
+int_mat <- matrix(1:6, ncol = 2)
+print(int_mat)
+```
+
+## Matrices
+
+- Matrices can only hold __one__ type of value
+    + i.e. logical, integer, double, character
+- Have additional attributes such as `dim()`, `nrow()` `ncol()`
+- Can have __optional__ `rownames()` & `colnames()`
+
+## Matrices
+
+__Some commands to try:__
+
+```{r, results='hide'}
+dim(int_mat)
+nrow(int_mat)
+typeof(int_mat)
+class(int_mat)
+attributes(int_mat)
+colnames(int_mat)
+length(int_mat)
+```
+
+__Ask questions if anything is confusing__
+
+## Matrices
+
+- Use square brackets to extract values by row & column
+- The form is `x[row, col]`
+- Leaving either `row` or `col` blank selects the entire row/column
+
+```{r, results='hide'}
+int_mat[2, 2]
+int_mat[1,]
+```
+
+__How would we just get the first column?__
+
+## Matrices
+
+__NB: Forgetting the comma when subsetting will treat the matrix as a single vector running down the columns__
+
+```{r}
+int_mat
+int_mat[5]
+```
+
+## Matrices
+
+**Requesting a row or column that doesn't exist is the source of a very common error message**
+
+```{r}
+dim(int_mat)
+```
+
+```{r, eval=FALSE}
+int_mat[5,]
+```
+
+<div class="red">
+```
+Error in int_mat[5, ] : subscript out of bounds
+```
+</div>
+
+
+## Arrays
+
+Arrays extend matrices to 3 or more dimensions
+
+Beyond the scope of today, but we just have more commas in the square brackets, e.g.
+```{r}
+dim(iris3)
+```
+
+```{r,eval=FALSE}
+dimnames(iris3)
+```
+
+. . .
+
+```{r}
+iris3[1,,]
+```
+```{r,results='hide'}
+iris3[1:2,,]
+```
+
+## Homogeneous Data Types
+
+- Vectors, Matrices & Arrays are the basic *homogeneous* data types
+- All are essentially just vectors
+
+# Heterogeneous Data Types {background-color="#3d3d40"}
+
+## Heterogeneous Data Types
+
+Summary of main data types in `R`
+
+Dimension   | Homogeneous | Heterogeneous
+------------|-------------|--------------
+1d          | `vector`    | `list`
+2d          | `matrix`    | `data.frame`
+3d+         | `array`     |
+
+## Lists
+
+A `list` is a __heterogeneous__ vector.
+
+- Each component is an `R` object
+- Can be a `vector`, or `matrix`
+- Could be another `list`
+- Any other `R` object type we haven't seen yet
+
+**These are incredibly common in `R`**
+
+## Lists
+
+Many `R` functions provide output as a list
+
+```{r, results='hide'}
+testResults <- t.test(dbl_vec)
+class(testResults)
+typeof(testResults)
+testResults
+```
+
+NB: There is a function (`print.htest()`) that tells `R` how to print the results to the Console
+
+## Lists
+
+Explore the various attributes of the object `testResults`
+
+```{r, results='hide'}
+attributes(testResults)
+length(testResults)
+names(testResults)
+typeof(testResults)
+```
+
+
+## Lists
+
+We can call the individual components of a list using the `$` symbol followed by the name
+
+```{r, results='hide'}
+testResults$statistic
+testResults$conf.int
+testResults$method
+```
+
+*Note that each component is quite different to the others.*
+
+## Subsetting Lists
+
+A `list` is a `vector` so we can also subset using the `[]` method
+
+```{r, results='hide'}
+testResults[1]
+typeof(testResults[1])
+```
+
+- Using single square brackets returns a `list` 
+    - i.e. is a subset of the larger object and of the *same type*
+
+## Subsetting Lists
+
+Double brackets again retrieve a single element of the vector
+
+- Returns the actual component as the underlying `R` object
+
+```{r, results='hide'}
+testResults[[1]]
+typeof(testResults[[1]])
+```
+
+*When would we use either method?*
+
+## Subsetting Lists
+
+We can also use names instead of positions
+
+```{r, results='hide'}
+testResults[c("statistic", "p.value")]
+testResults[["statistic"]]
+```
+
+
+## Lists
+
+- Note also the **Environment** Tab in the top right of RStudio
+- Click the arrow next to `testResults` to expand the entry
+- This is the output of `str(testResults)`
+
+# Data Frames {background-color="#3d3d40"}
+
+## Data Frames
+
+Finally!
+
+- These are the *most common type of data* you will work with
+- Each column is a `vector`
+- Columns can be different types of vectors
+- Column vectors **MUST** be the same length
+
+
+## Data Frames
+
+- Analogous to matrices, but are **specifically for heterogeneous data**
+- Have many of the same attributes as matrices
+    + `dim()`, `nrow()`, `ncol()`, `rownames()`, `colnames()`
+- `colnames()` & `rownames()` are **NOT** optional <br>$\implies$ are assigned by default
+
+## Data Frames
+
+Let's load `pigs` again
+
+```{r, eval=TRUE, results='hide'}
+library(tidyverse)
+pigs <- read_csv("data/pigs.csv")
+head(pigs)
+```
+
+
+. . .
+
+<br>
+
+__Try these commands__
+
+```{r, results='hide'}
+colnames(pigs)
+dim(pigs)
+nrow(pigs)
+```
+
+## Data Frames
+
+Individual entries can also be extracted using the square brackets
+
+```{r, results='hide'}
+pigs[1:2, 1]
+```
+
+. . .
+
+We can also refer to columns by name (same as matrices)
+
+```{r, results='hide'}
+pigs[1:2, "len"]
+```
+
+
+## Data Frames
+
+Thinking of columns being vectors is quite useful
+
+- We can call each column vector of a `data.frame` using the `$` operator
+
+```{r, results='hide'}
+pigs$len[1:2]
+```
+
+**This does NOT work for rows!!!**
+
+## Data Frames
+
+- `R` is *column major* by default (as is `FORTRAN` & Matlab)
+    + Very common in the 1970s
+- Many other languages are *row major*, e.g. C/C++, Python
+- `R` was designed for statistical analysis, but has developed capabilities **far beyond this**
+
+We will see this advantage this afternoon
+
+# Data Frames & Lists {background-color="#3d3d40"}
+
+## Data Frames & Lists
+
+__Data frames are actually special cases of lists__
+
+- Each column of a `data.frame` is a component of a `list`
+- The components must all be vectors of the **same length**
+- Data Frames can be treated identically to a `list`
+- Have additional subsetting operations and attributes
+
+## Data Frames & Lists
+
+Forgetting the comma, now gives a completely different result to a matrix!
+
+```{r, eval=FALSE}
+pigs[1]
+```
+
+__Was that what you expected?__
+
+__Try using the double bracket method__
+
+## Common Data Frame Errors
+
+**What do you think will happen if we type:**
+
+```{r, eval=FALSE}
+pigs[5]
+```
+
+::: {.fragment}
+<span style="color:red; font-family: 'Courier New', monospace;">Error: Column index must be at most 3 if positive, not 5</span>
+:::
+
+# Working With `R` Objects {background-color="#3d3d40"}
+
+## Name Attributes
+
+__How do we assign names?__
+
+```{r}
+named_vec <- c(a = 1, b = 2, c = 3)
+```
+
+. . .
+
+OR we can name an existing vector
+
+```{r}
+names(int_vec) <- c("a", "b", "c", "d", "e")
+```
+
+## Name Attributes
+
+__Can we remove names?__
+
+The `NULL`, or empty, vector in `R` is created using `c()`
+
+```{r, results='hide'}
+null_vec <- c()
+length(null_vec)
+```
+
+## Name Attributes
+
+We can also use this to remove names
+
+```{r}
+names(named_vec) <- c()
+```
+
+*Don't forget to put the names back...*
+
+## Matrices
+
+We can convert vectors to matrices, as earlier
+
+```{r}
+int_mat <- matrix(1:6, ncol = 2)
+```
+
+`R` is column major so fills columns by default
+
+```{r}
+row_mat <- matrix(1:6, ncol = 2, byrow = TRUE)
+```
+
+## Matrices 
+
+We can assign row names & column names after creation
+
+```{r}
+colnames(row_mat) <- c("odds", "evens")
+```
+
+Or using `dimnames()`
+
+```{r, results='hide'}
+dimnames(row_mat)
+```
+
+This a list of `length` 2 with `rownames` then `colnames` as the components.
+
+<!-- ## A Word Of Caution -->
+
+<!-- ```{r, warning=FALSE} -->
+<!-- rec_mat <- matrix(int_vec, ncol = 2) -->
+<!-- ``` -->
+
+<!-- __Did we successfully form an `R` object?__ -->
+
+<!-- __What has happened here?__ -->
+
+<!-- __This is a major (and warranted) criticism made of R__ -->
+
+## Lists
+
+```{r}
+my_list <- list(int_vec, dbl_vec)
+names(my_list) <- c("integers", "doubles")
+```
+
+OR
+
+```{r}
+my_list <- list(integers = int_vec, doubles = dbl_vec)
+```
+
+## Lists
+
+__What happens if we try this?__
+
+```{r}
+my_list$logical <- logi_vec
+```
+
+<!-- ## Lists -->
+<!-- We can coerce vectors to lists as well -->
+<!-- ```{r} -->
+<!-- int_list <- as.list(named_vec) -->
+<!-- ``` -->
+
+## Data Frames
+
+This is exactly the same as creating lists, but
+
+__The `names` attribute will also be the `colnames()`__
+
+```{r}
+my_df <- data.frame(doubles = dbl_vec, logical = logi_vec)
+names(my_df) == colnames(my_df)
+```
+
+## Data Frames
+
+__What happens if we try to add components that aren't the same length?__
+
+```{r, eval=FALSE}
+my_df <- data.frame(
+  integers = int_vec, 
+  doubles = dbl_vec, logical = logi_vec
+)
+```
+
+
