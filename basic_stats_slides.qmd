@@ -69,8 +69,8 @@ library(pander)
 
 - `R` has it's origins as a statistical analysis language (i.e. `S`)
 - Purpose of this session is NOT to teach statistical theory
-    - I am a Bioinformatician NOT statistician
-- How do we perform simple analyses in R
+    - I am a bioinformatician NOT a statistician
+- Perform simple analyses in R
 - Up to you to know what you're doing
     - Or talk to your usual statisticians & collaborators
     
@@ -102,7 +102,8 @@ library(pander)
 
 ## Distributions
 
-Take a random sample from a few important distributions
+- Let's take a random sample from a few important distributions
+    + All have mean $\mu = 1$ and sd $\sigma = 1$
 
 ```{r randomSamples}
 library(tidyverse)
@@ -115,8 +116,6 @@ randomSamples <- tibble(
 ```
 
 ## Distributions 
-
-These were all sampled from distributions with $\mu = 1$
 
 - Check our sample means
 
@@ -131,8 +130,6 @@ randomSamples %>%
 **Why are the means not exactly equal to 1?**
 
 ## Distributions
-
-These were all sampled from distributions with $\sigma = 1$
 
 - Check our sample variances
 
@@ -179,7 +176,7 @@ randomSamples %>%
 
 ## Data For This Session
 
-We'll use the `pigs` dataset we loaded earlier
+We'll use the `pigs` dataset from earlier
 
 ```{r}
 library(tidyverse)
@@ -201,23 +198,25 @@ pigs %>%
 ```
 
 ```{r, echo=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(results = 'hide')
 ```
 
 ## t-tests
 
-- Test for normally distributed data
+- Assumes normally distributed data
 - $t$-tests always test $H_0$ Vs $H_A$
-- (We may not always do meaningful tests today)
 
 . . .
 
 - The simplest test is on a simple vector
+    + This is not particularly meaningful for our data
 
-```{r}
+```{r, eval = FALSE}
 ?t.test
 t.test(pigs$len)
 ```
+
+<br>
 
 **What is $H_0$ in the above test?**
 
@@ -248,8 +247,10 @@ t.test(x = vc, y = oj)
 ## t-tests
 
 - An alternative is the `R` formula method: `len~supp`
-    + Length is a response variable to supplement as a predictor
-- Can only use one predictor $\implies$ linear regression
+    + Length is a response variable
+    + Supplement is the predictor
+- Can only use one predictor for a T-test
+    + Otherwise it's linear regression
 
 ```{r}
 t.test(len~supp, data = pigs)
@@ -261,8 +262,11 @@ t.test(len~supp, data = pigs)
 
 ## Wilcoxon Tests 
 
-- We assumed the above dataset was normally distributed: **What if it's not?**
-- Non-parametric alternative is the *Wilcoxon Rank-Sum* (aka *Mann-Whitney*)
+- We assumed the above dataset was normally distributed:<br>**What if it's not?**
+
+. . .
+
+- Non-parametric equivalent is the *Wilcoxon Rank-Sum* (aka *Mann-Whitney*)
 
 . . .
 
@@ -281,8 +285,8 @@ wilcox.test(len~supp, data = pigs)
 - Commonly used in *Observed Vs Expected*
 
 $$
-H_0: \text{No dependence between groups and outcome}\\
-H_A: \text{Dependence between groups and outcome}
+H_0: \text{No association between groups and outcome}\\
+H_A: \text{Association between groups and outcome}
 $$
 
 
@@ -296,6 +300,8 @@ pass
 chisq.test(pass)
 ```
 
+. . .
+
 **Can anyone remember when we shouldn't use a $\chi^2$ test?**
 
 ## Fisher's Exact Test
@@ -303,6 +309,7 @@ chisq.test(pass)
 - $\chi^2$ tests became popular in the days of the printed tables
     - We now have computers
 - Fisher's Exact Test is preferable in the cases of low cell counts
+    + (Or any other time...)
 - Same $H_0$ as the $\chi^2$ test
 - Uses the hypergeometric distribution
 
@@ -346,11 +353,13 @@ fisher.test(pass)$p.value
 
 ## Linear Regression
 
-Recap: We are trying to estimate a line
+We are trying to estimate a line with slope & intercept
 
 $$
 y = ax + b
 $$
+
+. . .
 
 Or 
 
@@ -365,12 +374,15 @@ Linear Regression always uses the `R` formula syntax
 
 - `y ~ x`: `y` is a function of `x`
 - We use the function `lm()`
-- Intercept is assumed unless explicitly removed (`~ 0 + ...`)
 
 ```{r}
 lm_pigs <- lm(len ~ supp , data = pigs) 
 summary(lm_pigs)
 ```
+
+. . .
+
+- Intercept is assumed unless explicitly removed (`~ 0 + ...`)
 
 ## Linear Regression
 
@@ -384,6 +396,10 @@ summary(lm_pigs_dose)
 
 . . .
 
+- Which values are associated with the intercept & slope?
+
+. . .
+
 - It looks like an increasing dose-level increases length
 
 ## Interaction Terms
@@ -391,7 +407,7 @@ summary(lm_pigs_dose)
 
 - We have given each group a separate intercept 
     + The same slope
-    + Requires an **interaction term**
+    + Requires an **interaction term** for different slopes
 
 ::: {.fragment}
 
@@ -450,8 +466,25 @@ plot(lm_pigs_full)
 par(mfrow = c(1, 1))
 ```
 
+. . .
 
-## Logistic Regression | `glm()`
+- Stands for *multi-frame rows*
+
+## Automated Model Selection
+
+- One strategy is to fit a heavily parameterised model
+- `R` can remove terms as required using Akaike's Information Criterion (AIC)
+    + The function is `step()`
+- No point here really but...
+
+. . .
+
+```{r}
+step(lm_pigs_full)
+```
+
+
+## Logistic Regression
 
 Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
 
@@ -460,26 +493,29 @@ Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
     - This is `binomial` data, $\pi$ is the probability of success
 
 ```{r}
-library(tibble)
 pass_df <- as.data.frame(pass) %>%
 	rownames_to_column("Attendance")
 ```
 
-## Logistic Regression | `glm()`
+## Logistic Regression
 
 Does attendance affect the probability of passing?
 
 - `glm()` can take numerous families (e.g. `Poisson`)
+    + Generalised Linear Model
 
 ```{r}
-glmPass <- glm(cbind(Pass, Fail) ~ Attendance, 
-							 data = pass_df, 
-							 family = "binomial")
+glmPass <- glm(
+  cbind(Pass, Fail) ~ Attendance, data = pass_df, family = binomial()
+)
 summary(glmPass)
 ```
 
+. . .
 
-## Mixed Effects Models | `lme4`
+- To fit a Poisson dataset set `family = poisson()`
+
+## Mixed Effects Models
 
 Mixed effects models include:
 
@@ -492,7 +528,7 @@ Rabbit <- MASS::Rabbit
 head(Rabbit)
 ```
 
-## Mixed Effects Models | `lme4`
+## Mixed Effects Models 
 
 Here we have the change in Blood pressure within the same 5 rabbits
 
@@ -504,107 +540,187 @@ filter(Rabbit, Animal == "R1")
 ```
 
 
-## Mixed Effects Models | `lme4`
+## Mixed Effects Models 
 
-If fitting within one rabbit:
+If fitting within one rabbit $\implies$ use `lm()`
 
 ```{r}
-lmRabbit1 <- lm(BPchange~(Treatment + Dose)^2, 
-		data = filter(Rabbit, Animal == "R1"))
-summary(lmRabbit1)
+lm_r1 <- lm(
+  BPchange~(Treatment + Dose)^2, data = Rabbit, subset = Animal == "R1"
+)
+summary(lm_r1)
 ```
 
-## Mixed Effects Models | `lme4`
+## Mixed Effects Models
 
 To nest within each rabbit we:
 
 - Use `lmer()` from `lme4`
 - Introduce a random effect `(1|Animal)`
+    + Captures variance between rabbits
 
 ```{r}
 library(lme4)
-lmeRabbit <- lmer(BPchange~Treatment + Dose + (1|Animal), 
-		data = Rabbit)
-summary(lmeRabbit)
-coef(summary(lmeRabbit))
+lme_rabbit <- lmer(BPchange~Treatment + Dose + (1|Animal), data = Rabbit)
+summary(lme_rabbit)
+coef(summary(lme_rabbit))
 ```
 
-## Mixed Effects Models | `lmerTest` {.build}
+::: {.notes}
+- Mixed-effects models were originally fitted using `nlme`
+- No longer being developed
+:::
+
+## Mixed Effects Models 
 
 This gives $t$-statistics, but no $p$-value
 
 **Why?**
 
+. . .
+
 ```{r}
 library(lmerTest)
-lmeRabbit <- lmer(BPchange~(Treatment + Dose)^2 + (1|Animal), 
-		data = Rabbit)
-summary(lmeRabbit)
+lme_rabbit <- lmer(BPchange~Treatment + Dose + (1|Animal), data = Rabbit)
+summary(lme_rabbit)
 ```
 
-# Other Statistical Tools
+
+## Mixed Effects Models 
+
+- Doug Bates & Ben Bolker are key R experts in this field
+    + Doug has left the R community
+- Lots of discussion for issues estimating DF with random effects
+- Ben Bolker also maintains `glmmTMB` and `glmmADMB`
+    + Generalised Mixed-effects Models
+    + https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html
+
+::: {.notes}
+Two linear algebra equations in & I was lost
+:::
+
+## Modelling Summary
+
+- `lm()` for standard regression models
+- `glm()` for generalised linear models
+- `lmer()` for linear mixed-effects models
+
+. . .
+
+- Robust models are implemented in `MASS`
+
+# Other Statistical Tools {background-color="#3d3d40"}
 
 ## Mutiple Testing in R
 
-The function `p.adjust()` takes the argument `method = ...`
+- The function `p.adjust()` takes the argument `method = ...`
 
-- We can select from `c("fdr", "BH", "BY", "holm", "bonferroni")`
+```{r, results='markup'}
+p.adjust.methods
+```
 
-Also the package `multcomp` is excellent
+
+. . .
+
+<br>
+
+```{r}
+lm_pigs_full %>% 
+  broom::tidy() %>% 
+  mutate(
+    adjP = p.adjust(p.value, "bonf"),
+    sig = case_when(
+      adjP < 0.001 ~ "***",
+      adjP < 0.01 ~ "**",
+      adjP < 0.05 ~ "*",
+      adjP < 0.1 ~ ".",
+      TRUE ~ ""
+    )
+  )
+```
+
+
+. . .
+
+Also the package `multcomp` is excellent but challenging
+
 
 ## PCA
 
-- Here we have 50 genes, from two T cell types: Both Stimulated & Resting
-- `PCA` needs a matrix, so I'll do it as I load
+- Here we have 50 genes, from two T cell types: Both Stimulated & Resting ^[Courtesy of Prof Simon Barry]
 
 ```{r}
-library(readr)
-library(stringr)
-genes <- read_csv("data/geneExpression.csv") %>%
-	as.data.frame() %>%
-	column_to_rownames("X1") %>%
-	as.matrix() 
+genes <- read_csv("data/geneExpression.csv") 
 ```
+
+. . .
+
+- PCA requires a numeric matrix
+
+```{r}
+gene_mat <- genes %>% 
+  as.data.frame() %>% 
+  column_to_rownames("ID") %>% 
+  as.matrix()
+```
+
 
 ## PCA
 
 - Our variable of interest here is the cell-types
 - We need to set that as the row variable:
     - Transpose the data using `t()`
+    - Default settings need tweaking (`S` reverse compatability)
 
-```{r}
-pcaGenes <- prcomp(t(genes))
-summary(pcaGenes)
-biplot(pcaGenes)
-screeplot(pcaGenes)
+```{r plot-pca, fig.show='hide'}
+pca <- gene_mat %>% 
+  t() %>% 
+  prcomp(center = TRUE, scale. = TRUE)
+summary(pca)
+biplot(pca)
+screeplot(pca)
 ```
+
+. . .
+
+- These plots aren't great...
 
 ## PCA
 
-If we'd like to see how our samples group:
+- The output of `prcomp()` is a list with class `prcomp`
+- Components are in `pca$x`
+- Gene loadings are in `pca$rotation`
+    + Contributions of each gene to each component
 
-- Create a `tibble` using he sample names
+. . .
 
 ```{r}
-samples <- tibble(name = colnames(genes)) %>%
-	mutate(CellType = str_extract(name, "(Th|Treg)"),
-				 Stim = str_detect(name, "\\+"))
+pca %>% broom::tidy()
 ```
+
 
 ## PCA
 
-The co-ordinates on each component are in `pcaGenes$x`
+- My go-to visualisation trick is
 
-Now we can convert to a `data.frame` and `left_join()`
-
-```{r}
-pcaGenes$x %>%
-	as.data.frame() %>%
-	rownames_to_column("name") %>%
-	left_join(samples) %>%
-	ggplot(
-		aes(x = PC1, y = PC2, colour = CellType, shape = Stim)
-		) +
-	geom_point(size = 2)
+```{r ggplot-pca, fig.show='hide'}
+pca %>% 
+  broom::tidy() %>% 
+  pivot_wider(names_from = "PC", values_from = "value", names_prefix = "PC") %>% 
+  ggplot(aes(PC1, PC2)) +
+  geom_point()
 ```
 
+## PCA Challenge
+
+In this dataset:
+
+- Treg & Th cells
+- Resting encoded with `-`
+- Stimulated encoded with `+`
+- Final number is the donor
+
+. . .
+
+1. *Colour the points by cell type and set the shape by treatment*
+2. *Add labels to each point* <br>(Hint: Use `ggrepel::geom_label_repel()`)

@@ -46,9 +46,9 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)`|
+| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Basic Statistical Analysis | | |
+| 11:00 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
 | 1:30  | Using Rmarkdown | | |
 | 3:00  | *Afternoon Tea* | | |
@@ -57,7 +57,7 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 
 | Day 3 | Topic |
 |:----- |:----- |
-| 9:00  | Bioconductor |
+| 9:00  | The Bioconductor Project |
 | 10:30 | *Morning Tea* |
 | 11:00 | Bulk RNA-Seq Analysis |
 | 12:30 | *Lunch* |
