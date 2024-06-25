@@ -1,0 +1,311 @@
+---
+title: "Functions and Iteration"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: functions.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+## Functions
+
+- Now familiar with using functions
+- Writing our own functions is an everyday skill in `R`
+- Sometimes complex $\implies$ usually *very simple*
+- Mostly "inline" functions for simple data manipulation
+    + Very common for axis labels in `ggplot()`
+    
+```{r}
+library(tidyverse)
+```
+
+    
+## A Quick Example
+
+```{r plot-orange}
+#| output-location: column
+Orange %>% 
+  ggplot(
+    aes(
+      age, circumference, colour = Tree
+    )
+  ) +
+  geom_point() +
+  scale_colour_brewer(
+    palette = "Set1"
+  )
+```
+
+. . .
+
+- Let's say that we wish to add the prefix 'Tree' to the legend
+
+## A Quick Example
+
+```{r plot-orange2}
+#| output-location: column
+Orange %>% 
+  ggplot(
+    aes(
+      age, circumference, colour = Tree
+    )
+  ) +
+  geom_point() +
+  scale_colour_brewer(
+    palette = "Set1",
+    labels = \(x) paste("Tree", x)
+  )
+```
+
+
+. . .
+
+- `\(x)` is short for `function(x)`
+- This function is applied to all labels
+
+## Inline Functions
+
+- This is often referred to as an *inline function*
+- Usually very simple, single line functions
+    + Often `\(x)` using `x` as the underlying value
+- We could've modified the underlying data (but didn't)
+- Also very useful when using `mutate()` to modify columns
+
+## Inline Functions
+
+- A common one for me for modifying labels might be
+
+```{r}
+flagstats <- c("properly_paired_reads", "unique_alignments")
+flagstats %>% 
+  str_replace_all("_", " ") %>% 
+  str_to_title()
+```
+
+. . .
+
+<br>
+
+- When modifying x-axis labels this might lead to:
+
+``` r
+scale_x_discrete(
+  labels = \(x) x %>% str_replace_all("_", " ") %>% str_to_title()
+)
+```
+
+## Understanding Functions
+
+A function really has multiple aspects
+
+::: {.incremental}
+1. The `formals()` $\implies$ the *arguments* we pass
+2. The `body()` $\implies$ the code that does stuff
+3. The `environment()` where calculations take place
+
+:::
+
+::: {.fragment}
+Let's look through `sd()` starting at the help page `?sd`
+:::
+
+## Understanding Functions
+
+```{r}
+formals(sd)
+```
+
+. . .
+
+- These are the arguments (or formals) required by the function
+- `na.rm` has a default value (`FALSE`)
+
+## Understanding Functions
+
+```{r}
+body(sd)
+```
+
+. . .
+
+Re-formatted that might be
+
+``` r
+sqrt(
+  var(
+    if (is.vector(x) || is.factor(x)) x else as.double(x), 
+    na.rm = na.rm
+  )
+)
+```
+
+## Understanding Functions
+
+So the full function might be written as:
+
+``` r
+sd <- function(x, na.rm = FALSE) {
+  sqrt(
+    var(
+      if (is.vector(x) || is.factor(x)) x else as.double(x), 
+      na.rm = na.rm
+    )
+  )
+}
+```
+
+::: {.notes}
+No need to write this function
+:::
+
+
+## Understanding Functions
+
+To make this more understandable
+
+``` r
+sd <- function(x, na.rm = FALSE) {
+  ## Coerce to a double, only if needed
+  if (!is.vector(x) || is.factor(x)) x <- as.double(x)
+  ## Calculate the variance
+  var_x <- var(x, na.rm = na.rm)
+  ## Return the square root of the variance
+  sqrt(var_x)
+}
+```
+
+## Writing Our Function
+
+- Let's write that function for modifying labels
+- Start by deciding what the function might be called
+    + Also what arguments we need
+
+```{r}
+modify_labels <- function(x) {
+  
+}
+```
+
+## Writing Our Function
+
+- The first step is to change `"_"` to spaces
+    + The last line will be returned by default
+
+```{r}
+modify_labels <- function(x) {
+  str_replace_all(x, "_", " ")
+}
+modify_labels(flagstats)
+```
+
+## Writing Our Function
+
+- We're going to modify that again $\implies$ let's form an object
+    + Then return the new object
+
+```{r}
+modify_labels <- function(x) {
+  new_x <- str_replace_all(x, "_", " ")
+  new_x
+}
+modify_labels(flagstats)
+```
+
+## Looking Inside the Function
+
+- Why are we referring to `flagstats` as `x`?
+
+. . .
+
+- When we pass it to the function is temporarily renamed `x`<br>$\implies$ *But where is it called x?*
+
+. . .
+
+- Each function has it's own environment
+    + Within the `GlobalEnvironment` but separate
+    
+## Looking Inside the Function
+
+- If we add a `browser()` command, we can enter the function at that exact point
+
+```{r, eval = FALSE}
+modify_labels <- function(x) {
+  browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x
+}
+modify_labels(flagstats)
+```
+
+- You should have been jumped to the `Environnment` Tab
+- The Console should also say `Browse[1]>`
+
+::: {.notes}
+This played up when testing both locally & on posit cloud
+:::
+
+
+## Looking Inside the Function
+
+- We're now looking inside the environment within the function
+- By passing `flagstats` as `x` $\implies$ this is it's name **within** this environment
+- Modifying *within the function* will not change the object in the *Global Environment*
+
+. . .
+
+- Execute `new_x <- str_replace_all(x, "_", " ")`
+
+. . .
+
+- What happened?

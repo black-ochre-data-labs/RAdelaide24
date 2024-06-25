@@ -50,9 +50,10 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
-| 1:30  | Using Rmarkdown | | |
-| 3:00  | *Afternoon Tea* | | |
-| 3:30  | Functions | | |
+| 1:30  | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+| 2:30  | *Afternoon Tea* | | |
+| 3:00  | Functions | | |
+| 4:00  | Recap and Bring Your Own Data  | | |
 
 
 | Day 3 | Topic |

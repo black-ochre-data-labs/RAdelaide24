@@ -37,9 +37,10 @@ intermediate users will also gain a great deal from attending.
 | 10:30 | *Morning Tea*                      |                                      |                                 |
 | 11:00 | Basic Statistical Analysis         | [Basic Statistics](basic_stats.html) | 70min                           |
 | 12:30 | *Lunch*                            |                                      |                                 |
-| 1:30  | Using Rmarkdown                    |                                      |                                 |
-| 3:00  | *Afternoon Tea*                    |                                      |                                 |
-| 3:30  | Functions                          |                                      |                                 |
+| 1:30  | Using Rmarkdown                    | [RMarkdown](rmarkdown.html)          | 60min                           |
+| 2:30  | *Afternoon Tea*                    |                                      |                                 |
+| 3:00  | Functions                          |                                      |                                 |
+| 4:00  | Recap and Bring Your Own Data      |                                      |                                 |
 
 | Day 3 | Topic                    |
 |:------|:-------------------------|
