@@ -75,16 +75,19 @@ library(tidyverse)
 
 ```{r plot-orange}
 #| output-location: column
+#| fig-width: 5
+#| fig-height: 4
 Orange %>% 
   ggplot(
     aes(
-      age, circumference, colour = Tree
+      age, circumference, 
+      colour = Tree
     )
   ) +
   geom_point() +
   scale_colour_brewer(
     palette = "Set1"
-  )
+  ) 
 ```
 
 . . .
@@ -95,10 +98,14 @@ Orange %>%
 
 ```{r plot-orange2}
 #| output-location: column
+#| fig-width: 5
+#| fig-height: 4
+#| code-line-numbers: "11"
 Orange %>% 
   ggplot(
     aes(
-      age, circumference, colour = Tree
+      age, circumference,
+      colour = Tree
     )
   ) +
   geom_point() +
@@ -111,8 +118,12 @@ Orange %>%
 
 . . .
 
-- `\(x)` is short for `function(x)`
-- This function is applied to all labels
+- `\(x)` is shorthand for `function(x)` (since R v4.1)
+- All labels are passed to the function as `x`
+
+::: {.notes}
+- New function notation was introduced in R v4.1 (2021)
+:::
 
 ## Inline Functions
 
@@ -124,13 +135,14 @@ Orange %>%
 
 ## Inline Functions
 
-- A common one for me for modifying labels might be
+- A common step I use when modifying labels might be
 
 ```{r}
 flagstats <- c("properly_paired_reads", "unique_alignments")
 flagstats %>% 
-  str_replace_all("_", " ") %>% 
-  str_to_title()
+  str_replace_all("_", " ") %>% # Add spaces
+  str_to_title() %>% # Capitalise the 1st letter
+  str_wrap(12) # Add line breaks (\n) to a given width
 ```
 
 . . .
@@ -141,9 +153,13 @@ flagstats %>%
 
 ``` r
 scale_x_discrete(
-  labels = \(x) x %>% str_replace_all("_", " ") %>% str_to_title()
+  labels = \(x) x %>% str_replace_all("_", " ") %>% str_to_title() %>% str_wrap(12)
 )
 ```
+
+::: {.notes}
+Piping like this is OK but up to you
+:::
 
 ## Understanding Functions
 
@@ -304,8 +320,447 @@ This played up when testing both locally & on posit cloud
 
 . . .
 
-- Execute `new_x <- str_replace_all(x, "_", " ")`
+- Within the browser execute<br>`new_x <- str_replace_all(x, "_", " ")`
 
 . . .
 
 - What happened?
+
+
+::: {.notes}
+- Should've seen the new object created in the function environment
+:::
+
+
+## Writing Our Function
+
+- Exit the `browser()` by typing `Q`
+- Remove the `browser()` line by adding a comment (`#`) to the start
+
+. . .
+
+- Now we can finish the function
+
+```{r}
+modify_labels <- function(x) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, 12)
+  new_x
+}
+modify_labels(flagstats)
+```
+
+. . .
+
+*Why didn't I use a pipe?*
+
+## Extending Our Function
+
+- Can we also control the width at which the text wraps
+    + Hard-wired to `12` internally
+
+. . .
+
+- Add an extra argument called `width` with default value of 12
+    + Now this can be changed any time we call the function
+
+```{r}
+modify_labels <- function(x, width = 12) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, width)
+  new_x
+}
+modify_labels(flagstats)
+modify_labels(flagstats, 80)
+```
+
+## Extending Our Function
+
+- In many help pages you may see `...` as a function argument
+- This allows for passing arguments to internal functions
+    + Are *not required* to be set specifically
+- Check the help page `?str_wrap`
+
+. . .
+
+- Notice there are four additional arguments:
+    + `width`, `indent`, `exdent` and `whitespace_only`
+
+## Extending Our Function
+
+- Let's remove width from our list of formal arguments
+- Replace with `...`
+- Pass `...` inside `str_wrap`
+
+```{r}
+modify_labels <- function(x, ...) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, ...)
+  new_x
+}
+modify_labels(flagstats)
+modify_labels(flagstats, width = 12)
+```
+
+
+## Extending Our Function
+
+- The default values will now be applied by `str_wrap()` *unless* we change them
+- The following would indent the first line by 2 spaces
+    + May be a little pointless ...
+
+```{r}
+modify_labels(flagstats, width = 12, indent = 2)
+```
+
+. . .
+
+- When writing functions need to choose target function carefully
+
+## Finishing Our Function
+
+- This is a more formal implementation of the original process
+- These two are functionally identical
+    - One more suited for *inline* use as a one-off
+    - The other may be more useful if using repeatedly
+
+```{r}
+one_liner <- \(x, ...) x %>% str_replace_all("_", " ") %>% str_to_title() %>% str_wrap(...)
+one_liner(flagstats, width = 12)
+modify_labels(flagstats, width = 12)
+```
+
+. . .
+
+*What else could we have done?*
+
+::: {.notes}
+- Added comments to explain each line
+- Added checks like `stopifnot(is.character(x))`
+:::
+
+# Iteration {background-color="#3c3c44"}
+
+## Iteration
+
+- `R` sees everything as vectors
+- We didn't need to modify each value of `flagstats`
+    + Not the case for most languages
+    + `python`, `C`, `C++`. `perl` etc *step* through vectors<br>$\implies$process one value at a time
+    
+## Iteration
+
+- A python-like process might've been
+
+```{r}
+new_x <- c()
+for (x in flagstats) {
+  new_x <- c(new_x, modify_labels(x, width = 12))
+}
+new_x
+```
+
+. . .
+
+1. We formed an empty object
+2. Stepped through every value in flagstats
+3. Modified values one at a time & added to `new_x`
+
+. . .
+
+*Stupidly slow in R*
+
+## Iteration
+
+- Each value was called `x` as we stepped through it
+- `x` is just a convention $\implies$ can be anything (`i`, `bob` etc)
+
+```{r}
+for (x in flagstats) {
+  print(x)
+}
+for (i in flagstats) {
+  print(i)
+}
+for (bob in flagstats) {
+  print(bob)
+}
+```
+
+## Iteration
+
+- Because `R` works on vectors $\implies$ rarely need to iterate on vectors
+
+. . .
+
+- Lists however...
+
+. . .
+
+- How would we get the length for each list element?
+
+```{r}
+vals <- list(letters = letters, num = rnorm(1000))
+```
+
+. . .
+
+<br>
+*Iteration is probably our first, best guess...*
+
+## Iteration
+
+```{r}
+len <- list()
+for (x in vals) {
+  len <- c(len, length(x))
+}
+names(len) <- names(vals)
+len
+```
+
+
+::: {.incremental}
+
+The above
+
+1. Initialises an empty list `len`
+2. Steps through each element calling it `x`
+3. Finds the length of `x` and extends `len`
+4. Adds the names so we know which value goes with which element
+
+:::
+
+## The `R` Way to Iterate
+
+- Conventional iteration is very slow in `R`
+- Provides the function `lapply`
+    + Stands for *list apply*
+    + Applies a function to each element of a list
+    
+. . .
+
+- Syntax is `lapply(list, function, ...)` 
+
+. . .
+    
+```{r}
+lapply(vals, length)
+```
+
+- No `...` arguments needed here
+
+::: {.notes}
+Much simpler way to work & is faster
+:::
+
+## The `R` Way to Iterate
+
+A quick example using the `...`
+
+```{r}
+lapply(vals, head, n = 4)
+```
+
+
+## The `R` Way to Iterate
+
+- `lapply()` will always return a list
+- Safest option
+    + Calling `head` gave two elements of different types
+    + Calling `length` gave two `integer` elements
+    
+. . .
+
+- We could've coerced the lengths into a vector
+
+```{r}
+lapply(vals, length) %>% unlist()
+```
+
+. . .
+
+- Only useful *if returning a common type*
+
+## The `R` Way to Iterate
+
+- If we know what we'll get$\implies$ `map_*()` functions
+- Part of `purrr` $\implies$ core `tidyverse` package
+
+```{r}
+map_int(vals, length)
+```
+
+. . .
+
+- Alternatives are `map_chr()`, `map_lgl()`, `map_dbl()`
+- Will error if setting the wrong type
+- Only used when single values are returned
+
+# Getting Real {background-color="#3c3c44"}
+
+## SNP Data
+
+- For the rest of this session we'll look at some SNPs
+- Will put all the day's material into practice
+- Everyone will have very different applications
+- Hopefully will help you figure out best approach for your data
+
+## SNP Data
+
+```{r load-snps}
+snps <- read_csv("data/snps.csv")
+dim(snps)
+snps[1:6, 1:10]
+```
+
+. . .
+
+- Each row represents a participant
+- We have `r nrow(snps)` participants with `r ncol(snps) - 1` SNP genotypes
+
+## SNP Data
+
+Our task is to:
+
+- Perform Fisher's Exact Test on each SNP locus
+    + Tests for association between genotype and population
+    + Could be allele count or genotypes
+- Decide which values to return
+    + Probably a p-value
+    + Do we want genotype counts? Odds Ratios?
+    
+. . .
+
+- `lapply()` and functions will be our friends
+
+## SNP Data
+
+- First let's check our population sizes
+
+```{r}
+snps %>% summarise(n = dplyr::n(), .by = Population)
+```
+
+
+## Missing Genotypes
+
+- Check the missing genotypes
+
+. . .
+
+- Know we know functions $\implies$ `across()`
+- Is a `dplyr` function
+    + Enables us to apply a function *across* zero or more columns
+    + Uses `tidyselect` helpers
+- The help page has lots of information
+    + Lets use it first
+
+## Missing Genotypes
+
+- Apply the function `is.na()` *across* all columns that *start_with* "SNP"
+
+```{r}
+snps %>% 
+  mutate(across(starts_with("SNP"), is.na)) %>% 
+  dplyr::select(1:10)
+```
+
+## Missing Genotypes
+
+- If we pass to `summarise()` we can count these
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  dplyr::select(1:10)
+```
+
+## Missing Genotypes
+
+- This gives the missing count for all `r ncol(snps) - 1` loci
+- Maybe `pivot_longer()` might help
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  pivot_longer(everything(), names_to = "locus", values_to = "missing")
+```
+
+## Missing Genotypes
+
+- Now we can summarise again
+- Will make a nice descriptive table in our `rmarkdown` report
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  pivot_longer(everything(), names_to = "locus", values_to = "missing") %>% 
+  summarise(n = dplyr::n(), .by = missing) %>% 
+  arrange(desc(n))
+```
+
+## TODO
+
+```{r analysis-3x2}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  summarise(
+    n = dplyr::n(), .by = c(Population, locus, genotype)
+  ) %>% 
+  pivot_wider(names_from = "Population", values_from = "n", values_fill = 0) %>% 
+  mutate(
+    locus = factor(
+      locus, levels = str_sort(unique(locus), numeric = TRUE)
+    )
+  ) %>% 
+  nest(df = c(genotype, Control, Treat)) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[,c("Control", "Treat")])),
+    p = map_dbl(ft, \(x) x$p.value),
+    adj_p = p.adjust(p, "fdr")
+  ) %>% 
+  arrange(p)
+## This uses 3x2 tables so there's no odds ratio
+```
+
+## TODO
+
+```{r analysis-2x2}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  summarise(
+    n = dplyr::n(), .by = c(Population, locus, genotype)
+  ) %>% 
+  pivot_wider(names_from = "genotype", values_from = "n", values_fill = 0) %>% 
+  mutate(
+    A = 2 * AA + AB,
+    B = 2 * BB + AB
+  ) %>% 
+  dplyr::select(Population, locus, A, B) %>% 
+  nest(df = c(Population, A, B)) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[,c("A", "B")])),
+    OR = map_dbl(ft, \(x) x$estimate),
+    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["B"]]),
+    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["B"]]),
+    p = map_dbl(ft, \(x) x$p.value),
+    adj_p = p.adjust(p, "fdr")
+  ) %>% 
+  arrange(p)
+## This gives an Odds Ratio
+```

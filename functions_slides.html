@@ -431,18 +431,19 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>Orange <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
 <span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>      age, circumference, <span class="at">colour =</span> Tree</span>
-<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb2-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(</span>
-<span id="cb2-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Set1"</span></span>
-<span id="cb2-10"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>      age, circumference, </span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour =</span> Tree</span>
+<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(</span>
+<span id="cb2-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Set1"</span></span>
+<span id="cb2-11"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="functions_slides_files/figure-revealjs/plot-orange-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="functions_slides_files/figure-revealjs/plot-orange-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -458,22 +459,23 @@ Dr Stevie Pederson
 <h2>A Quick Example</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>Orange <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>      age, circumference, <span class="at">colour =</span> Tree</span>
-<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(</span>
-<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Set1"</span>,</span>
-<span id="cb3-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> \(x) <span class="fu">paste</span>(<span class="st">"Tree"</span>, x)</span>
-<span id="cb3-11"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>Orange <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb3-3"><a href=""></a>    <span class="fu">aes</span>(</span>
+<span id="cb3-4"><a href=""></a>      age, circumference,</span>
+<span id="cb3-5"><a href=""></a>      <span class="at">colour =</span> Tree</span>
+<span id="cb3-6"><a href=""></a>    )</span>
+<span id="cb3-7"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb3-8"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href=""></a>  <span class="fu">scale_colour_brewer</span>(</span>
+<span id="cb3-10"><a href=""></a>    <span class="at">palette =</span> <span class="st">"Set1"</span>,</span>
+<span id="cb3-11"><a href=""></a>    <span class="at">labels =</span> \(x) <span class="fu">paste</span>(<span class="st">"Tree"</span>, x)</span>
+<span id="cb3-12"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="functions_slides_files/figure-revealjs/plot-orange2-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="functions_slides_files/figure-revealjs/plot-orange2-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -481,9 +483,24 @@ Dr Stevie Pederson
 </div>
 <div class="fragment">
 <ul>
-<li><code>\(x)</code> is short for <code>function(x)</code></li>
-<li>This function is applied to all labels</li>
+<li><code>\(x)</code> is shorthand for <code>function(x)</code> (since R v4.1)</li>
+<li>All labels are passed to the function as <code>x</code></li>
 </ul>
+<aside class="notes">
+<ul>
+<li>New function notation was introduced in R v4.1 (2021)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="inline-functions" class="slide level2">
@@ -501,15 +518,16 @@ Dr Stevie Pederson
 <section id="inline-functions-1" class="slide level2">
 <h2>Inline Functions</h2>
 <ul>
-<li>A common one for me for modifying labels might be</li>
+<li>A common step I use when modifying labels might be</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>flagstats <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"properly_paired_reads"</span>, <span class="st">"unique_alignments"</span>)</span>
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>flagstats <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="co"># Add spaces</span></span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">%&gt;%</span> <span class="co"># Capitalise the 1st letter</span></span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_wrap</span>(<span class="dv">12</span>) <span class="co"># Add line breaks (\n) to a given width</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly Paired Reads" "Unique Alignments"    </code></pre>
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -518,8 +536,21 @@ Dr Stevie Pederson
 <li>When modifying x-axis labels this might lead to:</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_discrete</span>(</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> \(x) x <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>()</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> \(x) x <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>() <span class="sc">%&gt;%</span> <span class="fu">str_wrap</span>(<span class="dv">12</span>)</span>
 <span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Piping like this is OK but up to you</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="understanding-functions" class="slide level2">
@@ -722,21 +753,720 @@ $na.rm
 </ul>
 <div class="fragment">
 <ul>
-<li>Execute <code>new_x &lt;- str_replace_all(x, "_", " ")</code></li>
+<li>Within the browser execute<br><code>new_x &lt;- str_replace_all(x, "_", " ")</code></li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
 <li>What happened?</li>
 </ul>
+<aside class="notes">
+<ul>
+<li>Should’ve seen the new object created in the function environment</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="writing-our-function-3" class="slide level2">
+<h2>Writing Our Function</h2>
+<ul>
+<li>Exit the <code>browser()</code> by typing <code>Q</code></li>
+<li>Remove the <code>browser()</code> line by adding a comment (<code>#</code>) to the start</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Now we can finish the function</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, <span class="dv">12</span>)</span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><em>Why didn’t I use a pipe?</em></p>
+</div>
+</section>
+<section id="extending-our-function" class="slide level2">
+<h2>Extending Our Function</h2>
+<ul>
+<li>Can we also control the width at which the text wraps
+<ul>
+<li>Hard-wired to <code>12</code> internally</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Add an extra argument called <code>width</code> with default value of 12
+<ul>
+<li>Now this can be changed any time we call the function</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">width =</span> <span class="dv">12</span>) {</span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
+<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
+<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, width)</span>
+<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
+<span id="cb22-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="dv">80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly Paired Reads" "Unique Alignments"    </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="extending-our-function-1" class="slide level2">
+<h2>Extending Our Function</h2>
+<ul>
+<li>In many help pages you may see <code>...</code> as a function argument</li>
+<li>This allows for passing arguments to internal functions
+<ul>
+<li>Are <em>not required</em> to be set specifically</li>
+</ul></li>
+<li>Check the help page <code>?str_wrap</code></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Notice there are four additional arguments:
+<ul>
+<li><code>width</code>, <code>indent</code>, <code>exdent</code> and <code>whitespace_only</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="extending-our-function-2" class="slide level2">
+<h2>Extending Our Function</h2>
+<ul>
+<li>Let’s remove width from our list of formal arguments</li>
+<li>Replace with <code>...</code></li>
+<li>Pass <code>...</code> inside <code>str_wrap</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
+<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, ...)</span>
+<span id="cb26-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
+<span id="cb26-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly Paired Reads" "Unique Alignments"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+</div>
+</section>
+<section id="extending-our-function-3" class="slide level2">
+<h2>Extending Our Function</h2>
+<ul>
+<li>The default values will now be applied by <code>str_wrap()</code> <em>unless</em> we change them</li>
+<li>The following would indent the first line by 2 spaces
+<ul>
+<li>May be a little pointless …</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">indent =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "  Properly\nPaired Reads" "  Unique\nAlignments"    </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>When writing functions need to choose target function carefully</li>
+</ul>
+</div>
+</section>
+<section id="finishing-our-function" class="slide level2">
+<h2>Finishing Our Function</h2>
+<ul>
+<li>This is a more formal implementation of the original process</li>
+<li>These two are functionally identical
+<ul>
+<li>One more suited for <em>inline</em> use as a one-off</li>
+<li>The other may be more useful if using repeatedly</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>one_liner <span class="ot">&lt;-</span> \(x, ...) x <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>() <span class="sc">%&gt;%</span> <span class="fu">str_wrap</span>(...)</span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">one_liner</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><em>What else could we have done?</em></p>
+<aside class="notes">
+<ul>
+<li>Added comments to explain each line</li>
+<li>Added checks like <code>stopifnot(is.character(x))</code></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section>
+<section id="iteration" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Iteration</h1>
+
+</section>
+<section id="iteration-1" class="slide level2">
+<h2>Iteration</h2>
+<ul>
+<li><code>R</code> sees everything as vectors</li>
+<li>We didn’t need to modify each value of <code>flagstats</code>
+<ul>
+<li>Not the case for most languages</li>
+<li><code>python</code>, <code>C</code>, <code>C++</code>. <code>perl</code> etc <em>step</em> through vectors<br><span class="math inline">\(\implies\)</span>process one value at a time</li>
+</ul></li>
+</ul>
+</section>
+<section id="iteration-2" class="slide level2">
+<h2>Iteration</h2>
+<ul>
+<li>A python-like process might’ve been</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> flagstats) {</span>
+<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">c</span>(new_x, <span class="fu">modify_labels</span>(x, <span class="at">width =</span> <span class="dv">12</span>))</span>
+<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a>new_x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ol type="1">
+<li>We formed an empty object</li>
+<li>Stepped through every value in flagstats</li>
+<li>Modified values one at a time &amp; added to <code>new_x</code></li>
+</ol>
+</div>
+<div class="fragment">
+<p><em>Stupidly slow in R</em></p>
+</div>
+</section>
+<section id="iteration-3" class="slide level2">
+<h2>Iteration</h2>
+<ul>
+<li>Each value was called <code>x</code> as we stepped through it</li>
+<li><code>x</code> is just a convention <span class="math inline">\(\implies\)</span> can be anything (<code>i</code>, <code>bob</code> etc)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> flagstats) {</span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "properly_paired_reads"
+[1] "unique_alignments"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> flagstats) {</span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "properly_paired_reads"
+[1] "unique_alignments"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (bob <span class="cf">in</span> flagstats) {</span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(bob)</span>
+<span id="cb42-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "properly_paired_reads"
+[1] "unique_alignments"</code></pre>
+</div>
+</div>
+</section>
+<section id="iteration-4" class="slide level2">
+<h2>Iteration</h2>
+<ul>
+<li>Because <code>R</code> works on vectors <span class="math inline">\(\implies\)</span> rarely need to iterate on vectors</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Lists however…</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>How would we get the length for each list element?</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">letters =</span> letters, <span class="at">num =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p><br> <em>Iteration is probably our first, best guess…</em></p>
+</div>
+</section>
+<section id="iteration-5" class="slide level2">
+<h2>Iteration</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>len <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> vals) {</span>
+<span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>  len <span class="ot">&lt;-</span> <span class="fu">c</span>(len, <span class="fu">length</span>(x))</span>
+<span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(len) <span class="ot">&lt;-</span> <span class="fu">names</span>(vals)</span>
+<span id="cb45-6"><a href="" aria-hidden="true" tabindex="-1"></a>len</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$letters
+[1] 26
+
+$num
+[1] 1000</code></pre>
+</div>
+</div>
+<div>
+<p>The above</p>
+<ol type="1">
+<li class="fragment">Initialises an empty list <code>len</code></li>
+<li class="fragment">Steps through each element calling it <code>x</code></li>
+<li class="fragment">Finds the length of <code>x</code> and extends <code>len</code></li>
+<li class="fragment">Adds the names so we know which value goes with which element</li>
+</ol>
+</div>
+</section>
+<section id="the-r-way-to-iterate" class="slide level2">
+<h2>The <code>R</code> Way to Iterate</h2>
+<ul>
+<li>Conventional iteration is very slow in <code>R</code></li>
+<li>Provides the function <code>lapply</code>
+<ul>
+<li>Stands for <em>list apply</em></li>
+<li>Applies a function to each element of a list</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Syntax is <code>lapply(list, function, ...)</code></li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$letters
+[1] 26
+
+$num
+[1] 1000</code></pre>
+</div>
+</div>
+<ul>
+<li>No <code>...</code> arguments needed here</li>
+</ul>
+<aside class="notes">
+<p>Much simpler way to work &amp; is faster</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="the-r-way-to-iterate-1" class="slide level2">
+<h2>The <code>R</code> Way to Iterate</h2>
+<p>A quick example using the <code>...</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, head, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$letters
+[1] "a" "b" "c" "d"
+
+$num
+[1]  1.113541  1.781198  0.811096 -1.903111</code></pre>
+</div>
+</div>
+</section>
+<section id="the-r-way-to-iterate-2" class="slide level2">
+<h2>The <code>R</code> Way to Iterate</h2>
+<ul>
+<li><code>lapply()</code> will always return a list</li>
+<li>Safest option
+<ul>
+<li>Calling <code>head</code> gave two elements of different types</li>
+<li>Calling <code>length</code> gave two <code>integer</code> elements</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We could’ve coerced the lengths into a vector</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>letters     num 
+     26    1000 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Only useful <em>if returning a common type</em></li>
+</ul>
+</div>
+</section>
+<section id="the-r-way-to-iterate-3" class="slide level2">
+<h2>The <code>R</code> Way to Iterate</h2>
+<ul>
+<li>If we know what we’ll get<span class="math inline">\(\implies\)</span> <code>map_*()</code> functions</li>
+<li>Part of <code>purrr</code> <span class="math inline">\(\implies\)</span> core <code>tidyverse</code> package</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">map_int</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>letters     num 
+     26    1000 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Alternatives are <code>map_chr()</code>, <code>map_lgl()</code>, <code>map_dbl()</code></li>
+<li>Will error if setting the wrong type</li>
+<li>Only used when single values are returned</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="getting-real" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Getting Real</h1>
+
+</section>
+<section id="snp-data" class="slide level2">
+<h2>SNP Data</h2>
+<ul>
+<li>For the rest of this session we’ll look at some SNPs</li>
+<li>Will put all the day’s material into practice</li>
+<li>Everyone will have very different applications</li>
+<li>Hopefully will help you figure out best approach for your data</li>
+</ul>
+</section>
+<section id="snp-data-1" class="slide level2">
+<h2>SNP Data</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/snps.csv"</span>)</span>
+<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(snps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  104 2001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 10
+  Population SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 
+  &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1 Control    AB    BB    AB    BB    BB    BB    BB    AB    AB   
+2 Control    AB    AB    AB    AB    BB    &lt;NA&gt;  AA    AA    AB   
+3 Control    BB    AB    AA    AA    AA    AB    AB    BB    AB   
+4 Control    AB    AB    BB    AB    AB    AB    AA    AA    BB   
+5 Control    BB    BB    AB    BB    AB    AA    AA    AB    AB   
+6 Control    AB    AB    AA    AA    AB    &lt;NA&gt;  AB    BB    AB   </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Each row represents a participant</li>
+<li>We have 104 participants with 2000 SNP genotypes</li>
+</ul>
+</div>
+</section>
+<section id="snp-data-2" class="slide level2">
+<h2>SNP Data</h2>
+<p>Our task is to:</p>
+<ul>
+<li>Perform Fisher’s Exact Test on each SNP locus
+<ul>
+<li>Tests for association between genotype and population</li>
+<li>Could be allele count or genotypes</li>
+</ul></li>
+<li>Decide which values to return
+<ul>
+<li>Probably a p-value</li>
+<li>Do we want genotype counts? Odds Ratios?</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>lapply()</code> and functions will be our friends</li>
+</ul>
+</div>
+</section>
+<section id="snp-data-3" class="slide level2">
+<h2>SNP Data</h2>
+<ul>
+<li>First let’s check our population sizes</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  Population     n
+  &lt;chr&gt;      &lt;int&gt;
+1 Control       53
+2 Treat         51</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-genotypes" class="slide level2">
+<h2>Missing Genotypes</h2>
+<ul>
+<li>Check the missing genotypes</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Know we know functions <span class="math inline">\(\implies\)</span> <code>across()</code></li>
+<li>Is a <code>dplyr</code> function
+<ul>
+<li>Enables us to apply a function <em>across</em> zero or more columns</li>
+<li>Uses <code>tidyselect</code> helpers</li>
+</ul></li>
+<li>The help page has lots of information
+<ul>
+<li>Lets use it first</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="missing-genotypes-1" class="slide level2">
+<h2>Missing Genotypes</h2>
+<ul>
+<li>Apply the function <code>is.na()</code> <em>across</em> all columns that <em>start_with</em> “SNP”</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), is.na)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 104 × 10
+   Population SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 
+   &lt;chr&gt;      &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;
+ 1 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 2 Control    FALSE FALSE FALSE FALSE FALSE TRUE  FALSE FALSE FALSE
+ 3 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 4 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 5 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 6 Control    FALSE FALSE FALSE FALSE FALSE TRUE  FALSE FALSE FALSE
+ 7 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 8 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 9 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+10 Control    FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+# ℹ 94 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-genotypes-2" class="slide level2">
+<h2>Missing Genotypes</h2>
+<ul>
+<li>If we pass to <code>summarise()</code> we can count these</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 10
+   SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 SNP10
+  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1     3     0     1     0     2     3     1     1     1     1</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-genotypes-3" class="slide level2">
+<h2>Missing Genotypes</h2>
+<ul>
+<li>This gives the missing count for all 2000 loci</li>
+<li>Maybe <code>pivot_longer()</code> might help</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb65-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb65-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,000 × 2
+   locus missing
+   &lt;chr&gt;   &lt;int&gt;
+ 1 SNP1        3
+ 2 SNP2        0
+ 3 SNP3        1
+ 4 SNP4        0
+ 5 SNP5        2
+ 6 SNP6        3
+ 7 SNP7        1
+ 8 SNP8        1
+ 9 SNP9        1
+10 SNP10       1
+# ℹ 1,990 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-genotypes-4" class="slide level2">
+<h2>Missing Genotypes</h2>
+<ul>
+<li>Now we can summarise again</li>
+<li>Will make a nice descriptive table in our <code>rmarkdown</code> report</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb67-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> missing) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  missing     n
+    &lt;int&gt; &lt;int&gt;
+1       1   721
+2       0   706
+3       2   361
+4       3   164
+5       4    39
+6       5     8
+7       6     1</code></pre>
+</div>
+</div>
+</section>
+<section id="todo" class="slide level2">
+<h2>TODO</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb69-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, genotype)</span>
+<span id="cb69-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Population"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb69-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">locus =</span> <span class="fu">factor</span>(</span>
+<span id="cb69-10"><a href="" aria-hidden="true" tabindex="-1"></a>      locus, <span class="at">levels =</span> <span class="fu">str_sort</span>(<span class="fu">unique</span>(locus), <span class="at">numeric =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb69-11"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-12"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(genotype, Control, Treat)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb69-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[,<span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Treat"</span>)])),</span>
+<span id="cb69-16"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb69-17"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">adj_p =</span> <span class="fu">p.adjust</span>(p, <span class="st">"fdr"</span>)</span>
+<span id="cb69-18"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-19"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,000 × 5
+   locus   df               ft             p    adj_p
+   &lt;fct&gt;   &lt;list&gt;           &lt;list&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 SNP1716 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.33e-14 4.66e-11
+ 2 SNP603  &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.54e-13 1.98e-10
+ 3 SNP1236 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.97e-13 1.98e-10
+ 4 SNP1271 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.84e-12 1.42e- 9
+ 5 SNP248  &lt;tibble [3 × 3]&gt; &lt;htest&gt; 7.23e-12 2.89e- 9
+ 6 SNP1501 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.52e-11 8.39e- 9
+ 7 SNP1618 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 4.19e-11 1.20e- 8
+ 8 SNP1014 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 8.41e-11 2.10e- 8
+ 9 SNP1150 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 1.69e-10 3.76e- 8
+10 SNP1730 &lt;tibble [3 × 3]&gt; &lt;htest&gt; 2.61e-10 5.21e- 8
+# ℹ 1,990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## This uses 3x2 tables so there's no odds ratio</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="todo-1" class="slide level2">
+<h2>TODO</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb72-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, genotype)</span>
+<span id="cb72-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"genotype"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb72-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">A =</span> <span class="dv">2</span> <span class="sc">*</span> AA <span class="sc">+</span> AB,</span>
+<span id="cb72-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">B =</span> <span class="dv">2</span> <span class="sc">*</span> BB <span class="sc">+</span> AB</span>
+<span id="cb72-11"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-12"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Population, locus, A, B) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, A, B)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb72-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[,<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>)])),</span>
+<span id="cb72-16"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
+<span id="cb72-17"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Control =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Control"</span>)[[<span class="st">"B"</span>]]),</span>
+<span id="cb72-18"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treat =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Treat"</span>)[[<span class="st">"B"</span>]]),</span>
+<span id="cb72-19"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb72-20"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">adj_p =</span> <span class="fu">p.adjust</span>(p, <span class="st">"fdr"</span>)</span>
+<span id="cb72-21"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-22"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,000 × 8
+   locus   df               ft           OR Control Treat        p    adj_p
+   &lt;chr&gt;   &lt;list&gt;           &lt;list&gt;    &lt;dbl&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 SNP1716 &lt;tibble [2 × 3]&gt; &lt;htest&gt; 15.8         41    91 6.00e-16 1.20e-12
+ 2 SNP1236 &lt;tibble [2 × 3]&gt; &lt;htest&gt; 14.0         39    91 1.23e-15 1.23e-12
+ 3 SNP603  &lt;tibble [2 × 3]&gt; &lt;htest&gt;  0.0767      64    11 8.47e-15 5.65e-12
+ 4 SNP1271 &lt;tibble [2 × 3]&gt; &lt;htest&gt;  0.0662      60     8 1.36e-14 6.79e-12
+ 5 SNP1501 &lt;tibble [2 × 3]&gt; &lt;htest&gt;  0.0930      71    16 2.38e-14 9.52e-12
+ 6 SNP248  &lt;tibble [2 × 3]&gt; &lt;htest&gt; 12.5         44    90 6.18e-14 2.06e-11
+ 7 SNP1730 &lt;tibble [2 × 3]&gt; &lt;htest&gt; 10.4         44    90 8.28e-13 2.36e-10
+ 8 SNP1150 &lt;tibble [2 × 3]&gt; &lt;htest&gt;  0.0841      56     9 1.02e-12 2.54e-10
+ 9 SNP311  &lt;tibble [2 × 3]&gt; &lt;htest&gt; 10.7         46    91 1.36e-12 3.01e-10
+10 SNP1618 &lt;tibble [2 × 3]&gt; &lt;htest&gt;  9.40        40    86 3.09e-12 6.18e-10
+# ℹ 1,990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## This gives an Odds Ratio</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
 </div>
-</div>
-</section>
+</section></section>
     </div>
   </div>
 
