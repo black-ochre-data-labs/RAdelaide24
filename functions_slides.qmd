@@ -58,6 +58,8 @@ knitr:
     fig.width: 10
 ---
 
+# Functions
+
 ## Functions
 
 - Now familiar with using functions
@@ -607,10 +609,16 @@ map_int(vals, length)
 
 ## SNP Data
 
-- For the rest of this session we'll look at some SNPs
+- For the rest of this session we'll look at some genotype data
 - Will put all the day's material into practice
 - Everyone will have very different applications
 - Hopefully will help you figure out best approach for your data
+
+. . .
+
+- Simulated data
+- Based on surviving moths after exposure to freezing temperature
+
 
 ## SNP Data
 
@@ -622,16 +630,17 @@ snps[1:6, 1:10]
 
 . . .
 
-- Each row represents a participant
-- We have `r nrow(snps)` participants with `r ncol(snps) - 1` SNP genotypes
+- Each row represents a surviving moth
+- We have `r nrow(snps)` moths with `r ncol(snps) - 1` SNP genotypes
 
 ## SNP Data
 
 Our task is to:
 
 - Perform Fisher's Exact Test on each SNP locus
-    + Tests for association between genotype and population
+    + Tests for association between genotype and survival
     + Could be allele count or genotypes
+    + Dominant or recessive model
 - Decide which values to return
     + Probably a p-value
     + Do we want genotype counts? Odds Ratios?
@@ -674,7 +683,8 @@ snps %>%
 
 ## Missing Genotypes
 
-- If we pass to `summarise()` we can count these
+- If we pass to `summarise()` we can count these accross all SNPs
+    + Perfect opportunity for an inline function
 
 ```{r}
 snps %>% 
@@ -712,55 +722,277 @@ snps %>%
   arrange(desc(n))
 ```
 
-## TODO
+## Performing an Analysis
 
-```{r analysis-3x2}
+- Let's see if the `A` allele acts in a dominant manner
+- Compare the numbers with A alleles across populations
+
+. . .
+
+- Classic Fisher's Exact Test using a 2x2 table
+
+|    | A_TRUE | A_FALSE |
+|:-- | ------ | ------- |
+| Control | *a* | *b*|
+| Treat | *c* | *d*|
+
+
+. . .
+
+- No right or wrong strategy
+
+## Performing an Analysis
+
+- Start by converting to long form
+
+```{r, eval=FALSE}
 snps %>% 
-  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
-  dplyr::filter(!is.na(genotype)) %>% 
-  summarise(
-    n = dplyr::n(), .by = c(Population, locus, genotype)
-  ) %>% 
-  pivot_wider(names_from = "Population", values_from = "n", values_fill = 0) %>% 
-  mutate(
-    locus = factor(
-      locus, levels = str_sort(unique(locus), numeric = TRUE)
-    )
-  ) %>% 
-  nest(df = c(genotype, Control, Treat)) %>% 
-  mutate(
-    ft = lapply(df, \(x) fisher.test(x[,c("Control", "Treat")])),
-    p = map_dbl(ft, \(x) x$p.value),
-    adj_p = p.adjust(p, "fdr")
-  ) %>% 
-  arrange(p)
-## This uses 3x2 tables so there's no odds ratio
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") 
 ```
 
-## TODO
+. . . 
 
-```{r analysis-2x2}
+- Can easily remove the missing genotypes
+
+
+```{r, eval=FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype))
+```
+
+## Performing an Analysis
+
+- Check for the presence of an `A` allele
+
+```{r, eval = FALSE}
 snps %>% 
   pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
   dplyr::filter(!is.na(genotype)) %>% 
-  summarise(
-    n = dplyr::n(), .by = c(Population, locus, genotype)
+  mutate(A = str_detect(genotype, "A")) 
+```
+
+
+## Performing an Analysis
+
+- Now count by presence of A
+   + Set the grouping to be by Population, locus & `A` status
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A))
+```
+
+## Performing an Analysis
+
+- Move the counts into `TRUE/FALSE` columns
+    + The 2x2 tables now start to appear
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
   ) %>% 
-  pivot_wider(names_from = "genotype", values_from = "n", values_fill = 0) %>% 
-  mutate(
-    A = 2 * AA + AB,
-    B = 2 * BB + AB
+  arrange(locus)
+```
+
+## Performing an Analysis
+
+- We can form a nested `tibble` for each locus
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
   ) %>% 
-  dplyr::select(Population, locus, A, B) %>% 
-  nest(df = c(Population, A, B)) %>% 
+  nest(df = c(Population, starts_with("A_")))
+```
+
+## Nesting Columns
+
+- This is a new idea $\implies$ we now have a `list` column
+- Look at the first one to see what the elements look like
+    + Not part of the analysis
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  slice(1) %>% pull(df)
+```
+
+## Using `lapply()` On Nested Columns
+
+- We can use `lapply()` to perform an analysis on every nested df
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
   mutate(
-    ft = lapply(df, \(x) fisher.test(x[,c("A", "B")])),
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")]))
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- We now have a new list column with a list of results from each test
+- Objects of class `htest`
+- Will have an element called `p.value`
+- This is a `double` (i.e. `numeric`)
+
+. . .
+
+- We can use `map_dbl()` to grab these values
+
+## Using `lapply()` On Nested Columns
+
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    p = map_dbl(ft, \(x) x$p.value),
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- How about an Odds Ratio?
+    + The OR is in an element called `estimate`
+
+. . .
+
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
     OR = map_dbl(ft, \(x) x$estimate),
-    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["B"]]),
-    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["B"]]),
     p = map_dbl(ft, \(x) x$p.value),
-    adj_p = p.adjust(p, "fdr")
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- Getting counts will require using `df` again
+
+. . .
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["A_TRUE"]]),
+    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["A_TRUE"]]),
+    OR = map_dbl(ft, \(x) x$estimate),
+    p = map_dbl(ft, \(x) x$p.value),
+  )
+```
+
+## The Final Analysis
+
+```{r}
+#| output-location: slide
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["A_TRUE"]]),
+    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["A_TRUE"]]),
+    OR = map_dbl(ft, \(x) x$estimate),
+    p = map_dbl(ft, \(x) x$p.value),
+    adj_p = p.adjust(p, "bonferroni")
   ) %>% 
   arrange(p)
-## This gives an Odds Ratio
 ```
+
+::: {.notes}
+For those with an OR > 1 the A allele might be a dominant susceptibility locus
+:::
+
+## Summary
+
+- We could save this as a final object
+- Select our important columns and prepare a table
+
+## Summary
+
+For this we needed to understand
+
+- When to use `pivot_longer()` and `pivot_wider()`
+- What is a `list`, `vector` and `data.frame`?
+- Difference between `integer` and `double` values
+- `tidyselect` helper functions + `dplyr`
+- How to use `lapply()` with inline functions
+- Extending `lapply()` using `map_*()` to produce vector output
+
+## Summary
+
+- Alternatives to `map_*()` are `sapply()` and `vapply()`
+    + `sapply()` is slightly unpredictable
+    + `vapply()` is a bit more clunky but powerful
+    
+. . .    
+    
+- Could've use `unlist(lapply(...))`
+
+*Why didn't we?*
+
+::: {.notes}
+Specifying the exact type will error if we're wrong. This is good
+:::

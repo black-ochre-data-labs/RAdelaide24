@@ -39,7 +39,7 @@ intermediate users will also gain a great deal from attending.
 | 12:30 | *Lunch*                            |                                      |                                 |
 | 1:30  | Using Rmarkdown                    | [RMarkdown](rmarkdown.html)          | 60min                           |
 | 2:30  | *Afternoon Tea*                    |                                      |                                 |
-| 3:00  | Functions                          |                                      |                                 |
+| 3:00  | Functions                          | [Functions](functions.html)          | 70min                           |
 | 4:00  | Recap and Bring Your Own Data      |                                      |                                 |
 
 | Day 3 | Topic                    |

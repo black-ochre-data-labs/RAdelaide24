@@ -58,6 +58,7 @@ knitr:
     fig.width: 10
 ---
 
+# Statistics in R
 
 ## Introduction
 
