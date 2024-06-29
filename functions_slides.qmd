@@ -58,7 +58,7 @@ knitr:
     fig.width: 10
 ---
 
-# Functions
+# Functions {background-color="#3c3c44"}
 
 ## Functions
 

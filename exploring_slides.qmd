@@ -58,6 +58,8 @@ knitr:
     fig.width: 10
 ---
 
+# Exploring Our Data
+
 ```{r load-pigs, echo=FALSE}
 library(tidyverse)
 pigs <- read_csv("data/pigs.csv")

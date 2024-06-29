@@ -1,0 +1,557 @@
+---
+title: "The Bioconductor Project"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro_bioc.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# The Bioconductor Project {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Bioconductor/Bioconductor5.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Today's Outline
+
+- Not just to show how to perform an RNA-Seq analysis
+- Understand how to use Bioconductor for your data
+- Key concepts & resources
+- Understanding Bioconductor objects, classes & methods
+
+## CRAN
+
+- A Package is a collection of functions
+- Associated with a given task/analysis/data-type
+- The main repository is "__The Comprehensive R Archive Network__" aka [CRAN](https://cran.r-project.org/)
+
+. . .
+
+- We install packages using `Tools > Install Packages...`
+    + Or by typing `install.packages("pkg_name")`
+- Will only install packages from CRAN
+
+## CRAN
+
+- Packages on CRAN cover everything & anything
+    + GIS-based spatial data, stock trading, data visualisation etc
+- Some packages are biological in focus, e.g. `Seurat` for scRNA
+
+. . .
+
+- Submission involves passing technical checks
+    + Tests across OSX, Windows & Linux
+    + Correct directory/file structures
+    
+. . .
+
+- No checks for statistics that are methodologically sound
+    + Usually publications associated $\implies$ peer-review
+    
+## Packages
+
+- Many packages are written by the authors for the authors
+- Decide to make them public in case others find them helpful
+
+. . .
+
+- Both Chris & I use `ngsReports` nearly every day (still...)
+
+![](assets/ngsreports_pub.png)
+    
+## Bioconductor
+
+- Bioconductor hosts packages focussed on biological research
+    + www.bioconductor.org
+    + Currently > 2,400 packages
+- Created by Robert Gentleman (one of the "R"s in `R`) in 2001
+
+. . .
+
+- Packages checked for programming consistency<br>$\implies$ not methodology
+    + Expected to integrate with other Bioconductor packages
+- Packages tested nightly on OSX, Windows, Linux + Arch Linux
+- All packages require a vignette explaining how to use the package
+    + Checked for clarity/helpfulness during package submission
+    
+## Bioconductor
+
+- Essentially represents a *community* of developers & users
+- Strongly encourages & supports diversity
+    + No longer on Twitter
+- Has a [Code of Conduct](https://bioconductor.org/about/code-of-conduct/)
+- Consciously supporting those from emerging countries
+    + Actively trying to translate resources to other languages
+- Also tries to find ways to engage with support developers & users
+    + support.bioconductor.org & slack.bioconductor.org
+
+## Bioconductor Structure
+
+::: {style="font-size: 95%;"}
+
+- [Core Team](https://bioconductor.org/about/core-team/)
+    + All employed by Bioconductor
+    + Primarily grant funded (NIH, NSF, CZI)
+- [Scientific Advisory Board (SAB)](https://bioconductor.org/about/scientific-advisory-board/)
+    + Meet Annually.
+    + External and Internal leaders who act as project advisors.
+- [Technical Advisory Board (TAB)](https://bioconductor.org/about/technical-advisory-board/)
+    + Meet monthly 
+    + Consider technical aspects of core infastructure and scientific direction of the project. 
+    + 15 members, 3 year term. Annual, open elections to rotate members. 
+
+:::    
+
+## Bioconductor Structure
+
+- [Community Advisory Board (CAB)](https://bioconductor.org/about/community-advisory-board/)
+    + Meet monthly
+    + Consider community outreach, events, education and training. 
+    + 15 members, 3 year term. Annual, open elections to rotate members. 
+- [Multiple Working Groups](https://workinggroups.bioconductor.org)
+    + [Code of Conduct committee](https://www.bioconductor.org/about/code-of-conduct/)
+    + Conference Committees, Training & Education etc
+    
+    
+## Bioconductor Packages
+
+- `R` generally has bi-annual releases
+    + With patch-fixes as needed
+    + Latest release 4.4.1 (14^th^ Jun, 2024)
+- CRAN packages continually update
+
+. . .
+
+- Bioconductor has two releases per year
+- Tested to a set R version (or later)
+- Bug-fixes also released as needed
+    + Generally new features added to packages at Bioc releases
+- Latest Bioconductor release is 3.19 (May 1^st^ 2024)
+    + Was tested on R v4.4.0
+
+## Bioconductor Packages
+
+- `BiocManager()` is a CRAN package
+- Enables installation from CRAN *and* Bioconductor
+    + Also handles package installation from `github`
+
+``` r
+BiocManager::install(c("pkg1", "smped/pkg2"))
+```
+
+## Bioconductor Packages
+
+- Many packages for specific analyses
+    + `DESeq2` & `edgeR` for bulk RNA-Seq Analysis
+    + `DiffBind` & `extraChIPs` for ChIP-Seq Analysis
+    + `fgsea` for GSEA within `R`
+
+. . .
+
+- Also multiple packages define object classes & general methods
+    + e.g. `GenomicRanges` for working with `GRanges` objects
+    + Is a foundational class many other packages build on
+- New packages are expected to use existing classes where possible
+
+## Bioconductor Packages
+
+![Taken from https://carpentries-incubator.github.io/bioc-project/02-introduction-to-bioconductor.html ](https://carpentries-incubator.github.io/bioc-project/fig/bioc-sequencing-ecosystem.svg)
+
+## Bioconductor Packages
+
+- The output from `body(function_name)` always has comments removed
+- All Bioconductor packages have the source code available
+    + https://code.bioconductor.org
+- Code is always written as a set of R Scripts
+- Inside the `R` directory
+    + Will retain comments & formatting from the authors
+    + Sometimes more helpful...
+    
+## BiocViews
+
+- [BiocViews](https://bioconductor.org/packages/release/BiocViews.html#___Software) provides on overview of all Bioconductor packages
+- Can be very helpful when looking for a resource
+- Most packages are software (for analysis)
+- Also annotation packages:
+    + Genome sequences, gene to GO mappings etc
+- Experiment Data provides experimental data for demonstrating workflows
+- Workflow packages are slowly growing
+
+. . .
+
+`browseVignettes()`
+
+# Object Classes {background-color="#3c3c44"}
+
+## Object Classes
+
+R has two common types of objects
+
+- Built on top of (and including) vectors, lists etc.
+- `S3` are very common & old (1970s)
+    + Usually list-type objects e.g. results from `lm()` or `t.test()`
+- `S4` introduced in '90s
+    + Focus on Object-Oriented Programming (OOP)  
+- Other less common classes (e.g. `R6` etc)
+
+## Objects and Methods
+
+- Functions can be written to handle different types of input data
+- Figuring out which version of the function to use<br>$\implies$*method dispatch*
+
+. . .
+
+- A good example is the function `summary()`
+    + Will return different results for a `vector` or `data.frame`
+
+``` r
+summary(letters)
+summary(mtcars)
+```
+
+. . .
+
+*How does `summary()` know what to do for different data structures?*
+
+## Objects and Methods
+
+- If we try to look at the code used in `summary()` it's a bit odd
+
+```{r}
+body(summary)
+```
+
+. . .
+
+- `summary()` uses different **methods** depending on the object class
+- Sometimes they're hidden [(I don't know why...)]{.fragment}
+
+## Objects and Methods
+
+```{r}
+methods(summary)
+```
+
+::: {.notes}
+The class is given after the dot
+Those marked with an asterisk are hidden
+:::
+
+## Objects and Methods
+
+- `summary.data.frame()` is used when `summary()` is called on a `data.frame`
+- `summary.lm()` for an object produced by `lm()`
+
+. . .
+
+- If no method is written for a class $\implies$ `summary.default()`
+- Look inside this using `body(summary.default)`
+    + The last couple of lines were the output from `summary(letters)`
+    
+## Objects and Methods   
+
+- Can also see what methods exist for a given class
+- Before loading any packages ~56 methods exist for a data.frame
+
+```{r}
+methods(class = "data.frame")
+```
+
+## Objects and Methods   
+
+- Loading a new package may introduce new methods
+
+```{r, results='hide'}
+library(tidyverse)
+methods(class = "data.frame")
+```
+
+. . .
+
+- Now we have ~170 methods for a data.frame
+
+## Objects and Methods   
+
+- Most classes have a `print()` method
+- Determines what to print to the screen when calling an object
+- Most common use case for me is `print(my_tbl, n = 20)`
+    + Can use to override the default number of rows printed
+    + Calls `print.tbl` (which is hidden)
+
+## S3 Objects
+
+- Everything we've just seen applies to `S3` objects
+- Very common class type (`data.frame`, `list`, `htest`, `lm` etc)
+
+. . .
+
+- Sometimes classes have an explicit hierarchy
+   + Best shown using `is()` instead of `class()`
+
+```{r}
+is(band_members)
+```
+
+. . .
+
+- `R` looks for `print.tbl_df()` $\rightarrow$  `print.tbl()` $\rightarrow$ `print.data.frame()` etc
+- Will use the first one found
+- If none found $\implies$ `print.default()`
+
+## S4 Objects
+
+Many Bioconductor Packages define `S4` objects
+
+- Very strict controls on data structure
+- Can be frustrating at first
+- Use the `@` symbol as well as `$`
+- Methods are also strictly defined
+
+## S4 Objects
+
+- Can be a little more challenging to interact with the `tidyverse`
+- Bioconductor pre-dates the `tidyverse` by > 10 years
+- `tidyomics` is an active area of Bioconductor development
+    + Led by Stefano Mangiola from SAiGENCI
+
+## S4 Objects
+
+::: {style="font-size: 95%;"}
+
+::: {.incremental}
+- Some packages use `S4` implementations of `S3` objects
+    + `data.frame` (S3) Vs `DataFrame` (S4)
+    + `list` (S3) Vs `List` (S4)
+    + `vector` (S3) Vs `Vector` (S4)
+    + `rle` (S3) Vs `Rle` (S4)
+- Many are written for memory efficiency
+- Look and behave very similarly, but can trip you over
+    + Object may require a `DataFrame` and you have a `data.frame`
+    + Coercion is usually relatively simple between base-level classes
+
+:::
+
+:::
+
+::: {.notes}
+Many S4 objects & methods were developed in the days when compute resources were limited
+:::
+
+## Rle Vectors
+
+- These are Run-Length Encoded vectors
+
+```{r}
+library(S4Vectors)
+test <- c(rep("X", 10), rep("Y", 5))
+test
+Rle(test)
+```
+
+- Can encode millions of chromosome names with minimal memory
+
+# Variations on `data.frame` Objects  {background-color="#3c3c44"}
+
+## `data.frame` Objects
+
+- `data.frame`
+    1. Can set `rownames`
+    2. Dumps all data to your screen
+    3. Cannot have column names with spaces
+
+. . .
+
+- `tibble` aka `tbl_df`
+    1. `rownames` are always `1:nrow(df)` 
+    2. Prints a summary with rownames hidden
+    3. Column names with spaces permitted
+    4. My preferred `data.frame` type
+
+
+## `DataFrame` objects
+
+```{r}
+?DataFrame
+```
+
+::: {.incremental}
+
+- An `S4` version
+    + Doesn't work with the `tidyverse`
+    + Still missing from `tidyomics`
+- Until 2021 couldn't coerce to a `tibble` directly
+- I hated that so wrote `extraChIPs::as_tibble()`
+    + Enables passing `S4` objects to `ggplot()`
+    + Not as straight-forward as you might think
+    + Please test & find any bugs I haven't found yet
+    
+:::
+
+## `DataFrame` objects
+    
+- Can have columns of lists (so can `tbl_df` objects)
+    - e.g. a `CharacterList()` from `IRanges`
+    - `S4` lists can be *typed* $\implies$ memory efficiency
+    - `List` objects can exist in a compressed form $\implies$ memory efficiency
+- `DataFrame` objects can have `S4` objects as columns
+    - `S3` data frames *cannot*
+    
+
+## `DataFrame` objects
+
+```{r}
+library(IRanges)
+genes <- c("A", "B")
+transcripts <- CharacterList(c("A1", "A2", "A3"),
+                             c("B1", "B2"))
+transcripts
+```
+
+```{r, results='hide'}
+DF <- DataFrame(Gene = genes, Transcripts = transcripts)
+DF
+map_int(DF$Transcripts, length)
+```
+
+## `DataFrame` objects
+
+- Metadata can be added to `DataFrame` objects
+- Must be a `list`
+
+```{r}
+metadata(DF) <- list(notes = "Stuff we made up")
+glimpse(DF)
+```
+
+::: {.notes}
+Point out the `@` structure
+:::
+
+## `S4` Object Structure
+
+- Notice that `S4` objects have *slots* denoted with `@`
+    + Subtly different to list *elements*
+- These are fixed and mandatory for every `S4` class
+    + Can still be empty (`NULL`) objects
+- Enforces a strict structure with checks as objects formed
+    + Saves time performing checks within functions
+
+## `S4` Object Structure
+
+- We can't `lapply` our way through these objects
+- Can access each slot using shortcuts `object@slotName`
+    + More formally using `slot(object, "slotName")`
+- The slots within an objects can be checked using `slotNames(object)`
+
+```{r}
+slotNames(DF)
+getSlots("DFrame")
+```
+
+## `S4` Methods
+
+- `S3` method dispatch uses the `method.class` syntax
+- `S4` is very different but somewhat analogous
+
+. . .
+
+- `S4` objects almost always have hierarchical classes
+- Methods are strictly defined by package authors
+    + Rely on a `Generic` function being defined for each method
+    + The hierarchy is traversed until a method is found
+
+## `S4` Methods
+
+- To check the class hierarchy of an object use `is()` 
+
+```{r}
+is(DF)
+```
+
+. . .
+
+``` r
+methods(class = "DataFrame")
+```
+
+## `S4` Methods
+
+- The function `body()` will return `standardGeneric()`
+    + Slightly different to `UseMethod()`
+
+. . .
+
+- To show code within a function
+
+```{r}
+getMethod(f = "nrow", signature = "DataFrame")
+```
+
+
+## Recap
+
+- The Bioconductor Project extends back to the early days of `R`
+    + Also the early days of bioinformatics
+    + Has a genuine community aspect
+. . .
+
+
+- `S4` object classes are common
+    + Foundational classes enabling package inter-operability
+    + Much less common in `CRAN` packages
+- Method dispatch is handled differently
+
+. . .
+
+- Can play badly with the `tidyverse`
+    + An area of active development
+    
+

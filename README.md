@@ -42,12 +42,12 @@ intermediate users will also gain a great deal from attending.
 | 3:00  | Functions                          | [Functions](functions.html)          | 70min                           |
 | 4:00  | Recap and Bring Your Own Data      |                                      |                                 |
 
-| Day 3 | Topic                    |
-|:------|:-------------------------|
-| 9:00  | The Bioconductor Project |
-| 10:30 | *Morning Tea*            |
-| 11:00 | Bulk RNA-Seq Analysis    |
-| 12:30 | *Lunch*                  |
-| 1:30  | Genomic Ranges           |
-| 3:00  | *Afternoon Tea*          |
-| 3:30  | Bring Your Own Data      |
+| Day 3 | Topic                    | Notes                                       | Estimated Duration <br>(approx) |
+|:------|:-------------------------|:--------------------------------------------|:--------------------------------|
+| 9:00  | The Bioconductor Project | [The Bioconductor Project](intro_bioc.html) | 40min                           |
+| 10:30 | *Morning Tea*            |                                             |                                 |
+| 11:00 | Bulk RNA-Seq Analysis    |                                             |                                 |
+| 12:30 | *Lunch*                  |                                             |                                 |
+| 1:30  | Genomic Ranges           |                                             |                                 |
+| 3:00  | *Afternoon Tea*          |                                             |                                 |
+| 3:30  | Bring Your Own Data      |                                             |                                 |
