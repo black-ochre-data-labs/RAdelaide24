@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -188,7 +188,7 @@ knitr:
     + Also handles package installation from `github`
 
 ``` r
-BiocManager::install(c("pkg1", "smped/pkg2"))
+BiocManager::install(c("pkg1", "user/pkg2"))
 ```
 
 ## Bioconductor Packages
@@ -207,7 +207,7 @@ BiocManager::install(c("pkg1", "smped/pkg2"))
 
 ## Bioconductor Packages
 
-![Taken from https://carpentries-incubator.github.io/bioc-project/02-introduction-to-bioconductor.html ](https://carpentries-incubator.github.io/bioc-project/fig/bioc-sequencing-ecosystem.svg)
+![Taken from https://carpentries-incubator.github.io/bioc-project/02-introduction-to-bioconductor.html ](https://carpentries-incubator.github.io/bioc-project/fig/bioc-sequencing-ecosystem.svg){fig-align="left"}
 
 ## Bioconductor Packages
 
@@ -431,7 +431,7 @@ Rle(test)
 
 ## `DataFrame` objects
 
-```{r}
+``` r
 ?DataFrame
 ```
 
@@ -509,7 +509,7 @@ as_tibble(DF)
 - Must be a `list`
 
 ```{r}
-metadata(DF) <- list(notes = "Stuff we made up")
+metadata(DF) <- list(details = "Created for RAdelaide 2024")
 glimpse(DF)
 ```
 
@@ -521,9 +521,27 @@ glimpse(DF)
 Point out the `@` structure
 :::
 
+## `DataFrame` objects
+
+- Also enable the addition of *column-specific metadata* $\implies$ `mcols()`
+    + Used heavily in Bioconductor
+
+```{r}
+mcols(DF) <- DataFrame(meta =  c("Made-up genes", "Made-up transcripts"))
+mcols(DF)
+```
+
+. . .
+
+```{r}
+glimpse(DF)
+```
+
+
+
 ## `S4` Object Structure
 
-- Notice that `S4` objects have *slots* denoted with `@`
+- `S4` objects have *slots* denoted with `@`
     + Subtly different to list *elements*
 - These are fixed and mandatory for every `S4` class
     + Can still be empty (`NULL`) objects

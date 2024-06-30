@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -54,8 +54,8 @@ knitr:
     warning: false
     message: false
     fig.align: center  
-    fig.height: 8
-    fig.width: 10
+    fig.height: 6
+    fig.width: 8
 ---
 
 # Exploring Our Data
@@ -278,7 +278,7 @@ Two options in `R`
 ## The package `magrittr`
 
 
-![The Treachery of Images, Rene Magritte, 1929](https://hdwallpaperim.com/wp-content/uploads/2017/08/24/113744-pipes-Ren%C3%A9_Magritte-painting-minimalism.jpg)
+![The Treachery of Images, Rene Magritte, 1929](https://hdwallpaperim.com/wp-content/uploads/2017/08/24/113744-pipes-Ren%C3%A9_Magritte-painting-minimalism.jpg){fig-align="left"}
 
 ## The package `magrittr`
 
@@ -627,9 +627,11 @@ bind_rows(
 - `pigs` isn't great for this
 - We'll use two data frames already in `R`
 
+. . .
+
 ::: {.columns}
 
-::: {.column}
+::: {.column width="50%"}
 
 ```{r}
 band_members
@@ -637,7 +639,7 @@ band_members
 
 ::: 
 
-::: {.column}
+::: {.column width="50%"}
 
 ```{r}
 band_instruments

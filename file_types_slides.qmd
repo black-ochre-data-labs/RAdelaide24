@@ -1,0 +1,207 @@
+---
+title: "File Types and Workflows"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: file_types.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# File Types {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Bioconductor/Bioconductor5.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## File Types
+
+- Bioinformatics workflows involve multiple steps
+- Different file types at different steps
+- Most are plain text based
+   + Often compressed to reduce size (i.e. binary)
+
+. . .
+
+- Often use the command line to preview large files
+- `R` is able to parse or interact with most common file types
+    + Loading large files into memory can be problematic
+    + Loading a 12Gb file will be difficult if you have 8Gb of RAM
+    
+## File Types
+
+- Bioconductor existed long before high-throughput sequencing
+    + Established in 2001
+    + Human Genome Project Completed in 2003 (ish)
+    + High-Throughput Sequencing emerged around 2005
+- Methods and file types established before sequencing
+    + The days of low compute resources (32bit OS, RAM in Mb)
+- As technology develops, so do methods, file types and classes
+
+## Transcriptomic Analysis
+
+- Early transcriptomic analysis was performed on microarray data
+- Many methods and data structures built around this data
+
+. . .
+
+- Bulk RNA-Seq is now *relatively* mature for gene-level analysis
+- Has extended earlier data structure & methods
+- Also introduced multiple new methods
+
+## Transcriptomic Analysis
+
+- Bulk RNA-Seq at the *transcript level* is still relatively immature
+- Single-Cell RNA-Seq now has a degree of maturity
+    + Cell trajectory analysis also moving rapidly
+- Spatial Transcriptomics is an emerging and rapidly developing technology
+    + Also includes imaging technologies
+
+. . .
+
+- Today we'll focus on gene-level, bulk RNA-Seq analysis
+    + Learning file types, packages, object classes, methods
+    + Also visualisation strategies
+    
+## Transcriptomes
+
+- Genes are considered as genomic regions transcribed into RNA
+- The complete region (i.e. locus) is transcribed
+    + Introns are *spliced out* $\implies$ mature transcripts
+
+
+![Image courtesy of National Human Genome Research Institute](assets/splicing2.png){fig-align="left"}
+
+::: {.notes}
+Historically genes were considered to be units of heritability
+The idea of transcribed loci is a modern concept
+:::
+
+## Transcriptomes
+
+- Multiple databases exist for gene annotations
+    + UCSC, NCBI (EntrezGene)
+    + Ensembl, Gencode
+    
+. . .
+    
+- Bioconductor was established in the US
+    + Many early annotation packages were UCSC-based
+    + Now well established for Ensembl
+    + Gencode annotation packages are less common
+    
+## Transcriptomes
+
+- The latest Gencode set of annotations (Release 46, May 2024)
+
+. . .
+
+- 63,086 Genes
+    + 19,411 protein coding
+    + Remainder are lncRNA, pseudogenes etc
+- 254,070 Transcripts
+    + 89,581 protein coding
+    + Remainder are NMD, lncRNA etc
+    
+. . .
+
+- Shortest annotated transcript is 8nt $\implies$ longest is 350,375nt
+    
+## The Basics of Bulk RNA-Sequencing
+
+1. Intact RNA is extracted from a sample $\implies$ millions of cells
+
+::: {.incremental}
+
+2. RNA is fragmented into 250-500bp fragments
+    + Lose short transcripts $\implies$ long transcripts broken into pieces
+3. Prepared for sequencing
+    + Converted to cDNA
+    + Sequencing adapters added to all fragments
+    + PCR amplification
+4. Sequenced from both directions (paired end sequencing)
+    + Commonly 50m reads/sample
+
+:::
+
+## The Basics of Bulk RNA-Sequencing
+
+::: {.incremental}
+
+1. QC and Read Trimming (optional) &#128519;
+2. Align reads to the reference genome &#128512;
+3. Count how many reads for each gene &#128528;
+4. Statistical (DGE) analysis &#128533;
+5. Enrichment analysis &#128560;
+6. Interpretation &#128561;
+
+- QC analysis, Statistical and enrichment analysis in R
+- Trimming, aligning and counting on an HPC
+- Interpretation with domain experts
+
+:::
+
+::: {.notes}
+Counting is implemented in R but I generally don't
+:::
+
+## The Basics of Bulk RNA-Sequencing
+
+![](assets/bd020139.f1.jpeg)
+
+## What File Types
+
+- Reference Genome $\implies$ `fasta` file
+- Sequencing data $\implies$ `fastq` file
+    + Often QC reports in plain text, tsv-based or json format
+- Alignments $\implies$ `bam` file
+    + Alignment log files in plain text or tsv-based format
+- Gene Annotations $\implies$ `gtf` file
+- Read Counts $\implies$ tsv-based format
+- Variants (if called) $\implies$ `vcf` file

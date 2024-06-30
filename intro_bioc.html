@@ -3903,9 +3903,7 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 </section>
 <section id="dataframe-objects" class="level2">
 <h2 class="anchored" data-anchor-id="dataframe-objects"><code>DataFrame</code> objects</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>?DataFrame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>?DataFrame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>An <code>S4</code> version
 <ul>
@@ -4005,7 +4003,7 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 <li>Must be a <code>list</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span>(DF) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">notes =</span> <span class="st">&quot;Stuff we made up&quot;</span>)</span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span>(DF) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">details =</span> <span class="st">&quot;Created for RAdelaide 2024&quot;</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Formal class &#39;DFrame&#39; [package &quot;S4Vectors&quot;] with 6 slots
@@ -4014,7 +4012,7 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
   ..@ elementType    : chr &quot;ANY&quot;
   ..@ elementMetadata: NULL
   ..@ metadata       :List of 1
-  .. ..$ notes: chr &quot;Stuff we made up&quot;
+  .. ..$ details: chr &quot;Created for RAdelaide 2024&quot;
   ..@ listData       :List of 2
   .. ..$ Gene       : chr [1:2] &quot;A&quot; &quot;B&quot;
   .. ..$ Transcripts:Formal class &#39;CompressedCharacterList&#39; [package &quot;IRanges&quot;] with 5 slots</code></pre>
@@ -4028,10 +4026,46 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>Point out the <code>@</code> structure</p>
 </div>
 </section>
+<section id="dataframe-objects-5" class="level2">
+<h2 class="anchored" data-anchor-id="dataframe-objects-5"><code>DataFrame</code> objects</h2>
+<ul>
+<li>Also enable the addition of <em>column-specific metadata</em> <span class="math inline">\(\implies\)</span> <code>mcols()</code>
+<ul>
+<li>Used heavily in Bioconductor</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(DF) <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(<span class="at">meta =</span>  <span class="fu">c</span>(<span class="st">&quot;Made-up genes&quot;</span>, <span class="st">&quot;Made-up transcripts&quot;</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 2 rows and 1 column
+                           meta
+                    &lt;character&gt;
+Gene              Made-up genes
+Transcripts Made-up transcripts</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Formal class &#39;DFrame&#39; [package &quot;S4Vectors&quot;] with 6 slots
+  ..@ rownames       : NULL
+  ..@ nrows          : int 2
+  ..@ elementType    : chr &quot;ANY&quot;
+  ..@ elementMetadata:Formal class &#39;DFrame&#39; [package &quot;S4Vectors&quot;] with 6 slots
+  ..@ metadata       :List of 1
+  .. ..$ details: chr &quot;Created for RAdelaide 2024&quot;
+  ..@ listData       :List of 2
+  .. ..$ Gene       : chr [1:2] &quot;A&quot; &quot;B&quot;
+  .. ..$ Transcripts:Formal class &#39;CompressedCharacterList&#39; [package &quot;IRanges&quot;] with 5 slots</code></pre>
+</div>
+</div>
+</section>
 <section id="s4-object-structure" class="level2">
 <h2 class="anchored" data-anchor-id="s4-object-structure"><code>S4</code> Object Structure</h2>
 <ul>
-<li>Notice that <code>S4</code> objects have <em>slots</em> denoted with <code>@</code>
+<li><code>S4</code> objects have <em>slots</em> denoted with <code>@</code>
 <ul>
 <li>Subtly different to list <em>elements</em></li>
 </ul></li>
@@ -4058,7 +4092,7 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 <div class="columns">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>DF<span class="sc">@</span>listData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>DF<span class="sc">@</span>listData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Gene
 [1] &quot;A&quot; &quot;B&quot;
@@ -4071,7 +4105,7 @@ CharacterList of length 2
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slot</span>(DF, <span class="st">&quot;listData&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slot</span>(DF, <span class="st">&quot;listData&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Gene
 [1] &quot;A&quot; &quot;B&quot;
@@ -4091,7 +4125,7 @@ CharacterList of length 2
 <li>Slot names can be found using <code>slotNames(object)</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slotNames</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slotNames</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;rownames&quot;        &quot;nrows&quot;           &quot;elementType&quot;     &quot;elementMetadata&quot;
 [5] &quot;metadata&quot;        &quot;listData&quot;       </code></pre>
@@ -4102,7 +4136,7 @@ CharacterList of length 2
 <li>The full type description can also be found</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">&quot;DFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">&quot;DFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           rownames               nrows         elementType     elementMetadata 
 &quot;character_OR_NULL&quot;           &quot;integer&quot;         &quot;character&quot; &quot;DataFrame_OR_NULL&quot; 
@@ -4140,7 +4174,7 @@ CharacterList of length 2
 <li>To check the class hierarchy of an object use <code>is()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] &quot;DFrame&quot;            &quot;DataFrame&quot;         &quot;SimpleList&quot;       
  [4] &quot;RectangularData&quot;   &quot;List&quot;              &quot;DataFrame_OR_NULL&quot;
@@ -4153,17 +4187,17 @@ CharacterList of length 2
 <li>Logical tests can be applied</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF, <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF, <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF, <span class="st">&quot;data.frame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF, <span class="st">&quot;data.frame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
 <p>. . .</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="s4-methods-2" class="level2">
 <h2 class="anchored" data-anchor-id="s4-methods-2"><code>S4</code> Methods</h2>
@@ -4178,13 +4212,13 @@ CharacterList of length 2
 <li>To show code within a function</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getMethod</span>(<span class="at">f =</span> <span class="st">&quot;nrow&quot;</span>, <span class="at">signature =</span> <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getMethod</span>(<span class="at">f =</span> <span class="st">&quot;nrow&quot;</span>, <span class="at">signature =</span> <span class="st">&quot;DataFrame&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Method Definition:
 
 function (x) 
 x@nrows
-&lt;bytecode: 0x562882beba38&gt;
+&lt;bytecode: 0x5617cb764220&gt;
 &lt;environment: namespace:S4Vectors&gt;
 
 Signatures:
