@@ -67,6 +67,10 @@ knitr:
 - Key concepts & resources
 - Understanding Bioconductor objects, classes & methods
 
+. . .
+
+- Please ask questions!!! It's the advantage of being here...
+
 ## CRAN
 
 - A Package is a collection of functions
@@ -222,7 +226,7 @@ BiocManager::install(c("pkg1", "smped/pkg2"))
 - Most packages are software (for analysis)
 - Also annotation packages:
     + Genome sequences, gene to GO mappings etc
-- Experiment Data provides experimental data for demonstrating workflows
+- Experimental data for demonstrating workflows
 - Workflow packages are slowly growing
 
 . . .
@@ -287,8 +291,8 @@ Those marked with an asterisk are hidden
 
 ## Objects and Methods
 
-- `summary.data.frame()` is used when `summary()` is called on a `data.frame`
-- `summary.lm()` for an object produced by `lm()`
+- `summary.data.frame()` <br>$\implies$ used when `summary()` is called on a `data.frame`
+- `summary.lm()` <br>$\implies$ for an object produced by `lm()`
 
 . . .
 
@@ -352,7 +356,8 @@ Many Bioconductor Packages define `S4` objects
 
 - Very strict controls on data structure
 - Can be frustrating at first
-- Use the `@` symbol as well as `$`
+- Use the `@` symbol for "slots" as well as `$` for list elements
+    + Slots are strictly defined components
 - Methods are also strictly defined
 
 ## S4 Objects
@@ -361,19 +366,26 @@ Many Bioconductor Packages define `S4` objects
 - Bioconductor pre-dates the `tidyverse` by > 10 years
 - `tidyomics` is an active area of Bioconductor development
     + Led by Stefano Mangiola from SAiGENCI
+    
+. . .
+
+![](assets/tidyomics.png){.absolute left=0 bottom=0 width="740px"}
 
 ## S4 Objects
 
 ::: {style="font-size: 95%;"}
 
-::: {.incremental}
+
 - Some packages use `S4` implementations of `S3` objects
     + `data.frame` (S3) Vs `DataFrame` (S4)
     + `list` (S3) Vs `List` (S4)
     + `vector` (S3) Vs `Vector` (S4)
     + `rle` (S3) Vs `Rle` (S4)
+    
+::: {.incremental}
+
 - Many are written for memory efficiency
-- Look and behave very similarly, but can trip you over
+- Look and behave similarly, but can ocassionally trip you over
     + Object may require a `DataFrame` and you have a `data.frame`
     + Coercion is usually relatively simple between base-level classes
 
@@ -396,7 +408,8 @@ test
 Rle(test)
 ```
 
-- Can encode millions of chromosome names with minimal memory
+- Can encode millions of chromosomes with minimal memory
+    + Sorting can help keep memory useage down
 
 # Variations on `data.frame` Objects  {background-color="#3c3c44"}
 
@@ -422,11 +435,13 @@ Rle(test)
 ?DataFrame
 ```
 
-::: {.incremental}
 
 - An `S4` version
     + Doesn't work with the `tidyverse`
     + Still missing from `tidyomics`
+
+::: {.fragment}
+    
 - Until 2021 couldn't coerce to a `tibble` directly
 - I hated that so wrote `extraChIPs::as_tibble()`
     + Enables passing `S4` objects to `ggplot()`
@@ -434,6 +449,18 @@ Rle(test)
     + Please test & find any bugs I haven't found yet
     
 :::
+
+## `DataFrame` objects
+
+- S3 Methods from `dplyr` will not work on `DataFrame` objects
+- Some equivalents exist (most pre-date the `tidyverse`)
+    + `subset()` pre-dates `dplyr::filter()`
+    + `rbind()` and `combineRows()` $\implies$ `bind_rows()`
+    + `cbind()`, `combineCols()` and `merge()` $\implies$ `joins`
+    + `sort()` $\implies$ `arrange()`
+    + `unique()` $\implies$ `distinct()`
+- No simple equivalent for `mutate()`, `summarise()`, `across()`, `pivot_*()`
+
 
 ## `DataFrame` objects
     
@@ -444,22 +471,37 @@ Rle(test)
 - `DataFrame` objects can have `S4` objects as columns
     - `S3` data frames *cannot*
     
+::: {.notes}
+By typing a list we only need to record the type once, instead of once for each element.
+Can make a big difference with large objects
+:::
+
 
 ## `DataFrame` objects
 
 ```{r}
 library(IRanges)
 genes <- c("A", "B")
-transcripts <- CharacterList(c("A1", "A2", "A3"),
-                             c("B1", "B2"))
+transcripts <- CharacterList(
+  c("A1", "A2", "A3"), c("B1", "B2")
+)
 transcripts
 ```
 
-```{r, results='hide'}
+. . .
+
+```{r}
 DF <- DataFrame(Gene = genes, Transcripts = transcripts)
 DF
-map_int(DF$Transcripts, length)
 ```
+
+. . .
+
+```{r}
+library(extraChIPs)
+as_tibble(DF)
+```
+
 
 ## `DataFrame` objects
 
@@ -471,6 +513,10 @@ metadata(DF) <- list(notes = "Stuff we made up")
 glimpse(DF)
 ```
 
+. . .
+
+- Notice where rownames are and how the "columns" are stored
+
 ::: {.notes}
 Point out the `@` structure
 :::
@@ -481,6 +527,7 @@ Point out the `@` structure
     + Subtly different to list *elements*
 - These are fixed and mandatory for every `S4` class
     + Can still be empty (`NULL`) objects
+    + Can be `S3` or `S4` objects
 - Enforces a strict structure with checks as objects formed
     + Saves time performing checks within functions
 
@@ -489,23 +536,59 @@ Point out the `@` structure
 - We can't `lapply` our way through these objects
 - Can access each slot using shortcuts `object@slotName`
     + More formally using `slot(object, "slotName")`
-- The slots within an objects can be checked using `slotNames(object)`
+    
+::: {.columns}
+   
+::: {.column}
+
+```{r}
+DF@listData
+```
+
+:::
+
+::: {.column}
+
+
+```{r}
+slot(DF, "listData")
+```
+
+:::
+
+:::
+    
+## `S4` Object Structure
+    
+- Slot names can be found using `slotNames(object)`
 
 ```{r}
 slotNames(DF)
+```
+
+. . .
+
+- The full type description can also be found
+
+```{r}
 getSlots("DFrame")
 ```
 
 ## `S4` Methods
 
 - `S3` method dispatch uses the `method.class` syntax
-- `S4` is very different but somewhat analogous
+- `S4` is very different but has some similarities
 
 . . .
 
 - `S4` objects almost always have hierarchical classes
+    + Increasingly common for `S3` objects
+    + Each level *extends* the lower level class
+    
+. . .    
+    
 - Methods are strictly defined by package authors
-    + Rely on a `Generic` function being defined for each method
+    + A `Generic` function must be defined for each method/class
     + The hierarchy is traversed until a method is found
 
 ## `S4` Methods
@@ -514,6 +597,15 @@ getSlots("DFrame")
 
 ```{r}
 is(DF)
+```
+
+. . .
+
+- Logical tests can be applied
+
+```{r}
+is(DF, "DataFrame")
+is(DF, "data.frame")
 ```
 
 . . .
@@ -546,7 +638,7 @@ getMethod(f = "nrow", signature = "DataFrame")
 
 - `S4` object classes are common
     + Foundational classes enabling package inter-operability
-    + Much less common in `CRAN` packages
+    + Much less common in `CRAN` packages (spatial/GIS)
 - Method dispatch is handled differently
 
 . . .
