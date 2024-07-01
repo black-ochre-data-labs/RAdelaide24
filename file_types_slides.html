@@ -30,6 +30,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="file_types_slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="file_types_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -345,7 +410,7 @@ Dr Stevie Pederson
   <p class="date">July 11, 2024</p>
 </section>
 <section>
-<section id="file-types" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Bioconductor/Bioconductor5.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<section id="file-types" class="title-slide slide level1 center" data-background-color="#3c3c44">
 <h1>File Types</h1>
 
 </section>
@@ -551,6 +616,17 @@ Dr Stevie Pederson
 <h2>The Basics of Bulk RNA-Sequencing</h2>
 
 <img data-src="assets/bd020139.f1.jpeg" class="r-stretch"></section>
+<section id="the-basics-of-bulk-rna-sequencing-3" class="slide level2">
+<h2>The Basics of Bulk RNA-Sequencing</h2>
+<ul>
+<li>Alternative methods align to transcript sequences NOT the genome</li>
+<li>These alignments are not spliced</li>
+<li>Reads align to multiple transcripts
+<ul>
+<li>With genomic alignments usually a single alignment</li>
+</ul></li>
+</ul>
+</section>
 <section id="what-file-types" class="slide level2">
 <h2>What File Types</h2>
 <ul>
@@ -567,6 +643,294 @@ Dr Stevie Pederson
 <li>Read Counts <span class="math inline">\(\implies\)</span> tsv-based format</li>
 <li>Variants (if called) <span class="math inline">\(\implies\)</span> <code>vcf</code> file</li>
 </ul>
+</section></section>
+<section>
+<section id="reference-sequences" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Reference Sequences</h1>
+
+</section>
+<section id="fasta-files" class="slide level2">
+<h2>Fasta Files</h2>
+<ul>
+<li>Sequence name + optional metadata in a single line
+<ul>
+<li>These lines begin with <code>&gt;</code></li>
+</ul></li>
+<li>Followed by sequence with no prefix
+<ul>
+<li>Single sequences commonly wrapped on multiple lines</li>
+</ul></li>
+<li>Sequence can be DNA, RNA or Protein</li>
+</ul>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;ERCC-00002
+TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCACAGTATACGGGCGTCG
+GCATCCAGACCGTCGGCTGATCGTGGTTTTACTAGGCTAGACTAGCGTAC
+GAGCACTATGGTCAGTAATTCCTGGAGGAATAGGTACCAAGAAAAAAACG
+AACCTTTGGGTTCCAGAGCTGTACGGTCGCACTGAACTCGGATAGGTCTC
+AGAAAAACGAAATATAGGCTTACGGTAGGTCCGAATGGCACAAAGCTTGT
+TCCGTTAGCTGGCATAAGATTCCATGCCTAGATGTGATACACGTTTCTGG
+AAACTGCCTCGTCATGCGACTGTTCCCCGGGGTCAGGGCCGCTGGTATTT
+GCTGTAAAGAGGGGCGTTGAGTCCGTCCGACTTCACTGCCCCCTTTCAGC
+CTTTTGGGTCCTGTATCCCAATTCTCAGAGGTCCCGCCGTACGCTGAGGA</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Sometimes use a standardised set of IUPAC codes</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="biostrings" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>The Bioconductor package for handling these is <code>Biostrings</code></li>
+<li>Depending on the sequence structure<br><span class="math inline">\(\implies\)</span> <code>DNAString</code>, <code>DNAStringSet</code> or <code>DNAStringSetList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAString</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1
+[[1]] AACGT</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-1" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>General class for RNA or Proteins <span class="math inline">\(\implies\)</span> <code>XString/Set/List</code>
+<ul>
+<li><code>RNAString*</code> or <code>AAString*</code></li>
+</ul></li>
+<li><code>XStringSet</code> objects are like lists
+<ul>
+<li><code>XStringSetList</code> objects are like lists of lists</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-2" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>If working with complete transcripts <span class="math inline">\(\implies\)</span> <code>XStringSet</code></li>
+<li>When needing exon structure within transcripts <span class="math inline">\(\implies\)</span> <code>XStringSetList</code></li>
+</ul>
+</section>
+<section id="biostrings-3" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>Using some example ERCC spike-in data</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>ercc <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">"data/ERCC92.fa.gz"</span>)</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>ercc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TCCAGATTACTTCCATTTCCGCC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00002
+ [2]  1023 CAGCAGCGATTAAGGCAGAGGCG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00003
+ [3]   523 TCTTGCTTCAACAATAACGTCTC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00004
+ [4]   984 CAATGATAGGCTAGTCTCGCGCA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00009
+ [5]   994 CGAGAGATGTTTGTAGGTGCGGA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00012
+ ...   ... ...
+[88]  1022 AGGAGCTCCAGTAGTTTTCCCCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00164
+[89]   872 GATATGCGTTACGTGAGTCTGAT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00165
+[90]  1024 CCAATGAACTCAGCTATTCTTCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00168
+[91]  1023 TATTGGTGGAGGGGCACAAGTTG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00170
+[92]   505 CTGGAGATTGTCTCGTACGGTTA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-4" class="slide level2">
+<h2>Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 92</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">width</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1061 1023  523  984  994  808</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ERCC-00002" "ERCC-00003" "ERCC-00004" "ERCC-00009" "ERCC-00012"
+[6] "ERCC-00013"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(ercc, <span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           G|C
+[1,] 0.5136664
+[2,] 0.3264907
+[3,] 0.3441683
+[4,] 0.4725610
+[5,] 0.5090543
+[6,] 0.4282178</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-5" class="slide level2">
+<h2>Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TTTTTTTTTTTTTTTTTTTTTTT...GCGGAAATGGAAGTAATCTGGA ERCC-00002
+ [2]  1023 TTTTTTTTTTTTTTTTTTTTTTT...GCCTCTGCCTTAATCGCTGCTG ERCC-00003
+ [3]   523 TTTTTTTTTTTTTTTTTTTTTTT...AGACGTTATTGTTGAAGCAAGA ERCC-00004
+ [4]   984 TTTTTTTTTTTTTTTTTTTTTTT...GCGCGAGACTAGCCTATCATTG ERCC-00009
+ [5]   994 TTTTTTTTTTTTTTTTTTTTTTT...CCGCACCTACAAACATCTCTCG ERCC-00012
+ ...   ... ...
+[88]  1022 TTTTTTTTTTTTTTTTTTTTTTT...GGGGAAAACTACTGGAGCTCCT ERCC-00164
+[89]   872 TTTTTTTTTTTTTTTTTTTTTTT...TCAGACTCACGTAACGCATATC ERCC-00165
+[90]  1024 TTTTTTTTTTTTTTTTTTTTTTT...GAAGAATAGCTGAGTTCATTGG ERCC-00168
+[91]  1023 TTTTTTTTTTTTTTTTTTTTTTT...AACTTGTGCCCCTCCACCAATA ERCC-00170
+[92]   505 TTTTTTTTTTTTTTTTTTTTTTT...AACCGTACGAGACAATCTCCAG ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-6" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li><code>XStringSet</code> objects are easy to subset</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(ercc, <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]    10 TCCAGATTAC                                       ERCC-00002
+ [2]    10 CAGCAGCGAT                                       ERCC-00003
+ [3]    10 TCTTGCTTCA                                       ERCC-00004
+ [4]    10 CAATGATAGG                                       ERCC-00009
+ [5]    10 CGAGAGATGT                                       ERCC-00012
+ ...   ... ...
+[88]    10 AGGAGCTCCA                                       ERCC-00164
+[89]    10 GATATGCGTT                                       ERCC-00165
+[90]    10 CCAATGAACT                                       ERCC-00168
+[91]    10 TATTGGTGGA                                       ERCC-00170
+[92]    10 CTGGAGATTG                                       ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-7" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>Sliding windows are simple &amp; fast on <code>XString</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Views on a 1061-letter DNAString subject
+subject: TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCA...TTTTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA
+views:
+      start end width
+  [1]     1  10    10 [TCCAGATTAC]
+  [2]     2  11    10 [CCAGATTACT]
+  [3]     3  12    10 [CAGATTACTT]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">letterFrequency</span>(<span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     G|C
+[1,] 0.4
+[2,] 0.4
+[3,] 0.3</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome" class="slide level2">
+<h2>BSgenome</h2>
+<ul>
+<li>Biostrings are extended to provide entire genomes <span class="math inline">\(\implies\)</span> <code>BSgenome</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSgenome.Hsapiens.UCSC.hg38)</span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>hg38 <span class="ot">&lt;-</span> BSgenome.Hsapiens.UCSC.hg38</span>
+<span id="cb30-3"><a href="" aria-hidden="true" tabindex="-1"></a>hg38</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>| BSgenome object for Human
+| - organism: Homo sapiens
+| - provider: UCSC
+| - genome: hg38
+| - release date: 2023/01/31
+| - 711 sequence(s):
+|     chr1                    chr2                    chr3                   
+|     chr4                    chr5                    chr6                   
+|     chr7                    chr8                    chr9                   
+|     chr10                   chr11                   chr12                  
+|     chr13                   chr14                   chr15                  
+|     ...                     ...                     ...                    
+|     chr19_KV575256v1_alt    chr19_KV575257v1_alt    chr19_KV575258v1_alt   
+|     chr19_KV575259v1_alt    chr19_KV575260v1_alt    chr19_MU273387v1_alt   
+|     chr22_KN196485v1_alt    chr22_KN196486v1_alt    chr22_KQ458387v1_alt   
+|     chr22_KQ458388v1_alt    chr22_KQ759761v1_alt    chrX_KV766199v1_alt    
+|     chrX_MU273395v1_alt     chrX_MU273396v1_alt     chrX_MU273397v1_alt    
+| 
+| Tips: call 'seqnames()' on the object to get all the sequence names, call
+| 'seqinfo()' to get the full sequence info, use the '$' or '[[' operator to
+| access a given sequence, see '?BSgenome' for more information.</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome-1" class="slide level2">
+<h2>BSgenome</h2>
+<ul>
+<li><code>seqinfo()</code> objects provide sequence lengths &amp; build information</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">seqinfo</span>(hg38)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Seqinfo object with 711 sequences (1 circular) from hg38 genome:
+  seqnames             seqlengths isCircular genome
+  chr1                  248956422      FALSE   hg38
+  chr2                  242193529      FALSE   hg38
+  chr3                  198295559      FALSE   hg38
+  chr4                  190214555      FALSE   hg38
+  chr5                  181538259      FALSE   hg38
+  ...                         ...        ...    ...
+  chr22_KQ759761v1_alt     145162      FALSE   hg38
+  chrX_KV766199v1_alt      188004      FALSE   hg38
+  chrX_MU273395v1_alt      619716      FALSE   hg38
+  chrX_MU273396v1_alt      294119      FALSE   hg38
+  chrX_MU273397v1_alt      330493      FALSE   hg38</code></pre>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
