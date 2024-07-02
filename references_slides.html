@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="file_types_slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="file_types_slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="file_types_slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="file_types_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="file_types_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="file_types_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="file_types_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="file_types_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="references_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="references_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="references_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="references_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="references_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Dr Stevie Pederson">
   <meta name="dcterms.date" content="2024-07-11">
-  <title>File Types and Workflows</title>
+  <title>Preparatory Files For RNA-Seq</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="file_types_slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="file_types_slides_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -96,11 +96,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="file_types_slides_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="file_types_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="file_types_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="file_types_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="file_types_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="references_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -392,7 +392,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
-  <h1 class="title">File Types and Workflows</h1>
+  <h1 class="title">Preparatory Files For RNA-Seq</h1>
   <p class="subtitle">RAdelaide 2024</p>
 
 <div class="quarto-title-authors">
@@ -410,241 +410,6 @@ Dr Stevie Pederson
   <p class="date">July 11, 2024</p>
 </section>
 <section>
-<section id="file-types" class="title-slide slide level1 center" data-background-color="#3c3c44">
-<h1>File Types</h1>
-
-</section>
-<section id="file-types-1" class="slide level2">
-<h2>File Types</h2>
-<ul>
-<li>Bioinformatics workflows involve multiple steps</li>
-<li>Different file types at different steps</li>
-<li>Most are plain text based
-<ul>
-<li>Often compressed to reduce size (i.e.&nbsp;binary)</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Often use the command line to preview large files</li>
-<li><code>R</code> is able to parse or interact with most common file types
-<ul>
-<li>Loading large files into memory can be problematic</li>
-<li>Loading a 12Gb file will be difficult if you have 8Gb of RAM</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="file-types-2" class="slide level2">
-<h2>File Types</h2>
-<ul>
-<li>Bioconductor existed long before high-throughput sequencing
-<ul>
-<li>Established in 2001</li>
-<li>Human Genome Project Completed in 2003 (ish)</li>
-<li>High-Throughput Sequencing emerged around 2005</li>
-</ul></li>
-<li>Methods and file types established before sequencing
-<ul>
-<li>The days of low compute resources (32bit OS, RAM in Mb)</li>
-</ul></li>
-<li>As technology develops, so do methods, file types and classes</li>
-</ul>
-</section>
-<section id="transcriptomic-analysis" class="slide level2">
-<h2>Transcriptomic Analysis</h2>
-<ul>
-<li>Early transcriptomic analysis was performed on microarray data</li>
-<li>Many methods and data structures built around this data</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Bulk RNA-Seq is now <em>relatively</em> mature for gene-level analysis</li>
-<li>Has extended earlier data structure &amp; methods</li>
-<li>Also introduced multiple new methods</li>
-</ul>
-</div>
-</section>
-<section id="transcriptomic-analysis-1" class="slide level2">
-<h2>Transcriptomic Analysis</h2>
-<ul>
-<li>Bulk RNA-Seq at the <em>transcript level</em> is still relatively immature</li>
-<li>Single-Cell RNA-Seq now has a degree of maturity
-<ul>
-<li>Cell trajectory analysis also moving rapidly</li>
-</ul></li>
-<li>Spatial Transcriptomics is an emerging and rapidly developing technology
-<ul>
-<li>Also includes imaging technologies</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Today we’ll focus on gene-level, bulk RNA-Seq analysis
-<ul>
-<li>Learning file types, packages, object classes, methods</li>
-<li>Also visualisation strategies</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="transcriptomes" class="slide level2">
-<h2>Transcriptomes</h2>
-<ul>
-<li>Genes are considered as genomic regions transcribed into RNA</li>
-<li>The complete region (i.e.&nbsp;locus) is transcribed
-<ul>
-<li>Introns are <em>spliced out</em> <span class="math inline">\(\implies\)</span> mature transcripts</li>
-</ul></li>
-</ul>
-
-<img data-src="assets/splicing2.png" class="r-stretch quarto-figure-left"><p class="caption">Image courtesy of National Human Genome Research Institute</p><aside class="notes">
-<p>Historically genes were considered to be units of heritability The idea of transcribed loci is a modern concept</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="transcriptomes-1" class="slide level2">
-<h2>Transcriptomes</h2>
-<ul>
-<li>Multiple databases exist for gene annotations
-<ul>
-<li>UCSC, NCBI (EntrezGene)</li>
-<li>Ensembl, Gencode</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Bioconductor was established in the US
-<ul>
-<li>Many early annotation packages were UCSC-based</li>
-<li>Now well established for Ensembl</li>
-<li>Gencode annotation packages are less common</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="transcriptomes-2" class="slide level2">
-<h2>Transcriptomes</h2>
-<ul>
-<li>The latest Gencode set of annotations (Release 46, May 2024)</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>63,086 Genes
-<ul>
-<li>19,411 protein coding</li>
-<li>Remainder are lncRNA, pseudogenes etc</li>
-</ul></li>
-<li>254,070 Transcripts
-<ul>
-<li>89,581 protein coding</li>
-<li>Remainder are NMD, lncRNA etc</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>Shortest annotated transcript is 8nt <span class="math inline">\(\implies\)</span> longest is 350,375nt</li>
-</ul>
-</div>
-</section>
-<section id="the-basics-of-bulk-rna-sequencing" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
-<ol type="1">
-<li>Intact RNA is extracted from a sample <span class="math inline">\(\implies\)</span> millions of cells</li>
-</ol>
-<div>
-<ol start="2" type="1">
-<li class="fragment">RNA is fragmented into 250-500bp fragments
-<ul>
-<li class="fragment">Lose short transcripts <span class="math inline">\(\implies\)</span> long transcripts broken into pieces</li>
-</ul></li>
-<li class="fragment">Prepared for sequencing
-<ul>
-<li class="fragment">Converted to cDNA</li>
-<li class="fragment">Sequencing adapters added to all fragments</li>
-<li class="fragment">PCR amplification</li>
-</ul></li>
-<li class="fragment">Sequenced from both directions (paired end sequencing)
-<ul>
-<li class="fragment">Commonly 50m reads/sample</li>
-</ul></li>
-</ol>
-</div>
-</section>
-<section id="the-basics-of-bulk-rna-sequencing-1" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
-<div>
-<ol type="1">
-<li class="fragment">QC and Read Trimming (optional) 😇</li>
-<li class="fragment">Align reads to the reference genome 😀</li>
-<li class="fragment">Count how many reads for each gene 😐</li>
-<li class="fragment">Statistical (DGE) analysis 😕</li>
-<li class="fragment">Enrichment analysis 😰</li>
-<li class="fragment">Interpretation 😱</li>
-</ol>
-<ul>
-<li class="fragment">QC analysis, Statistical and enrichment analysis in R</li>
-<li class="fragment">Trimming, aligning and counting on an HPC</li>
-<li class="fragment">Interpretation with domain experts</li>
-</ul>
-</div>
-<aside class="notes">
-<p>Counting is implemented in R but I generally don’t</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-basics-of-bulk-rna-sequencing-2" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
-
-<img data-src="assets/bd020139.f1.jpeg" class="r-stretch"></section>
-<section id="the-basics-of-bulk-rna-sequencing-3" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
-<ul>
-<li>Alternative methods align to transcript sequences NOT the genome</li>
-<li>These alignments are not spliced</li>
-<li>Reads align to multiple transcripts
-<ul>
-<li>With genomic alignments usually a single alignment</li>
-</ul></li>
-</ul>
-</section>
-<section id="what-file-types" class="slide level2">
-<h2>What File Types</h2>
-<ul>
-<li>Reference Genome <span class="math inline">\(\implies\)</span> <code>fasta</code> file</li>
-<li>Sequencing data <span class="math inline">\(\implies\)</span> <code>fastq</code> file
-<ul>
-<li>Often QC reports in plain text, tsv-based or json format</li>
-</ul></li>
-<li>Alignments <span class="math inline">\(\implies\)</span> <code>bam</code> file
-<ul>
-<li>Alignment log files in plain text or tsv-based format</li>
-</ul></li>
-<li>Gene Annotations <span class="math inline">\(\implies\)</span> <code>gtf</code> file</li>
-<li>Read Counts <span class="math inline">\(\implies\)</span> tsv-based format</li>
-<li>Variants (if called) <span class="math inline">\(\implies\)</span> <code>vcf</code> file</li>
-</ul>
-</section></section>
-<section>
 <section id="reference-sequences" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
 <h1>Reference Sequences</h1>
 
@@ -652,17 +417,14 @@ Dr Stevie Pederson
 <section id="fasta-files" class="slide level2">
 <h2>Fasta Files</h2>
 <ul>
-<li>Sequence name + optional metadata in a single line
-<ul>
-<li>These lines begin with <code>&gt;</code></li>
-</ul></li>
+<li>Used for entire genomes or small, single sequences</li>
+<li>Sequence name + optional “free-form” metadata begins with <code>&gt;</code></li>
 <li>Followed by sequence with no prefix
 <ul>
 <li>Single sequences commonly wrapped on multiple lines</li>
 </ul></li>
 <li>Sequence can be DNA, RNA or Protein</li>
 </ul>
-<div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;ERCC-00002
@@ -690,7 +452,6 @@ CTTTTGGGTCCTGTATCCCAATTCTCAGAGGTCCCGCCGTACGCTGAGGA</code></pre>
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="biostrings" class="slide level2">
 <h2>Biostrings</h2>
@@ -717,6 +478,19 @@ seq: AACGT</code></pre>
 [[1]] AACGT</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>By have a new class (not just characters) many operations become simplified</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="biostrings-1" class="slide level2">
 <h2>Biostrings</h2>
@@ -725,9 +499,9 @@ seq: AACGT</code></pre>
 <ul>
 <li><code>RNAString*</code> or <code>AAString*</code></li>
 </ul></li>
-<li><code>XStringSet</code> objects are like lists
+<li><code>XStringSet</code> objects are lists of <code>XString</code> objects
 <ul>
-<li><code>XStringSetList</code> objects are like lists of lists</li>
+<li><code>XStringSetList</code> objects are lists of <code>XStringSet</code> objects</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -754,7 +528,10 @@ seq: AACGT</code></pre>
 <section id="biostrings-3" class="slide level2">
 <h2>Biostrings</h2>
 <ul>
-<li>Using some example ERCC spike-in data</li>
+<li>Using some example ERCC spike-in data
+<ul>
+<li>Short, known sequences sometimes used for RNA-Seq QC + Normalisation</li>
+</ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>ercc <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">"data/ERCC92.fa.gz"</span>)</span>
@@ -874,10 +651,10 @@ views:
 </div>
 </div>
 </section>
-<section id="bsgenome" class="slide level2">
-<h2>BSgenome</h2>
+<section id="bsgenome-objects" class="slide level2">
+<h2>BSgenome Objects</h2>
 <ul>
-<li>Biostrings are extended to provide entire genomes <span class="math inline">\(\implies\)</span> <code>BSgenome</code> objects</li>
+<li>Biostrings are used to provide entire genomes <span class="math inline">\(\implies\)</span> <code>BSgenome</code> objects</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSgenome.Hsapiens.UCSC.hg38)</span>
@@ -908,13 +685,32 @@ views:
 </div>
 </div>
 </section>
-<section id="bsgenome-1" class="slide level2">
+<section id="bsgenome-objects-1" class="slide level2">
+<h2>BSgenome Objects</h2>
+<ul>
+<li>Genomes are ‘promises’ cached on your HDD
+<ul>
+<li>Only the metadata is actually loaded</li>
+</ul></li>
+<li>Can be directly loaded into memory if needed</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>chrM <span class="ot">&lt;-</span> <span class="fu">getSeq</span>(hg38, <span class="st">"chrM"</span>)</span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>chrM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>16569-letter DNAString object
+seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome" class="slide level2">
 <h2>BSgenome</h2>
 <ul>
 <li><code>seqinfo()</code> objects provide sequence lengths &amp; build information</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">seqinfo</span>(hg38)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>sq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(hg38)</span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>sq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Seqinfo object with 711 sequences (1 circular) from hg38 genome:
   seqnames             seqlengths isCircular genome
@@ -931,10 +727,557 @@ views:
   chrX_MU273397v1_alt      330493      FALSE   hg38</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="genomic-ranges" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/GenomicRanges/GenomicRanges.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Genomic Ranges</h1>
+
+</section>
+<section id="genomic-ranges-1" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>We can work with specific regions with a genome using <code>GRanges</code> objects
+<ul>
+<li>The Bioconductor equivalent of a <code>bed</code> file</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Best practice is to always define the genome the range has been drawn from</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>, <span class="at">seqinfo =</span> sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="bed-files" class="slide level2">
+<h2>Bed Files</h2>
+<ul>
+<li><code>bed</code> files are a common genomics format</li>
+<li>Primarily contain ranges but can include some additional fields</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>chrY    10000   2781479 .   0   .
+chrY    56887902    57217415    .   0   .</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>The columns are defined as<br><code>chrom</code>, <code>chromStart</code>, <code>chromEnd</code>, <code>name</code>, <code>score</code> &amp; <code>strand</code></li>
+<li>Empty fields (<code>name</code> &amp; <code>strand</code>) are provided as <code>.</code></li>
+<li>Additional columns for <a href="https://en.wikipedia.org/wiki/BED_(file_format)#Description">plotting parameters</a> can also be passed</li>
+</ul>
+</div>
+</section>
+<section id="bed-files-1" class="slide level2">
+<h2>Bed Files</h2>
+<ul>
+<li>These are simple <code>tsv</code> files (sometimes space-separated)
+<ul>
+<li>We could use <code>read_tsv()</code> if we really want</li>
+<li>Would need to use:<br><code>read_tsv("path/to/bed", col_names = c("chrom", "chromStart", "chromEnd", "name", "score", "strand"))</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The package <code>rtracklayer</code> is an all-purpose -omics file import package
+<ul>
+<li>Handles 0/1-based co-ordinates easily</li>
+<li>Will prase files as <code>GRanges</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="importing-bed-files" class="slide level2">
+<h2>Importing Bed Files</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="ot">&lt;-</span> <span class="fu">import.bed</span>(<span class="st">"data/parY.bed"</span>, <span class="at">seqinfo =</span> sq)</span>
+<span id="cb41-3"><a href="" aria-hidden="true" tabindex="-1"></a>parY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        &lt;NA&gt;         0
+  [2]     chrY 56887903-57217415      * |        &lt;NA&gt;         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Any unspecified <code>strand</code> information <span class="math inline">\(\implies\)</span> <code>*</code></li>
+</ul>
+</div>
+</section>
+<section id="genomic-ranges-2" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>Note that we have and <code>mcols</code> element
+<ul>
+<li><code>DataFrame</code> with metadata about each range</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 2 rows and 2 columns
+         name     score
+  &lt;character&gt; &lt;numeric&gt;
+1          NA         0
+2          NA         0</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Can also separate the ranges</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">granges</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 0 metadata columns:
+      seqnames            ranges strand
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chrY     10001-2781479      *
+  [2]     chrY 56887903-57217415      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-plyranges-package" class="slide level2">
+<h2>The <code>plyranges</code> package</h2>
+<div style="font-size: 95%;">
+<ul>
+<li><code>plyranges</code> provides <code>dplyr</code>-like operations on <code>GRanges</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"PAR1"</span>, <span class="st">"PAR2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        PAR1         0
+  [2]     chrY 56887903-57217415      * |        PAR2         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">select</span>(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 1 metadata column:
+      seqnames            ranges strand |     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |         0
+  [2]     chrY 56887903-57217415      * |         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Not going any deeper today
+<ul>
+<li>Only for <code>GRanges</code> <span class="math inline">\(\implies\)</span> not <code>DataFrame</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="genomic-ranges-3" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>This makes extracting the genomic sequence trivial</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 2:
+      width seq
+[1] 2771479 CTAACCCTAACCCTAACCCTAACCCTAACCCTA...TCAGACCTTAGTTATAGATTAAAAGAAGTTAA
+[2]  329513 ATGTGTTTTTTGGCTGCATAAATGTCTTCTTTT...GTGGGTGTGTGGGTGTGGTGTGTGGGTGTGGT</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>Gene and transcript annotations use a co-ordinate-based system</li>
+<li>External files usually in <code>gtf</code> format
+<ul>
+<li>Columns 1-8: <code>chrom</code>, <code>source</code>, <code>type</code>, <code>start</code>, <code>end</code>, <code>score</code>, <code>strand</code>, <code>phase</code></li>
+<li>Column 9 is ‘<code>;</code>’ separated and flexible</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Passed to <code>R</code> as a <code>GRanges</code> object with <code>mcols</code></li>
+<li><code>rtracklayer</code> provides <code>import.gff()</code>
+<ul>
+<li><code>gtf</code> files are based on v2 specifications of the <code>gff</code> format</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-1" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">import.gff</span>(<span class="st">"data/gencode.v41.chrY.gtf.gz"</span>, <span class="at">genome =</span> <span class="st">"hg38"</span>)</span>
+<span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>plyranges</code> can be very useful for removing redundant columns</li>
+<li>Individual columns can be extracted using <code>$</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf<span class="sc">$</span>type <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gene"        "transcript"  "exon"        "CDS"         "start_codon"
+[6] "stop_codon"  "UTR"        </code></pre>
+</div>
+</div>
+<ul>
+<li>These are the types of features in a standard gtf
+<ul>
+<li><code>gene</code> and <code>transcript</code> annotations cover the entire range</li>
+<li>Individual exons within each transcripts are <code>exons</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Notice the types of features provided in a standard gtf</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="genomic-ranges-4" class="slide level2">
+<h2>Genomic Ranges</h2>
+<p>This structure highlights a few unexpected features of <code>GRanges</code></p>
+<div>
+<ol type="1">
+<li class="fragment">There are no rownames or colnames
+<ul>
+<li class="fragment">Ranges can have <code>names()</code></li>
+<li class="fragment"><code>mcols()</code> have colnames</li>
+</ul></li>
+<li class="fragment"><code>nrow</code> and <code>ncol</code> only work on <code>mcols</code> NOT the <code>GRanges</code> object</li>
+<li class="fragment">The number of ranges is obtained using <code>length()</code></li>
+</ol>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9955</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-2" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>If we want to find the sequence of a gene or transcript <br><span class="math inline">\(\implies\)</span> can’t use these features</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"gene"</span>)</span>
+<span id="cb58-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"transcript"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Instead use exons
+<ul>
+<li>The same ranges may be annotated as multiple exons</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_by_overlaps</span>(<span class="fu">GRanges</span>(<span class="st">"chrY:284167-284314"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is a <code>plyranges</code> approach to the question
+<ul>
+<li>Still, note these are identical exons from 10 transcripts</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-3" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>To find every exon associated with a gene:</li>
+</ul>
+<div>
+<ol type="1">
+<li class="fragment">Subset our data to exons only</li>
+<li class="fragment">Split into a <code>GRangesList</code> using the gene_id</li>
+<li class="fragment">Merge overlapping exons</li>
+</ol>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<aside class="notes">
+<p>This is the first time we’ve seen the <code>.</code> inactions using <code>%&gt;%</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="grangeslist-objects" class="slide level2">
+<h2>GRangesList Objects</h2>
+<ul>
+<li><code>GRangesList</code> objects strictly have a <code>GRanges</code> object as every element</li>
+<li>Often obtained by <em>splitting</em> a <code>GRanges</code> object based on a single <code>mcol</code></li>
+<li>Must have identical <code>seqinfo</code> elements
+<ul>
+<li>i.e.&nbsp;from the same genome</li>
+</ul></li>
+<li>Very efficient way to perform complex operations</li>
+</ul>
+</section>
+<section id="grangeslist-objects-1" class="slide level2">
+<h2>GRangesList Objects</h2>
+<ul>
+<li>The function <code>reduce</code> merges overlapping ranges <span class="math inline">\(\implies\)</span> <code>mcols</code> are lost</li>
+<li>Will handle all elements of a <code>GRangesList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a>  GenomicRanges<span class="sc">::</span><span class="fu">reduce</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Notice that the original 107 exons for the first gene are now 15</li>
+</ul>
+<aside class="notes">
+<p>Maintaining mcols is enabled using <code>reduceMC</code> from <code>extraChIPs</code> but it’s needed less often than we might think</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-4" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>The above strategy could be used to return:
+<ul>
+<li>the overall coding length for a gene</li>
+<li>the overall GC content</li>
+<li>a “consensus sequence” for a gene <br><span class="math inline">\(\implies\)</span> not guaranteed to represent what’s expressed</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>To obtain transcript sequences we split by transcript_id
+<ul>
+<li>No need to reduce overlapping exons</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-5" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>trans_grl <span class="ot">&lt;-</span> gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>transcript_id) </span>
+<span id="cb62-4"><a href="" aria-hidden="true" tabindex="-1"></a>trans_grl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1018
+[["ENST00000155093.8"]] AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGCCGACCGCCC...
+[["ENST00000215473.7"]] CTGGTGGTCCAGTACCTCCAAAGATATGGAATACACTCCTGAAATATCCTGAA...
+[["ENST00000244174.11_PAR_Y"]] GCTGTGCACCCAGAGATAGTTGGGTGACAAATCACCTCCAGGTTGG...
+[["ENST00000250776.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250784.13"]] CTCTTCCGTCGCAGAGTTTCGCCATG ...
+[["ENST00000250805.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250823.5"]] ATACACAGGGAGGCCAGGCAGCCTGGAGTTAGTCGACCGTTGCGAGACGTTGA...
+[["ENST00000250825.5"]] AGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAAAGCCGAGAGC...
+[["ENST00000250831.6"]] ATGATTGGCCGCTGGAGGTAGGCGGGATTTCCGGGCACGGCTTCCGGCGTCCT...
+[["ENST00000250838.6"]] GTAACAGGCAGGAAGAAAGCTTTCTGTACTACACCAGAGGGTTGGGGCTGTGG...
+...
+&lt;1008 more elements&gt;</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-6" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>Notice that each transcript retains the exon structure</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 8:
+    width seq
+[1]   389 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCG...CGGGGGCGAGAAGGCGAAGGCTGCAGGCGTGAG
+[2]    89 GAGCTGTGACTAATGAGAATTAAAGGCCATGGAT...CACAAGAGCCAAACTCATTTTTTGATGGAATAG
+[3]   573 GAGCTGATGCTACACACATGGATGGTGATCAGAT...AAGCCAGCTGTGAGGACTACCTAATGATTTCGT
+[4]   150 TGGATGATGCTGGCAAAATAGAACATGATGGTTC...TTTTTAAAGCTGACCCTGGAGAAGATGACTTAG
+[5]   144 GTGGAACTGTAGACATTGTGGAGAGTGAACCTGA...TCAATGACTCTCAACAAGAAGATGAAGATTTAA
+[6]   153 ATGTTGCTGAAATTGCTGATGAAGTTTATATGGA...CCTTCGTACCAATTGCATGGGCAGCAGCTTATG
+[7]   141 GTAATAATTCTGATGGAATTGAAAACCGGAATGG...AGAGAAGACCTGATTCCAGGCAGTACCAAACAG
+[8]  3697 CAATAATTATTGGCCCTGATGGTCATCCTTTGAC...TTTTACTGTTAATAAATGTTTACTTGTATATGA</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-7" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>A cleaner approach is provided by <code>GenomicFeatures</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GenomicFeatures)</span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">extractTranscriptSeqs</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1018:
+       width seq                                            names               
+   [1]  5336 AGTGCTCCAGAGAAAGGCCGTC...TAAATGTTTACTTGTATATGA ENST00000155093.8
+   [2]  4595 CTGGTGGTCCAGTACCTCCAAA...GAGCCCTTCAGAAGACATTCT ENST00000215473.7
+   [3]  2038 GCTGTGCACCCAGAGATAGTTG...AAAAGGGGCTTGATGGCTGTT ENST00000244174.1...
+   [4]   910 TGTCTGTCAGAGCTGTCAGCCT...AAACACTGGTATATTTCTGTT ENST00000250776.5
+   [5]  1189 CTCTTCCGTCGCAGAGTTTCGC...AAATCCTGTGGCTGTAGGAAA ENST00000250784.13
+   ...   ... ...
+[1014]   534 GGCTTTGGGCAGAGGCAGCCAG...TAAATATGATATGGGAGTGTG ENST00000700889.1
+[1015]   600 GGCTTTGGGCAGAGGCAGCCAG...AAAGCTAAATGCAATTGCATA ENST00000700898.1
+[1016]   676 GGCTTTGGGCAGAGGCAGCCAG...TAGTTTCTTAAATTTGTAAAA ENST00000700901.1
+[1017]  1048 ACTCGCGGACGATCTCTGCTCG...AAACAAAAACAAAAAAAAAAA ENST00000701084.1...
+[1018]  1591 GGAGGTGGCTCGGGCCGCGCCG...ATAAAATATTTTTTGAAACCA ENST00000701359.1...</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>We could export this as a <code>fasta</code> file using <code>writeXStringSet()</code></li>
+<li>Might become a reference transcriptome (instead of genome)</li>
+</ul>
+</div>
+</section>
+<section id="closing-comments" class="slide level2">
+<h2>Closing Comments</h2>
+<p>Standard (gene-level) RNA-Seq workflows:</p>
+<div class="fragment">
+<ol type="1">
+<li>align to a reference genome
+<ul>
+<li>Produces a <code>bam</code> file for each sample</li>
+</ul></li>
+<li>count aligned reads which overlap an exon
+<ul>
+<li>Requires a GTF within exon-coordinates</li>
+</ul></li>
+</ol>
+</div>
+<div class="fragment">
+<ul>
+<li>Alignment requires preparing an index for your aligner (e.g.&nbsp;STAR, hisat2)</li>
+<li>Indexes always require a reference genome in <code>fasta</code> format</li>
+<li>Can usually obtain from UCSC, Ensembl, Gencode etc</li>
+<li>Non-standard approaches can utilise the above</li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-1" class="slide level2">
+<h2>Closing Comments</h2>
+<p>If aligning to a reference transcriptome</p>
+<ul>
+<li>Can download a transcriptome from Gencode etc</li>
+<li>Prepare a tailored transcriptome using the above strategy</li>
+<li>Index the transcriptome using <code>salmon</code>, <code>kallisto</code> etc</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>GTF not needed during counting <span class="math inline">\(\implies\)</span> index preparation only</li>
+<li>No <code>bam</code> file produced <span class="math inline">\(\implies\)</span> only transcript-level counts</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Above allows incorporation of variants into a reference transcriptomes
+<ul>
+<li><code>transmogR</code> developed at BODL</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-2" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>The above was overkill for a generic analysis</li>
+<li>Gave introductions to fundamental data structures</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>Biostrings</code> for DNA/RNA sequences
+<ul>
+<li><code>XString/Set/List</code> objects</li>
+</ul></li>
+<li><code>GRanges</code> for working with co-ordinates
+<ul>
+<li>Often obtained by importing <code>bed</code> or <code>gtf</code> files</li>
+</ul></li>
+<li><code>GRangesList</code> for splitting <code>GRanges</code> by some feature</li>
+</ul>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
+</div>
 </div>
 </div>
 </section></section>
@@ -942,19 +1285,19 @@ views:
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="file_types_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="references_slides_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="file_types_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="file_types_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="file_types_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

@@ -59,8 +59,11 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
 | 9:00  | The Bioconductor Project | [The Bioconductor Project](intro_bioc.html) | `r getTiming("intro_bioc_slides.qmd")` |
+| 9:45 | An Outline of RNA-Seq | [RNA-Seq](rna_seq.html) | `r getTiming("rna_seq_slides.qmd")` |
+| 10:00 | Packages for Genomes | [Biostrings and Genomic Ranges](references.html) |  `r getTiming("references_slides.qmd", 1.5)` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Bulk RNA-Seq Analysis | | |
+| 11:00 | Packages for Genomes (continued) | | |
+| 11:30 | Bulk RNA-Seq Analysis | | |
 | 12:30 | *Lunch* | | |
 | 1:30  | Genomic Ranges | | |
 | 3:00  | *Afternoon Tea* | | |

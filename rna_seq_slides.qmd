@@ -1,5 +1,5 @@
 ---
-title: "File Types and Workflows"
+title: "A Brief Introduction to RNA-Seq"
 subtitle: "RAdelaide 2024"
 author: "Dr Stevie Pederson"
 institute: |
@@ -25,7 +25,7 @@ format:
     show-slide-number: all
   html: 
     css: [bodl.scss, extra.css]
-    output-file: file_types.html
+    output-file: rna_seq.html
     embed-resources: true    
     toc: true
     toc-depth: 1    
@@ -214,116 +214,26 @@ Counting is implemented in R but I generally don't
 - Read Counts $\implies$ tsv-based format
 - Variants (if called) $\implies$ `vcf` file
 
-# Reference Sequences {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+## What Tools
 
-## Fasta Files
-
-- Sequence name + optional metadata in a single line
-    + These lines begin with `>`
-- Followed by sequence with no prefix
-    + Single sequences commonly wrapped on multiple lines
-- Sequence can be DNA, RNA or Protein
+- Read QC is often performed using `FastQC` or `fastp`
+    + `fastp` will also remove low quality bases/reads
+    + Standalone trimming/filtering tools (`cutadapt`, `AdapterRemoval` etc)
+- MultiQC provides good summaries of QC reports across a dataset
+    + `ngsReports` enables import into R for custom plots/tables
 
 . . .
 
-```{bash, echo = FALSE}
-zcat data/ERCC92.fa.gz | head
-```
+- Alignment to a reference genome needs a splice-aware aligner
+    + `STAR` is the most common followed by `hisat2` & `bowtie2`
 
-::: {.notes}
-Sometimes use a standardised set of IUPAC codes
-:::
+## What Tools
 
-## Biostrings
-
-- The Bioconductor package for handling these is `Biostrings`
-- Depending on the sequence structure<br>$\implies$ `DNAString`, `DNAStringSet` or `DNAStringSetList`
-
-
-```{r}
-library(Biostrings)
-DNAString("AACGT")
-DNAStringSet("AACGT")
-DNAStringSetList("AACGT")
-```
-
-## Biostrings
-
-- General class for RNA or Proteins $\implies$ `XString/Set/List`
-    + `RNAString*` or `AAString*`
-- `XStringSet` objects are like lists
-    + `XStringSetList` objects are like lists of lists
+- Counting alignments usually uses `featureCounts`, `RSEM` or `htseq2`
+    + Needs a GTF for counting alignments
     
-```{r}
-DNAStringSet("AACGT") |> unlist()
-DNAStringSetList("AACGT") |> unlist()
-```
+. . .
 
-## Biostrings
-
-- If working with complete transcripts $\implies$ `XStringSet`
-- When needing exon structure within transcripts $\implies$ `XStringSetList`
-
-    
-## Biostrings
-
-- Using some example ERCC spike-in data
-    
-```{r}
-ercc <- readDNAStringSet("data/ERCC92.fa.gz")
-ercc
-```
-
-## Biostrings
-
-```{r}
-length(ercc)
-width(ercc) |> head()
-names(ercc) |> head()
-letterFrequency(ercc, "GC", as.prob = TRUE) |> head()
-```
-
-## Biostrings
-
-```{r}
-reverseComplement(ercc)
-```
-
-
-## Biostrings
-
-- `XStringSet` objects are easy to subset
-
-```{r}
-subseq(ercc, 1, width = 10)
-```
-
-
-## Biostrings
-
-- Sliding windows are simple & fast on `XString` objects
-
-```{r}
-Views(ercc[[1]], start = 1:3, width = 10) 
-Views(ercc[[1]], start = 1:3, width = 10) |> letterFrequency("GC", as.prob = TRUE)
-```
-
-    
-## BSgenome
-
-- Biostrings are extended to provide entire genomes $\implies$ `BSgenome` objects
-
-```{r}
-library(BSgenome.Hsapiens.UCSC.hg38)
-hg38 <- BSgenome.Hsapiens.UCSC.hg38
-hg38
-```
-
-## BSgenome
-
-- `seqinfo()` objects provide sequence lengths & build information
-
-```{r}
-seqinfo(hg38)
-```
-
+- Alignments to a reference *transcriptome* only returns counts
+    + Most common tools are `salmon` or `kallisto`
+    + Also returns uncertainty for alignments

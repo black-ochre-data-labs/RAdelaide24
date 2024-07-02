@@ -42,12 +42,15 @@ intermediate users will also gain a great deal from attending.
 | 3:00  | Functions                          | [Functions](functions.html)          | 70min                           |
 | 4:00  | Recap and Bring Your Own Data      |                                      |                                 |
 
-| Day 3 | Topic                    | Notes                                       | Estimated Duration <br>(approx) |
-|:------|:-------------------------|:--------------------------------------------|:--------------------------------|
-| 9:00  | The Bioconductor Project | [The Bioconductor Project](intro_bioc.html) | 40min                           |
-| 10:30 | *Morning Tea*            |                                             |                                 |
-| 11:00 | Bulk RNA-Seq Analysis    |                                             |                                 |
-| 12:30 | *Lunch*                  |                                             |                                 |
-| 1:30  | Genomic Ranges           |                                             |                                 |
-| 3:00  | *Afternoon Tea*          |                                             |                                 |
-| 3:30  | Bring Your Own Data      |                                             |                                 |
+| Day 3 | Topic                            | Notes                                            | Estimated Duration <br>(approx) |
+|:------|:---------------------------------|:-------------------------------------------------|:--------------------------------|
+| 9:00  | The Bioconductor Project         | [The Bioconductor Project](intro_bioc.html)      | 40min                           |
+| 9:45  | An Outline of RNA-Seq            | [RNA-Seq](rna_seq.html)                          | 10min                           |
+| 10:00 | Packages for Genomes             | [Biostrings and Genomic Ranges](references.html) | 50min                           |
+| 10:30 | *Morning Tea*                    |                                                  |                                 |
+| 11:00 | Packages for Genomes (continued) |                                                  |                                 |
+| 11:30 | Bulk RNA-Seq Analysis            |                                                  |                                 |
+| 12:30 | *Lunch*                          |                                                  |                                 |
+| 1:30  | Genomic Ranges                   |                                                  |                                 |
+| 3:00  | *Afternoon Tea*                  |                                                  |                                 |
+| 3:30  | Bring Your Own Data              |                                                  |                                 |
