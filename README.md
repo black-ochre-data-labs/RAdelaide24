@@ -46,7 +46,7 @@ intermediate users will also gain a great deal from attending.
 |:------|:---------------------------------|:-------------------------------------------------|:--------------------------------|
 | 9:00  | The Bioconductor Project         | [The Bioconductor Project](intro_bioc.html)      | 40min                           |
 | 9:45  | An Outline of RNA-Seq            | [RNA-Seq](rna_seq.html)                          | 10min                           |
-| 10:00 | Packages for Genomes             | [Biostrings and Genomic Ranges](references.html) | 50min                           |
+| 10:00 | Packages for Genomes             | [Biostrings and Genomic Ranges](references.html) | 60min                           |
 | 10:30 | *Morning Tea*                    |                                                  |                                 |
 | 11:00 | Packages for Genomes (continued) |                                                  |                                 |
 | 11:30 | Bulk RNA-Seq Analysis            |                                                  |                                 |

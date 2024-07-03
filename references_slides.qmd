@@ -477,6 +477,95 @@ extractTranscriptSeqs(hg38, trans_grl)
 - We could export this as a `fasta` file using `writeXStringSet()`
 - Might become a reference transcriptome (instead of genome)
 
+# AnnotationHub {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Annotation Hub
+
+- Much processing is done on an HPC when running a sequencing workflow
+- Knowing standalone files & how to import into `R` is vital
+- Many annotations are also prepared as packages
+- The database of these packages is `AnnotationHub`
+    + Doesn't download packages, just provides a list
+
+## Annotation Hub
+
+```{r ah, cache=TRUE}
+library(AnnotationHub)
+## This will run for a minute or two the first time you run it
+ah <- AnnotationHub()
+ah
+```
+
+::: {.notes}
+- Data is available from multiple sources and in multiple formats
+- GRanges
+:::
+
+## Annotation Hub
+
+- The full metadata can be seen by accessing the `mcols`
+
+```{r}
+mcols(ah)
+```
+
+## Annotation Hub
+
+- Searching is easiest using `subset()` or `query()`
+- The following returns all EnsDb objects built on GRCh38 (hg38)
+
+```{r subset-ah, cache=TRUE}
+ah %>% 
+  subset(genome == "GRCh38") %>%
+  subset(rdataclass == "EnsDb") 
+```
+
+## Annotation Hub
+
+- This behaves like a list $\implies$ extract elements using `[[]]`
+    + Will download an entire annotation set
+
+```{r ensdb, cache=TRUE}
+ensdb <- ah[["AH116860"]]
+ensdb
+```
+
+## EnsDb Ojects
+
+- The first Bioconductor packages of this type were TxDb packages
+    + Used UCSC annotations & genome builds
+- Contain all information about a given annotation build
+- EnsDb packages use Ensembl resources & the package `ensembldb`
+- Enormous data-mapping and information content
+
+```{r ensdb2, eval=FALSE}
+genes(ensdb)
+transcripts(ensdb)
+exonsBy(ensdb, by = "tx")
+```
+
+## EnsDb Ojects
+
+- Can be highly beneficial for ensuring self-contained, reproducible workflows
+    + No external files required
+
+. . .
+
+- Notice difference in genome build to UCSC (`hg38`)
+- Slight difference in column names to Gencode
+- No TxDb or EnsDb packages available for Gencode gene annotations
+
+## Gencode Annotations
+
+- Are available as raw gff files
+
+```{r}
+ah %>% subset(dataprovider == "Gencode")
+```
+
+
+
+
 ## Closing Comments
 
 Standard (gene-level) RNA-Seq workflows:

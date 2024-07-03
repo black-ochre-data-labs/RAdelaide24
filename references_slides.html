@@ -1207,6 +1207,285 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <li>Might become a reference transcriptome (instead of genome)</li>
 </ul>
 </div>
+</section></section>
+<section>
+<section id="annotationhub" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>AnnotationHub</h1>
+
+</section>
+<section id="annotation-hub" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>Much processing is done on an HPC when running a sequencing workflow</li>
+<li>Knowing standalone files &amp; how to import into <code>R</code> is vital</li>
+<li>Many annotations are also prepared as packages</li>
+<li>The database of these packages is <code>AnnotationHub</code>
+<ul>
+<li>Doesn’t download packages, just provides a list</li>
+</ul></li>
+</ul>
+</section>
+<section id="annotation-hub-1" class="slide level2">
+<h2>Annotation Hub</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## This will run for a minute or two the first time you run it</span></span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>ah</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 71634 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl, BroadInstitute, UCSC, ftp://ftp.ncbi.nlm.nih.gov/g...
+# $species: Homo sapiens, Mus musculus, Drosophila melanogaster, Rattus norv...
+# $rdataclass: GRanges, TwoBitFile, BigWigFile, EnsDb, Rle, OrgDb, SQLiteFil...
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH5012"]]' 
+
+             title                                             
+  AH5012   | Chromosome Band                                   
+  AH5013   | STS Markers                                       
+  AH5014   | FISH Clones                                       
+  AH5015   | Recomb Rate                                       
+  AH5016   | ENCODE Pilot                                      
+  ...        ...                                               
+  AH117051 | Ensembl 112 EnsDb for Xiphophorus maculatus       
+  AH117052 | Ensembl 112 EnsDb for Xenopus tropicalis          
+  AH117053 | Ensembl 112 EnsDb for Zonotrichia albicollis      
+  AH117054 | Ensembl 112 EnsDb for Zalophus californianus      
+  AH117055 | Ensembl 112 EnsDb for Zosterops lateralis melanops</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Data is available from multiple sources and in multiple formats</li>
+<li>GRanges</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="annotation-hub-2" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>The full metadata can be seen by accessing the <code>mcols</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(ah)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 71634 rows and 15 columns
+                          title dataprovider                species taxonomyid
+                    &lt;character&gt;  &lt;character&gt;            &lt;character&gt;  &lt;integer&gt;
+AH5012          Chromosome Band         UCSC           Homo sapiens       9606
+AH5013              STS Markers         UCSC           Homo sapiens       9606
+AH5014              FISH Clones         UCSC           Homo sapiens       9606
+AH5015              Recomb Rate         UCSC           Homo sapiens       9606
+AH5016             ENCODE Pilot         UCSC           Homo sapiens       9606
+...                         ...          ...                    ...        ...
+AH117051 Ensembl 112 EnsDb fo..      Ensembl  Xiphophorus maculatus       8083
+AH117052 Ensembl 112 EnsDb fo..      Ensembl     Xenopus tropicalis       8364
+AH117053 Ensembl 112 EnsDb fo..      Ensembl Zonotrichia albicollis      44394
+AH117054 Ensembl 112 EnsDb fo..      Ensembl Zalophus californianus       9704
+AH117055 Ensembl 112 EnsDb fo..      Ensembl Zosterops lateralis ..    1220523
+                         genome            description coordinate_1_based
+                    &lt;character&gt;            &lt;character&gt;          &lt;integer&gt;
+AH5012                     hg19 GRanges object from ..                  1
+AH5013                     hg19 GRanges object from ..                  1
+AH5014                     hg19 GRanges object from ..                  1
+AH5015                     hg19 GRanges object from ..                  1
+AH5016                     hg19 GRanges object from ..                  1
+...                         ...                    ...                ...
+AH117051   X_maculatus-5.0-male Gene and protein ann..                  1
+AH117052          UCB_Xtro_10.0 Gene and protein ann..                  1
+AH117053 Zonotrichia_albicoll.. Gene and protein ann..                  1
+AH117054           mZalCal1.pri Gene and protein ann..                  1
+AH117055            ASM128173v1 Gene and protein ann..                  1
+                     maintainer rdatadateadded          preparerclass
+                    &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
+AH5012   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5013   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5014   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5015   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5016   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+...                         ...            ...                    ...
+AH117051 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117052 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117053 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117054 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117055 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+                                             tags  rdataclass
+                                           &lt;AsIs&gt; &lt;character&gt;
+AH5012                    cytoBand,UCSC,track,...     GRanges
+AH5013                      stsMap,UCSC,track,...     GRanges
+AH5014                  fishClones,UCSC,track,...     GRanges
+AH5015                  recombRate,UCSC,track,...     GRanges
+AH5016               encodeRegions,UCSC,track,...     GRanges
+...                                           ...         ...
+AH117051 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117052 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117053 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117054 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117055 112,Annotation,AnnotationHubSoftware,...       EnsDb
+                      rdatapath              sourceurl  sourcetype
+                    &lt;character&gt;            &lt;character&gt; &lt;character&gt;
+AH5012   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5013   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5014   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5015   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5016   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+...                         ...                    ...         ...
+AH117051 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117052 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117053 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117054 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117055 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-3" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>Searching is easiest using <code>subset()</code> or <code>query()</code></li>
+<li>The following returns all EnsDb objects built on GRCh38 (hg38)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(genome <span class="sc">==</span> <span class="st">"GRCh38"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(rdataclass <span class="sc">==</span> <span class="st">"EnsDb"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 27 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl
+# $species: Homo sapiens
+# $rdataclass: EnsDb
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH53211"]]' 
+
+             title                             
+  AH53211  | Ensembl 87 EnsDb for Homo Sapiens 
+  AH53715  | Ensembl 88 EnsDb for Homo Sapiens 
+  AH56681  | Ensembl 89 EnsDb for Homo Sapiens 
+  AH57757  | Ensembl 90 EnsDb for Homo Sapiens 
+  AH60773  | Ensembl 91 EnsDb for Homo Sapiens 
+  ...        ...                               
+  AH109336 | Ensembl 108 EnsDb for Homo sapiens
+  AH109606 | Ensembl 109 EnsDb for Homo sapiens
+  AH113665 | Ensembl 110 EnsDb for Homo sapiens
+  AH116291 | Ensembl 111 EnsDb for Homo sapiens
+  AH116860 | Ensembl 112 EnsDb for Homo sapiens</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-4" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>This behaves like a list <span class="math inline">\(\implies\)</span> extract elements using <code>[[]]</code>
+<ul>
+<li>Will download an entire annotation set</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>ensdb <span class="ot">&lt;-</span> ah[[<span class="st">"AH116860"</span>]]</span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>ensdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EnsDb for Ensembl:
+|Backend: SQLite
+|Db type: EnsDb
+|Type of Gene ID: Ensembl Gene ID
+|Supporting package: ensembldb
+|Db created by: ensembldb package from Bioconductor
+|script_version: 0.3.10
+|Creation time: Mon Jun 17 16:14:46 2024
+|ensembl_version: 112
+|ensembl_host: localhost
+|Organism: Homo sapiens
+|taxonomy_id: 9606
+|genome_build: GRCh38
+|DBSCHEMAVERSION: 2.2
+|common_name: human
+|species: homo_sapiens
+| No. of genes: 71935.
+| No. of transcripts: 279860.
+|Protein data available.</code></pre>
+</div>
+</div>
+</section>
+<section id="ensdb-ojects" class="slide level2">
+<h2>EnsDb Ojects</h2>
+<ul>
+<li>The first Bioconductor packages of this type were TxDb packages
+<ul>
+<li>Used UCSC annotations &amp; genome builds</li>
+</ul></li>
+<li>Contain all information about a given annotation build</li>
+<li>EnsDb packages use Ensembl resources &amp; the package <code>ensembldb</code></li>
+<li>Enormous data-mapping and information content</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(ensdb)</span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">transcripts</span>(ensdb)</span>
+<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exonsBy</span>(ensdb, <span class="at">by =</span> <span class="st">"tx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ensdb-ojects-1" class="slide level2">
+<h2>EnsDb Ojects</h2>
+<ul>
+<li>Can be highly beneficial for ensuring self-contained, reproducible workflows
+<ul>
+<li>No external files required</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Notice difference in genome build to UCSC (<code>hg38</code>)</li>
+<li>Slight difference in column names to Gencode</li>
+<li>No TxDb or EnsDb packages available for Gencode gene annotations</li>
+</ul>
+</div>
+</section>
+<section id="gencode-annotations" class="slide level2">
+<h2>Gencode Annotations</h2>
+<ul>
+<li>Are available as raw gff files</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> <span class="fu">subset</span>(dataprovider <span class="sc">==</span> <span class="st">"Gencode"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 31 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Gencode
+# $species: Homo sapiens, Mus musculus
+# $rdataclass: GRanges
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH49545"]]' 
+
+            title                                                    
+  AH49545 | gencode.vM6.2wayconspseudos.gff3.gz                      
+  AH49546 | gencode.vM6.annotation.gff3.gz                           
+  AH49547 | gencode.vM6.basic.annotation.gff3.gz                     
+  AH49548 | gencode.vM6.chr_patch_hapl_scaff.annotation.gff3.gz      
+  AH49549 | gencode.vM6.chr_patch_hapl_scaff.basic.annotation.gff3.gz
+  ...       ...                                                      
+  AH75126 | gencode.v31.tRNAs.gff3.gz                                
+  AH75127 | gencode.v31lift37.annotation.gff3.gz                     
+  AH75128 | gencode.v31lift37.basic.annotation.gff3.gz               
+  AH75129 | gencode.v31lift37.long_noncoding_RNAs.gff3.gz            
+  AH75130 | gencode.v31lift37.unmapped.gff3.gz                       </code></pre>
+</div>
+</div>
 </section>
 <section id="closing-comments" class="slide level2">
 <h2>Closing Comments</h2>
