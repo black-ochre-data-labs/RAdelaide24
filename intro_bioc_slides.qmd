@@ -63,9 +63,10 @@ knitr:
 ## Today's Outline
 
 - Not just to show how to perform an RNA-Seq analysis
-- Understand how to use Bioconductor for your data
-- Key concepts & resources
+- Understanding common file types
 - Understanding Bioconductor objects, classes & methods
+    + Has relevance beyond Bioconductor (e.g. map visualisation)
+- Key concepts & resources
 
 . . .
 
@@ -122,7 +123,7 @@ knitr:
 
 - Packages checked for programming consistency<br>$\implies$ not methodology
     + Expected to integrate with other Bioconductor packages
-- Packages tested nightly on OSX, Windows, Linux + Arch Linux
+- Packages tested nightly on OSX, Windows, Debian Linux + Arch Linux
 - All packages require a vignette explaining how to use the package
     + Checked for clarity/helpfulness during package submission
     

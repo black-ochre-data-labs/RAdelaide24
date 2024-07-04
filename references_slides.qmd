@@ -1,5 +1,5 @@
 ---
-title: "Preparatory Files For RNA-Seq"
+title: "References and Ranges"
 subtitle: "RAdelaide 2024"
 author: "Dr Stevie Pederson"
 institute: |

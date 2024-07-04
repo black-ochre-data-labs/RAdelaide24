@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2024-07-11"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -66,200 +67,86 @@ knitr:
 
 . . .
 
-- To start this analysis $\implies$ need the number of reads assigned to each gene
-- Takes multiple steps to prepare
+- Need to perform a statistical test on each gene
+    + Select genes-of-interest using some criteria
 
 . . .
 
-1. Choice of reference and annotations (e.g. hg38 + Gencode vXX)
-2. Pre-processing of sequenced RNA libraries
-3. Alignment to a reference
-4. Quantification
+- Dealing with count data $\implies$ can't be Normally distributed
+- Generally assumed to have a Negative Binomial distribution
+    + Essentially a Poisson distribution with additional variability   
 
-## Data Preparation
+## Today's Data
 
-- Reference selection
-- Different sources have slightly different assemblies
-    + Different scaffold naming systems
-    + With/without "chr" prefix
-    + Main chromosomes are usually identical sequences
-- My personal choice in Gencode for everything
-    + All files will be compatible (fasta, gtf)
-    
-## Index Preparation
-
-- Pre-processed reads are aligned to a genome
-- All aligners based on Burrows-Wheeler Transform
-    + Comp. Sci algorithm for fast searching
-    + Requires the formation of an index which is searched
-- Most common aligners are `STAR` or `hisat2`
-    + Both splice-aware
-    + GTF used during building of the index
-- Requires an HPC & scripting skills
-
-## Data Pre-Processing
-
-- Sequencing requires fragment long RNA molecules
-- Adapters are attached to amplify the fragments
-    + 1 fragment $\implies$ many, many fragments
-    + Makes signal detection viable
-    
-. . .
-    
-- Sequencing is an error-prone process
-    + Sequence errors
-    + Fragments smaller than read-length $\implies$ adapters present
-    
-## Sequencing Technology
-
-![Wang, M. (2021). Next-Generation Sequencing (NGS). In: Pan, S., Tang, J. (eds) Clinical Molecular Diagnostics. Springer, Singapore. https://doi.org/10.1007/978-981-16-1037-0_23](assets/449456_1_En_23_Fig2_HTML.png){width="650px" fig-align='left'}
-    
-::: {.notes}
-- The prepared library is added to a flowcell
-- Hopefully the dilution spreads molecules sparsely & evenly
-:::
-    
-## Fastq Files    
-
-- The output from sequencing is a `fastq` file
-    + Often compressed with `fq.gz` suffix
-- If fragments are sequenced from one end only: *single-end reads*
-- If sequenced from both ends: *paired-end reads*
-- Both provided in separate files: `{prefix}_R1.fq.gz` + `{prefix}_R2.fq.gz`
-    + Files match exactly
-- Paired reads still represent a single fragment
-    + Generally more sequence information $\implies$ more confident alignment
-- Commonly 30-50 million reads in each file
-
-## Fastq Files
-
-- Rarely parse `fastq` files into `R`
-- Each read takes 4 lines:
+- Data obtained from Gene Expression Omnibus [GSE171742](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171742)
+- Stem cell derived cardiomyocytes with 4 treatment groups [@Liu2023-qu]
+- All transfected using lentivral vectors
 
 . . .
 
-1. Header with important information (read index, [x,y] co-ordinates etc)
-2. Sequence content
-3. Empty line (used to repeat the header)
-4. Quality scores (ASCII encoded)
+1. Control
+2. Nsp6 over-expression
+3. Nsp8 over-expression
+4. M over-expression
 
-## Fastq Files
 
-A brief example showing two reads ^[https://en.wikipedia.org/wiki/FASTQ_format]
+## Today's Data
 
-```
-@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=72
-GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACCAAGTTACCCTTAACAACTTAAGGGTTTTCAAATAGA
-+
-IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9ICIIIIIIIIIIIIIIIIIIIIDIIIIIII>IIIIII/
-@SRR001666.2 071112_SLXA-EAS1_s_7:5:1:801:338 length=72
-GTTCAGGGATACGACGTTTGTATTTTAAGAATCTGAAGCAGAAGTCGATGATAATACGCGTCGTTTTATCAT
-+
-IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII>IIIII-I)8I
+![](assets/Liu_paper.png){fig-align="left"}
+
+## Today's Data
+
+- Well documented [metadata](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5233239)! &#129299;
+- We know exact versions of all tools and annotations
+
+![](assets/GEO_description.png){.absolute left=0 bottom=100 width=1000}
+
+## Loading Packages
+
+::: {style="font-size: 90%;"}
+
+```{r packages}
+library(tidyverse)
+library(edgeR)
+library(AnnotationHub)
+library(rtracklayer)
+library(plyranges)
 ```
 
-    
-## Data Pre-Processing
-
-- A 'read' is the total signal from an entire cluster of molecules
-- If errors occur during cluster formation:
-    + Molecules get 'out-of-sync'
-    + Actual sequence becomes uncertain
-    + Low quality scores assigned
-- Most people discard low quality reads 
-- Adapter sequences at either end can also be removed
-
-## Data Pre-Processing
-
-- Multiple tools to perform this
-    + `cutadapt`, `AdapterRemoval`, `trimmomatic`, `TrimGalore` etc
-- Overall summaries of library QC can be obtained $\implies$ `FastQC`
-- `fastp` combined QC reports with read trimming
-
-. . .
-
-- `FastQC`, `fastp`, `cutadapt` all return reports after running
-    + Are run on a single library (i.e. sample) at a time
-- `MultiQC` is an excellent standalone tool for combining all reports
-- `ngsReports` is the "go-to" Bioconductor package for this
-
-::: {.notes}
-Not going to go into ngsReports today but I use regularly in my QC workflows
-:::
-
-
-## Alignment
-
-- After alignment to the reference $\implies$ `bam` files produced
-- Usually contain millions of alignments
-- Each read now occupies a single line with 11 tab-separated fields
-
-::: {style="font-size: 50%;"}
-
-| Column | Field | Description |
-|:------ |:----- |:----------- |
-| 1 | `QNAME` | The original FastQ header line |
-| 2 | `FLAG` | Information regarding pairing, primary alignment, duplicate status, unmapped etc |
-| 3 | `RNAME` | Reference sequence name (e.g. chr1) |
-| 4 | `POS` | Left-most co-ordinate in the alignment |
-| 5 | `MAPQ` | Mapping quality score |
-| 6 | `CIGAR` | Code summarising exact matches, insertions, deletions etc. |
-| 7 | `RNEXT` | Reference sequence the mate aligned to |
-| 8 | `PNEXT` | left-most co-ordinate the mate aligned to |
-| 9 | `TLEN` | Read length |
-| 10 | `SEQ` | The actual read sequence |
-| 11 | `QUAL` | The actual read quality scores |
-
+```{r ah, cache=TRUE}
+ah <- AnnotationHub()
+ah %>% subset(dataprovider == "Gencode" & genome == "GRCh38") %>% query("v31")
+```
 
 :::
 
-::: {.notes}
-SAM files are plain text whilst BAM are compressed to save storage
-:::
-
-## Alignment
-
-- 12th (optional) column often contains tags
-    + `NH:i:1` indicates this read aligned only once
-    + `AS:i:290` the actual alignment score produced by the aligner
-    + `NM:i:2` two edits are required to perfectly match the reference
-
-. . .
-
-- Reads can align to multiple locations
-- Only one read in a pair may align
-- Generally view small subsets of data using `samtools`
+## Loading Packages
 
 
-## Bam Files
+```{r genes, cache=TRUE}
+gtf <- ah[["AH75125"]] # This will take several minutes
+genes <- gtf %>% 
+  filter(type == "gene") %>% 
+  select(starts_with("gene"))
+genes
+```
 
-- Most assigning of reads to genes is performed by external tools
-- Produces flat (i.e. tsv) files<br>$\implies$ count once & load each time you start
-- Today's data produced counts using `featureCounts` from the `Subread` tool
 
-. . .
+## Loading Counts
 
-- Counting can be performed in `R`:
-    + `Rsubread` or `GenomicAlignments`
-- Should still only be performed once and saved as a standalone file
+- Data is exactly as produced by `featureCounts` [@Liao2014-gy]
+- Tab-delimited but with some weird columns
 
-## Bam Files
+```{r}
+read_tsv("data/GSE171742_counts.out.gz", n_max = 6)
+```
 
-- The Bioconductor interface to `bam` files is `Rsamtools`
-- Sequences loaded as `DNAStringSet`s
-- Alignment co-ordinates as `GRanges` objects
 
-. . .
 
-- When loading a subset of reads set `ScanBamParam()`
-- Enables loading reads:
-    + from specific ranges (using `GRanges`)
-    + with specific tags or flags
-- Controls what columns are returned
 
 # Working With Count Data {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 
-    
+## References
 
     

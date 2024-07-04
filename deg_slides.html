@@ -30,7 +30,92 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="deg_slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="deg_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="deg_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -356,346 +441,175 @@ Dr Stevie Pederson
 </ul>
 <div class="fragment">
 <ul>
-<li>To start this analysis <span class="math inline">\(\implies\)</span> need the number of reads assigned to each gene</li>
-<li>Takes multiple steps to prepare</li>
+<li>Need to perform a statistical test on each gene
+<ul>
+<li>Select genes-of-interest using some criteria</li>
+</ul></li>
 </ul>
 </div>
 <div class="fragment">
+<ul>
+<li>Dealing with count data <span class="math inline">\(\implies\)</span> can’t be Normally distributed</li>
+<li>Generally assumed to have a Negative Binomial distribution
+<ul>
+<li>Essentially a Poisson distribution with additional variability</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="todays-data" class="slide level2">
+<h2>Today’s Data</h2>
+<ul>
+<li>Data obtained from Gene Expression Omnibus <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171742">GSE171742</a></li>
+<li>Stem cell derived cardiomyocytes with 4 treatment groups <span class="citation" data-cites="Liu2023-qu">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>)</span></li>
+<li>All transfected using lentivral vectors</li>
+</ul>
+<div class="fragment">
 <ol type="1">
-<li>Choice of reference and annotations (e.g.&nbsp;hg38 + Gencode vXX)</li>
-<li>Pre-processing of sequenced RNA libraries</li>
-<li>Alignment to a reference</li>
-<li>Quantification</li>
+<li>Control</li>
+<li>Nsp6 over-expression</li>
+<li>Nsp8 over-expression</li>
+<li>M over-expression</li>
 </ol>
 </div>
 </section>
-<section id="data-preparation" class="slide level2">
-<h2>Data Preparation</h2>
-<ul>
-<li>Reference selection</li>
-<li>Different sources have slightly different assemblies
-<ul>
-<li>Different scaffold naming systems</li>
-<li>With/without “chr” prefix</li>
-<li>Main chromosomes are usually identical sequences</li>
-</ul></li>
-<li>My personal choice in Gencode for everything
-<ul>
-<li>All files will be compatible (fasta, gtf)</li>
-</ul></li>
-</ul>
-</section>
-<section id="index-preparation" class="slide level2">
-<h2>Index Preparation</h2>
-<ul>
-<li>Pre-processed reads are aligned to a genome</li>
-<li>All aligners based on Burrows-Wheeler Transform
-<ul>
-<li>Comp. Sci algorithm for fast searching</li>
-<li>Requires the formation of an index which is searched</li>
-</ul></li>
-<li>Most common aligners are <code>STAR</code> or <code>hisat2</code>
-<ul>
-<li>Both splice-aware</li>
-<li>GTF used during building of the index</li>
-</ul></li>
-<li>Requires an HPC &amp; scripting skills</li>
-</ul>
-</section>
-<section id="data-pre-processing" class="slide level2">
-<h2>Data Pre-Processing</h2>
-<ul>
-<li>Sequencing requires fragment long RNA molecules</li>
-<li>Adapters are attached to amplify the fragments
-<ul>
-<li>1 fragment <span class="math inline">\(\implies\)</span> many, many fragments</li>
-<li>Makes signal detection viable</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Sequencing is an error-prone process
-<ul>
-<li>Sequence errors</li>
-<li>Fragments smaller than read-length <span class="math inline">\(\implies\)</span> adapters present</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="sequencing-technology" class="slide level2">
-<h2>Sequencing Technology</h2>
+<section id="todays-data-1" class="slide level2">
+<h2>Today’s Data</h2>
 
-<img data-src="assets/449456_1_En_23_Fig2_HTML.png" width="650" class="r-stretch quarto-figure-left"><p class="caption">Wang, M. (2021). Next-Generation Sequencing (NGS). In: Pan, S., Tang, J. (eds) Clinical Molecular Diagnostics. Springer, Singapore. https://doi.org/10.1007/978-981-16-1037-0_23</p><aside class="notes">
+<img data-src="assets/Liu_paper.png" class="quarto-figure quarto-figure-left r-stretch"></section>
+<section id="todays-data-2" class="slide level2">
+<h2>Today’s Data</h2>
 <ul>
-<li>The prepared library is added to a flowcell</li>
-<li>Hopefully the dilution spreads molecules sparsely &amp; evenly</li>
+<li>Well documented <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5233239">metadata</a>! 🤓</li>
+<li>We know exact versions of all tools and annotations</li>
 </ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p><img data-src="assets/GEO_description.png" class="absolute" style="left: 0px; bottom: 100px; width: 1000px; "></p>
 </section>
-<section id="fastq-files" class="slide level2">
-<h2>Fastq Files</h2>
-<ul>
-<li>The output from sequencing is a <code>fastq</code> file
-<ul>
-<li>Often compressed with <code>fq.gz</code> suffix</li>
-</ul></li>
-<li>If fragments are sequenced from one end only: <em>single-end reads</em></li>
-<li>If sequenced from both ends: <em>paired-end reads</em></li>
-<li>Both provided in separate files: <code>{prefix}_R1.fq.gz</code> + <code>{prefix}_R2.fq.gz</code>
-<ul>
-<li>Files match exactly</li>
-</ul></li>
-<li>Paired reads still represent a single fragment
-<ul>
-<li>Generally more sequence information <span class="math inline">\(\implies\)</span> more confident alignment</li>
-</ul></li>
-<li>Commonly 30-50 million reads in each file</li>
-</ul>
-</section>
-<section id="fastq-files-1" class="slide level2">
-<h2>Fastq Files</h2>
-<ul>
-<li>Rarely parse <code>fastq</code> files into <code>R</code></li>
-<li>Each read takes 4 lines:</li>
-</ul>
-<div class="fragment">
-<ol type="1">
-<li>Header with important information (read index, [x,y] co-ordinates etc)</li>
-<li>Sequence content</li>
-<li>Empty line (used to repeat the header)</li>
-<li>Quality scores (ASCII encoded)</li>
-</ol>
+<section id="loading-packages" class="slide level2">
+<h2>Loading Packages</h2>
+<div style="font-size: 90%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(edgeR)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> <span class="fu">subset</span>(dataprovider <span class="sc">==</span> <span class="st">"Gencode"</span> <span class="sc">&amp;</span> genome <span class="sc">==</span> <span class="st">"GRCh38"</span>) <span class="sc">%&gt;%</span> <span class="fu">query</span>(<span class="st">"v31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 9 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Gencode
+# $species: Homo sapiens
+# $rdataclass: GRanges
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH75118"]]' 
+
+            title                                                    
+  AH75118 | gencode.v31.2wayconspseudos.gff3.gz                      
+  AH75119 | gencode.v31.annotation.gff3.gz                           
+  AH75120 | gencode.v31.basic.annotation.gff3.gz                     
+  AH75121 | gencode.v31.chr_patch_hapl_scaff.annotation.gff3.gz      
+  AH75122 | gencode.v31.chr_patch_hapl_scaff.basic.annotation.gff3.gz
+  AH75123 | gencode.v31.long_noncoding_RNAs.gff3.gz                  
+  AH75124 | gencode.v31.polyAs.gff3.gz                               
+  AH75125 | gencode.v31.primary_assembly.annotation.gff3.gz          
+  AH75126 | gencode.v31.tRNAs.gff3.gz                                </code></pre>
+</div>
+</div>
 </div>
 </section>
-<section id="fastq-files-2" class="slide level2">
-<h2>Fastq Files</h2>
-<p>A brief example showing two reads <sup>1</sup></p>
-<pre><code>@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=72
-GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACCAAGTTACCCTTAACAACTTAAGGGTTTTCAAATAGA
-+
-IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9ICIIIIIIIIIIIIIIIIIIIIDIIIIIII&gt;IIIIII/
-@SRR001666.2 071112_SLXA-EAS1_s_7:5:1:801:338 length=72
-GTTCAGGGATACGACGTTTGTATTTTAAGAATCTGAAGCAGAAGTCGATGATAATACGCGTCGTTTTATCAT
-+
-IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII&gt;IIIII-I)8I</code></pre>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>https://en.wikipedia.org/wiki/FASTQ_format</p></li></ol></aside></section>
-<section id="data-pre-processing-1" class="slide level2">
-<h2>Data Pre-Processing</h2>
-<ul>
-<li>A ‘read’ is the total signal from an entire cluster of molecules</li>
-<li>If errors occur during cluster formation:
-<ul>
-<li>Molecules get ‘out-of-sync’</li>
-<li>Actual sequence becomes uncertain</li>
-<li>Low quality scores assigned</li>
-</ul></li>
-<li>Most people discard low quality reads</li>
-<li>Adapter sequences at either end can also be removed</li>
-</ul>
-</section>
-<section id="data-pre-processing-2" class="slide level2">
-<h2>Data Pre-Processing</h2>
-<ul>
-<li>Multiple tools to perform this
-<ul>
-<li><code>cutadapt</code>, <code>AdapterRemoval</code>, <code>trimmomatic</code>, <code>TrimGalore</code> etc</li>
-</ul></li>
-<li>Overall summaries of library QC can be obtained <span class="math inline">\(\implies\)</span> <code>FastQC</code></li>
-<li><code>fastp</code> combined QC reports with read trimming</li>
-</ul>
-<div class="fragment">
-<ul>
-<li><code>FastQC</code>, <code>fastp</code>, <code>cutadapt</code> all return reports after running
-<ul>
-<li>Are run on a single library (i.e.&nbsp;sample) at a time</li>
-</ul></li>
-<li><code>MultiQC</code> is an excellent standalone tool for combining all reports</li>
-<li><code>ngsReports</code> is the “go-to” Bioconductor package for this</li>
-</ul>
-<aside class="notes">
-<p>Not going to go into ngsReports today but I use regularly in my QC workflows</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="loading-packages-1" class="slide level2">
+<h2>Loading Packages</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> ah[[<span class="st">"AH75125"</span>]] <span class="co"># This will take several minutes</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"gene"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"gene"</span>))</span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 60662 ranges and 3 metadata columns:
+            seqnames        ranges strand |           gene_id
+               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;character&gt;
+      [1]       chr1   11869-14409      + | ENSG00000223972.5
+      [2]       chr1   14404-29570      - | ENSG00000227232.5
+      [3]       chr1   17369-17436      - | ENSG00000278267.1
+      [4]       chr1   29554-31109      + | ENSG00000243485.5
+      [5]       chr1   30366-30503      + | ENSG00000284332.1
+      ...        ...           ...    ... .               ...
+  [60658] KI270734.1   72411-74814      + | ENSG00000276017.1
+  [60659] KI270734.1 131494-137392      + | ENSG00000278817.1
+  [60660] KI270734.1 138082-161852      - | ENSG00000277196.4
+  [60661] KI270744.1   51009-51114      - | ENSG00000278625.1
+  [60662] KI270750.1 148668-148843      + | ENSG00000277374.1
+                       gene_type   gene_name
+                     &lt;character&gt; &lt;character&gt;
+      [1] transcribed_unproces..     DDX11L1
+      [2] unprocessed_pseudogene      WASH7P
+      [3]                  miRNA   MIR6859-1
+      [4]                 lncRNA MIR1302-2HG
+      [5]                  miRNA   MIR1302-2
+      ...                    ...         ...
+  [60658]         protein_coding  AC007325.1
+  [60659]         protein_coding  AC007325.4
+  [60660]         protein_coding  AC007325.2
+  [60661]                  snRNA     RF00026
+  [60662]                  snRNA     RF00003
+  -------
+  seqinfo: 47 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
 </div>
 </section>
-<section id="alignment" class="slide level2">
-<h2>Alignment</h2>
+<section id="loading-counts" class="slide level2">
+<h2>Loading Counts</h2>
 <ul>
-<li>After alignment to the reference <span class="math inline">\(\implies\)</span> <code>bam</code> files produced</li>
-<li>Usually contain millions of alignments</li>
-<li>Each read now occupies a single line with 11 tab-separated fields</li>
+<li>Data is exactly as produced by <code>featureCounts</code> <span class="citation" data-cites="Liao2014-gy">(<a href="#/references" role="doc-biblioref" onclick="">Liao, Smyth, and Shi 2014</a>)</span></li>
+<li>Tab-delimited but with some weird columns</li>
 </ul>
-<div style="font-size: 50%;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 24%">
-<col style="width: 48%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Column</th>
-<th style="text-align: left;">Field</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><code>QNAME</code></td>
-<td style="text-align: left;">The original FastQ header line</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;"><code>FLAG</code></td>
-<td style="text-align: left;">Information regarding pairing, primary alignment, duplicate status, unmapped etc</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: left;"><code>RNAME</code></td>
-<td style="text-align: left;">Reference sequence name (e.g.&nbsp;chr1)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: left;"><code>POS</code></td>
-<td style="text-align: left;">Left-most co-ordinate in the alignment</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;"><code>MAPQ</code></td>
-<td style="text-align: left;">Mapping quality score</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">6</td>
-<td style="text-align: left;"><code>CIGAR</code></td>
-<td style="text-align: left;">Code summarising exact matches, insertions, deletions etc.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">7</td>
-<td style="text-align: left;"><code>RNEXT</code></td>
-<td style="text-align: left;">Reference sequence the mate aligned to</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">8</td>
-<td style="text-align: left;"><code>PNEXT</code></td>
-<td style="text-align: left;">left-most co-ordinate the mate aligned to</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">9</td>
-<td style="text-align: left;"><code>TLEN</code></td>
-<td style="text-align: left;">Read length</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">10</td>
-<td style="text-align: left;"><code>SEQ</code></td>
-<td style="text-align: left;">The actual read sequence</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">11</td>
-<td style="text-align: left;"><code>QUAL</code></td>
-<td style="text-align: left;">The actual read quality scores</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">read_tsv</span>(<span class="st">"data/GSE171742_counts.out.gz"</span>, <span class="at">n_max =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 18
+  Geneid    Chr   Start End   Strand Length `1_control` `6_control` `11_control`
+  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+1 ENSG0000… chrX… 1006… 1006… -;-;-…   4535        5211        6192         4542
+2 ENSG0000… chrX… 1005… 1005… +;+;+…   1476          65         178           96
+3 ENSG0000… chr2… 5093… 5093… -;-;-…   1207        1454        1889         1329
+4 ENSG0000… chr1… 1698… 1698… -;-;-…   6883         628         548          522
+5 ENSG0000… chr1… 1696… 1696… +;+;+…   5970         191         241          150
+6 ENSG0000… chr1… 2761… 2761… -;-;-…   3382           0           0            0
+# ℹ 9 more variables: `2_Nsp6` &lt;dbl&gt;, `7_Nsp6` &lt;dbl&gt;, `12_Nsp6` &lt;dbl&gt;,
+#   `3_Nsp8` &lt;dbl&gt;, `8_Nsp8` &lt;dbl&gt;, `13_Nsp8` &lt;dbl&gt;, `4_M` &lt;dbl&gt;, `9_M` &lt;dbl&gt;,
+#   `14_M` &lt;dbl&gt;</code></pre>
 </div>
-<aside class="notes">
-<p>SAM files are plain text whilst BAM are compressed to save storage</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="alignment-1" class="slide level2">
-<h2>Alignment</h2>
-<ul>
-<li>12th (optional) column often contains tags
-<ul>
-<li><code>NH:i:1</code> indicates this read aligned only once</li>
-<li><code>AS:i:290</code> the actual alignment score produced by the aligner</li>
-<li><code>NM:i:2</code> two edits are required to perfectly match the reference</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Reads can align to multiple locations</li>
-<li>Only one read in a pair may align</li>
-<li>Generally view small subsets of data using <code>samtools</code></li>
-</ul>
-</div>
-</section>
-<section id="bam-files" class="slide level2">
-<h2>Bam Files</h2>
-<ul>
-<li>Most assigning of reads to genes is performed by external tools</li>
-<li>Produces flat (i.e.&nbsp;tsv) files<br><span class="math inline">\(\implies\)</span> count once &amp; load each time you start</li>
-<li>Today’s data produced counts using <code>featureCounts</code> from the <code>Subread</code> tool</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Counting can be performed in <code>R</code>:
-<ul>
-<li><code>Rsubread</code> or <code>GenomicAlignments</code></li>
-</ul></li>
-<li>Should still only be performed once and saved as a standalone file</li>
-</ul>
-</div>
-</section>
-<section id="bam-files-1" class="slide level2">
-<h2>Bam Files</h2>
-<ul>
-<li>The Bioconductor interface to <code>bam</code> files is <code>Rsamtools</code></li>
-<li>Sequences loaded as <code>DNAStringSet</code>s</li>
-<li>Alignment co-ordinates as <code>GRanges</code> objects</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>When loading a subset of reads set <code>ScanBamParam()</code></li>
-<li>Enables loading reads:
-<ul>
-<li>from specific ranges (using <code>GRanges</code>)</li>
-<li>with specific tags or flags</li>
-</ul></li>
-<li>Controls what columns are returned</li>
-</ul>
 </div>
 </section></section>
+<section>
 <section id="working-with-count-data" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
 <h1>Working With Count Data</h1>
+
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
 </div>
-</section>
-
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Liao2014-gy" class="csl-entry" role="listitem">
+Liao, Yang, Gordon K Smyth, and Wei Shi. 2014. <span>“featureCounts: An Efficient General Purpose Program for Assigning Sequence Reads to Genomic Features.”</span> <em>Bioinformatics</em> 30 (7): 923–30.
+</div>
+<div id="ref-Liu2023-qu" class="csl-entry" role="listitem">
+Liu, Juli, Shiyong Wu, Yucheng Zhang, Cheng Wang, Sheng Liu, Jun Wan, and Lei Yang. 2023. <span>“<span>SARS-CoV-2</span> Viral Genes Nsp6, Nsp8, and <span>M</span> Compromise Cellular <span>ATP</span> Levels to Impair Survival and Function of Human Pluripotent Stem Cell-Derived Cardiomyocytes.”</span> <em>Stem Cell Res. Ther.</em> 14 (1): 249.
+</div>
+</div>
+</section></section>
     </div>
   </div>
 

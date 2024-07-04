@@ -30,7 +30,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="rna_seq_slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="rna_seq_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="rna_seq_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -345,63 +365,55 @@ Dr Stevie Pederson
   <p class="date">July 11, 2024</p>
 </section>
 <section>
-<section id="file-types" class="title-slide slide level1 center" data-background-color="#3c3c44">
-<h1>File Types</h1>
+<section id="transcriptomic-analysis" class="title-slide slide level1 center">
+<h1>Transcriptomic Analysis</h1>
 
-</section>
-<section id="file-types-1" class="slide level2">
-<h2>File Types</h2>
-<ul>
-<li>Bioinformatics workflows involve multiple steps</li>
-<li>Different file types at different steps</li>
-<li>Most are plain text based
-<ul>
-<li>Often compressed to reduce size (i.e.&nbsp;binary)</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Often use the command line to preview large files</li>
-<li><code>R</code> is able to parse or interact with most common file types
-<ul>
-<li>Loading large files into memory can be problematic</li>
-<li>Loading a 12Gb file will be difficult if you have 8Gb of RAM</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="file-types-2" class="slide level2">
-<h2>File Types</h2>
-<ul>
-<li>Bioconductor existed long before high-throughput sequencing
-<ul>
-<li>Established in 2001</li>
-<li>Human Genome Project Completed in 2003 (ish)</li>
-<li>High-Throughput Sequencing emerged around 2005</li>
-</ul></li>
-<li>Methods and file types established before sequencing
-<ul>
-<li>The days of low compute resources (32bit OS, RAM in Mb)</li>
-</ul></li>
-<li>As technology develops, so do methods, file types and classes</li>
-</ul>
-</section>
-<section id="transcriptomic-analysis" class="slide level2">
-<h2>Transcriptomic Analysis</h2>
-<ul>
-<li>Early transcriptomic analysis was performed on microarray data</li>
-<li>Many methods and data structures built around this data</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Bulk RNA-Seq is now <em>relatively</em> mature for gene-level analysis</li>
-<li>Has extended earlier data structure &amp; methods</li>
-<li>Also introduced multiple new methods</li>
-</ul>
-</div>
 </section>
 <section id="transcriptomic-analysis-1" class="slide level2">
 <h2>Transcriptomic Analysis</h2>
+<ul>
+<li>High-throughput transcriptomic analysis took off ~25 years ago
+<ul>
+<li>Followed the release of the the human genome very rapidly</li>
+</ul></li>
+<li>Microarrays enabled transcriptome-wide profiling of gene expression
+<ul>
+<li>Probes were designed for each targeted gene</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>How does gene expression change across two or more groups
+<ul>
+<li>Control vs Treatment</li>
+</ul></li>
+<li>Represents an abundance analysis</li>
+<li>Relies on many, many cells pooled together</li>
+</ul>
+</div>
+</section>
+<section id="rna-seq" class="slide level2">
+<h2>RNA-Seq</h2>
+<ul>
+<li>The development of high-throughput sequencing <span class="math inline">\(\implies\)</span> RNA-seq</li>
+<li>Rapidly replaced microarrays</li>
+<li>Needed fewer cells <span class="math inline">\(\implies\)</span> could sample entire transcriptome</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Bulk RNA-Seq built on methods established for microarrays
+<ul>
+<li>New statistical models became quickly established</li>
+</ul></li>
+<li>Focussed on <em>gene-level</em> analysis
+<ul>
+<li>Now relatively mature</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="rna-seq-1" class="slide level2">
+<h2>RNA-Seq</h2>
 <ul>
 <li>Bulk RNA-Seq at the <em>transcript level</em> is still relatively immature</li>
 <li>Single-Cell RNA-Seq now has a degree of maturity
@@ -434,7 +446,7 @@ Dr Stevie Pederson
 </ul>
 
 <img data-src="assets/splicing2.png" class="r-stretch quarto-figure-left"><p class="caption">Image courtesy of National Human Genome Research Institute</p><aside class="notes">
-<p>Historically genes were considered to be units of heritability The idea of transcribed loci is a modern concept</p>
+<p>Historically genes were considered to be units of heritability The idea of a transcribed locus is a modern concept</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -447,89 +459,149 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="transcriptomes-1" class="slide level2">
-<h2>Transcriptomes</h2>
-<ul>
-<li>Multiple databases exist for gene annotations
-<ul>
-<li>UCSC, NCBI (EntrezGene)</li>
-<li>Ensembl, Gencode</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Bioconductor was established in the US
-<ul>
-<li>Many early annotation packages were UCSC-based</li>
-<li>Now well established for Ensembl</li>
-<li>Gencode annotation packages are less common</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="transcriptomes-2" class="slide level2">
-<h2>Transcriptomes</h2>
-<ul>
-<li>The latest Gencode set of annotations (Release 46, May 2024)</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>63,086 Genes
-<ul>
-<li>19,411 protein coding</li>
-<li>Remainder are lncRNA, pseudogenes etc</li>
-</ul></li>
-<li>254,070 Transcripts
-<ul>
-<li>89,581 protein coding</li>
-<li>Remainder are NMD, lncRNA etc</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>Shortest annotated transcript is 8nt <span class="math inline">\(\implies\)</span> longest is 350,375nt</li>
-</ul>
-</div>
-</section>
 <section id="the-basics-of-bulk-rna-sequencing" class="slide level2">
 <h2>The Basics of Bulk RNA-Sequencing</h2>
 <ol type="1">
-<li>Intact RNA is extracted from a sample <span class="math inline">\(\implies\)</span> millions of cells</li>
+<li>Intact RNA is extracted from a sample
+<ul>
+<li>Tens of thousands of cells are lysed</li>
+<li>May contain RNA from different cell types</li>
+</ul></li>
 </ol>
-<div>
+<div class="fragment">
 <ol start="2" type="1">
-<li class="fragment">RNA is fragmented into 250-500bp fragments
+<li>RNA is fragmented into 250-500bp fragments
 <ul>
-<li class="fragment">Lose short transcripts <span class="math inline">\(\implies\)</span> long transcripts broken into pieces</li>
-</ul></li>
-<li class="fragment">Prepared for sequencing
-<ul>
-<li class="fragment">Converted to cDNA</li>
-<li class="fragment">Sequencing adapters added to all fragments</li>
-<li class="fragment">PCR amplification</li>
-</ul></li>
-<li class="fragment">Sequenced from both directions (paired end sequencing)
-<ul>
-<li class="fragment">Commonly 50m reads/sample</li>
+<li>Lose short transcripts <span class="math inline">\(\implies\)</span> long transcripts broken into pieces</li>
 </ul></li>
 </ol>
 </div>
 </section>
 <section id="the-basics-of-bulk-rna-sequencing-1" class="slide level2">
 <h2>The Basics of Bulk RNA-Sequencing</h2>
-<div>
+<ol start="3" type="1">
+<li>Prepared for sequencing
+<ul>
+<li>Converted to cDNA</li>
+<li>Sequencing adapters added to all fragments</li>
+<li>PCR amplification</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<ol start="4" type="1">
+<li>Sequenced from both directions (paired end sequencing)
+<ul>
+<li>Commonly 50m reads/sample</li>
+</ul></li>
+</ol>
+</div>
+</section>
+<section id="the-basics-of-bulk-rna-sequencing-2" class="slide level2">
+<h2>The Basics of Bulk RNA-Sequencing</h2>
+
+<img data-src="assets/bd020139.f1.jpeg" class="r-stretch"></section>
+<section id="sequencing-technology" class="slide level2">
+<h2>Sequencing Technology</h2>
+
+<img data-src="assets/449456_1_En_23_Fig2_HTML.png" width="650" class="r-stretch quarto-figure-left"><p class="caption">Wang, M. (2021). Next-Generation Sequencing (NGS). In: Pan, S., Tang, J. (eds) Clinical Molecular Diagnostics. Springer, Singapore. https://doi.org/10.1007/978-981-16-1037-0_23</p><aside class="notes">
+<ul>
+<li>The prepared library is added to a flowcell</li>
+<li>Hopefully the dilution spreads molecules sparsely &amp; evenly</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fastq-files" class="slide level2">
+<h2>Fastq Files</h2>
+<ul>
+<li>The output from sequencing is a <code>fastq</code> file
+<ul>
+<li>Plain text file</li>
+</ul></li>
+<li>Commonly 30-50 million reads in each file
+<ul>
+<li>Each read takes 4 lines</li>
+<li>50m read x 4 lines = 200m lines</li>
+</ul></li>
+<li>Often compressed with <code>fq.gz</code> suffix</li>
+<li>Almost never parsed into <code>R</code></li>
+</ul>
+</section>
+<section id="fastq-files-1" class="slide level2">
+<h2>Fastq Files</h2>
+<ul>
+<li>If fragments are sequenced from one end only: <em>single-end reads</em></li>
+<li>If sequenced from both ends: <em>paired-end reads</em></li>
+<li>Both provided in separate files
+<ul>
+<li><code>{prefix}_R1.fq.gz</code> + <code>{prefix}_R2.fq.gz</code></li>
+<li>Files match exactly</li>
+</ul></li>
+<li>Paired reads still represent a single fragment
+<ul>
+<li>More sequence information <span class="math inline">\(\implies\)</span> more confident alignment</li>
+</ul></li>
+</ul>
+</section>
+<section id="fastq-files-2" class="slide level2">
+<h2>Fastq Files</h2>
 <ol type="1">
-<li class="fragment">QC and Read Trimming (optional) 😇</li>
+<li>Read header starts with <code>@</code></li>
+<li>Sequence</li>
+<li><code>+</code></li>
+<li>Quality scores</li>
+</ol>
+<div class="fragment">
+<pre><code>@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=72
+GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACCAAGTTACCCTTAACAACTTAAGGGTTTTCAAATAGA
++
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9ICIIIIIIIIIIIIIIIIIIIIDIIIIIII&gt;IIIIII/
+@SRR001666.2 071112_SLXA-EAS1_s_7:5:1:801:338 length=72
+GTTCAGGGATACGACGTTTGTATTTTAAGAATCTGAAGCAGAAGTCGATGATAATACGCGTCGTTTTATCAT
++
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII&gt;IIIII-I)8I</code></pre>
+<aside class="notes">
+<ul>
+<li>We rarely parse these into <code>R</code></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="workflow-outline" class="slide level2">
+<h2>Workflow Outline</h2>
+<ol type="1">
+<li>QC and Read Trimming (optional) 😇</li>
+</ol>
+<div>
+<ol start="2" type="1">
 <li class="fragment">Align reads to the reference genome 😀</li>
 <li class="fragment">Count how many reads for each gene 😐</li>
 <li class="fragment">Statistical (DGE) analysis 😕</li>
 <li class="fragment">Enrichment analysis 😰</li>
-<li class="fragment">Interpretation 😱</li>
+<li class="fragment">Biological Interpretation 😱</li>
 </ol>
 <ul>
-<li class="fragment">QC analysis, Statistical and enrichment analysis in R</li>
 <li class="fragment">Trimming, aligning and counting on an HPC</li>
+<li class="fragment">QC analysis, Statistical and enrichment analysis in R</li>
 <li class="fragment">Interpretation with domain experts</li>
 </ul>
 </div>
@@ -547,81 +619,359 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-basics-of-bulk-rna-sequencing-2" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
-
-<img data-src="assets/bd020139.f1.jpeg" class="r-stretch"></section>
-<section id="the-basics-of-bulk-rna-sequencing-3" class="slide level2">
-<h2>The Basics of Bulk RNA-Sequencing</h2>
+<section id="alternative-approaches" class="slide level2">
+<h2>Alternative Approaches</h2>
 <ul>
 <li>Alternative methods align to transcript sequences NOT the genome</li>
 <li>These alignments are not spliced</li>
-<li>Reads align to multiple transcripts
+<li>Most reads align to multiple transcripts
 <ul>
 <li>With genomic alignments usually a single alignment</li>
 </ul></li>
 </ul>
-</section>
-<section id="what-file-types" class="slide level2">
-<h2>What File Types</h2>
-<ul>
-<li>Reference Genome <span class="math inline">\(\implies\)</span> <code>fasta</code> file</li>
-<li>Sequencing data <span class="math inline">\(\implies\)</span> <code>fastq</code> file
-<ul>
-<li>Often QC reports in plain text, tsv-based or json format</li>
-</ul></li>
-<li>Alignments <span class="math inline">\(\implies\)</span> <code>bam</code> file
-<ul>
-<li>Alignment log files in plain text or tsv-based format</li>
-</ul></li>
-<li>Gene Annotations <span class="math inline">\(\implies\)</span> <code>gtf</code> file</li>
-<li>Read Counts <span class="math inline">\(\implies\)</span> tsv-based format</li>
-<li>Variants (if called) <span class="math inline">\(\implies\)</span> <code>vcf</code> file</li>
-</ul>
-</section>
-<section id="what-tools" class="slide level2">
-<h2>What Tools</h2>
-<ul>
-<li>Read QC is often performed using <code>FastQC</code> or <code>fastp</code>
-<ul>
-<li><code>fastp</code> will also remove low quality bases/reads</li>
-<li>Standalone trimming/filtering tools (<code>cutadapt</code>, <code>AdapterRemoval</code> etc)</li>
-</ul></li>
-<li>MultiQC provides good summaries of QC reports across a dataset
-<ul>
-<li><code>ngsReports</code> enables import into R for custom plots/tables</li>
-</ul></li>
-</ul>
 <div class="fragment">
 <ul>
-<li>Alignment to a reference genome needs a splice-aware aligner
+<li>Transcript-level analysis is a newly solved problem <span class="citation" data-cites="Baldoni2024-zf">(<a href="#/references" role="doc-biblioref" onclick="">Baldoni et al. 2024</a>)</span></li>
+<li>Downstream analysis using transcripts is challenging
 <ul>
-<li><code>STAR</code> is the most common followed by <code>hisat2</code> &amp; <code>bowtie2</code></li>
+<li>Genes mapped to functions &amp; pathways <em>NOT</em> transcripts</li>
 </ul></li>
 </ul>
 </div>
 </section>
-<section id="what-tools-1" class="slide level2">
-<h2>What Tools</h2>
+<section id="data-pre-processing" class="slide level2">
+<h2>Data Pre-Processing</h2>
 <ul>
-<li>Counting alignments usually uses <code>featureCounts</code>, <code>RSEM</code> or <code>htseq2</code>
+<li>A ‘read’ is the total signal from an entire cluster of molecules</li>
+<li>If errors occur during cluster formation:
 <ul>
-<li>Needs a GTF for counting alignments</li>
+<li>Molecules get ‘out-of-sync’</li>
+<li>Actual sequence becomes uncertain</li>
+<li>Low quality scores assigned</li>
+</ul></li>
+<li>Most people discard low quality reads</li>
+<li>Adapter sequences at either end can also be removed
+<ul>
+<li>Derive from short RNA fragments</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-pre-processing-1" class="slide level2">
+<h2>Data Pre-Processing</h2>
+<ul>
+<li>Overall summaries of library quality can be obtained <span class="math inline">\(\implies\)</span> <code>FastQC</code></li>
+<li>Multiple tools to perform Pre-processing
+<ul>
+<li><code>cutadapt</code>, <code>AdapterRemoval</code>, <code>trimmomatic</code>, <code>TrimGalore</code> etc</li>
+<li>Potentially problematic reads or sequences removed</li>
+</ul></li>
+<li><code>fastp</code> combines QC reports with read trimming</li>
+</ul>
+</section>
+<section id="data-pre-processing-2" class="slide level2">
+<h2>Data Pre-Processing</h2>
+<ul>
+<li><code>FastQC</code>, <code>fastp</code>, <code>cutadapt</code> all return reports after running
+<ul>
+<li>Are run on a single library (i.e.&nbsp;sample) at a time</li>
+</ul></li>
+<li><a href="https://multiqc.info"><code>MultiQC</code></a> is an excellent standalone tool for combining all reports</li>
+<li><code>ngsReports</code> is the “go-to” Bioconductor package for this
+<ul>
+<li>Can also import alignment summaries + many others</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Not going to go into ngsReports today but I use regularly in my QC workflows</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="alignment" class="slide level2">
+<h2>Alignment</h2>
+<ul>
+<li>Pre-processed reads are aligned to a genome</li>
+<li>All aligners based on Burrows-Wheeler Transform
+<ul>
+<li>Comp. Sci algorithm for fast searching</li>
+<li>Requires the <em>creation of an index</em> which is searched</li>
+</ul></li>
+<li>Most common aligners are <code>STAR</code>, <code>hisat2</code> or <code>bowtie2</code>
+<ul>
+<li>All splice-aware</li>
+<li>GTF used during building of the index</li>
+</ul></li>
+<li>Requires an HPC &amp; scripting skills</li>
+</ul>
+</section>
+<section id="bam-files" class="slide level2">
+<h2>Bam Files</h2>
+<ul>
+<li>After alignment to the reference <span class="math inline">\(\implies\)</span> <code>bam</code> files produced</li>
+<li>Usually contain millions of alignments</li>
+<li>Each read now occupies a single line with 11 tab-separated fields</li>
+</ul>
+<div style="font-size: 50%;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 24%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>QNAME</code></td>
+<td style="text-align: left;">The original FastQ header line</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><code>FLAG</code></td>
+<td style="text-align: left;">Information regarding pairing, primary alignment, duplicate status, unmapped etc</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><code>RNAME</code></td>
+<td style="text-align: left;">Reference sequence name (e.g.&nbsp;chr1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>POS</code></td>
+<td style="text-align: left;">Left-most co-ordinate in the alignment</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><code>MAPQ</code></td>
+<td style="text-align: left;">Mapping quality score</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><code>CIGAR</code></td>
+<td style="text-align: left;">Code summarising exact matches, insertions, deletions etc.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;"><code>RNEXT</code></td>
+<td style="text-align: left;">Reference sequence the mate aligned to</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;"><code>PNEXT</code></td>
+<td style="text-align: left;">Left-most co-ordinate the mate aligned to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;"><code>TLEN</code></td>
+<td style="text-align: left;">Read length</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;"><code>SEQ</code></td>
+<td style="text-align: left;">The original read sequence</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">11</td>
+<td style="text-align: left;"><code>QUAL</code></td>
+<td style="text-align: left;">The read quality scores</td>
+</tr>
+</tbody>
+</table>
+</div>
+<aside class="notes">
+<p>SAM files are plain text whilst BAM are compressed to save storage</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bam-files-1" class="slide level2">
+<h2>Bam Files</h2>
+<ul>
+<li>12th (optional) column often contains tags
+<ul>
+<li><code>NH:i:1</code> indicates this read aligned only once</li>
+<li><code>AS:i:290</code> the actual alignment score produced by the aligner</li>
+<li><code>NM:i:2</code> two edits are required to perfectly match the reference</li>
 </ul></li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Alignments to a reference <em>transcriptome</em> only returns counts
+<li>Reads can align to multiple locations
 <ul>
-<li>Most common tools are <code>salmon</code> or <code>kallisto</code></li>
-<li>Also returns uncertainty for alignments</li>
+<li>Sometimes more alignments than reads</li>
+</ul></li>
+<li>Rarely, only one read in a pair may align</li>
+<li>Generally view small subsets of data using <code>samtools</code> in <code>bash</code></li>
+</ul>
+</div>
+</section>
+<section id="bam-files-2" class="slide level2">
+<h2>Bam Files</h2>
+<ul>
+<li>The Bioconductor interface to <code>bam</code> files is <code>Rsamtools</code></li>
+<li>Sequences loaded as <code>DNAStringSet</code>s</li>
+<li>Alignment co-ordinates as <code>GRanges</code> objects</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>When loading a subset of reads set <code>ScanBamParam()</code></li>
+<li>Enables loading alignments:
+<ul>
+<li>from specific ranges (using <code>GRanges</code>)</li>
+<li>with specific tags or flags</li>
+</ul></li>
+<li>Controls which columns are returned</li>
+</ul>
+</div>
+</section>
+<section id="read-counting" class="slide level2">
+<h2>Read Counting</h2>
+<ul>
+<li>Most assigning of reads to genes is performed by external tools</li>
+<li>Gene, Transcript &amp; Exon co-ordinates passed in a GTF
+<ul>
+<li>Aligned Reads overlapping an exon/transcript/gene are counted</li>
 </ul></li>
 </ul>
+<div class="fragment">
+<ul>
+<li>Produces flat (i.e.&nbsp;tsv) files <span class="math inline">\(\implies\)</span> count once &amp; load each time you start</li>
+<li>Today’s count data produced using <code>featureCounts</code> from the <code>Subread</code> tool
+<ul>
+<li>Other tools are <code>RSEM</code>, <code>htseq</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="read-counting-1" class="slide level2">
+<h2>Read Counting</h2>
+<ul>
+<li>Counting can be performed in <code>R</code>:
+<ul>
+<li><code>Rsubread</code> or <code>GenomicAlignments</code></li>
+</ul></li>
+<li>Should still only be performed once and saved as a standalone file
+<ul>
+<li>Would avoid doing at the start of every R script</li>
+</ul></li>
+</ul>
+</section>
+<section id="trancriptomic-pseudo-aligners" class="slide level2">
+<h2>Trancriptomic Pseudo-Aligners</h2>
+<ul>
+<li><code>salmon</code> and <code>kallisto</code> perform pseudo-alignments to the transcriptome (i.e.&nbsp;<em>not</em> the genome)</li>
+<li>Don’t produce <code>bam</code> files <span class="math inline">\(\implies\)</span> only transcript-level counts</li>
+<li>Transcript-level counts have explicit uncertainty due to multi-mapping
+<ul>
+<li>Can now be modelled confidently</li>
+</ul></li>
+<li>Can be simply summed to obtain gene-level counts</li>
+<li>Becoming increasingly popular</li>
+</ul>
+</section>
+<section id="reference-annotations" class="slide level2">
+<h2>Reference Annotations</h2>
+<ul>
+<li>Reference <em>genomes</em> are relatively stable over many years</li>
+<li>Available from multiple sources
+<ul>
+<li>Inconsistent use of the “chr” prefix</li>
+<li>Inconsistency in “chrM” or “chrMT”</li>
+<li>Some variability in scaffolds</li>
+</ul></li>
+</ul>
+</section>
+<section id="reference-annotations-1" class="slide level2">
+<h2>Reference Annotations</h2>
+<ul>
+<li>Annotation sets are updated multiple times every year
+<ul>
+<li>Gencode, Ensembl, UCSC</li>
+<li>Usually minor changes</li>
+</ul></li>
+<li>Not important for genomic alignment</li>
+<li>Very important for read counting &amp; transcriptomic alignment</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Changes appear as genes move from predicted to verified</li>
+<li>Prediction algorithms also change</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reference-annotations-2" class="slide level2">
+<h2>Reference Annotations</h2>
+<ul>
+<li>The latest Gencode set of annotations (Release 46, May 2024)</li>
+<li>63,086 Genes
+<ul>
+<li>19,411 protein coding</li>
+<li>Remainder are lncRNA, pseudogenes etc</li>
+</ul></li>
+<li>254,070 Transcripts
+<ul>
+<li>89,581 protein coding</li>
+<li>Remainder are NMD, lncRNA etc</li>
+</ul></li>
+<li>Shortest annotated (spliced) transcript is 8nt <span class="math inline">\(\implies\)</span> longest is 350,375nt</li>
+</ul>
+<aside class="notes">
+<p>Checking Gencode v41 there were 251,295 transcripts and 61,906 genes</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Baldoni2024-zf" class="csl-entry" role="listitem">
+Baldoni, Pedro L, Yunshun Chen, Soroor Hediyeh-Zadeh, Yang Liao, Xueyi Dong, Matthew E Ritchie, Wei Shi, and Gordon K Smyth. 2024. <span>“Dividing Out Quantification Uncertainty Allows Efficient Assessment of Differential Transcript Expression with edgeR.”</span> <em>Nucleic Acids Res.</em> 52 (3): e13.
 </div>
 </div>
 </section></section>

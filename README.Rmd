@@ -30,18 +30,18 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
 | 9:00  | Welcome To Country |     | 15min    |
-| 9:15  | Installation Help  |     | 15min    |
-| 9:30  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 0.9)`|
-| 10:00 | Spreadsheet-Like Data   | [Data Import](import.html) | `r getTiming("import_slides.qmd", 1.2)`|
+|   | Installation Help  |     | 15min    |
+|  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 0.9)`|
+|  | Spreadsheet-Like Data   | [Data Import](import.html) | `r getTiming("import_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Spreadsheet-Like Data (continued) | | |
-| 11:30 | Exploring & Manipulating Data | [Data Exploration](exploring.html) | `r getTiming("exploring_slides.qmd", 1)` |
+| | Exploring & Manipulating Data | [Data Exploration](exploring.html) | `r getTiming("exploring_slides.qmd", 1)` |
 | 12:30 | *Lunch* | | |
-| 1:15  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
-| 2:30  | *Afternoon Tea* | | |
-| 3:00  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd")` |
-|       | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
-| 4:00  | Recap and Bring Your Own Data  | | |
+| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
+|  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd")` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30  | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
+|  | Recap and Bring Your Own Data  | | |
 
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
@@ -50,20 +50,20 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
-| 1:30  | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
-| 2:30  | *Afternoon Tea* | | |
-| 3:00  | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.2)` |
-| 4:00  | Recap and Bring Your Own Data  | | |
+| 1:30  | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.2)` |
+|  | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30  | Using Rmarkdown (continued) | | |
+| | Recap and Bring Your Own Data  | | |
 
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
 | 9:00  | The Bioconductor Project | [The Bioconductor Project](intro_bioc.html) | `r getTiming("intro_bioc_slides.qmd")` |
-| 9:45 | An Outline of RNA-Seq | [RNA-Seq](rna_seq.html) | `r getTiming("rna_seq_slides.qmd")` |
-| 10:00 | Packages for Genomes | [Biostrings and Genomic Ranges](references.html) |  `r getTiming("references_slides.qmd", 1.5)` |
+| | Working with Sequences and Genomic Ranges | [References and Ranges](references.html) | `r getTiming("references_slides.qmd")` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Packages for Genomes (continued) | | |
-| 11:30 | Bulk RNA-Seq Analysis | | |
+| 11:00 | Introduction to RNA-Seq | [RNA-Seq](rna_seq.html) |  `r getTiming("rna_seq_slides.qmd", 1.2)` |
+|  | Bulk RNA-Seq Analysis | | |
 | 12:30 | *Lunch* | | |
 | 1:30  | Genomic Ranges | | |
 | 3:00  | *Afternoon Tea* | | |
