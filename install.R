@@ -18,7 +18,7 @@ pkg <- c(
 install.packages("BiocManager")
 stopifnot("BiocManager" %in% rownames(installed.packages()))
 cat("BiocManager successfully installed\n")
-BiocManager::install(pkg, ask = FALSE, force = TRUE)
+BiocManager::install(pkg, ask = FALSE, update = TRUE)
 
 missing <- setdiff(pkg, rownames(installed.packages()))
 if (length(missing)) {
