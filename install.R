@@ -8,6 +8,7 @@ pkg <- c(
   "GenomicFeatures", "Gviz", "glue", "ggrepel",
   "IRanges",
   "lme4", "lmerTest",
+  "msigdbr",
   "pander", "plyranges",
   "readxl", "rtracklayer",
   "S4Vectors",
