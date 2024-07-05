@@ -487,7 +487,6 @@ Dr Stevie Pederson
 </section>
 <section id="loading-packages" class="slide level2">
 <h2>Loading Packages</h2>
-<div style="font-size: 90%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(edgeR)</span>
@@ -495,6 +494,13 @@ Dr Stevie Pederson
 <span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
 <span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="getting-annotations" class="slide level2">
+<h2>Getting Annotations</h2>
+<ul>
+<li>Which one shall we choose?</li>
+</ul>
+<div style="font-size: 90%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> <span class="fu">subset</span>(dataprovider <span class="sc">==</span> <span class="st">"Gencode"</span> <span class="sc">&amp;</span> genome <span class="sc">==</span> <span class="st">"GRCh38"</span>) <span class="sc">%&gt;%</span> <span class="fu">query</span>(<span class="st">"v31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -525,66 +531,165 @@ Dr Stevie Pederson
 </section>
 <section id="loading-packages-1" class="slide level2">
 <h2>Loading Packages</h2>
+<div style="font-size: 95%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> ah[[<span class="st">"AH75125"</span>]] <span class="co"># This will take several minutes</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> ah[[<span class="st">"AH75121"</span>]] <span class="co"># This will take several minutes</span></span>
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> gtf <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"gene"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"gene"</span>))</span>
 <span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>GRanges object with 60662 ranges and 3 metadata columns:
-            seqnames        ranges strand |           gene_id
-               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;character&gt;
-      [1]       chr1   11869-14409      + | ENSG00000223972.5
-      [2]       chr1   14404-29570      - | ENSG00000227232.5
-      [3]       chr1   17369-17436      - | ENSG00000278267.1
-      [4]       chr1   29554-31109      + | ENSG00000243485.5
-      [5]       chr1   30366-30503      + | ENSG00000284332.1
-      ...        ...           ...    ... .               ...
-  [60658] KI270734.1   72411-74814      + | ENSG00000276017.1
-  [60659] KI270734.1 131494-137392      + | ENSG00000278817.1
-  [60660] KI270734.1 138082-161852      - | ENSG00000277196.4
-  [60661] KI270744.1   51009-51114      - | ENSG00000278625.1
-  [60662] KI270750.1 148668-148843      + | ENSG00000277374.1
-                       gene_type   gene_name
-                     &lt;character&gt; &lt;character&gt;
-      [1] transcribed_unproces..     DDX11L1
-      [2] unprocessed_pseudogene      WASH7P
-      [3]                  miRNA   MIR6859-1
-      [4]                 lncRNA MIR1302-2HG
-      [5]                  miRNA   MIR1302-2
-      ...                    ...         ...
-  [60658]         protein_coding  AC007325.1
-  [60659]         protein_coding  AC007325.4
-  [60660]         protein_coding  AC007325.2
-  [60661]                  snRNA     RF00026
-  [60662]                  snRNA     RF00003
+<pre><code>GRanges object with 66738 ranges and 3 metadata columns:
+            seqnames        ranges strand |           gene_id              gene_type   gene_name
+               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;character&gt;            &lt;character&gt; &lt;character&gt;
+      [1]       chr1   11869-14409      + | ENSG00000223972.5 transcribed_unproces..     DDX11L1
+      [2]       chr1   14404-29570      - | ENSG00000227232.5 unprocessed_pseudogene      WASH7P
+      [3]       chr1   17369-17436      - | ENSG00000278267.1                  miRNA   MIR6859-1
+      [4]       chr1   29554-31109      + | ENSG00000243485.5                 lncRNA MIR1302-2HG
+      [5]       chr1   30366-30503      + | ENSG00000284332.1                  miRNA   MIR1302-2
+      ...        ...           ...    ... .               ...                    ...         ...
+  [66734] KI270734.1   72411-74814      + | ENSG00000276017.1         protein_coding  AC007325.1
+  [66735] KI270734.1 131494-137392      + | ENSG00000278817.1         protein_coding  AC007325.4
+  [66736] KI270734.1 138082-161852      - | ENSG00000277196.4         protein_coding  AC007325.2
+  [66737] KI270744.1   51009-51114      - | ENSG00000278625.1                  snRNA     RF00026
+  [66738] KI270750.1 148668-148843      + | ENSG00000277374.1                  snRNA     RF00003
   -------
-  seqinfo: 47 sequences from an unspecified genome; no seqlengths</code></pre>
+  seqinfo: 407 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
 </div>
 </div>
 </section>
 <section id="loading-counts" class="slide level2">
 <h2>Loading Counts</h2>
 <ul>
-<li>Data is exactly as produced by <code>featureCounts</code> <span class="citation" data-cites="Liao2014-gy">(<a href="#/references" role="doc-biblioref" onclick="">Liao, Smyth, and Shi 2014</a>)</span></li>
+<li>Data is exactly as produced by <code>featureCounts</code> <span class="citation" data-cites="Liao2014-gy">(<a href="#/references" role="doc-biblioref" onclick="">Liao, Smyth, and Shi 2014</a>)</span>
+<ul>
 <li>Tab-delimited but with some weird columns</li>
+</ul></li>
+<li>Let’s have a sneak preview</li>
 </ul>
+<div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">read_tsv</span>(<span class="st">"data/GSE171742_counts.out.gz"</span>, <span class="at">n_max =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 18
-  Geneid    Chr   Start End   Strand Length `1_control` `6_control` `11_control`
-  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-1 ENSG0000… chrX… 1006… 1006… -;-;-…   4535        5211        6192         4542
-2 ENSG0000… chrX… 1005… 1005… +;+;+…   1476          65         178           96
-3 ENSG0000… chr2… 5093… 5093… -;-;-…   1207        1454        1889         1329
-4 ENSG0000… chr1… 1698… 1698… -;-;-…   6883         628         548          522
-5 ENSG0000… chr1… 1696… 1696… +;+;+…   5970         191         241          150
-6 ENSG0000… chr1… 2761… 2761… -;-;-…   3382           0           0            0
-# ℹ 9 more variables: `2_Nsp6` &lt;dbl&gt;, `7_Nsp6` &lt;dbl&gt;, `12_Nsp6` &lt;dbl&gt;,
-#   `3_Nsp8` &lt;dbl&gt;, `8_Nsp8` &lt;dbl&gt;, `13_Nsp8` &lt;dbl&gt;, `4_M` &lt;dbl&gt;, `9_M` &lt;dbl&gt;,
-#   `14_M` &lt;dbl&gt;</code></pre>
+  Geneid      Chr   Start End   Strand Length `1_control` `6_control` `11_control` `2_Nsp6` `7_Nsp6`
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 ENSG000000… chrX… 1006… 1006… -;-;-…   4535        5211        6192         4542     4328     5283
+2 ENSG000000… chrX… 1005… 1005… +;+;+…   1476          65         178           96       50       86
+3 ENSG000000… chr2… 5093… 5093… -;-;-…   1207        1454        1889         1329     1472     1684
+4 ENSG000000… chr1… 1698… 1698… -;-;-…   6883         628         548          522      560      636
+5 ENSG000000… chr1… 1696… 1696… +;+;+…   5970         191         241          150      146      254
+6 ENSG000000… chr1… 2761… 2761… -;-;-…   3382           0           0            0        0        0
+# ℹ 7 more variables: `12_Nsp6` &lt;dbl&gt;, `3_Nsp8` &lt;dbl&gt;, `8_Nsp8` &lt;dbl&gt;, `13_Nsp8` &lt;dbl&gt;,
+#   `4_M` &lt;dbl&gt;, `9_M` &lt;dbl&gt;, `14_M` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Which columns do we need? How would you parse them?</p>
+</div>
+</section>
+<section id="loading-counts-1" class="slide level2">
+<h2>Loading Counts</h2>
+<ul>
+<li>The best form for counts is as a matrix</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"data/GSE171742_counts.out.gz"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Geneid, <span class="fu">contains</span>(<span class="st">"_"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="st">"Geneid"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:66738, 1:12] 5211 65 1454 628 191 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : chr [1:66738] "ENSG00000000003.14" "ENSG00000000005.6" "ENSG00000000419.12" "ENSG00000000457.14" ...
+  ..$ : chr [1:12] "1_control" "6_control" "11_control" "2_Nsp6" ...</code></pre>
+</div>
+</div>
+</section>
+<section id="checking-annotations" class="slide level2">
+<h2>Checking Annotations</h2>
+<ul>
+<li>Compare these with the annotations we have</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">rownames</span>(counts), genes<span class="sc">$</span>gene_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ENSG00000002586.20_PAR_Y" "ENSG00000124333.16_PAR_Y" "ENSG00000124334.17_PAR_Y"
+ [4] "ENSG00000167393.17_PAR_Y" "ENSG00000168939.11_PAR_Y" "ENSG00000169084.14_PAR_Y"
+ [7] "ENSG00000169093.16_PAR_Y" "ENSG00000169100.14_PAR_Y" "ENSG00000178605.13_PAR_Y"
+[10] "ENSG00000182162.11_PAR_Y" "ENSG00000182378.14_PAR_Y" "ENSG00000182484.15_PAR_Y"
+[13] "ENSG00000185203.12_PAR_Y" "ENSG00000185291.11_PAR_Y" "ENSG00000185960.14_PAR_Y"
+[16] "ENSG00000196433.13_PAR_Y" "ENSG00000197976.12_PAR_Y" "ENSG00000198223.16_PAR_Y"
+[19] "ENSG00000205755.11_PAR_Y" "ENSG00000214717.12_PAR_Y" "ENSG00000223274.6_PAR_Y" 
+[22] "ENSG00000223484.7_PAR_Y"  "ENSG00000223511.7_PAR_Y"  "ENSG00000223571.6_PAR_Y" 
+[25] "ENSG00000223773.7_PAR_Y"  "ENSG00000225661.7_PAR_Y"  "ENSG00000226179.6_PAR_Y" 
+[28] "ENSG00000227159.8_PAR_Y"  "ENSG00000228410.6_PAR_Y"  "ENSG00000228572.7_PAR_Y" 
+[31] "ENSG00000229232.6_PAR_Y"  "ENSG00000230542.6_PAR_Y"  "ENSG00000234622.6_PAR_Y" 
+[34] "ENSG00000234958.6_PAR_Y"  "ENSG00000236017.8_PAR_Y"  "ENSG00000236871.7_PAR_Y" 
+[37] "ENSG00000237040.6_PAR_Y"  "ENSG00000237531.6_PAR_Y"  "ENSG00000237801.6_PAR_Y" 
+[40] "ENSG00000265658.6_PAR_Y"  "ENSG00000270726.6_PAR_Y"  "ENSG00000275287.5_PAR_Y" 
+[43] "ENSG00000277120.5_PAR_Y"  "ENSG00000280767.3_PAR_Y"  "ENSG00000281849.3_PAR_Y" </code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>If we’re doing everything, we don’t need to check these</li>
+<li>Only for public data. Annotations can be difficult to untangle</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>Should we remove the suffixes?</li>
+</ul>
+</section>
+<section id="checking-annotations-1" class="slide level2">
+<h2>Checking Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>genes <span class="sc">%&gt;%</span> <span class="fu">subset</span>(gene_id <span class="sc">==</span> <span class="st">"ENSG00000002586.20"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 3 metadata columns:
+      seqnames          ranges strand |            gene_id      gene_type   gene_name
+         &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; |        &lt;character&gt;    &lt;character&gt; &lt;character&gt;
+  [1]     chrX 2691187-2741309      + | ENSG00000002586.20 protein_coding        CD99
+  [2]     chrY 2691187-2741309      + | ENSG00000002586.20 protein_coding        CD99
+  -------
+  seqinfo: 407 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+<ul>
+<li>How can we resolve this?</li>
+</ul>
+</section>
+<section id="checking-annotations-2" class="slide level2">
+<h2>Checking Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> genes <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">gene_id =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">duplicated</span>(gene_id) <span class="sc">~</span> <span class="fu">paste0</span>(gene_id, <span class="st">"_PAR_Y"</span>),</span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> gene_id</span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(genes, <span class="fu">duplicated</span>(gene_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 0 ranges and 3 metadata columns:
+   seqnames    ranges strand |     gene_id   gene_type   gene_name
+      &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt; &lt;character&gt;
+  -------
+  seqinfo: 407 sequences from an unspecified genome; no seqlengths</code></pre>
 </div>
 </div>
 </section></section>
@@ -592,6 +697,183 @@ Dr Stevie Pederson
 <section id="working-with-count-data" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
 <h1>Working With Count Data</h1>
 
+</section>
+<section id="dgelist-objects" class="slide level2">
+<h2>DGEList Objects</h2>
+<ul>
+<li>We’ll use <code>edgeR</code> for DGE analysis <span class="citation" data-cites="edgeR2010">(<a href="#/references" role="doc-biblioref" onclick="">Robinson, McCarthy, and Smyth 2010</a>)</span></li>
+<li>Counts, sample metadata and gene annotations stored in a single <code>S4</code> object
+<ul>
+<li><code>DGEList</code>: Digital Gene Expression List</li>
+<li>Gene &amp; metadata elements need to be <code>data.frame</code> objects</li>
+<li>Will be coerced if able</li>
+</ul></li>
+</ul>
+</section>
+<section id="dgelist-objects-1" class="slide level2">
+<h2>DGEList Objects</h2>
+<ul>
+<li>How can we get sample metadata?</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="fu">colnames</span>(counts)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(id, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"replicate"</span>, <span class="st">"treatment"</span>), <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+   id         replicate treatment
+   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;    
+ 1 1_control  1         control  
+ 2 6_control  6         control  
+ 3 11_control 11        control  
+ 4 2_Nsp6     2         Nsp6     
+ 5 7_Nsp6     7         Nsp6     
+ 6 12_Nsp6    12        Nsp6     
+ 7 3_Nsp8     3         Nsp8     
+ 8 8_Nsp8     8         Nsp8     
+ 9 13_Nsp8    13        Nsp8     
+10 4_M        4         M        
+11 9_M        9         M        
+12 14_M       14        M        </code></pre>
+</div>
+</div>
+<ul>
+<li>Will be in the same order as <code>counts</code></li>
+</ul>
+</section>
+<section id="dgelist-objects-2" class="slide level2">
+<h2>DGEList Objects</h2>
+<ul>
+<li>Annotations appear to match the counts
+<ul>
+<li>Counts for 66738 genes</li>
+<li>Annotations for 66738 genes</li>
+</ul></li>
+<li>But will be in a different order
+<ul>
+<li>Counts in order of name</li>
+<li>Annotations in genomic order</li>
+</ul></li>
+</ul>
+</section>
+<section id="dgelist-objects-3" class="slide level2">
+<h2>DGEList Objects</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>genes <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> .[<span class="fu">rownames</span>(counts)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 66738 ranges and 3 metadata columns:
+                     seqnames              ranges strand |            gene_id      gene_type
+                        &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |        &lt;character&gt;    &lt;character&gt;
+  ENSG00000000003.14     chrX 100627109-100639991      - | ENSG00000000003.14 protein_coding
+   ENSG00000000005.6     chrX 100584936-100599885      + |  ENSG00000000005.6 protein_coding
+  ENSG00000000419.12    chr20   50934867-50958555      - | ENSG00000000419.12 protein_coding
+  ENSG00000000457.14     chr1 169849631-169894267      - | ENSG00000000457.14 protein_coding
+  ENSG00000000460.17     chr1 169662007-169854080      + | ENSG00000000460.17 protein_coding
+                 ...      ...                 ...    ... .                ...            ...
+   ENSG00000288107.1    chr10 133565797-133629507      + |  ENSG00000288107.1         lncRNA
+   ENSG00000288108.1     chr5     1931058-1933985      - |  ENSG00000288108.1         lncRNA
+   ENSG00000288109.1    chr17   67658015-67659465      - |  ENSG00000288109.1         lncRNA
+   ENSG00000288110.1     chr8     4496392-4503392      + |  ENSG00000288110.1         lncRNA
+   ENSG00000288111.1     chr3 130181346-130188814      + |  ENSG00000288111.1         lncRNA
+                       gene_name
+                     &lt;character&gt;
+  ENSG00000000003.14      TSPAN6
+   ENSG00000000005.6        TNMD
+  ENSG00000000419.12        DPM1
+  ENSG00000000457.14       SCYL3
+  ENSG00000000460.17    C1orf112
+                 ...         ...
+   ENSG00000288107.1  AL731769.2
+   ENSG00000288108.1  AC126768.3
+   ENSG00000288109.1  AC079331.3
+   ENSG00000288110.1  AC010941.1
+   ENSG00000288111.1  AC130888.1
+  -------
+  seqinfo: 407 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+</section>
+<section id="dgelist-objects-4" class="slide level2">
+<h2>DGEList Objects</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">counts =</span> counts,</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">samples =</span> samples,</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">genes =</span> genes <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setNames</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">rownames</span>(counts)] <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>(<span class="at">row.names =</span> <span class="fu">names</span>(.))</span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>dge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>An object of class "DGEList"
+$counts
+                   1_control 6_control 11_control 2_Nsp6 7_Nsp6 12_Nsp6 3_Nsp8 8_Nsp8 13_Nsp8  4_M
+ENSG00000000003.14      5211      6192       4542   4328   5283    4336   4330   5208    4635 4743
+ENSG00000000005.6         65       178         96     50     86      83     67     92      80   51
+ENSG00000000419.12      1454      1889       1329   1472   1684    1368   1666   2042    1707 1822
+ENSG00000000457.14       628       548        522    560    636     492    530    500     498  622
+ENSG00000000460.17       191       241        150    146    254     164    161    179     183  173
+                    9_M 14_M
+ENSG00000000003.14 5498 5172
+ENSG00000000005.6    70   64
+ENSG00000000419.12 2293 1987
+ENSG00000000457.14  513  560
+ENSG00000000460.17  256  228
+66733 more rows ...
+
+$samples
+           group lib.size norm.factors         id replicate treatment
+1_control      1 38633196            1  1_control         1   control
+6_control      1 48184412            1  6_control         6   control
+11_control     1 34566631            1 11_control        11   control
+2_Nsp6         1 33088151            1     2_Nsp6         2      Nsp6
+7_Nsp6         1 41621703            1     7_Nsp6         7      Nsp6
+7 more rows ...
+
+$genes
+                   seqnames     start       end  width strand            gene_id      gene_type
+ENSG00000000003.14     chrX 100627109 100639991  12883      - ENSG00000000003.14 protein_coding
+ENSG00000000005.6      chrX 100584936 100599885  14950      +  ENSG00000000005.6 protein_coding
+ENSG00000000419.12    chr20  50934867  50958555  23689      - ENSG00000000419.12 protein_coding
+ENSG00000000457.14     chr1 169849631 169894267  44637      - ENSG00000000457.14 protein_coding
+ENSG00000000460.17     chr1 169662007 169854080 192074      + ENSG00000000460.17 protein_coding
+                   gene_name
+ENSG00000000003.14    TSPAN6
+ENSG00000000005.6       TNMD
+ENSG00000000419.12      DPM1
+ENSG00000000457.14     SCYL3
+ENSG00000000460.17  C1orf112
+66733 more rows ...</code></pre>
+</div>
+</div>
+</section>
+<section id="dgelist-objects-5" class="slide level2">
+<h2>DGEList Objects</h2>
+<ul>
+<li>Key elements have different but related dimensions</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66738    12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dge<span class="sc">$</span>counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66738    12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dge<span class="sc">$</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12  6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dge<span class="sc">$</span>genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66738     8</code></pre>
+</div>
+</div>
+<ul>
+<li><code>samples</code> is column metadata <span class="math inline">\(\implies\)</span> <code>genes</code> is row metadata</li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -607,6 +889,9 @@ Liao, Yang, Gordon K Smyth, and Wei Shi. 2014. <span>“featureCounts: An Effici
 </div>
 <div id="ref-Liu2023-qu" class="csl-entry" role="listitem">
 Liu, Juli, Shiyong Wu, Yucheng Zhang, Cheng Wang, Sheng Liu, Jun Wan, and Lei Yang. 2023. <span>“<span>SARS-CoV-2</span> Viral Genes Nsp6, Nsp8, and <span>M</span> Compromise Cellular <span>ATP</span> Levels to Impair Survival and Function of Human Pluripotent Stem Cell-Derived Cardiomyocytes.”</span> <em>Stem Cell Res. Ther.</em> 14 (1): 249.
+</div>
+<div id="ref-edgeR2010" class="csl-entry" role="listitem">
+Robinson, Mark D, Davis J McCarthy, and Gordon K Smyth. 2010. <span>“edgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data.”</span> <em>Bioinformatics</em> 26 (1): 139–40. <a href="https://doi.org/10.1093/bioinformatics/btp616">https://doi.org/10.1093/bioinformatics/btp616</a>.
 </div>
 </div>
 </section></section>
