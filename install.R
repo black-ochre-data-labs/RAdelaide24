@@ -1,4 +1,4 @@
-# Veyr basic installation script
+# Very basic installation script
 pkg <- c(
   "AnnotationHub",
   "Biostrings","BSgenome.Hsapiens.UCSC.hg38",
@@ -10,7 +10,7 @@ pkg <- c(
   "lme4", "lmerTest",
   "msigdbr",
   "pander", "plyranges",
-  "readxl", "rtracklayer",
+  "readxl", "remotes", "rtracklayer",
   "S4Vectors",
   "tidyverse"
 )
@@ -18,7 +18,7 @@ pkg <- c(
 install.packages("BiocManager")
 stopifnot("BiocManager" %in% rownames(installed.packages()))
 cat("BiocManager successfully installed\n")
-BiocManager::install(pkg, ask = FALSE, update = TRUE)
+BiocManager::install(pkg, ask = FALSE, update = FALSE, version = "3.19")
 
 missing <- setdiff(pkg, rownames(installed.packages()))
 if (length(missing)) {
