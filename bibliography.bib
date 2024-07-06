@@ -138,3 +138,144 @@
     doi = {10.1093/bioinformatics/btp616},
   }
 
+@Article{DESeq22014,
+    title = {Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2},
+    author = {Michael I. Love and Wolfgang Huber and Simon Anders},
+    year = {2014},
+    journal = {Genome Biology},
+    doi = {10.1186/s13059-014-0550-8},
+    volume = {15},
+    issue = {12},
+    pages = {550},
+  }
+
+
+
+@ARTICLE{Robinson2010-qp,
+  title    = "A scaling normalization method for differential expression
+              analysis of {RNA-seq} data",
+  author   = "Robinson, Mark D and Oshlack, Alicia",
+  abstract = "The fine detail provided by sequencing-based transcriptome
+              surveys suggests that RNA-seq is likely to become the platform of
+              choice for interrogating steady state RNA. In order to discover
+              biologically important changes in expression, we show that
+              normalization continues to be an essential step in the analysis.
+              We outline a simple and effective method for performing
+              normalization and show dramatically improved results for
+              inferring differential expression in simulated and publicly
+              available data sets.",
+  journal  = "Genome Biol.",
+  volume   =  11,
+  number   =  3,
+  pages    = "R25",
+  month    =  mar,
+  year     =  2010,
+  language = "en"
+}
+
+
+@ARTICLE{Smyth2004-hl,
+  title    = "Linear models and empirical bayes methods for assessing
+              differential expression in microarray experiments",
+  author   = "Smyth, Gordon K",
+  abstract = "The problem of identifying differentially expressed genes in
+              designed microarray experiments is considered. Lonnstedt and
+              Speed (2002) derived an expression for the posterior odds of
+              differential expression in a replicated two-color experiment
+              using a simple hierarchical parametric model. The purpose of this
+              paper is to develop the hierarchical model of Lonnstedt and Speed
+              (2002) into a practical approach for general microarray
+              experiments with arbitrary numbers of treatments and RNA samples.
+              The model is reset in the context of general linear models with
+              arbitrary coefficients and contrasts of interest. The approach
+              applies equally well to both single channel and two color
+              microarray experiments. Consistent, closed form estimators are
+              derived for the hyperparameters in the model. The estimators
+              proposed have robust behavior even for small numbers of arrays
+              and allow for incomplete data arising from spot filtering or spot
+              quality weights. The posterior odds statistic is reformulated in
+              terms of a moderated t-statistic in which posterior residual
+              standard deviations are used in place of ordinary standard
+              deviations. The empirical Bayes approach is equivalent to
+              shrinkage of the estimated sample variances towards a pooled
+              estimate, resulting in far more stable inference when the number
+              of arrays is small. The use of moderated t-statistics has the
+              advantage over the posterior odds that the number of
+              hyperparameters which need to estimated is reduced; in
+              particular, knowledge of the non-null prior for the fold changes
+              are not required. The moderated t-statistic is shown to follow a
+              t-distribution with augmented degrees of freedom. The moderated t
+              inferential approach extends to accommodate tests of composite
+              null hypotheses through the use of moderated F-statistics. The
+              performance of the methods is demonstrated in a simulation study.
+              Results are presented for two publicly available data sets.",
+  journal  = "Stat. Appl. Genet. Mol. Biol.",
+  volume   =  3,
+  pages    = "Article3",
+  month    =  feb,
+  year     =  2004,
+  language = "en"
+}
+
+
+@ARTICLE{Lund2012-xo,
+  title    = "Detecting differential expression in {RNA-sequence} data using
+              quasi-likelihood with shrunken dispersion estimates",
+  author   = "Lund, Steven P and Nettleton, Dan and McCarthy, Davis J and
+              Smyth, Gordon K",
+  abstract = "Next generation sequencing technology provides a powerful tool
+              for measuring gene expression (mRNA) levels in the form of
+              RNA-sequence data. Method development for identifying
+              differentially expressed (DE) genes from RNA-seq data, which
+              frequently includes many low-count integers and can exhibit
+              severe overdispersion relative to Poisson or binomial
+              distributions, is a popular area of ongoing research. Here we
+              present quasi-likelihood methods with shrunken dispersion
+              estimates based on an adaptation of Smyth's (2004) approach to
+              estimating gene-specific error variances for microarray data. Our
+              suggested methods are computationally simple, analogous to ANOVA
+              and compare favorably versus competing methods in detecting DE
+              genes and estimating false discovery rates across a variety of
+              simulations based on real data.",
+  journal  = "Stat. Appl. Genet. Mol. Biol.",
+  volume   =  11,
+  number   =  5,
+  month    =  oct,
+  year     =  2012,
+  language = "en"
+}
+
+
+@ARTICLE{McCarthy2009-qf,
+  title    = "Testing significance relative to a fold-change threshold is a
+              {TREAT}",
+  author   = "McCarthy, Davis J and Smyth, Gordon K",
+  abstract = "MOTIVATION: Statistical methods are used to test for the
+              differential expression of genes in microarray experiments. The
+              most widely used methods successfully test whether the true
+              differential expression is different from zero, but give no
+              assurance that the differences found are large enough to be
+              biologically meaningful. RESULTS: We present a method, t-tests
+              relative to a threshold (TREAT), that allows researchers to test
+              formally the hypothesis (with associated p-values) that the
+              differential expression in a microarray experiment is greater
+              than a given (biologically meaningful) threshold. We have
+              evaluated the method using simulated data, a dataset from a
+              quality control experiment for microarrays and data from a
+              biological experiment investigating histone deacetylase
+              inhibitors. When the magnitude of differential expression is
+              taken into account, TREAT improves upon the false discovery rate
+              of existing methods and identifies more biologically relevant
+              genes. AVAILABILITY: R code implementing our methods is
+              contributed to the software package limma available at
+              http://www.bioconductor.org.",
+  journal  = "Bioinformatics",
+  volume   =  25,
+  number   =  6,
+  pages    = "765--771",
+  month    =  mar,
+  year     =  2009,
+  language = "en"
+}
+
+

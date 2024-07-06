@@ -49,8 +49,9 @@ intermediate users will also gain a great deal from attending.
 |       | Working with Sequences and Genomic Ranges | [References and Ranges](references.html)    | 40min                           |
 | 10:30 | *Morning Tea*                             |                                             |                                 |
 | 11:00 | Introduction to RNA-Seq                   | [RNA-Seq](rna_seq.html)                     | 30min                           |
-|       | Bulk RNA-Seq Analysis                     |                                             |                                 |
+|       | Bulk RNA-Seq Analysis                     | [Differential Gene Expression](deg.html)    | 80min                           |
 | 12:30 | *Lunch*                                   |                                             |                                 |
-| 1:30  | Genomic Ranges                            |                                             |                                 |
+| 1:30  | Bulk RNA-Seq Analysis (continued)         |                                             |                                 |
+|       | Enrichment Analysis                       |                                             |                                 |
 | 3:00  | *Afternoon Tea*                           |                                             |                                 |
 | 3:30  | Bring Your Own Data                       |                                             |                                 |

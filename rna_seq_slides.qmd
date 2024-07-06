@@ -67,6 +67,8 @@ knitr:
     + Followed the release of the the human genome very rapidly 
 - Microarrays enabled transcriptome-wide profiling of gene expression
     + Probes were designed for each targeted gene
+- The Bioconductor package `limma` was first released in 2004 [@Smyth2004-hl]
+    + Still heavily used and maintained
 
 . . .
 

@@ -489,10 +489,16 @@ Dr Stevie Pederson
 <h2>Loading Packages</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(edgeR)</span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
-<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
-<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(edgeR)</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span>
+<span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="getting-annotations" class="slide level2">
@@ -529,8 +535,8 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="loading-packages-1" class="slide level2">
-<h2>Loading Packages</h2>
+<section id="getting-annotations-1" class="slide level2">
+<h2>Getting Annotations</h2>
 <div style="font-size: 95%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> ah[[<span class="st">"AH75121"</span>]] <span class="co"># This will take several minutes</span></span>
@@ -694,9 +700,24 @@ Dr Stevie Pederson
 </div>
 </section></section>
 <section>
-<section id="working-with-count-data" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
-<h1>Working With Count Data</h1>
+<section id="dge-analysis" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>DGE Analysis</h1>
 
+</section>
+<section id="basic-workflow" class="slide level2">
+<h2>Basic Workflow</h2>
+<ol type="1">
+<li>Remove low-expressed &amp; undetectable genes</li>
+<li>Normalise the data</li>
+<li>Estimate dispersions</li>
+<li>Perform Statistical Tests</li>
+<li>Enrichment Testing</li>
+</ol>
+<div class="fragment">
+<ul>
+<li>Careful checks at every step to inform decisions</li>
+</ul>
+</div>
 </section>
 <section id="dgelist-objects" class="slide level2">
 <h2>DGEList Objects</h2>
@@ -704,11 +725,30 @@ Dr Stevie Pederson
 <li>We’ll use <code>edgeR</code> for DGE analysis <span class="citation" data-cites="edgeR2010">(<a href="#/references" role="doc-biblioref" onclick="">Robinson, McCarthy, and Smyth 2010</a>)</span></li>
 <li>Counts, sample metadata and gene annotations stored in a single <code>S4</code> object
 <ul>
-<li><code>DGEList</code>: Digital Gene Expression List</li>
+<li><code>DGEList</code>: <em>Digital</em> Gene Expression List</li>
 <li>Gene &amp; metadata elements need to be <code>data.frame</code> objects</li>
-<li>Will be coerced if able</li>
+<li>Will be coerced if able . . .</li>
 </ul></li>
+<li><code>DESeq2</code> is a common alternative <span class="citation" data-cites="DESeq22014">(<a href="#/references" role="doc-biblioref" onclick="">Love, Huber, and Anders 2014</a>)</span></li>
+<li>Uses an extension of <code>SummarizedExperiment</code> objects</li>
 </ul>
+<aside class="notes">
+<ul>
+<li>Both methods are gold-standard but neither perfect for every dataset</li>
+<li>Both Wolfgang Huber &amp; Gordon Smyth are exceptional statisticians</li>
+<li>Will try get to DESeq2 later in the session</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="dgelist-objects-1" class="slide level2">
 <h2>DGEList Objects</h2>
@@ -717,37 +757,51 @@ Dr Stevie Pederson
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="fu">colnames</span>(counts)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(id, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"replicate"</span>, <span class="st">"treatment"</span>), <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(id, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"replicate"</span>, <span class="st">"treatment"</span>), <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment),</span>
+<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">as.integer</span>(treatment)</span>
+<span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 3
-   id         replicate treatment
-   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;    
- 1 1_control  1         control  
- 2 6_control  6         control  
- 3 11_control 11        control  
- 4 2_Nsp6     2         Nsp6     
- 5 7_Nsp6     7         Nsp6     
- 6 12_Nsp6    12        Nsp6     
- 7 3_Nsp8     3         Nsp8     
- 8 8_Nsp8     8         Nsp8     
- 9 13_Nsp8    13        Nsp8     
-10 4_M        4         M        
-11 9_M        9         M        
-12 14_M       14        M        </code></pre>
+<pre><code># A tibble: 12 × 4
+   id         replicate treatment group
+   &lt;chr&gt;      &lt;chr&gt;     &lt;fct&gt;     &lt;int&gt;
+ 1 1_control  1         control       1
+ 2 6_control  6         control       1
+ 3 11_control 11        control       1
+ 4 2_Nsp6     2         Nsp6          3
+ 5 7_Nsp6     7         Nsp6          3
+ 6 12_Nsp6    12        Nsp6          3
+ 7 3_Nsp8     3         Nsp8          4
+ 8 8_Nsp8     8         Nsp8          4
+ 9 13_Nsp8    13        Nsp8          4
+10 4_M        4         M             2
+11 9_M        9         M             2
+12 14_M       14        M             2</code></pre>
 </div>
 </div>
-<ul>
-<li>Will be in the same order as <code>counts</code></li>
-</ul>
+<aside class="notes">
+<p>Will be in the same order as <code>counts</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="dgelist-objects-2" class="slide level2">
 <h2>DGEList Objects</h2>
 <ul>
 <li>Annotations appear to match the counts
 <ul>
-<li>Counts for 66738 genes</li>
-<li>Annotations for 66738 genes</li>
+<li>Counts for 66,738 genes</li>
+<li>Annotations for 66,738 genes</li>
 </ul></li>
 <li>But will be in a different order
 <ul>
@@ -798,7 +852,7 @@ Dr Stevie Pederson
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(</span>
 <span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">counts =</span> counts,</span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">samples =</span> samples,</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">samples =</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="fu">colnames</span>(counts)) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(samples),</span>
 <span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">genes =</span> genes <span class="sc">%&gt;%</span> </span>
 <span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setNames</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> </span>
 <span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">rownames</span>(counts)] <span class="sc">%&gt;%</span> </span>
@@ -827,8 +881,8 @@ $samples
 1_control      1 38633196            1  1_control         1   control
 6_control      1 48184412            1  6_control         6   control
 11_control     1 34566631            1 11_control        11   control
-2_Nsp6         1 33088151            1     2_Nsp6         2      Nsp6
-7_Nsp6         1 41621703            1     7_Nsp6         7      Nsp6
+2_Nsp6         3 33088151            1     2_Nsp6         2      Nsp6
+7_Nsp6         3 41621703            1     7_Nsp6         7      Nsp6
 7 more rows ...
 
 $genes
@@ -875,6 +929,856 @@ ENSG00000000460.17  C1orf112
 <li><code>samples</code> is column metadata <span class="math inline">\(\implies\)</span> <code>genes</code> is row metadata</li>
 </ul>
 </section>
+<section id="library-sizes" class="slide level2">
+<h2>Library Sizes</h2>
+<ul>
+<li>The very first step with counts <span class="math inline">\(\implies\)</span> library sizes</li>
+<li>This is the total number of reads (i.e.&nbsp;RNA fragments) assigned to genes</li>
+<li>Ideally &gt;20m reads per sample</li>
+<li>Those below 10m reads are generally considered as problematic
+<ul>
+<li>Context dependent</li>
+</ul></li>
+</ul>
+</section>
+<section id="library-sizes-1" class="slide level2">
+<h2>Library Sizes</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge<span class="sc">$</span>samples <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(replicate, lib.size <span class="sc">/</span> <span class="fl">1e6</span>, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb30-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample"</span>, <span class="at">y =</span> <span class="st">"Library Size (millions)"</span>, <span class="at">fill =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-lib-size-1.png">Click to show figure</a></p>
+</div>
+</section>
+<section id="library-sizes-2" class="slide level2">
+<h2>Library Sizes</h2>
+<ul>
+<li>We can get fancy and add the mean value</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge<span class="sc">$</span>samples <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(replicate, lib.size <span class="sc">/</span> <span class="fl">1e6</span>, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb31-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb31-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">yintercept =</span> lib.size),</span>
+<span id="cb31-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">lib.size =</span> <span class="fu">mean</span>(lib.size <span class="sc">/</span> <span class="fl">1e6</span>)),</span>
+<span id="cb31-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">"grey30"</span></span>
+<span id="cb31-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb31-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample"</span>, <span class="at">y =</span> <span class="st">"Library Size (millions)"</span>, <span class="at">fill =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb31-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/lib-size-with-mean-1.png">Click to show figure</a></p>
+</div>
+<aside class="notes">
+<p>These look like really good libraries so far</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="detected-vs-undetected-genes" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<ul>
+<li>By adding counts across samples and seeing how many are zero<br><span class="math inline">\(\implies\)</span> non-detectable genes</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge<span class="sc">$</span>counts <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowSums</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">equals</span>(<span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27211</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Genes with low counts can also be removed
+<ul>
+<li>These end up being highly variable</li>
+<li>Uninformative statistically</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="detected-vs-undetected-genes-1" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<ul>
+<li>No set method for considering a gene as <em>too low to bother with</em></li>
+<li>Can use raw counts below some value</li>
+<li>Counts within a group above some value <span class="math inline">\(\implies\)</span> detected within a treatment</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Counts per million reads (CPM) is a common measure used in abundance analysis</li>
+<li>Take the library sizes / 1e6 &amp; divide counts by this value <span class="math inline">\(\implies\)</span> CPM</li>
+<li>Can also use logCPM
+<ul>
+<li>Adds a non-zero value to every gene to avoid zeroes</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="detected-vs-undetected-genes-2" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<ul>
+<li><code>edgeR</code> provides a function <code>filterByExpr()</code></li>
+<li>Flags genes for removal or discarding based on counts</li>
+<li>Set minimum CPM as <code>min.count</code> <span class="math inline">\(\times 1e6\)</span> / <code>median(lib.size)</code></li>
+<li>Set minimum <em>total counts</em></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Genes are retained if CPM &gt; minCPM in <span class="math inline">\(\geq n\)</span> samples
+<ul>
+<li><span class="math inline">\(n\)</span> is the smallest treatment group</li>
+</ul></li>
+<li>Default settings may be a little generous for this dataset</li>
+</ul>
+</div>
+</section>
+<section id="detected-vs-undetected-genes-3" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<ul>
+<li>If we require &gt; 1CPM in at least 3 samples</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>min_count <span class="ot">&lt;-</span> dge<span class="sc">$</span>samples<span class="sc">$</span>lib.size <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">divide_by</span>(<span class="fl">1e6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">0</span>)</span>
+<span id="cb34-5"><a href="" aria-hidden="true" tabindex="-1"></a>min_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 38</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>min_total <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">filterByExpr</span>(dge, <span class="at">min.count =</span> min_count, <span class="at">min.total.count =</span> <span class="dv">150</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="detected-vs-undetected-genes-4" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<div style="font-size: 95%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> dge<span class="sc">$</span>counts <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cpm</span>(<span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">all_of</span>(<span class="st">"gene_id"</span>), <span class="at">names_to =</span> <span class="st">"id"</span>, <span class="at">values_to =</span> <span class="st">"logCPM"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge<span class="sc">$</span>samples) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logCPM, <span class="fu">after_stat</span>(density), <span class="at">group =</span> id)) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">colour =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">glue</span>(<span class="st">"Before Filtering: {comma(length(keep))} genes"</span>)) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb37-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span>
+<span id="cb37-11"><a href="" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> dge<span class="sc">$</span>counts[keep,] <span class="sc">%&gt;%</span> </span>
+<span id="cb37-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cpm</span>(<span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">all_of</span>(<span class="st">"gene_id"</span>), <span class="at">names_to =</span> <span class="st">"id"</span>, <span class="at">values_to =</span> <span class="st">"logCPM"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-15"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge<span class="sc">$</span>samples) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-16"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logCPM, <span class="fu">after_stat</span>(density), <span class="at">group =</span> id)) <span class="sc">+</span></span>
+<span id="cb37-17"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">colour =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb37-18"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">glue</span>(<span class="st">"After Filtering: {comma(sum(keep))} genes"</span>)) <span class="sc">+</span></span>
+<span id="cb37-19"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb37-20"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span>
+<span id="cb37-21"><a href="" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>, <span class="at">axes =</span> <span class="st">"collect"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-densities-1.png">Click to show figure</a></p>
+</div>
+</section>
+<section id="detected-vs-undetected-genes-5" class="slide level2">
+<h2>Detected Vs Undetected Genes</h2>
+<ul>
+<li>Create new object once satisfied with the filtering strategy</li>
+<li>Passing the logical vector will subset <code>counts</code> &amp; <code>genes</code> correctly
+<ul>
+<li>The original library sizes are retained</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge_filter <span class="ot">&lt;-</span> dge[keep,]</span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>dge_filter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>An object of class "DGEList"
+$counts
+                   1_control 6_control 11_control 2_Nsp6 7_Nsp6 12_Nsp6 3_Nsp8 8_Nsp8 13_Nsp8  4_M
+ENSG00000000003.14      5211      6192       4542   4328   5283    4336   4330   5208    4635 4743
+ENSG00000000005.6         65       178         96     50     86      83     67     92      80   51
+ENSG00000000419.12      1454      1889       1329   1472   1684    1368   1666   2042    1707 1822
+ENSG00000000457.14       628       548        522    560    636     492    530    500     498  622
+ENSG00000000460.17       191       241        150    146    254     164    161    179     183  173
+                    9_M 14_M
+ENSG00000000003.14 5498 5172
+ENSG00000000005.6    70   64
+ENSG00000000419.12 2293 1987
+ENSG00000000457.14  513  560
+ENSG00000000460.17  256  228
+13891 more rows ...
+
+$samples
+           group lib.size norm.factors         id replicate treatment
+1_control      1 38633196            1  1_control         1   control
+6_control      1 48184412            1  6_control         6   control
+11_control     1 34566631            1 11_control        11   control
+2_Nsp6         3 33088151            1     2_Nsp6         2      Nsp6
+7_Nsp6         3 41621703            1     7_Nsp6         7      Nsp6
+7 more rows ...
+
+$genes
+                   seqnames     start       end  width strand            gene_id      gene_type
+ENSG00000000003.14     chrX 100627109 100639991  12883      - ENSG00000000003.14 protein_coding
+ENSG00000000005.6      chrX 100584936 100599885  14950      +  ENSG00000000005.6 protein_coding
+ENSG00000000419.12    chr20  50934867  50958555  23689      - ENSG00000000419.12 protein_coding
+ENSG00000000457.14     chr1 169849631 169894267  44637      - ENSG00000000457.14 protein_coding
+ENSG00000000460.17     chr1 169662007 169854080 192074      + ENSG00000000460.17 protein_coding
+                   gene_name
+ENSG00000000003.14    TSPAN6
+ENSG00000000005.6       TNMD
+ENSG00000000419.12      DPM1
+ENSG00000000457.14     SCYL3
+ENSG00000000460.17  C1orf112
+13891 more rows ...</code></pre>
+</div>
+</div>
+</section>
+<section id="normalisation" class="slide level2">
+<h2>Normalisation</h2>
+<ul>
+<li>Normalisation is a very common step in transcriptomic analysis</li>
+<li>Helps to account for differences in library composition
+<ul>
+<li>e.g.&nbsp;are some libraries dominated by a handful of highly abundant genes</li>
+</ul></li>
+<li>The default in <code>edgeR</code> is TMM <span class="citation" data-cites="Robinson2010-qp">(<a href="#/references" role="doc-biblioref" onclick="">Robinson and Oshlack 2010</a>)</span></li>
+<li><code>DESeq2</code> uses RLE normalisation
+<ul>
+<li>Very similar in principle</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-analysis-of-counts" class="slide level2">
+<h2>Statistical Analysis of Counts</h2>
+<ul>
+<li>Poisson models number of events per unit
+<ul>
+<li>e.g.&nbsp;telephone calls per minute</li>
+</ul></li>
+<li>The rate parameter (<span class="math inline">\(\lambda\)</span>) models this</li>
+<li>mean occurence = average rate = <span class="math inline">\(\lambda\)</span></li>
+<li>Variance is fixed at <span class="math inline">\(\lambda\)</span>
+<ul>
+<li>If variance <span class="math inline">\(\neq \lambda \implies\)</span> not Poisson data</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The basic model for <code>edgeR</code> is a Negative Binomial Model
+<ul>
+<li>NB: mean = <span class="math inline">\(\lambda\)</span>; variance = <span class="math inline">\(\lambda + r\)</span></li>
+</ul></li>
+<li>Multiple strategies for obtaining estimates</li>
+</ul>
+</div>
+</section>
+<section id="statistical-analysis-of-counts-1" class="slide level2">
+<h2>Statistical Analysis of Counts</h2>
+<ul>
+<li>Counts / gene (i.e.&nbsp;<span class="math inline">\(y_{gi}\)</span>) are a function of library size (<span class="math inline">\(L_i\)</span>)</li>
+<li>Gene length is fixed across samples <span class="math inline">\(\implies\)</span> library size is not</li>
+<li>Dividing by library size is a way of normalising counts</li>
+</ul>
+<p><span class="math display">\[
+\log (y_{gi} / L_i) = \beta_0 + \beta_1 + ...
+\]</span></p>
+</section>
+<section id="normalisation-1" class="slide level2">
+<h2>Normalisation</h2>
+<ul>
+<li>Calculation of normalisation factors (<span class="math inline">\(Y_i\)</span>) per sample
+<ul>
+<li>The idealised normalisation factor is <span class="math inline">\(Y_i = 1\)</span></li>
+</ul></li>
+<li>Can use scaled library sizes <span class="math inline">\(L^*_i = Y_i \times L_i\)</span></li>
+</ul>
+<p><span class="math display">\[
+\log (y_{gi} / L^*_i) = \beta_0 + \beta_1 + ...
+\]</span></p>
+</section>
+<section id="tmm-normalisation" class="slide level2">
+<h2>TMM Normalisation</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge_filter <span class="ot">&lt;-</span> <span class="fu">calcNormFactors</span>(dge_filter)</span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>dge_filter<span class="sc">$</span>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           group lib.size norm.factors         id replicate treatment
+1_control      1 38633196    0.9943180  1_control         1   control
+6_control      1 48184412    0.9770121  6_control         6   control
+11_control     1 34566631    0.9883140 11_control        11   control
+2_Nsp6         3 33088151    1.0157571     2_Nsp6         2      Nsp6
+7_Nsp6         3 41621703    0.9963827     7_Nsp6         7      Nsp6
+12_Nsp6        3 32724713    1.0060007    12_Nsp6        12      Nsp6
+3_Nsp8         4 33502022    1.0076816     3_Nsp8         3      Nsp8
+8_Nsp8         4 41364663    0.9977052     8_Nsp8         8      Nsp8
+13_Nsp8        4 36288023    1.0027832    13_Nsp8        13      Nsp8
+4_M            2 36851725    1.0081808        4_M         4         M
+9_M            2 41546877    0.9987653        9_M         9         M
+14_M           2 43587502    1.0076991       14_M        14         M</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>The clustering around 1 suggests very similar libraries</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pca-analysis" class="slide level2">
+<h2>PCA Analysis</h2>
+<ul>
+<li><code>edgeR</code> offers <code>plotMDS()</code> for quick exploration</li>
+</ul>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMDS</span>(</span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dge_filter, </span>
+<span id="cb42-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">as.integer</span>(dge_filter<span class="sc">$</span>samples<span class="sc">$</span>treatment)</span>
+<span id="cb42-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/plot-mds-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Takes top 500 most variable genes</li>
+<li>Uses base graphics</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pca-analysis-1" class="slide level2">
+<h2>PCA Analysis</h2>
+<ul>
+<li>logCPM values are very useful for PCA
+<ul>
+<li>Will now be calculated using the normalisation factors</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> dge_filter <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cpm</span>(<span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(<span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                           PC1     PC2     PC3     PC4     PC5      PC6      PC7      PC8      PC9
+Standard deviation     66.6493 50.4749 45.2310 31.7401 29.3998 25.88752 24.74707 21.51801 20.94233
+Proportion of Variance  0.3197  0.1833  0.1472  0.0725  0.0622  0.04823  0.04407  0.03332  0.03156
+Cumulative Proportion   0.3197  0.5030  0.6502  0.7227  0.7849  0.83316  0.87723  0.91056  0.94212
+                           PC10     PC11      PC12
+Standard deviation     20.27916 19.82675 2.753e-13
+Proportion of Variance  0.02959  0.02829 0.000e+00
+Cumulative Proportion   0.97171  1.00000 1.000e+00</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>prop_var <span class="ot">&lt;-</span> <span class="fu">summary</span>(pca)<span class="sc">$</span>importance[<span class="st">"Proportion of Variance"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="pca-analysis-2" class="slide level2">
+<h2>PCA Analysis</h2>
+<ul>
+<li>PC1 vs PC2 shown below <span class="math inline">\(\implies\)</span> easily modified to other components</li>
+</ul>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Simple PCA</a></li><li><a href="#tabset-1-2">Enhanced Axis Labels</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a>pca <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"PC"</span>, <span class="at">names_prefix =</span> <span class="st">"PC"</span>, <span class="at">values_from =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-4"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">id =</span> row) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge_filter<span class="sc">$</span>samples) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1, PC2, <span class="at">colour =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb46-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> id), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb46-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-pca-1.png">Click to show figure</a></p>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>pca <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"PC"</span>, <span class="at">names_prefix =</span> <span class="st">"PC"</span>, <span class="at">values_from =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-4"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">id =</span> row) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge_filter<span class="sc">$</span>samples) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1, PC2, <span class="at">colour =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb47-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb47-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> id), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb47-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb47-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">glue</span>(<span class="st">"PC1 ({percent(prop_var['PC1'])} Variance)"</span>),</span>
+<span id="cb47-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">glue</span>(<span class="st">"PC2 ({percent(prop_var['PC2'])} Variance)"</span>),</span>
+<span id="cb47-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Treatment"</span></span>
+<span id="cb47-13"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb47-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-pca-labels-1.png">Click to show figure</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pca-analysis-3" class="slide level2">
+<h2>PCA Analysis</h2>
+<ul>
+<li>What do we think the above is telling us?</li>
+<li>Does it look like treatment is contributing to the variance?</li>
+<li>Are there any other potetnail sources of variability?</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Looks to me like samples 2-4 had transfection issues</li>
+<li>Need to discuss with wet lab folks</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-design-matrix" class="slide level2">
+<h2>The Design Matrix</h2>
+<div style="font-size: 92%;">
+<ul>
+<li>Before proceeding need to define a <em>design matrix</em></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>treatment, dge_filter<span class="sc">$</span>samples)</span>
+<span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           (Intercept) treatmentM treatmentNsp6 treatmentNsp8
+1_control            1          0             0             0
+6_control            1          0             0             0
+11_control           1          0             0             0
+2_Nsp6               1          0             1             0
+7_Nsp6               1          0             1             0
+12_Nsp6              1          0             1             0
+3_Nsp8               1          0             0             1
+8_Nsp8               1          0             0             1
+13_Nsp8              1          0             0             1
+4_M                  1          1             0             0
+9_M                  1          1             0             0
+14_M                 1          1             0             0
+attr(,"assign")
+[1] 0 1 1 1
+attr(,"contrasts")
+attr(,"contrasts")$treatment
+[1] "contr.treatment"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-design-matrix-1" class="slide level2">
+<h2>The Design Matrix</h2>
+<ul>
+<li>The first column will estimate average expression in control samples</li>
+<li>Remaining columns estimate the difference due to treatments</li>
+<li>(Almost) always modelled on the log2 scale <span class="math inline">\(\implies\)</span> logFC</li>
+</ul>
+</section>
+<section id="estimating-dispersions" class="slide level2">
+<h2>Estimating Dispersions</h2>
+<ul>
+<li>We can estimate the dispersion parameter across the entire dataset</li>
+<li><code>edgeR</code> models consider technical noise as Poisson with <em>biological noise</em> as over-dispersion</li>
+<li>This adds multiple elements to the <code>DGEList</code>
+<ul>
+<li>Essential for <code>edgeR</code> models</li>
+</ul></li>
+<li>Initial estimates are moderated using a global trend during model fitting</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a>dge_filter <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(dge_filter, <span class="at">design =</span> X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="estimating-dispersions-1" class="slide level2">
+<h2>Estimating Dispersions</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Output uses base graphics no ggplot</span></span>
+<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(dge_filter, <span class="at">pch =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/plot-bcv-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-fitting" class="slide level2">
+<h2>Model Fitting</h2>
+<ul>
+<li>The recommended approach for <code>edgeR</code> is to use <em>Quasi-Likelihood</em> fits <span class="citation" data-cites="Lund2012-xo">(<a href="#/references" role="doc-biblioref" onclick="">Lund et al. 2012</a>)</span>
+<ul>
+<li>Allows flexibility in over-dispersion parameters</li>
+</ul></li>
+<li>First we fit the model <span class="math inline">\(\implies\)</span> then perform testing</li>
+<li>Using our design matrix, we will fit the model for all co-efficients in <code>X</code>
+<ul>
+<li>Perform tests within each co-efficient</li>
+<li>We’ll use the ‘M’ treatment</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmQLFit</span>(dge_filter, <span class="at">design =</span> X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model-testing" class="slide level2">
+<h2>Model Testing</h2>
+<ul>
+<li>Statistical tests use quasi-likelihood F-tests</li>
+<li>Use moderate dispersions (Empirical Bayes)</li>
+<li>By default, the top10 genes are returned</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> <span class="fu">glmQLFTest</span>(<span class="at">coef =</span> <span class="st">"treatmentM"</span>) <span class="sc">%&gt;%</span> <span class="fu">topTags</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coefficient:  treatmentM 
+                   seqnames     start       end  width strand            gene_id      gene_type
+ENSG00000065609.14     chr6  83552880  83709691 156812      - ENSG00000065609.14 protein_coding
+ENSG00000133878.9      chr8  33591330  33600023   8694      -  ENSG00000133878.9 protein_coding
+ENSG00000112837.17     chr6  84687351  84764598  77248      - ENSG00000112837.17 protein_coding
+ENSG00000125730.16    chr19   6677704   6730562  52859      - ENSG00000125730.16 protein_coding
+ENSG00000144810.16     chr3  99638475  99799226 160752      + ENSG00000144810.16 protein_coding
+ENSG00000112562.18     chr6 168441151 168673445 232295      + ENSG00000112562.18 protein_coding
+ENSG00000118137.9     chr11 116835751 116837950   2200      -  ENSG00000118137.9 protein_coding
+ENSG00000101335.10    chr20  36541497  36551447   9951      + ENSG00000101335.10 protein_coding
+ENSG00000156113.23    chr10  76869601  77638369 768769      - ENSG00000156113.23 protein_coding
+ENSG00000165118.15     chr9  83938311  83956986  18676      - ENSG00000165118.15 protein_coding
+                   gene_name     logFC    logCPM         F       PValue          FDR
+ENSG00000065609.14    SNAP91 -4.298482 5.7855158 1244.7901 4.457146e-13 6.193650e-09
+ENSG00000133878.9     DUSP26 -6.406627 0.9996001  320.3749 8.859485e-11 6.155570e-07
+ENSG00000112837.17     TBX18  4.614608 1.3852329  463.1117 1.329742e-10 6.159367e-07
+ENSG00000125730.16        C3  7.404154 1.9905031  222.5631 7.853570e-10 2.728330e-06
+ENSG00000144810.16    COL8A1  1.897573 4.2552562  221.7729 7.221342e-09 2.006955e-05
+ENSG00000112562.18     SMOC2  2.975471 2.9960180  214.3021 8.720084e-09 2.019572e-05
+ENSG00000118137.9      APOA1 -1.909907 6.8931539  201.6088 1.216484e-08 2.414894e-05
+ENSG00000101335.10      MYL9  2.208139 9.0902053  192.7708 1.553354e-08 2.553771e-05
+ENSG00000156113.23    KCNMA1  2.906831 4.0355987  190.5689 1.653997e-08 2.553771e-05
+ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="model-testing-1" class="slide level2">
+<h2>Model Testing</h2>
+<ul>
+<li>Can easily collect all genes into a manageable object</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_M <span class="ot">&lt;-</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glmQLFTest</span>(<span class="at">coef =</span> <span class="st">"treatmentM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">topTags</span>(<span class="at">n =</span> <span class="cn">Inf</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb55-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb55-6"><a href="" aria-hidden="true" tabindex="-1"></a>res_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13,896 × 13
+   seqnames     start      end  width strand gene_id gene_type gene_name logFC logCPM     F   PValue
+   &lt;fct&gt;        &lt;int&gt;    &lt;int&gt;  &lt;int&gt; &lt;fct&gt;  &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+ 1 chr6      83552880   8.37e7 156812 -      ENSG00… protein_… SNAP91    -4.30   5.79 1245. 4.46e-13
+ 2 chr8      33591330   3.36e7   8694 -      ENSG00… protein_… DUSP26    -6.41   1.00  320. 8.86e-11
+ 3 chr6      84687351   8.48e7  77248 -      ENSG00… protein_… TBX18      4.61   1.39  463. 1.33e-10
+ 4 chr19      6677704   6.73e6  52859 -      ENSG00… protein_… C3         7.40   1.99  223. 7.85e-10
+ 5 chr3      99638475   9.98e7 160752 +      ENSG00… protein_… COL8A1     1.90   4.26  222. 7.22e- 9
+ 6 chr6     168441151   1.69e8 232295 +      ENSG00… protein_… SMOC2      2.98   3.00  214. 8.72e- 9
+ 7 chr11    116835751   1.17e8   2200 -      ENSG00… protein_… APOA1     -1.91   6.89  202. 1.22e- 8
+ 8 chr20     36541497   3.66e7   9951 +      ENSG00… protein_… MYL9       2.21   9.09  193. 1.55e- 8
+ 9 chr10     76869601   7.76e7 768769 -      ENSG00… protein_… KCNMA1     2.91   4.04  191. 1.65e- 8
+10 chr9      83938311   8.40e7  18676 -      ENSG00… protein_… C9orf64    5.73   1.84  176. 2.01e- 8
+# ℹ 13,886 more rows
+# ℹ 1 more variable: FDR &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-testing" class="slide level2">
+<h2>Multiple Testing</h2>
+<ul>
+<li>Under H<sub>0</sub>: ~1 in 20 random p-values will be &lt; 0.05</li>
+<li>With ~14,000 genes <span class="math inline">\(\implies\)</span> about 700 expected</li>
+<li>These would be Type 1 errors <span class="math inline">\(\implies\)</span> false positives
+<ul>
+<li>We say something is happening, when it’s just noise</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The False Discovery Rate (FDR) controls Type 1 errors at a given rate
+<ul>
+<li>Using <span class="math inline">\(\alpha = 0.05 \implies\)</span> happy with 5% of results being errors</li>
+<li>Always just an estimate</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(res_M<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1409</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="inspection-of-p-values" class="slide level2">
+<h2>Inspection of P-values</h2>
+<ul>
+<li>Under H<sub>0</sub> <span class="math inline">\(\implies\)</span> <span class="math inline">\(p \sim \mathcal{U}(0, 1)\)</span></li>
+<li>Under H<sub>A</sub> no distribution <span class="math inline">\(\implies\)</span> peak near zero</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_M <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PValue)) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>, <span class="at">fill =</span> <span class="st">"grey70"</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-pval-1.png">Click to show figure</a></p>
+</div>
+<aside class="notes">
+<p>Looks as expected</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="volcano-plots" class="slide level2">
+<h2>Volcano Plots</h2>
+<ul>
+<li>Plot developed during microarray analysis</li>
+<li>Shows logFC against significance (<span class="math inline">\(p\)</span>-values)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_M <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logFC, <span class="sc">-</span><span class="fu">log10</span>(PValue), <span class="at">colour =</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb60-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb60-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> gene_name),</span>
+<span id="cb60-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb60-7"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(PValue) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-8"><a href="" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb60-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb60-10"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-volcano-1.png">Click to show figure</a></p>
+</div>
+</section>
+<section id="ma-plots" class="slide level2">
+<h2>MA Plots</h2>
+<ul>
+<li>Two-colour microarray data introduced MA plots</li>
+<li>Signal from two-colour arrays layered treat vs control in a single spot
+<ul>
+<li><code>A</code> for intensity averages</li>
+<li><code>M</code> for mean intensity differences</li>
+</ul></li>
+<li>Still commonly used and the language remains</li>
+<li>Sometimes called MD (mean-difference) plots
+<ul>
+<li><code>edgeR</code> provides <code>plotMD()</code></li>
+</ul></li>
+<li>Show average expression on the <code>x</code>-axis and logFC on <code>y</code>-axis
+<ul>
+<li>How highly expressed are any DE genes?</li>
+</ul></li>
+</ul>
+</section>
+<section id="ma-plots-1" class="slide level2">
+<h2>MA Plots</h2>
+<ul>
+<li>Often start with an exploration then customise for our data</li>
+</ul>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Initial Plot</a></li><li><a href="#tabset-2-2">Customised Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_M <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logCPM, logFC)) <span class="sc">+</span></span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-ma-1.png">Click to show figure</a></p>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_M <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PValue)) <span class="sc">%&gt;%</span> <span class="co"># Why do this?</span></span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logCPM, logFC, <span class="at">colour =</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb62-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb62-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">'royalblue3'</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb62-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> gene_name),</span>
+<span id="cb62-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb62-9"><a href="" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(logFC))) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-11"><a href="" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb62-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb62-13"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb62-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-ma-label-1.png">Click to show figure</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="filtering-of-de-genes" class="slide level2">
+<h2>Filtering of DE Genes</h2>
+<ul>
+<li>There is a tendency of the most extreme logFC to be in low expressed genes</li>
+<li>The ratio of any number over a small number will <span class="math inline">\(\rightarrow \infty\)</span></li>
+<li>If there are “too many” DE genes <span class="math inline">\(\implies\)</span> should we filter results?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Early approaches were to filter on extreme logFC</li>
+<li>Biased results towards low-expressed genes</li>
+</ul>
+</div>
+</section>
+<section id="range-based-hypothesis-testing" class="slide level2">
+<h2>Range-Based Hypothesis Testing</h2>
+<ul>
+<li>Traditional H<sub>0</sub> is <span class="math inline">\(\mu = 0\)</span> against H<sub>A</sub> <span class="math inline">\(\mu \neq 0\)</span></li>
+<li>An alternative is to use a range-based H<sub>0</sub> <span class="citation" data-cites="McCarthy2009-qf">(<a href="#/references" role="doc-biblioref" onclick="">McCarthy and Smyth 2009</a>)</span></li>
+<li>Implemented in <code>glmTreat()</code></li>
+<li>Default range is FC &gt; 20% in either direction</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_treatM <span class="ot">&lt;-</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glmTreat</span>(<span class="at">coef =</span> <span class="st">"treatmentM"</span>, <span class="at">lfc =</span> <span class="fu">log2</span>(<span class="fl">1.2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">topTags</span>(<span class="at">n =</span> <span class="cn">Inf</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb63-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(res_treatM<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 596</code></pre>
+</div>
+</div>
+</section>
+<section id="range-based-hypothesis-testing-1" class="slide level2">
+<h2>Range-Based Hypothesis Testing</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_treatM <span class="sc">%&gt;%</span> </span>
+<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PValue)) <span class="sc">%&gt;%</span> <span class="co"># Why do this?</span></span>
+<span id="cb65-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(logCPM, logFC, <span class="at">colour =</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb65-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb65-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">'royalblue3'</span>, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb65-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb65-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> gene_name),</span>
+<span id="cb65-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb65-9"><a href="" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(logFC))) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-11"><a href="" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb65-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb65-13"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb65-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/plot-ma-treat-1.png">Click to show figure</a></p>
+</div>
+<aside class="notes">
+<p>Clearly some high logFC genes had weak statistical support</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="using-deseq2" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/DESeq2/DESeq2.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Using DESeq2</h1>
+
+</section>
+<section id="deseq2" class="slide level2">
+<h2>DESeq2</h2>
+<ul>
+<li>Another common package for RNASeq analysis is <code>DESeq2</code> <span class="citation" data-cites="DESeq22014">(<a href="#/references" role="doc-biblioref" onclick="">Love, Huber, and Anders 2014</a>)</span></li>
+<li>Uses <code>S4</code> object more interconnected to other Bioconductor classes</li>
+<li>Different approach to dispersions</li>
+<li>Different statistical testing</li>
+<li>Feels a bit more like a <em>black-box</em> to me
+<ul>
+<li>More default settings for a similar workflow <span class="math inline">\(\implies\)</span> fewer manual steps</li>
+</ul></li>
+<li>Is a very high-quality approach (as is <code>edgeR</code>)</li>
+</ul>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <div class="quarto-auto-generated-content">
@@ -890,8 +1794,20 @@ Liao, Yang, Gordon K Smyth, and Wei Shi. 2014. <span>“featureCounts: An Effici
 <div id="ref-Liu2023-qu" class="csl-entry" role="listitem">
 Liu, Juli, Shiyong Wu, Yucheng Zhang, Cheng Wang, Sheng Liu, Jun Wan, and Lei Yang. 2023. <span>“<span>SARS-CoV-2</span> Viral Genes Nsp6, Nsp8, and <span>M</span> Compromise Cellular <span>ATP</span> Levels to Impair Survival and Function of Human Pluripotent Stem Cell-Derived Cardiomyocytes.”</span> <em>Stem Cell Res. Ther.</em> 14 (1): 249.
 </div>
+<div id="ref-DESeq22014" class="csl-entry" role="listitem">
+Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. <span>“Moderated Estimation of Fold Change and Dispersion for RNA-Seq Data with DESeq2.”</span> <em>Genome Biology</em> 15: 550. <a href="https://doi.org/10.1186/s13059-014-0550-8">https://doi.org/10.1186/s13059-014-0550-8</a>.
+</div>
+<div id="ref-Lund2012-xo" class="csl-entry" role="listitem">
+Lund, Steven P, Dan Nettleton, Davis J McCarthy, and Gordon K Smyth. 2012. <span>“Detecting Differential Expression in <span class="nocase">RNA-sequence</span> Data Using Quasi-Likelihood with Shrunken Dispersion Estimates.”</span> <em>Stat. Appl. Genet. Mol. Biol.</em> 11 (5).
+</div>
+<div id="ref-McCarthy2009-qf" class="csl-entry" role="listitem">
+McCarthy, Davis J, and Gordon K Smyth. 2009. <span>“Testing Significance Relative to a Fold-Change Threshold Is a <span>TREAT</span>.”</span> <em>Bioinformatics</em> 25 (6): 765–71.
+</div>
 <div id="ref-edgeR2010" class="csl-entry" role="listitem">
 Robinson, Mark D, Davis J McCarthy, and Gordon K Smyth. 2010. <span>“edgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data.”</span> <em>Bioinformatics</em> 26 (1): 139–40. <a href="https://doi.org/10.1093/bioinformatics/btp616">https://doi.org/10.1093/bioinformatics/btp616</a>.
+</div>
+<div id="ref-Robinson2010-qp" class="csl-entry" role="listitem">
+Robinson, Mark D, and Alicia Oshlack. 2010. <span>“A Scaling Normalization Method for Differential Expression Analysis of <span class="nocase">RNA-seq</span> Data.”</span> <em>Genome Biol.</em> 11 (3): R25.
 </div>
 </div>
 </section></section>

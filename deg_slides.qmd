@@ -110,10 +110,16 @@ options(width = 100)
 
 ```{r packages}
 library(tidyverse)
+library(magrittr)
 library(edgeR)
 library(AnnotationHub)
 library(rtracklayer)
 library(plyranges)
+library(patchwork)
+library(scales)
+library(glue)
+library(ggrepel)
+theme_set(theme_bw())
 ```
 
 ## Getting Annotations
@@ -129,7 +135,7 @@ ah %>% subset(dataprovider == "Gencode" & genome == "GRCh38") %>% query("v31")
 
 :::
 
-## Loading Packages
+## Getting Annotations
 
 ::: {style="font-size: 95%;"}
 
@@ -209,15 +215,37 @@ subset(genes, duplicated(gene_id))
 ```
 
 
-# Working With Count Data {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+# DGE Analysis {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Basic Workflow
+
+1. Remove low-expressed & undetectable genes
+2. Normalise the data
+3. Estimate dispersions
+4. Perform Statistical Tests
+5. Enrichment Testing
+
+. . .
+
+- Careful checks at every step to inform decisions
 
 ## DGEList Objects
 
 - We'll use `edgeR` for DGE analysis [@edgeR2010]
 - Counts, sample metadata and gene annotations stored in a single `S4` object
-    + `DGEList`: Digital Gene Expression List
+    + `DGEList`: *Digital* Gene Expression List
     + Gene & metadata elements need to be `data.frame` objects
     + Will be coerced if able
+. . .
+
+- `DESeq2` is a common alternative [@DESeq22014]
+- Uses an extension of `SummarizedExperiment` objects
+
+::: {.notes}
+- Both methods are gold-standard but neither perfect for every dataset
+- Both Wolfgang Huber & Gordon Smyth are exceptional statisticians
+- Will try get to DESeq2 later in the session
+:::
 
 ## DGEList Objects
 
@@ -225,17 +253,23 @@ subset(genes, duplicated(gene_id))
 
 ```{r}
 samples <- tibble(id = colnames(counts)) %>% 
-  separate(id, into = c("replicate", "treatment"), remove = FALSE)
+  separate(id, into = c("replicate", "treatment"), remove = FALSE) %>% 
+  mutate(
+    treatment = as.factor(treatment),
+    group = as.integer(treatment)
+  )
 samples
 ```
 
-- Will be in the same order as `counts`
+::: {.notes}
+Will be in the same order as `counts`
+:::
 
 ## DGEList Objects
 
 - Annotations appear to match the counts
-    + Counts for `r nrow(counts)` genes
-    + Annotations for `r length(genes)` genes
+    + Counts for `r comma(nrow(counts))` genes
+    + Annotations for `r comma(length(genes))` genes
 - But will be in a different order
     + Counts in order of name
     + Annotations in genomic order
@@ -251,7 +285,7 @@ genes %>% setNames(.$gene_id) %>% .[rownames(counts)]
 ```{r}
 dge <- DGEList(
   counts = counts,
-  samples = samples,
+  samples = tibble(id = colnames(counts)) %>% left_join(samples),
   genes = genes %>% 
     setNames(.$gene_id) %>% 
     .[rownames(counts)] %>% 
@@ -272,6 +306,606 @@ dim(dge$genes)
 ```
 
 - `samples` is column metadata $\implies$ `genes` is row metadata
+
+## Library Sizes
+
+- The very first step with counts $\implies$ library sizes
+- This is the total number of reads (i.e. RNA fragments) assigned to genes
+- Ideally >20m reads per sample
+- Those below 10m reads are generally considered as problematic
+    + Context dependent
+
+## Library Sizes
+
+```{r plot-lib-size}
+#| fig-height: 5
+#| fig-show: hide
+dge$samples %>% 
+  ggplot(aes(replicate, lib.size / 1e6, fill = treatment)) +
+  geom_col() +
+  facet_wrap(~treatment, nrow = 1, scales = "free_x") +
+  labs(x = "Sample", y = "Library Size (millions)", fill = "Treatment") +
+  scale_y_continuous(expand = expansion(c(0, 0.05))) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-lib-size-1.png)
+
+:::
+
+## Library Sizes
+
+- We can get fancy and add the mean value 
+
+```{r lib-size-with-mean}
+#| fig-show: hide
+#| fig-height: 5
+dge$samples %>% 
+  ggplot(aes(replicate, lib.size / 1e6, fill = treatment)) +
+  geom_col() +
+  geom_hline(
+    aes(yintercept = lib.size),
+    data = . %>% summarise(lib.size = mean(lib.size / 1e6)),
+    linetype = 2, colour = "grey30"
+  ) +
+  facet_wrap(~treatment, nrow = 1, scales = "free_x") +
+  labs(x = "Sample", y = "Library Size (millions)", fill = "Treatment") +
+  scale_y_continuous(expand = expansion(c(0, 0.05))) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/lib-size-with-mean-1.png)
+
+:::
+
+::: {.notes}
+These look like really good libraries so far
+:::
+
+## Detected Vs Undetected Genes
+
+- By adding counts across samples and seeing how many are zero<br>$\implies$ non-detectable genes
+
+```{r}
+dge$counts %>% 
+  rowSums() %>% 
+  equals(0) %>% 
+  sum()
+```
+
+. . .
+
+- Genes with low counts can also be removed
+    + These end up being highly variable
+    + Uninformative statistically
+
+## Detected Vs Undetected Genes
+
+- No set method for considering a gene as *too low to bother with*
+- Can use raw counts below some value
+- Counts within a group above some value $\implies$ detected within a treatment
+
+. . .
+
+- Counts per million reads (CPM) is a common measure used in abundance analysis 
+- Take the library sizes / 1e6 & divide counts by this value $\implies$ CPM
+- Can also use logCPM
+    + Adds a non-zero value to every gene to avoid zeroes
+
+## Detected Vs Undetected Genes
+
+- `edgeR` provides a function `filterByExpr()`
+- Flags genes for removal or discarding based on counts
+- Set minimum CPM as `min.count` $\times 1e6$ / `median(lib.size)`
+- Set minimum *total counts*
+
+. . .
+
+- Genes are retained if CPM > minCPM in $\geq n$ samples
+    + $n$ is the smallest treatment group
+
+
+- Default settings may be a little generous for this dataset
+
+## Detected Vs Undetected Genes
+    
+- If we require > 1CPM in at least 3 samples
+
+```{r}
+min_count <- dge$samples$lib.size %>% 
+  median() %>% 
+  divide_by(1e6) %>% 
+  round(0)
+min_count
+min_total <- 150
+keep <- filterByExpr(dge, min.count = min_count, min.total.count = 150)
+```
+
+
+## Detected Vs Undetected Genes
+
+::: {style="font-size: 95%;"}
+
+```{r plot-densities}
+#| fig-show: hide
+#| fig-height: 5
+A <- dge$counts %>% 
+  cpm(log = TRUE) %>% 
+  as_tibble(rownames = "gene_id") %>% 
+  pivot_longer(-all_of("gene_id"), names_to = "id", values_to = "logCPM") %>% 
+  left_join(dge$samples) %>% 
+  ggplot(aes(logCPM, after_stat(density), group = id)) +
+  geom_density(aes(colour = treatment)) +
+  ggtitle(glue("Before Filtering: {comma(length(keep))} genes")) +
+  labs(y = "Density", colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+B <- dge$counts[keep,] %>% 
+  cpm(log = TRUE) %>% 
+  as_tibble(rownames = "gene_id") %>% 
+  pivot_longer(-all_of("gene_id"), names_to = "id", values_to = "logCPM") %>% 
+  left_join(dge$samples) %>% 
+  ggplot(aes(logCPM, after_stat(density), group = id)) +
+  geom_density(aes(colour = treatment)) +
+  ggtitle(glue("After Filtering: {comma(sum(keep))} genes")) +
+  labs(y = "Density", colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+A + B + plot_layout(guides = "collect", axes = "collect")
+```
+
+:::
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-densities-1.png)
+
+:::
+
+## Detected Vs Undetected Genes
+
+- Create new object once satisfied with the filtering strategy
+- Passing the logical vector will subset `counts` & `genes` correctly
+    + The original library sizes are retained
+
+```{r}
+dge_filter <- dge[keep,]
+dge_filter
+```
+
+
+
+## Normalisation
+
+- Normalisation is a very common step in transcriptomic analysis
+- Helps to account for differences in library composition
+    + e.g. are some libraries dominated by a handful of highly abundant genes
+- The default in `edgeR` is TMM [@Robinson2010-qp]
+- `DESeq2` uses RLE normalisation
+    + Very similar in principle
+    
+## Statistical Analysis of Counts
+
+- Poisson models number of events per unit
+    + e.g. telephone calls per minute
+- The rate parameter ($\lambda$) models this
+- mean occurence = average rate = $\lambda$
+- Variance is fixed at $\lambda$
+    + If variance $\neq \lambda \implies$ not Poisson data 
+    
+. . .
+
+- The basic model for `edgeR` is a Negative Binomial Model
+    + NB: mean = $\lambda$; variance = $\lambda + r$
+- Multiple strategies for obtaining estimates
+    
+## Statistical Analysis of Counts
+
+- Counts / gene (i.e. $y_{gi}$) are a function of library size ($L_i$)
+- Gene length is fixed across samples $\implies$ library size is not
+- Dividing by library size is a way of normalising counts
+
+$$
+\log (y_{gi} / L_i) = \beta_0 + \beta_1 + ...
+$$
+
+## Normalisation
+
+- Calculation of normalisation factors ($Y_i$) per sample
+    + The idealised normalisation factor is $Y_i = 1$
+- Can use scaled library sizes $L^*_i = Y_i \times L_i$
+
+$$
+\log (y_{gi} / L^*_i) = \beta_0 + \beta_1 + ...
+$$
+
+## TMM Normalisation
+
+```{r}
+dge_filter <- calcNormFactors(dge_filter)
+dge_filter$samples
+```
+
+::: {.notes}
+- The clustering around 1 suggests very similar libraries
+:::
+
+## PCA Analysis
+
+- `edgeR` offers `plotMDS()` for quick exploration
+
+
+```{r plot-mds}
+#| output-location: column
+#| fig-height: 7
+plotMDS(
+  dge_filter, 
+  col = as.integer(dge_filter$samples$treatment)
+)
+```
+
+::: {.notes}
+- Takes top 500 most variable genes
+- Uses base graphics
+:::
+
+## PCA Analysis
+
+- logCPM values are very useful for PCA
+    + Will now be calculated using the normalisation factors
+    
+```{r}
+pca <- dge_filter %>% 
+  cpm(log = TRUE) %>% 
+  t() %>% 
+  prcomp(center = TRUE, scale. = TRUE)
+summary(pca)
+prop_var <- summary(pca)$importance["Proportion of Variance",]
+```
+
+## PCA Analysis
+
+- PC1 vs PC2 shown below $\implies$ easily modified to other components
+
+:::: {.panel-tabset}
+
+### Simple PCA
+
+```{r plot-pca}
+#| fig-show: hide
+pca %>% 
+  broom::tidy() %>% 
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>% 
+  dplyr::rename(id = row) %>% 
+  left_join(dge_filter$samples) %>% 
+  ggplot(aes(PC1, PC2, colour = treatment)) +
+  geom_text(aes(label = id), show.legend = FALSE) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-pca-1.png)
+
+:::
+
+### Enhanced Axis Labels
+
+```{r plot-pca-labels}
+#| fig-show: hide
+pca %>% 
+  broom::tidy() %>% 
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>% 
+  dplyr::rename(id = row) %>% 
+  left_join(dge_filter$samples) %>% 
+  ggplot(aes(PC1, PC2, colour = treatment)) +
+  geom_point() +
+  geom_text_repel(aes(label = id), show.legend = FALSE) +
+  labs(
+    x = glue("PC1 ({percent(prop_var['PC1'])} Variance)"),
+    y = glue("PC2 ({percent(prop_var['PC2'])} Variance)"),
+    colour = "Treatment"
+  ) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-pca-labels-1.png)
+
+:::
+
+::::
+
+## PCA Analysis
+
+- What do we think the above is telling us?
+- Does it look like treatment is contributing to the variance?
+- Are there any other potetnail sources of variability?
+
+::: {.notes}
+- Looks to me like samples 2-4 had transfection issues
+- Need to discuss with wet lab folks
+:::
+
+## The Design Matrix
+
+::: {style="font-size: 92%;"}
+
+- Before proceeding need to define a *design matrix*
+
+```{r}
+X <- model.matrix(~treatment, dge_filter$samples)
+X
+```
+
+:::
+
+## The Design Matrix
+
+- The first column will estimate average expression in control samples
+- Remaining columns estimate the difference due to treatments
+- (Almost) always modelled on the log2 scale $\implies$ logFC
+
+## Estimating Dispersions
+
+- We can estimate the dispersion parameter across the entire dataset
+- `edgeR` models consider technical noise as Poisson with *biological noise* as over-dispersion
+- This adds multiple elements to the `DGEList`
+    + Essential for `edgeR` models
+- Initial estimates are moderated using a global trend during model fitting
+
+```{r}
+dge_filter <- estimateDisp(dge_filter, design = X)
+```
+
+## Estimating Dispersions
+
+```{r plot-bcv}
+#| output-location: column
+#| fig-height: 7
+# Output uses base graphics no ggplot
+plotBCV(dge_filter, pch = 2)
+```
+
+## Model Fitting
+
+- The recommended approach for `edgeR` is to use *Quasi-Likelihood* fits [@Lund2012-xo]
+    + Allows flexibility in over-dispersion parameters
+- First we fit the model $\implies$ then perform testing
+- Using our design matrix, we will fit the model for all co-efficients in `X`
+    + Perform tests within each co-efficient
+    + We'll use the 'M' treatment
+
+
+```{r}
+fit <- glmQLFit(dge_filter, design = X)
+```
+
+## Model Testing
+
+- Statistical tests use quasi-likelihood F-tests
+- Use moderate dispersions (Empirical Bayes)
+- By default, the top10 genes are returned
+
+```{r}
+fit %>% glmQLFTest(coef = "treatmentM") %>% topTags()
+```
+
+## Model Testing
+
+- Can easily collect all genes into a manageable object
+
+```{r}
+res_M <- fit %>% 
+  glmQLFTest(coef = "treatmentM") %>%
+  topTags(n = Inf) %>% 
+  as.data.frame() %>% 
+  as_tibble()
+res_M
+```
+
+## Multiple Testing
+
+- Under H~0~: ~1 in 20 random p-values will be < 0.05
+- With ~14,000 genes $\implies$ about 700 expected
+- These would be Type 1 errors $\implies$ false positives
+    + We say something is happening, when it's just noise
+    
+. . .
+
+- The False Discovery Rate (FDR) controls Type 1 errors at a given rate
+    + Using $\alpha = 0.05 \implies$ happy with 5% of results being errors
+    + Always just an estimate
+    
+```{r}
+sum(res_M$FDR < 0.05)
+```
+
+    
+## Inspection of P-values
+
+- Under H~0~ $\implies$ $p \sim \mathcal{U}(0, 1)$
+- Under H~A~ no distribution $\implies$ peak near zero
+
+```{r plot-pval}
+#| fig-show: hide
+res_M %>% 
+  ggplot(aes(PValue)) +
+  geom_histogram(binwidth = 0.01, fill = "grey70", colour = "black") +
+  scale_y_continuous(expand = expansion(c(0, 0.05))) 
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-pval-1.png)
+
+:::
+
+::: {.notes}
+Looks as expected
+:::
+
+## Volcano Plots
+
+- Plot developed during microarray analysis
+- Shows logFC against significance ($p$-values)
+
+```{r plot-volcano}
+#| fig-show: hide
+res_M %>% 
+  ggplot(aes(logFC, -log10(PValue), colour = FDR < 0.05)) +
+  geom_point() +
+  geom_label_repel(
+    aes(label = gene_name),
+    data = . %>% 
+      arrange(PValue) %>% 
+      dplyr::slice(1:10),
+    size = 3, show.legend = FALSE
+  ) +
+  scale_colour_manual(values = c("black", "red")) 
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-volcano-1.png)
+
+:::
+
+
+## MA Plots
+
+- Two-colour microarray data introduced MA plots
+- Signal from two-colour arrays layered treat vs control in a single spot
+    + `A` for intensity averages
+    + `M` for mean intensity differences
+- Still commonly used and the language remains
+- Sometimes called MD (mean-difference) plots
+    + `edgeR` provides `plotMD()`
+- Show average expression on the `x`-axis and logFC on `y`-axis
+    + How highly expressed are any DE genes?
+
+## MA Plots
+
+- Often start with an exploration then customise for our data
+
+:::: {.panel-tabset}
+
+### Initial Plot
+
+```{r plot-ma}
+#| fig-show: hide
+res_M %>% 
+  ggplot(aes(logCPM, logFC)) +
+  geom_point(aes(colour = FDR < 0.05), alpha = 0.7) +
+  scale_colour_manual(values = c("black", "red"))
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-ma-1.png)
+
+:::
+
+### Customised Plot
+
+```{r plot-ma-label}
+#| fig-show: hide
+res_M %>% 
+  arrange(desc(PValue)) %>% # Why do this?
+  ggplot(aes(logCPM, logFC, colour = FDR < 0.05)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(se = FALSE, colour = 'royalblue3', method = "lm") +
+  geom_label_repel(
+    aes(label = gene_name),
+    data = . %>% 
+      dplyr::filter(FDR < 0.05) %>% 
+      arrange(desc(abs(logFC))) %>% 
+      dplyr::slice(1:10),
+    size = 3, show.legend = FALSE
+  ) +
+  scale_colour_manual(values = c("black", "red")) 
+```
+
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-ma-label-1.png)
+
+:::
+
+::::
+
+## Filtering of DE Genes
+
+- There is a tendency of the most extreme logFC to be in low expressed genes
+- The ratio of any number over a small number will $\rightarrow \infty$
+- If there are "too many" DE genes $\implies$ should we filter results?
+
+. . .
+
+- Early approaches were to filter on extreme logFC
+- Biased results towards low-expressed genes
+
+## Range-Based Hypothesis Testing
+
+- Traditional H~0~ is $\mu = 0$ against H~A~ $\mu \neq 0$
+- An alternative is to use a range-based H~0~ [@McCarthy2009-qf]
+- Implemented in `glmTreat()`
+- Default range is FC > 20% in either direction
+
+```{r}
+res_treatM <- fit %>% 
+  glmTreat(coef = "treatmentM", lfc = log2(1.2)) %>% 
+  topTags(n = Inf) %>% 
+  as.data.frame() %>% 
+  as_tibble()
+sum(res_treatM$FDR < 0.05)
+```
+
+## Range-Based Hypothesis Testing
+
+```{r plot-ma-treat}
+#| fig-show: hide
+res_treatM %>% 
+  arrange(desc(PValue)) %>% # Why do this?
+  ggplot(aes(logCPM, logFC, colour = FDR < 0.05)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(se = FALSE, colour = 'royalblue3', method = "lm") +
+  geom_label_repel(
+    aes(label = gene_name),
+    data = . %>% 
+      dplyr::filter(FDR < 0.05) %>% 
+      arrange(desc(abs(logFC))) %>% 
+      dplyr::slice(1:10),
+    size = 3, show.legend = FALSE
+  ) +
+  scale_colour_manual(values = c("black", "red")) 
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/plot-ma-treat-1.png)
+
+:::
+
+::: {.notes}
+Clearly some high logFC genes had weak statistical support
+:::
+
+# Using DESeq2 {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/DESeq2/DESeq2.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## DESeq2
+
+- Another common package for RNASeq analysis is `DESeq2` [@DESeq22014]
+- Uses `S4` object more interconnected to other Bioconductor classes
+- Different approach to dispersions
+- Different statistical testing
+- Feels a bit more like a "*black-box*" to me
+    + More default settings for a similar workflow $\implies$ fewer manual steps
+- Is a very high-quality approach (as is `edgeR`)
 
 ## References
 
