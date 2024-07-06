@@ -84,7 +84,7 @@ options(width = 100)
 
 - Data obtained from Gene Expression Omnibus [GSE171742](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171742)
 - Stem cell derived cardiomyocytes with 4 treatment groups [@Liu2023-qu]
-- All transfected using lentivral vectors
+- All transfected using lentiviral vectors
 
 . . .
 
@@ -491,7 +491,7 @@ dge_filter
 - Poisson models number of events per unit
     + e.g. telephone calls per minute
 - The rate parameter ($\lambda$) models this
-- mean occurence = average rate = $\lambda$
+- mean occurrence = average rate = $\lambda$
 - Variance is fixed at $\lambda$
     + If variance $\neq \lambda \implies$ not Poisson data 
     
@@ -623,7 +623,7 @@ pca %>%
 
 - What do we think the above is telling us?
 - Does it look like treatment is contributing to the variance?
-- Are there any other potetnail sources of variability?
+- Are there any other potential sources of variability?
 
 ::: {.notes}
 - Looks to me like samples 2-4 had transfection issues
@@ -675,7 +675,7 @@ plotBCV(dge_filter, pch = 2)
 - The recommended approach for `edgeR` is to use *Quasi-Likelihood* fits [@Lund2012-xo]
     + Allows flexibility in over-dispersion parameters
 - First we fit the model $\implies$ then perform testing
-- Using our design matrix, we will fit the model for all co-efficients in `X`
+- Using our design matrix, we will fit the model for all coefficients in `X`
     + Perform tests within each co-efficient
     + We'll use the 'M' treatment
 
@@ -906,6 +906,314 @@ Clearly some high logFC genes had weak statistical support
 - Feels a bit more like a "*black-box*" to me
     + More default settings for a similar workflow $\implies$ fewer manual steps
 - Is a very high-quality approach (as is `edgeR`)
+
+## DESeq2
+
+```{r}
+library(DESeq2)
+library(extraChIPs)
+dds <- DESeqDataSetFromMatrix(
+  dge_filter$counts, 
+  colData = samples,
+  rowData = dge_filter$genes %>% 
+    makeGRangesFromDataFrame(keep.extra.columns = TRUE),
+  design = ~ treatment
+)
+is(dds)
+```
+
+## Summarized Experiment Objects
+
+- `SummarizedExperiment` objects are a core Bioconductor class
+
+```{r}
+getSlots("SummarizedExperiment")
+```
+
+. . .
+
+- Any number of `assays` can be added
+    + Usually matrices with identical dimensions
+- `colData` holds the sample-level metadata
+
+## Summarized Experiment Objects
+
+- `RangedSummarizedExperiment` objects are a subclass of `SummarizedExperiment`
+
+```{r}
+getSlots("RangedSummarizedExperiment")
+```
+
+. . .
+
+- All slots from a `SummarizedExperiment`
+- `rowRanges` allow metadata for each row of counts
+    + Usually a `GRanges` with optional `mcols`
+
+## DESeqDataSet Objects
+
+- Extends `RangedSummarizedExperiment` objects
+
+```{r}
+getSlots("DESeqDataSet")
+```
+
+. . . 
+
+- Includes a design matrix & dispersionFunction
+
+## DESeqDataSet Objects
+
+- Multiple data access method exist
+    + `colData()`, `rowData()`, `rowRanges()`
+    + `assay()`, `counts()`
+
+```{r}
+#| results: hide
+colData(dds)
+rowRanges(dds)
+rowData(dds)
+assay(dds, "counts") %>% head()
+counts(dds) %>% head()
+```
+
+
+## DESeqDataSet Objects
+
+- All functions & methods written for parent classes work with a `DESeqDataSet`
+- `tidyomics` specifically developed for `SummarizedExperiment` objects
+- Numerous functions & methods for `SummarizedExperiment` objects
+
+. . .
+
+- Let's look at a few from `extraChIPs`
+- First add a `logCPM` assay
+
+```{r}
+assay(dds, "logCPM") <- cpm(dds, log = TRUE)
+assays(dds)
+```
+
+::: {.notes}
+- I know the methods in `extraChIPs` best given I wrote them. Sorry...
+:::
+
+## DESeqDataSet Objects
+
+
+```{r ec-pca12}
+#| output-location: column
+plotAssayPCA(
+  dds, assay = "logCPM", 
+  colour = "treatment", label = "id"
+) +
+  labs(colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## DESeqDataSet Objects
+
+```{r ec-pca23}
+#| output-location: column
+plotAssayPCA(
+  dds, assay = "logCPM", 
+  colour = "treatment", label = "id",
+  pc_x = 2, pc_y = 3 # Change the PCs
+) +
+  labs(colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## DESeqDataSet Objects
+
+```{r logcpm-densities}
+#| output-location: column
+plotAssayDensities(
+  dds, "logCPM", colour = "treatment"
+  ) +
+  labs(colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## DESeqDataSet Objects
+
+```{r log1p-densities}
+#| output-location: column
+plotAssayDensities(
+  dds, colour = "treatment", trans = "log1p"
+  ) +
+  labs(colour = "Treatment") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## DESeqDataSet Objects
+
+```{r logcpm-rle}
+#| output-location: column
+plotAssayRle(
+  dds, "logCPM", 
+  fill = "treatment", by_x = "replicate"
+) +
+  facet_wrap(
+    ~treatment, nrow = 1, scales = "free_x"
+  ) +
+  labs(fill = "Treatment") +
+  scale_fill_brewer(palette = "Set1")
+## RLE shows if any sample shows consistently
+## higher or lower counts
+```
+
+::: {.notes}
+- This makes another excellent QC check
+- Usually fine, but a good tool to know
+:::
+
+## DGE Analysis
+
+- The function `DESeq()` wraps multiple steps
+- Normalisation factors $\equiv$ `sizeFactors` added to `colData`
+    + Uses the RLE method (very similar to TMM)
+- Additional assays will be added along with `rowData` columns
+- Testing is performed using the Wald Test
+
+```{r}
+dds <- DESeq(dds)
+dds
+```
+
+## Dispersions
+
+```{r deseq-dispersions}
+#| output-location: column
+# Dispersions are also moderated by `DESeq2`
+plotDispEsts(dds)
+```
+
+
+## DGE Results
+
+```{r}
+resultsNames(dds)
+res_deseq2_M <- results(dds, name = "treatment_M_vs_control")
+res_deseq2_M
+```
+
+
+## DGE Results
+
+- This analysis gave `r comma(sum(res_deseq2_M$padj < 0.05, na.rm = TRUE))` DE genes
+- To sort by significance
+
+```{r}
+res_deseq2_M %>% 
+  as_tibble(rownames = "gene_id") %>% 
+  left_join(as_tibble(genes)) %>% 
+  arrange(pvalue) %>% 
+  dplyr::select(range, starts_with("gene"), everything())
+```
+
+::: {.notes}
+This takes advantage of `as_tibble()` twice. Once to convert a `DataFrame`, with
+the second to convert a `GRanges`
+:::
+
+## Visualising Results
+
+```{r deseq-ma}
+#| output-location: column
+plotMA(res_deseq2_M)
+```
+
+
+## Filtering Results
+
+::: {style="font-size: 90%;"}
+
+- The approach taken by `DESeq2` is different from `edgeR`'s range-based H~0~
+- Shrinks the estimates of logFC [@Zhu2019-kg]
+- Returns `s`-values (false sign or small)
+
+```{r}
+res_lfcshrink_M <- lfcShrink(
+  dds, "treatment_M_vs_control", lfcThreshold = log2(1.2)
+)
+res_lfcshrink_M
+```
+
+:::
+
+## Filtering Results
+
+- This has reduced the original `r comma(sum(res_deseq2_M$padj < 0.05, na.rm = TRUE))` DE genes to `r comma(sum(res_lfcshrink_M$svalue < 0.05))`
+
+```{r}
+res_lfcshrink_M %>% 
+  as_tibble(rownames = "gene_id") %>% 
+  left_join(as_tibble(genes)) %>% 
+  arrange(svalue) %>% 
+  dplyr::filter(svalue < 0.05) %>% 
+  dplyr::select(range, starts_with("gene"), everything())
+```
+
+## Comparison of Approaches
+
+- Using the most conservative analyses
+- Genes along zero for `DESeq2` were a result of shrinkage
+
+```{r plot-compare}
+#| echo: false
+#| fig-align: left
+dplyr::select(res_treatM, gene_id, logFC, FDR) %>% 
+  left_join(
+    res_lfcshrink_M %>% 
+      as_tibble(rownames = "gene_id") %>% 
+      dplyr::select(gene_id, log2FoldChange, svalue),
+    by = "gene_id", suffix = c("edgeR", "DESeq2")
+  ) %>% 
+  left_join(as_tibble(genes), by = "gene_id") %>% 
+  mutate(
+    Status = case_when(
+      FDR < 0.05 & svalue < 0.05 ~ "Both",
+      FDR < 0.05 ~ "edgeR Only",
+      svalue < 0.05 ~ "DESeq2 Only",
+      TRUE ~ "Neither"
+    )
+  ) %>% 
+  ggplot(aes(logFC, log2FoldChange, colour = Status)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  geom_text_repel(
+    aes(label = gene_name),
+    data = . %>% dplyr::filter(abs(logFC) > 4.5, Status != "Neither"),
+    show.legend = FALSE
+  ) +
+  labs(x = "logFC (edgeR)", y = "shrunken logFC (DESeq2)") +
+  scale_colour_manual(
+    values = c("forestgreen", "skyblue3", "orange3", "grey")
+  )
+```
+
+## Export Results
+
+- Save the `edgeR` results using the following
+
+```{r}
+write_rds(res_treatM, here::here("data/res_treatM.rds"))
+```
+
+## Conclusion
+
+- `DESeq2` data structure integrate nicely with other Bioconductor packages
+- `edgeR` can also handle `SummarizedExperiment` objects (mostly)
+- No right or wrong method or data classes to use
+    + Results were still broadly consistent
+- `DESeq2` also has many options for parameter/model choice not covered here
+
+. . .
+
+- `SummarizedExperiment` objects share much with `SingleCellExperiment` objects
+- Have helped with multiple analyses & seem preferable to `Seurat` (IMHO)
+    + `Seurat` is everywhere but I spend a lot of time debugging for people
 
 ## References
 

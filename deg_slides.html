@@ -462,7 +462,7 @@ Dr Stevie Pederson
 <ul>
 <li>Data obtained from Gene Expression Omnibus <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171742">GSE171742</a></li>
 <li>Stem cell derived cardiomyocytes with 4 treatment groups <span class="citation" data-cites="Liu2023-qu">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>)</span></li>
-<li>All transfected using lentivral vectors</li>
+<li>All transfected using lentiviral vectors</li>
 </ul>
 <div class="fragment">
 <ol type="1">
@@ -1179,7 +1179,7 @@ ENSG00000000460.17  C1orf112
 <li>e.g.&nbsp;telephone calls per minute</li>
 </ul></li>
 <li>The rate parameter (<span class="math inline">\(\lambda\)</span>) models this</li>
-<li>mean occurence = average rate = <span class="math inline">\(\lambda\)</span></li>
+<li>mean occurrence = average rate = <span class="math inline">\(\lambda\)</span></li>
 <li>Variance is fixed at <span class="math inline">\(\lambda\)</span>
 <ul>
 <li>If variance <span class="math inline">\(\neq \lambda \implies\)</span> not Poisson data</li>
@@ -1374,7 +1374,7 @@ Cumulative Proportion   0.97171  1.00000 1.000e+00</code></pre>
 <ul>
 <li>What do we think the above is telling us?</li>
 <li>Does it look like treatment is contributing to the variance?</li>
-<li>Are there any other potetnail sources of variability?</li>
+<li>Are there any other potential sources of variability?</li>
 </ul>
 <aside class="notes">
 <ul>
@@ -1473,7 +1473,7 @@ attr(,"contrasts")$treatment
 <li>Allows flexibility in over-dispersion parameters</li>
 </ul></li>
 <li>First we fit the model <span class="math inline">\(\implies\)</span> then perform testing</li>
-<li>Using our design matrix, we will fit the model for all co-efficients in <code>X</code>
+<li>Using our design matrix, we will fit the model for all coefficients in <code>X</code>
 <ul>
 <li>Perform tests within each co-efficient</li>
 <li>We’ll use the ‘M’ treatment</li>
@@ -1772,12 +1772,514 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <li>Uses <code>S4</code> object more interconnected to other Bioconductor classes</li>
 <li>Different approach to dispersions</li>
 <li>Different statistical testing</li>
-<li>Feels a bit more like a <em>black-box</em> to me
+<li>Feels a bit more like a “<em>black-box</em>” to me
 <ul>
 <li>More default settings for a similar workflow <span class="math inline">\(\implies\)</span> fewer manual steps</li>
 </ul></li>
 <li>Is a very high-quality approach (as is <code>edgeR</code>)</li>
 </ul>
+</section>
+<section id="deseq2-1" class="slide level2">
+<h2>DESeq2</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span>
+<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(extraChIPs)</span>
+<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb66-4"><a href="" aria-hidden="true" tabindex="-1"></a>  dge_filter<span class="sc">$</span>counts, </span>
+<span id="cb66-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colData =</span> samples,</span>
+<span id="cb66-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">rowData =</span> dge_filter<span class="sc">$</span>genes <span class="sc">%&gt;%</span> </span>
+<span id="cb66-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">makeGRangesFromDataFrame</span>(<span class="at">keep.extra.columns =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> <span class="sc">~</span> treatment</span>
+<span id="cb66-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb66-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "DESeqDataSet"               "RangedSummarizedExperiment" "SummarizedExperiment"      
+[4] "RectangularData"            "Vector"                     "Annotated"                 
+[7] "vector_OR_Vector"          </code></pre>
+</div>
+</div>
+</section>
+<section id="summarized-experiment-objects" class="slide level2">
+<h2>Summarized Experiment Objects</h2>
+<ul>
+<li><code>SummarizedExperiment</code> objects are a core Bioconductor class</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"SummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            colData              assays               NAMES     elementMetadata            metadata 
+        "DataFrame"    "Assays_OR_NULL" "character_OR_NULL"         "DataFrame"              "list" </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Any number of <code>assays</code> can be added
+<ul>
+<li>Usually matrices with identical dimensions</li>
+</ul></li>
+<li><code>colData</code> holds the sample-level metadata</li>
+</ul>
+</div>
+</section>
+<section id="summarized-experiment-objects-1" class="slide level2">
+<h2>Summarized Experiment Objects</h2>
+<ul>
+<li><code>RangedSummarizedExperiment</code> objects are a subclass of <code>SummarizedExperiment</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"RangedSummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     rowRanges                        colData                         assays 
+"GenomicRanges_OR_GRangesList"                    "DataFrame"               "Assays_OR_NULL" 
+                         NAMES                elementMetadata                       metadata 
+           "character_OR_NULL"                    "DataFrame"                         "list" </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>All slots from a <code>SummarizedExperiment</code></li>
+<li><code>rowRanges</code> allow metadata for each row of counts
+<ul>
+<li>Usually a <code>GRanges</code> with optional <code>mcols</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="deseqdataset-objects" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<ul>
+<li>Extends <code>RangedSummarizedExperiment</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"DESeqDataSet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        design             dispersionFunction                      rowRanges 
+                         "ANY"                     "function" "GenomicRanges_OR_GRangesList" 
+                       colData                         assays                          NAMES 
+                   "DataFrame"               "Assays_OR_NULL"            "character_OR_NULL" 
+               elementMetadata                       metadata 
+                   "DataFrame"                         "list" </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Includes a design matrix &amp; dispersionFunction</li>
+</ul>
+</div>
+</section>
+<section id="deseqdataset-objects-1" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<ul>
+<li>Multiple data access method exist
+<ul>
+<li><code>colData()</code>, <code>rowData()</code>, <code>rowRanges()</code></li>
+<li><code>assay()</code>, <code>counts()</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(dds)</span>
+<span id="cb74-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowRanges</span>(dds)</span>
+<span id="cb74-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(dds)</span>
+<span id="cb74-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"counts"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb74-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">counts</span>(dds) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="deseqdataset-objects-2" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<ul>
+<li>All functions &amp; methods written for parent classes work with a <code>DESeqDataSet</code></li>
+<li><code>tidyomics</code> specifically developed for <code>SummarizedExperiment</code> objects</li>
+<li>Numerous functions &amp; methods for <code>SummarizedExperiment</code> objects</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Let’s look at a few from <code>extraChIPs</code></li>
+<li>First add a <code>logCPM</code> assay</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"logCPM"</span>) <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dds, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of length 2
+names(2): counts logCPM</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>I know the methods in <code>extraChIPs</code> best given I wrote them. Sorry…</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="deseqdataset-objects-3" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
+<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span></span>
+<span id="cb77-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb77-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb77-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/ec-pca12-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deseqdataset-objects-4" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
+<span id="cb78-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
+<span id="cb78-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span>,</span>
+<span id="cb78-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc_x =</span> <span class="dv">2</span>, <span class="at">pc_y =</span> <span class="dv">3</span> <span class="co"># Change the PCs</span></span>
+<span id="cb78-5"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb78-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb78-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/ec-pca23-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deseqdataset-objects-5" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
+<span id="cb79-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, <span class="at">colour =</span> <span class="st">"treatment"</span></span>
+<span id="cb79-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb79-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb79-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/logcpm-densities-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deseqdataset-objects-6" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
+<span id="cb80-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">trans =</span> <span class="st">"log1p"</span></span>
+<span id="cb80-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb80-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb80-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/log1p-densities-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deseqdataset-objects-7" class="slide level2">
+<h2>DESeqDataSet Objects</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayRle</span>(</span>
+<span id="cb81-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, </span>
+<span id="cb81-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> <span class="st">"treatment"</span>, <span class="at">by_x =</span> <span class="st">"replicate"</span></span>
+<span id="cb81-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb81-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb81-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>treatment, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_x"</span></span>
+<span id="cb81-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb81-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb81-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/logcpm-rle-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## RLE shows if any sample shows consistently</span></span>
+<span id="cb82-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## higher or lower counts</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>This makes another excellent QC check</li>
+<li>Usually fine, but a good tool to know</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dge-analysis-1" class="slide level2">
+<h2>DGE Analysis</h2>
+<ul>
+<li>The function <code>DESeq()</code> wraps multiple steps</li>
+<li>Normalisation factors <span class="math inline">\(\equiv\)</span> <code>sizeFactors</code> added to <code>colData</code>
+<ul>
+<li>Uses the RLE method (very similar to TMM)</li>
+</ul></li>
+<li>Additional assays will be added along with <code>rowData</code> columns</li>
+<li>Testing is performed using the Wald Test</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
+<span id="cb83-2"><a href="" aria-hidden="true" tabindex="-1"></a>dds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: DESeqDataSet 
+dim: 13896 12 
+metadata(1): version
+assays(5): counts logCPM mu H cooks
+rownames(13896): ENSG00000000003.14 ENSG00000000005.6 ... ENSG00000288022.1
+  ENSG00000288066.1
+rowData names(33): gene_id gene_type ... deviance maxCooks
+colnames(12): 1_control 6_control ... 9_M 14_M
+colData names(5): id replicate treatment group sizeFactor</code></pre>
+</div>
+</div>
+</section>
+<section id="dispersions" class="slide level2">
+<h2>Dispersions</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Dispersions are also moderated by `DESeq2`</span></span>
+<span id="cb85-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotDispEsts</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/deseq-dispersions-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dge-results" class="slide level2">
+<h2>DGE Results</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Intercept"                 "treatment_M_vs_control"    "treatment_Nsp6_vs_control"
+[4] "treatment_Nsp8_vs_control"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"treatment_M_vs_control"</span>)</span>
+<span id="cb88-2"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>log2 fold change (MLE): treatment M vs control 
+Wald test p-value: treatment M vs control 
+DataFrame with 13896 rows and 6 columns
+                    baseMean log2FoldChange     lfcSE       stat      pvalue        padj
+                   &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;   &lt;numeric&gt;   &lt;numeric&gt;
+ENSG00000000003.14 4918.2962     -0.0734152 0.0548639  -1.338132 1.80853e-01 0.444613885
+ENSG00000000005.6    80.3602     -0.8692770 0.3071633  -2.830016 4.65457e-03 0.036358343
+ENSG00000000419.12 1710.4219      0.3642342 0.0843509   4.318081 1.57392e-05 0.000353798
+ENSG00000000457.14  551.4245     -0.0386804 0.1648748  -0.234605 8.14516e-01 0.923290340
+ENSG00000000460.17  190.9980      0.1536008 0.1744186   0.880645 3.78510e-01 0.650754388
+...                      ...            ...       ...        ...         ...         ...
+ENSG00000287966.1    43.9669     -0.5843052  0.448175 -1.3037444  0.19232074   0.4593943
+ENSG00000287978.1    75.1925      0.0260297  0.412190  0.0631498  0.94964723   0.9831753
+ENSG00000288012.1    32.8771     -0.2789995  0.462572 -0.6031481  0.54641019   0.7777428
+ENSG00000288022.1    36.4753     -0.8772781  0.328395 -2.6714106  0.00755332   0.0523458
+ENSG00000288066.1   438.5152      0.0771334  0.210274  0.3668230  0.71375102   0.8722577</code></pre>
+</div>
+</div>
+</section>
+<section id="dge-results-1" class="slide level2">
+<h2>DGE Results</h2>
+<ul>
+<li>This analysis gave 1,972 DE genes</li>
+<li>To sort by significance</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pvalue) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13,896 × 10
+   range        gene_id gene_type gene_name baseMean log2FoldChange  lfcSE  stat    pvalue      padj
+   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 chr6:835528… ENSG00… protein_… SNAP91      2097.           -4.29 0.123  -34.9 2.49e-267 3.45e-263
+ 2 chr3:996384… ENSG00… protein_… COL8A1       727.            1.91 0.136   14.0 7.91e- 45 5.49e- 41
+ 3 chr6:168441… ENSG00… protein_… SMOC2        302.            2.98 0.215   13.9 1.21e- 43 5.61e- 40
+ 4 chr10:76869… ENSG00… protein_… KCNMA1       624.            2.91 0.212   13.8 3.59e- 43 1.25e- 39
+ 5 chr20:36541… ENSG00… protein_… MYL9       20813.            2.22 0.162   13.7 1.13e- 42 3.14e- 39
+ 6 chr6:846873… ENSG00… protein_… TBX18         97.4           4.65 0.340   13.7 1.41e- 42 3.26e- 39
+ 7 chr11:11683… ENSG00… protein_… APOA1       4526.           -1.90 0.143  -13.3 3.88e- 40 7.70e- 37
+ 8 chr9:164095… ENSG00… protein_… BNC2         257.            3.50 0.265   13.2 5.34e- 40 9.28e- 37
+ 9 chr22:17178… ENSG00… protein_… ADA2         734.           -1.20 0.0960 -12.5 7.89e- 36 1.22e- 32
+10 chr6:560565… ENSG00… protein_… COL21A1      343.           -2.37 0.198  -12.0 5.38e- 33 7.48e- 30
+# ℹ 13,886 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>This takes advantage of <code>as_tibble()</code> twice. Once to convert a <code>DataFrame</code>, with the second to convert a <code>GRanges</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="visualising-results" class="slide level2">
+<h2>Visualising Results</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(res_deseq2_M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="deg_slides_files/figure-revealjs/deseq-ma-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="filtering-results" class="slide level2">
+<h2>Filtering Results</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>The approach taken by <code>DESeq2</code> is different from <code>edgeR</code>’s range-based H<sub>0</sub></li>
+<li>Shrinks the estimates of logFC <span class="citation" data-cites="Zhu2019-kg">(<a href="#/references" role="doc-biblioref" onclick="">Zhu, Ibrahim, and Love 2019</a>)</span></li>
+<li>Returns <code>s</code>-values (false sign or small)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(</span>
+<span id="cb93-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"treatment_M_vs_control"</span>, <span class="at">lfcThreshold =</span> <span class="fu">log2</span>(<span class="fl">1.2</span>)</span>
+<span id="cb93-3"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb93-4"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>log2 fold change (MAP): treatment M vs control 
+ 
+DataFrame with 13896 rows and 4 columns
+                    baseMean log2FoldChange     lfcSE    svalue
+                   &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+ENSG00000000003.14 4918.2962     -0.0675130 0.0529894 0.7792084
+ENSG00000000005.6    80.3602     -0.6065355 0.3664508 0.0413765
+ENSG00000000419.12 1710.4219      0.3378204 0.0851769 0.0458250
+ENSG00000000457.14  551.4245     -0.0192876 0.1236106 0.6995773
+ENSG00000000460.17  190.9980      0.0854692 0.1358403 0.5657148
+...                      ...            ...       ...       ...
+ENSG00000287966.1    43.9669    -0.09359097  0.200388 0.4204071
+ENSG00000287978.1    75.1925     0.00454662  0.168958 0.6258674
+ENSG00000288012.1    32.8771    -0.03896311  0.176866 0.5545518
+ENSG00000288022.1    36.4753    -0.56074752  0.410878 0.0593301
+ENSG00000288066.1   438.5152     0.03309121  0.140818 0.6493741</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="filtering-results-1" class="slide level2">
+<h2>Filtering Results</h2>
+<ul>
+<li>This has reduced the original 1,972 DE genes to 1,270</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="sc">%&gt;%</span> </span>
+<span id="cb95-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(svalue) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(svalue <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,270 × 8
+   range                       gene_id   gene_type gene_name baseMean log2FoldChange  lfcSE   svalue
+   &lt;chr&gt;                       &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 chr6:83552880-83709691:-    ENSG0000… protein_… SNAP91      2097.          -4.28  0.123  0       
+ 2 chr22:17178790-17258235:-   ENSG0000… protein_… ADA2         734.          -1.18  0.0966 0       
+ 3 chr11:116835751-116837950:- ENSG0000… protein_… APOA1       4526.          -1.88  0.144  0       
+ 4 chr6:56056590-56394094:-    ENSG0000… protein_… COL21A1      343.          -2.33  0.199  0       
+ 5 chr8:33591330-33600023:-    ENSG0000… protein_… DUSP26        73.3         -6.34  0.597  0       
+ 6 chr9:128255829-128275995:-  ENSG0000… protein_… GOLGA2      1615.          -0.942 0.0817 0       
+ 7 chr6:84687351-84764598:-    ENSG0000… protein_… TBX18         97.4          4.60  0.338  9.79e-39
+ 8 chr6:168441151-168673445:+  ENSG0000… protein_… SMOC2        302.           2.95  0.216  1.28e-36
+ 9 chr10:76869601-77638369:-   ENSG0000… protein_… KCNMA1       624.           2.88  0.212  5.28e-36
+10 chr9:16409503-16870843:-    ENSG0000… protein_… BNC2         257.           3.46  0.266  1.29e-34
+# ℹ 1,260 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="comparison-of-approaches" class="slide level2">
+<h2>Comparison of Approaches</h2>
+<ul>
+<li>Using the most conservative analyses</li>
+<li>Genes along zero for <code>DESeq2</code> were a result of shrinkage</li>
+</ul>
+
+<img data-src="deg_slides_files/figure-revealjs/plot-compare-1.png" class="quarto-figure quarto-figure-left r-stretch" width="768"></section>
+<section id="export-results" class="slide level2">
+<h2>Export Results</h2>
+<ul>
+<li>Save the <code>edgeR</code> results using the following</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(res_treatM, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/res_treatM.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li><code>DESeq2</code> data structure integrate nicely with other Bioconductor packages</li>
+<li><code>edgeR</code> can also handle <code>SummarizedExperiment</code> objects (mostly)</li>
+<li>No right or wrong method or data classes to use
+<ul>
+<li>Results were still broadly consistent</li>
+</ul></li>
+<li><code>DESeq2</code> also has many options for parameter/model choice not covered here</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>SummarizedExperiment</code> objects share much with <code>SingleCellExperiment</code> objects</li>
+<li>Have helped with multiple analyses &amp; seem preferable to <code>Seurat</code> (IMHO)
+<ul>
+<li><code>Seurat</code> is everywhere but I spend a lot of time debugging for people</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -1808,6 +2310,9 @@ Robinson, Mark D, Davis J McCarthy, and Gordon K Smyth. 2010. <span>“edgeR: A 
 </div>
 <div id="ref-Robinson2010-qp" class="csl-entry" role="listitem">
 Robinson, Mark D, and Alicia Oshlack. 2010. <span>“A Scaling Normalization Method for Differential Expression Analysis of <span class="nocase">RNA-seq</span> Data.”</span> <em>Genome Biol.</em> 11 (3): R25.
+</div>
+<div id="ref-Zhu2019-kg" class="csl-entry" role="listitem">
+Zhu, Anqi, Joseph G Ibrahim, and Michael I Love. 2019. <span>“Heavy-Tailed Prior Distributions for Sequence Count Data: Removing the Noise and Preserving Large Differences.”</span> <em>Bioinformatics</em> 35 (12): 2084–92.
 </div>
 </div>
 </section></section>

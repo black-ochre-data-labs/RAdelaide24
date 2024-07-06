@@ -279,3 +279,42 @@
 }
 
 
+
+@ARTICLE{Zhu2019-kg,
+  title    = "Heavy-tailed prior distributions for sequence count data:
+              removing the noise and preserving large differences",
+  author   = "Zhu, Anqi and Ibrahim, Joseph G and Love, Michael I",
+  abstract = "MOTIVATION: In RNA-seq differential expression analysis,
+              investigators aim to detect those genes with changes in
+              expression level across conditions, despite technical and
+              biological variability in the observations. A common task is to
+              accurately estimate the effect size, often in terms of a
+              logarithmic fold change (LFC). RESULTS: When the read counts are
+              low or highly variable, the maximum likelihood estimates for the
+              LFCs has high variance, leading to large estimates not
+              representative of true differences, and poor ranking of genes by
+              effect size. One approach is to introduce filtering thresholds
+              and pseudocounts to exclude or moderate estimated LFCs. Filtering
+              may result in a loss of genes from the analysis with true
+              differences in expression, while pseudocounts provide a limited
+              solution that must be adapted per dataset. Here, we propose the
+              use of a heavy-tailed Cauchy prior distribution for effect sizes,
+              which avoids the use of filter thresholds or pseudocounts. The
+              proposed method, Approximate Posterior Estimation for generalized
+              linear model, apeglm, has lower bias than previously proposed
+              shrinkage estimators, while still reducing variance for those
+              genes with little information for statistical inference.
+              AVAILABILITY AND IMPLEMENTATION: The apeglm package is available
+              as an R/Bioconductor package at
+              https://bioconductor.org/packages/apeglm, and the methods can be
+              called from within the DESeq2 software. SUPPLEMENTARY
+              INFORMATION: Supplementary data are available at Bioinformatics
+              online.",
+  journal  = "Bioinformatics",
+  volume   =  35,
+  number   =  12,
+  pages    = "2084--2092",
+  month    =  jun,
+  year     =  2019,
+  language = "en"
+}

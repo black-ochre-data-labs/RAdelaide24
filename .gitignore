@@ -4,5 +4,6 @@
 .Ruserdata
 *.Rproj
 *cache*
+*rds
 
 /.quarto/
