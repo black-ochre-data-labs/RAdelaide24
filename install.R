@@ -6,7 +6,7 @@ pkg <- c(
   "DESeq2",
   "edgeR", "ensembldb", "extraChIPs",
   "GenomicFeatures", "Gviz", "glue", "ggrepel",
-  "IRanges",
+  "here", "IRanges",
   "lme4", "lmerTest",
   "msigdbr",
   "pander", "plyranges",
