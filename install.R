@@ -9,7 +9,7 @@ pkg <- c(
   "here", "IRanges",
   "lme4", "lmerTest",
   "msigdbr",
-  "pander", "plyranges",
+  "pander", "pheatmap", "plyranges",
   "readxl", "remotes", "rtracklayer",
   "S4Vectors",
   "tidyverse"
