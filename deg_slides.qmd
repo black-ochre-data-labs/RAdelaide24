@@ -119,6 +119,7 @@ library(patchwork)
 library(scales)
 library(glue)
 library(ggrepel)
+library(pheatmap)
 theme_set(theme_bw())
 ```
 
@@ -893,6 +894,92 @@ res_treatM %>%
 
 ::: {.notes}
 Clearly some high logFC genes had weak statistical support
+:::
+
+## Checking Individual Genes
+
+- Checking individual genes for changes in expression can be helpful
+- Choosing a small number helps with interpretability
+
+```{r boxplot-topranked}
+#| fig-show: hide
+cpm(dge_filter, log = TRUE) %>% 
+  .[res_treatM$gene_id[1:9],] %>% 
+  as_tibble(rownames = "gene_id") %>% 
+  pivot_longer(-all_of("gene_id"), names_to = "id", values_to = "logCPM") %>% 
+  left_join(dge$genes) %>% 
+  left_join(dge$samples) %>%
+  mutate(gene_name = fct_inorder(gene_name)) %>% 
+  ggplot(aes(treatment, logCPM, fill = treatment)) +
+  geom_boxplot() +
+  facet_wrap(~gene_name, scales = "free_y") +
+  scale_fill_brewer(palette = "Set1")
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/boxplot-topranked-1.png)
+
+:::
+
+## Heatmaps Across Multiple Genes
+
+- Showing larger groups of genes can also be informative
+- Enables very basic clustering of genes
+
+. . .
+
+- The package `pheatmap` is a common resource
+- Pre-dates the `tidyverse` $\implies$ `matrix` and `data.frame` objects
+
+## Heatmaps Across Multiple Genes
+
+1. Form a matrix from the top genes
+2. Subtract the mean expression value
+    + This retains variability but shows direction of change
+3. Set rownames to be the gene-names
+
+```{r}
+mat <- cpm(dge_filter, log = TRUE)[res_treatM$gene_id[1:25],] 
+mat <- mat - rowMeans(mat)
+rownames(mat) <- setNames(genes$gene_name, genes$gene_id)[rownames(mat)]
+```
+
+. . .
+
+- Choosing too many genes can confuse rather than illustrate the results!!!
+
+## Heatmaps Across Multiple Genes
+
+- Groups can be set using column annotations (`annotation_col`)
+    + Requires a `data.frame` with rownames 
+- Group colours can also be passed as a list
+
+```{r heatmap-topranked}
+#| fig-show: hide
+pheatmap(
+  mat, 
+  annotation_col = samples %>%
+    dplyr::select(id, treatment) %>% 
+    as.data.frame() %>% 
+    column_to_rownames("id"),
+  annotation_colors = list(
+    treatment = setNames(
+      RColorBrewer::brewer.pal(4, "Set1"), levels(samples$treatment)
+    )
+  ),
+  cutree_rows = 4
+)
+```
+
+::: {style="font-size: 75%;"}
+
+[Click to show figure](deg_slides_files/figure-revealjs/heatmap-topranked-1.png)
+
+:::
+
+::: {.notes}
+Every column in the annotation df will be added as an annotation
 :::
 
 # Using DESeq2 {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/DESeq2/DESeq2.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}

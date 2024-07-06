@@ -498,7 +498,8 @@ Dr Stevie Pederson
 <span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
 <span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="getting-annotations" class="slide level2">
@@ -1759,6 +1760,104 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="checking-individual-genes" class="slide level2">
+<h2>Checking Individual Genes</h2>
+<ul>
+<li>Checking individual genes for changes in expression can be helpful</li>
+<li>Choosing a small number helps with interpretability</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cpm</span>(dge_filter, <span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a>  .[res_treatM<span class="sc">$</span>gene_id[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>],] <span class="sc">%&gt;%</span> </span>
+<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">all_of</span>(<span class="st">"gene_id"</span>), <span class="at">names_to =</span> <span class="st">"id"</span>, <span class="at">values_to =</span> <span class="st">"logCPM"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge<span class="sc">$</span>genes) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dge<span class="sc">$</span>samples) <span class="sc">%&gt;%</span></span>
+<span id="cb66-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene_name =</span> <span class="fu">fct_inorder</span>(gene_name)) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(treatment, logCPM, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb66-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb66-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene_name, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb66-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/boxplot-topranked-1.png">Click to show figure</a></p>
+</div>
+</section>
+<section id="heatmaps-across-multiple-genes" class="slide level2">
+<h2>Heatmaps Across Multiple Genes</h2>
+<ul>
+<li>Showing larger groups of genes can also be informative</li>
+<li>Enables very basic clustering of genes</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The package <code>pheatmap</code> is a common resource</li>
+<li>Pre-dates the <code>tidyverse</code> <span class="math inline">\(\implies\)</span> <code>matrix</code> and <code>data.frame</code> objects</li>
+</ul>
+</div>
+</section>
+<section id="heatmaps-across-multiple-genes-1" class="slide level2">
+<h2>Heatmaps Across Multiple Genes</h2>
+<ol type="1">
+<li>Form a matrix from the top genes</li>
+<li>Subtract the mean expression value
+<ul>
+<li>This retains variability but shows direction of change</li>
+</ul></li>
+<li>Set rownames to be the gene-names</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dge_filter, <span class="at">log =</span> <span class="cn">TRUE</span>)[res_treatM<span class="sc">$</span>gene_id[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>],] </span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> mat <span class="sc">-</span> <span class="fu">rowMeans</span>(mat)</span>
+<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat) <span class="ot">&lt;-</span> <span class="fu">setNames</span>(genes<span class="sc">$</span>gene_name, genes<span class="sc">$</span>gene_id)[<span class="fu">rownames</span>(mat)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Choosing too many genes can confuse rather than illustrate the results!!!</li>
+</ul>
+</div>
+</section>
+<section id="heatmaps-across-multiple-genes-2" class="slide level2">
+<h2>Heatmaps Across Multiple Genes</h2>
+<ul>
+<li>Groups can be set using column annotations (<code>annotation_col</code>)
+<ul>
+<li>Requires a <code>data.frame</code> with rownames</li>
+</ul></li>
+<li>Group colours can also be passed as a list</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(</span>
+<span id="cb68-2"><a href="" aria-hidden="true" tabindex="-1"></a>  mat, </span>
+<span id="cb68-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">annotation_col =</span> samples <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(id, treatment) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb68-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">"id"</span>),</span>
+<span id="cb68-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">annotation_colors =</span> <span class="fu">list</span>(</span>
+<span id="cb68-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">setNames</span>(</span>
+<span id="cb68-9"><a href="" aria-hidden="true" tabindex="-1"></a>      RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">4</span>, <span class="st">"Set1"</span>), <span class="fu">levels</span>(samples<span class="sc">$</span>treatment)</span>
+<span id="cb68-10"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb68-11"><a href="" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb68-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">cutree_rows =</span> <span class="dv">4</span></span>
+<span id="cb68-13"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div style="font-size: 75%;">
+<p><a href="deg_slides_files/figure-revealjs/heatmap-topranked-1.png">Click to show figure</a></p>
+</div>
+<aside class="notes">
+<p>Every column in the annotation df will be added as an annotation</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="using-deseq2" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/DESeq2/DESeq2.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
@@ -1782,16 +1881,16 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <section id="deseq2-1" class="slide level2">
 <h2>DESeq2</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span>
-<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(extraChIPs)</span>
-<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
-<span id="cb66-4"><a href="" aria-hidden="true" tabindex="-1"></a>  dge_filter<span class="sc">$</span>counts, </span>
-<span id="cb66-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colData =</span> samples,</span>
-<span id="cb66-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">rowData =</span> dge_filter<span class="sc">$</span>genes <span class="sc">%&gt;%</span> </span>
-<span id="cb66-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">makeGRangesFromDataFrame</span>(<span class="at">keep.extra.columns =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb66-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> <span class="sc">~</span> treatment</span>
-<span id="cb66-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb66-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(extraChIPs)</span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>  dge_filter<span class="sc">$</span>counts, </span>
+<span id="cb69-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colData =</span> samples,</span>
+<span id="cb69-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">rowData =</span> dge_filter<span class="sc">$</span>genes <span class="sc">%&gt;%</span> </span>
+<span id="cb69-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">makeGRangesFromDataFrame</span>(<span class="at">keep.extra.columns =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb69-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> <span class="sc">~</span> treatment</span>
+<span id="cb69-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb69-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "DESeqDataSet"               "RangedSummarizedExperiment" "SummarizedExperiment"      
 [4] "RectangularData"            "Vector"                     "Annotated"                 
@@ -1805,7 +1904,7 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <li><code>SummarizedExperiment</code> objects are a core Bioconductor class</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"SummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"SummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            colData              assays               NAMES     elementMetadata            metadata 
         "DataFrame"    "Assays_OR_NULL" "character_OR_NULL"         "DataFrame"              "list" </code></pre>
@@ -1827,7 +1926,7 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <li><code>RangedSummarizedExperiment</code> objects are a subclass of <code>SummarizedExperiment</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"RangedSummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"RangedSummarizedExperiment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     rowRanges                        colData                         assays 
 "GenomicRanges_OR_GRangesList"                    "DataFrame"               "Assays_OR_NULL" 
@@ -1851,7 +1950,7 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <li>Extends <code>RangedSummarizedExperiment</code> objects</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"DESeqDataSet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"DESeqDataSet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        design             dispersionFunction                      rowRanges 
                          "ANY"                     "function" "GenomicRanges_OR_GRangesList" 
@@ -1877,11 +1976,11 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(dds)</span>
-<span id="cb74-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowRanges</span>(dds)</span>
-<span id="cb74-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(dds)</span>
-<span id="cb74-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"counts"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
-<span id="cb74-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">counts</span>(dds) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(dds)</span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowRanges</span>(dds)</span>
+<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(dds)</span>
+<span id="cb77-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"counts"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb77-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">counts</span>(dds) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="deseqdataset-objects-2" class="slide level2">
@@ -1897,8 +1996,8 @@ ENSG00000165118.15   C9orf64  5.728040 1.8379059  176.1002 2.011799e-08 2.556070
 <li>First add a <code>logCPM</code> assay</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"logCPM"</span>) <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dds, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(dds, <span class="st">"logCPM"</span>) <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dds, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">assays</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of length 2
 names(2): counts logCPM</code></pre>
@@ -1925,12 +2024,12 @@ names(2): counts logCPM</code></pre>
 <h2>DESeqDataSet Objects</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
-<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
-<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span></span>
-<span id="cb77-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb77-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
-<span id="cb77-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
+<span id="cb80-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
+<span id="cb80-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span></span>
+<span id="cb80-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb80-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb80-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1946,13 +2045,13 @@ names(2): counts logCPM</code></pre>
 <h2>DESeqDataSet Objects</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
-<span id="cb78-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
-<span id="cb78-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span>,</span>
-<span id="cb78-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc_x =</span> <span class="dv">2</span>, <span class="at">pc_y =</span> <span class="dv">3</span> <span class="co"># Change the PCs</span></span>
-<span id="cb78-5"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb78-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
-<span id="cb78-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayPCA</span>(</span>
+<span id="cb81-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">assay =</span> <span class="st">"logCPM"</span>, </span>
+<span id="cb81-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">label =</span> <span class="st">"id"</span>,</span>
+<span id="cb81-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc_x =</span> <span class="dv">2</span>, <span class="at">pc_y =</span> <span class="dv">3</span> <span class="co"># Change the PCs</span></span>
+<span id="cb81-5"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb81-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb81-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1968,11 +2067,11 @@ names(2): counts logCPM</code></pre>
 <h2>DESeqDataSet Objects</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
-<span id="cb79-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, <span class="at">colour =</span> <span class="st">"treatment"</span></span>
-<span id="cb79-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb79-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
-<span id="cb79-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
+<span id="cb82-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, <span class="at">colour =</span> <span class="st">"treatment"</span></span>
+<span id="cb82-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb82-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb82-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1988,11 +2087,11 @@ names(2): counts logCPM</code></pre>
 <h2>DESeqDataSet Objects</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
-<span id="cb80-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">trans =</span> <span class="st">"log1p"</span></span>
-<span id="cb80-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb80-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
-<span id="cb80-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayDensities</span>(</span>
+<span id="cb83-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="at">colour =</span> <span class="st">"treatment"</span>, <span class="at">trans =</span> <span class="st">"log1p"</span></span>
+<span id="cb83-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb83-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb83-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2008,15 +2107,15 @@ names(2): counts logCPM</code></pre>
 <h2>DESeqDataSet Objects</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayRle</span>(</span>
-<span id="cb81-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, </span>
-<span id="cb81-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> <span class="st">"treatment"</span>, <span class="at">by_x =</span> <span class="st">"replicate"</span></span>
-<span id="cb81-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb81-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
-<span id="cb81-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>treatment, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_x"</span></span>
-<span id="cb81-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb81-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
-<span id="cb81-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotAssayRle</span>(</span>
+<span id="cb84-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"logCPM"</span>, </span>
+<span id="cb84-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> <span class="st">"treatment"</span>, <span class="at">by_x =</span> <span class="st">"replicate"</span></span>
+<span id="cb84-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb84-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb84-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>treatment, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_x"</span></span>
+<span id="cb84-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb84-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb84-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2025,8 +2124,8 @@ names(2): counts logCPM</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## RLE shows if any sample shows consistently</span></span>
-<span id="cb82-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## higher or lower counts</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## RLE shows if any sample shows consistently</span></span>
+<span id="cb85-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## higher or lower counts</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <aside class="notes">
@@ -2058,8 +2157,8 @@ names(2): counts logCPM</code></pre>
 <li>Testing is performed using the Wald Test</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
-<span id="cb83-2"><a href="" aria-hidden="true" tabindex="-1"></a>dds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
+<span id="cb86-2"><a href="" aria-hidden="true" tabindex="-1"></a>dds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: DESeqDataSet 
 dim: 13896 12 
@@ -2077,8 +2176,8 @@ colData names(5): id replicate treatment group sizeFactor</code></pre>
 <h2>Dispersions</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Dispersions are also moderated by `DESeq2`</span></span>
-<span id="cb85-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotDispEsts</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Dispersions are also moderated by `DESeq2`</span></span>
+<span id="cb88-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotDispEsts</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2093,13 +2192,13 @@ colData names(5): id replicate treatment group sizeFactor</code></pre>
 <section id="dge-results" class="slide level2">
 <h2>DGE Results</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Intercept"                 "treatment_M_vs_control"    "treatment_Nsp6_vs_control"
 [4] "treatment_Nsp8_vs_control"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"treatment_M_vs_control"</span>)</span>
-<span id="cb88-2"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"treatment_M_vs_control"</span>)</span>
+<span id="cb91-2"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>log2 fold change (MLE): treatment M vs control 
 Wald test p-value: treatment M vs control 
@@ -2127,11 +2226,11 @@ ENSG00000288066.1   438.5152      0.0771334  0.210274  0.3668230  0.71375102   0
 <li>To sort by significance</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="sc">%&gt;%</span> </span>
-<span id="cb90-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pvalue) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_deseq2_M <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pvalue) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13,896 × 10
    range        gene_id gene_type gene_name baseMean log2FoldChange  lfcSE  stat    pvalue      padj
@@ -2167,7 +2266,7 @@ ENSG00000288066.1   438.5152      0.0771334  0.210274  0.3668230  0.71375102   0
 <h2>Visualising Results</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(res_deseq2_M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(res_deseq2_M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2188,10 +2287,10 @@ ENSG00000288066.1   438.5152      0.0771334  0.210274  0.3668230  0.71375102   0
 <li>Returns <code>s</code>-values (false sign or small)</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(</span>
-<span id="cb93-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"treatment_M_vs_control"</span>, <span class="at">lfcThreshold =</span> <span class="fu">log2</span>(<span class="fl">1.2</span>)</span>
-<span id="cb93-3"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb93-4"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(</span>
+<span id="cb96-2"><a href="" aria-hidden="true" tabindex="-1"></a>  dds, <span class="st">"treatment_M_vs_control"</span>, <span class="at">lfcThreshold =</span> <span class="fu">log2</span>(<span class="fl">1.2</span>)</span>
+<span id="cb96-3"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb96-4"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>log2 fold change (MAP): treatment M vs control 
  
@@ -2219,12 +2318,12 @@ ENSG00000288066.1   438.5152     0.03309121  0.140818 0.6493741</code></pre>
 <li>This has reduced the original 1,972 DE genes to 1,270</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="sc">%&gt;%</span> </span>
-<span id="cb95-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(svalue) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(svalue <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="" aria-hidden="true" tabindex="-1"></a>res_lfcshrink_M <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"gene_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb98-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(genes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb98-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(svalue) <span class="sc">%&gt;%</span> </span>
+<span id="cb98-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(svalue <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb98-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(range, <span class="fu">starts_with</span>(<span class="st">"gene"</span>), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,270 × 8
    range                       gene_id   gene_type gene_name baseMean log2FoldChange  lfcSE   svalue
@@ -2257,7 +2356,7 @@ ENSG00000288066.1   438.5152     0.03309121  0.140818 0.6493741</code></pre>
 <li>Save the <code>edgeR</code> results using the following</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(res_treatM, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/res_treatM.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(res_treatM, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/res_treatM.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="conclusion" class="slide level2">
