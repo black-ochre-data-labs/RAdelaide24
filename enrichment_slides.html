@@ -579,7 +579,7 @@ Dr Stevie Pederson
 <section id="msigdb" class="slide level2">
 <h2>MSigDB</h2>
 <ul>
-<li>The Molecular Signatures Database (MSigDB) collects multiple databases
+<li>The Molecular Signatures Database collects multiple databases <span class="citation" data-cites="Liberzon2011-fr">(<a href="#/references" role="doc-biblioref" onclick="">Liberzon et al. 2011</a>)</span>
 <ul>
 <li>https://www.gsea-msigdb.org/gsea/msigdb/index.jsp</li>
 <li>Collected simply as gene sets without functional annotation</li>
@@ -611,9 +611,10 @@ Dr Stevie Pederson
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
-<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_collections</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_collections</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 23 × 3
@@ -1079,6 +1080,39 @@ ENSG00000167110
 <section id="gene-set-enrichment-analysis-8" class="slide level2">
 <h2>Gene Set Enrichment Analysis</h2>
 <ul>
+<li>Show some highly ranked genes from the top-ranked pathway
+<ul>
+<li>Could choose multiple pathways &amp; annotate genes</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(edgeR)</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>dge <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/dge_filter.rds"</span>)</span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>lcpm <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dge, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(lcpm) <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(<span class="fu">rownames</span>(lcpm), <span class="st">"ENSG[0-9]+"</span>)</span>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a>le_ids <span class="ot">&lt;-</span> res_treatM <span class="sc">%&gt;%</span> </span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ensembl_gene <span class="sc">%in%</span> kegg_by_gs<span class="sc">$</span>KEGG_LYSOSOME, FDR <span class="sc">&lt;</span> <span class="fl">0.1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"ensembl_gene"</span>)</span>
+<span id="cb24-9"><a href="" aria-hidden="true" tabindex="-1"></a>lcpm[le_ids, <span class="fu">str_subset</span>(dge<span class="sc">$</span>samples<span class="sc">$</span>id, <span class="st">"(control|M)$"</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb24-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rownames</span>(id2symbol[<span class="fu">rownames</span>(.)]) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="dv">1</span>, \(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pheatmap</span>(<span class="at">main =</span> <span class="st">"KEGG_LYSOSOME (FDR &lt; 0.1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+<section id="gene-set-enrichment-analysis-8-output" class="slide level2 output-location-slide"><h2>Gene Set Enrichment Analysis</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="enrichment_slides_files/figure-revealjs/lysosome-pheatmap-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="gene-set-enrichment-analysis-9" class="slide level2">
+<h2>Gene Set Enrichment Analysis</h2>
+<ul>
 <li>This approach has assumed that clustering by direction is biologically relevant</li>
 <li>Implies that up-regulated genes <span class="math inline">\(\implies\)</span> pathway activation</li>
 <li>Ranks can also be prepared using significance only (<span class="math inline">\(-\log_{10}p\)</span>)
@@ -1086,7 +1120,442 @@ ENSG00000167110
 <li>Effectively detects <em>perturbed</em> gene sets with genes at both ends</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fgsea</span>(kegg_by_gs, ranks_by_sig, <span class="at">scoreType =</span> <span class="st">"pos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## This is pseudo-code</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Need to setup ranks_by_sig. Maybe in final DIY session?</span></span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fgsea</span>(kegg_by_gs, ranks_by_sig, <span class="at">scoreType =</span> <span class="st">"pos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="final-gsea-comment" class="slide level2">
+<h2>Final GSEA Comment</h2>
+<ul>
+<li>Permutation is performed across genes</li>
+<li>Doesn’t take into account inter-gene correlations
+<ul>
+<li>Tends to produce spurious results</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The original GSEA took a matrix and permuted columns (i.e.&nbsp;sample labels)
+<ul>
+<li>Far better management of correlations</li>
+</ul></li>
+<li>Large number of samples is needed (n &gt; 8)</li>
+<li>Is implemented as <code>fgseaLabel()</code></li>
+<li>Similar approach for more complicated linear models in <code>limma::romer()</code></li>
+</ul>
+</div>
+</section>
+</section>
+<section>
+<section id="hypergeometric-approaches" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Hypergeometric Approaches</h1>
+
+</section>
+<section id="hypergeometric-testing" class="slide level2">
+<h2>Hypergeometric Testing</h2>
+<ul>
+<li>Fisher’s Exact Test is a two-sided hypergeometric test
+<ul>
+<li>Test for association between groups using a <span class="math inline">\(2\times2\)</span> table</li>
+</ul></li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">DEG</th>
+<th style="text-align: left;">Not DEG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">In Gene Set</td>
+<td style="text-align: left;"><span class="math inline">\(a\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not In Gene Set</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(d\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><br></p>
+<ul>
+<li>No association <span class="math inline">\(\implies p(DEG|GS) = p(DEG|\overline{GS})\)</span></li>
+<li>One-sided tests are also plausible</li>
+</ul>
+</div>
+</section>
+<section id="hypergeometric-testing-1" class="slide level2">
+<h2>Hypergeometric Testing</h2>
+<ul>
+<li>Personally, I find Bioconductor testing packages cumbersome</li>
+<li><code>AnnotationDbi</code> and <code>GO.db</code> contain mappings from gene to gene set
+<ul>
+<li>Often based on EnztrezGene IDs</li>
+</ul></li>
+<li>Many packages insist on using these (or similar strategies)
+<ul>
+<li>Feels overly complicated to me</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Could easily write our own (as for the SNP loci yesterday)</li>
+<li>I often use <code>goseq</code> <span class="citation" data-cites="Young2010-jw">(<a href="#/references" role="doc-biblioref" onclick="">Young et al. 2010</a>)</span></li>
+<li>Despite it’s name <span class="math inline">\(\implies\)</span> very flexible framework
+<ul>
+<li>Albeit with a few quirks</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="goseq" class="slide level2">
+<h2>Goseq</h2>
+<ul>
+<li><code>goseq</code> uses hypergeometric tests which account for bias</li>
+<li>Longer genes have higher counts
+<ul>
+<li>Being identified as DE can be impacted by signal level (MA plots)</li>
+</ul></li>
+<li>Classic hypergeometric tests are also implemented</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Analysis works with all databases
+<ul>
+<li>Requires gene sets split by gene ID</li>
+</ul></li>
+<li>Also requires a <code>0/1</code> named vector for DE genes</li>
+</ul>
+</div>
+</section>
+<section id="goseq-1" class="slide level2">
+<h2>Goseq</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a>kegg_by_gene <span class="ot">&lt;-</span> kegg_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>ensembl_gene) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(pull, <span class="st">"gs_name"</span>)</span>
+<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(kegg_by_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3374</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>de_M <span class="ot">&lt;-</span> <span class="fu">setNames</span>(res_treatM<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>, res_treatM<span class="sc">$</span>ensembl_gene)</span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(de_M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ENSG00000065609 ENSG00000133878 ENSG00000112837 ENSG00000125730 ENSG00000112562 
+           TRUE            TRUE            TRUE            TRUE            TRUE 
+ENSG00000144810 
+           TRUE </code></pre>
+</div>
+</div>
+</section>
+<section id="goseq-2" class="slide level2">
+<h2>Goseq</h2>
+<ul>
+<li>The first step is to check the probability of a gene being DE based on gene length
+<ul>
+<li>Returns a probability weighting function (PWF) used during testing</li>
+<li>Gene lengths are <em>essential</em> for Ensembl IDs<br><span class="math inline">\(\implies\)</span> if not provided <code>nullp()</code> will try find them (very slow)</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(goseq)</span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>pwf <span class="ot">&lt;-</span> <span class="fu">nullp</span>(de_M, <span class="at">bias.data =</span> res_treatM<span class="sc">$</span>length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<aside class="notes">
+<p>If not provided <code>nullp()</code> will try find them</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="goseq-2-output" class="slide level2 output-location-slide"><h2>Goseq</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="enrichment_slides_files/figure-revealjs/pwf-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="goseq-3" class="slide level2">
+<h2>Goseq</h2>
+<ul>
+<li>This object is in the required structure for enrichment testing</li>
+<li>The <code>pwf</code> column allows for biased sampling of genes</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pwf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                DEgenes bias.data        pwf
+ENSG00000065609    TRUE      6651 0.04427687
+ENSG00000133878    TRUE      1971 0.03918978
+ENSG00000112837    TRUE      8654 0.04427687
+ENSG00000125730    TRUE      8328 0.04427687
+ENSG00000112562    TRUE      4032 0.04417537
+ENSG00000144810    TRUE      9408 0.04427687</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Standard hypergeometric tests are described using red/white balls being drawn from a bag</li>
+<li>Biased sampling effectively allows for balls being different sizes <span class="math inline">\(\implies\)</span> biased sampling</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="goseq-4" class="slide level2">
+<h2>Goseq</h2>
+<ul>
+<li>Enrichment tests are performed for over- and under-representation</li>
+<li>Generally we only want over-represented</li>
+<li>Returned p-values are <em>not</em> adjusted for multiple testing</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>goseq_M <span class="ot">&lt;-</span> <span class="fu">goseq</span>(pwf, <span class="at">gene2cat =</span> kegg_by_gene)</span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(goseq_M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                        category over_represented_pvalue
+45                 KEGG_ECM_RECEPTOR_INTERACTION            2.097988e-05
+102 KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTION            1.157246e-04
+145                      KEGG_RETINOL_METABOLISM            2.578521e-03
+14              KEGG_ARACHIDONIC_ACID_METABOLISM            3.257153e-03
+54                           KEGG_FOCAL_ADHESION            3.826782e-03
+40                   KEGG_DILATED_CARDIOMYOPATHY            7.525823e-03
+    under_represented_pvalue numDEInCat numInCat
+45                 0.9999960         13       65
+102                0.9999736         13       77
+145                0.9997823          4       12
+14                 0.9995626          5       21
+54                 0.9984649         17      162
+40                 0.9977625          9       68</code></pre>
+</div>
+</div>
+</section>
+<section id="goseq-5" class="slide level2">
+<h2>Goseq</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>To really tidy the results</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>goseq_M <span class="ot">&lt;-</span> <span class="fu">goseq</span>(pwf, <span class="at">gene2cat =</span> kegg_by_gene) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">FDR =</span> <span class="fu">p.adjust</span>(over_represented_pvalue, <span class="st">"fdr"</span>),</span>
+<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">pDE =</span> numDEInCat <span class="sc">/</span> numInCat</span>
+<span id="cb36-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-7"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb36-8"><a href="" aria-hidden="true" tabindex="-1"></a>    category, <span class="at">nDE =</span> numDEInCat, pDE, <span class="at">size =</span> numInCat, <span class="at">pvalue =</span> over_represented_pvalue, FDR</span>
+<span id="cb36-9"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb36-10"><a href="" aria-hidden="true" tabindex="-1"></a>goseq_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 181 × 6
+   category                                      nDE   pDE  size  pvalue     FDR
+   &lt;chr&gt;                                       &lt;int&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 KEGG_ECM_RECEPTOR_INTERACTION                  13 0.2      65 2.10e-5 0.00380
+ 2 KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTI…    13 0.169    77 1.16e-4 0.0105 
+ 3 KEGG_RETINOL_METABOLISM                         4 0.333    12 2.58e-3 0.139  
+ 4 KEGG_ARACHIDONIC_ACID_METABOLISM                5 0.238    21 3.26e-3 0.139  
+ 5 KEGG_FOCAL_ADHESION                            17 0.105   162 3.83e-3 0.139  
+ 6 KEGG_DILATED_CARDIOMYOPATHY                     9 0.132    68 7.53e-3 0.227  
+ 7 KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION    10 0.119    84 9.82e-3 0.254  
+ 8 KEGG_HYPERTROPHIC_CARDIOMYOPATHY_HCM            8 0.129    62 1.33e-2 0.302  
+ 9 KEGG_CELL_ADHESION_MOLECULES_CAMS               8 0.125    64 1.59e-2 0.319  
+10 KEGG_TRYPTOPHAN_METABOLISM                      4 0.190    21 2.07e-2 0.374  
+# ℹ 171 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="goseq-6" class="slide level2">
+<h2>Goseq</h2>
+<div style="font-size: 87%;">
+<ul>
+<li>The above objects &amp; steps are <em>all required</em></li>
+<li>If no bias <span class="math inline">\(\implies\)</span> PWF should be relatively flat</li>
+<li>To explicitly use unbiased sampling set <code>method = "Hypergeometric"</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">goseq</span>(pwf, <span class="at">gene2cat =</span> kegg_by_gene, <span class="at">method =</span> <span class="st">"Hypergeometric"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb38-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">FDR =</span> <span class="fu">p.adjust</span>(over_represented_pvalue, <span class="st">"fdr"</span>), <span class="at">pDE =</span> numDEInCat <span class="sc">/</span> numInCat</span>
+<span id="cb38-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb38-7"><a href="" aria-hidden="true" tabindex="-1"></a>    category, <span class="at">nDE =</span> numDEInCat, pDE, <span class="at">size =</span> numInCat, <span class="at">pvalue =</span> over_represented_pvalue, FDR</span>
+<span id="cb38-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 181 × 6
+   category                                      nDE   pDE  size  pvalue     FDR
+   &lt;chr&gt;                                       &lt;int&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 KEGG_ECM_RECEPTOR_INTERACTION                  13 0.2      65 1.71e-5 0.00309
+ 2 KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTI…    13 0.169    77 1.11e-4 0.0100 
+ 3 KEGG_RETINOL_METABOLISM                         4 0.333    12 2.39e-3 0.126  
+ 4 KEGG_FOCAL_ADHESION                            17 0.105   162 3.31e-3 0.126  
+ 5 KEGG_ARACHIDONIC_ACID_METABOLISM                5 0.238    21 3.48e-3 0.126  
+ 6 KEGG_DILATED_CARDIOMYOPATHY                     9 0.132    68 7.15e-3 0.216  
+ 7 KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION    10 0.119    84 9.85e-3 0.255  
+ 8 KEGG_HYPERTROPHIC_CARDIOMYOPATHY_HCM            8 0.129    62 1.28e-2 0.289  
+ 9 KEGG_CELL_ADHESION_MOLECULES_CAMS               8 0.125    64 1.54e-2 0.309  
+10 KEGG_TRYPTOPHAN_METABOLISM                      4 0.190    21 2.01e-2 0.364  
+# ℹ 171 more rows</code></pre>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Very similar for this dataset but still slightly lower p-values</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="testing-for-overall-de-across-a-gene-set" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/limma/limma.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Testing For Overall <br> DE Across A Gene Set</h1>
+
+</section>
+<section id="camera" class="slide level2">
+<h2>Camera</h2>
+<ul>
+<li>One final method is to test for an overall trend towards DE across a gene set</li>
+<li><code>camera()</code> can incorporate inter-gene correlations <span class="citation" data-cites="Wu2012-jy">(<a href="#/references" role="doc-biblioref" onclick="">Wu and Smyth 2012</a>)</span>
+<ul>
+<li>Default is to use a fixed value of 0.01</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limma)</span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cameraPR</span>(ranks_treatM, kegg_by_gs) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                          NGenes Direction       PValue
+KEGG_ECM_RECEPTOR_INTERACTION                 65        Up 3.068526e-09
+KEGG_HEMATOPOIETIC_CELL_LINEAGE               25        Up 2.896232e-06
+KEGG_MATURITY_ONSET_DIABETES_OF_THE_YOUNG      5      Down 4.567113e-05
+KEGG_DRUG_METABOLISM_CYTOCHROME_P450          21      Down 1.470574e-04
+KEGG_LYSOSOME                                103        Up 2.277758e-04
+KEGG_FOCAL_ADHESION                          162        Up 3.305249e-04
+                                                   FDR
+KEGG_ECM_RECEPTOR_INTERACTION             5.554031e-07
+KEGG_HEMATOPOIETIC_CELL_LINEAGE           2.621090e-04
+KEGG_MATURITY_ONSET_DIABETES_OF_THE_YOUNG 2.755492e-03
+KEGG_DRUG_METABOLISM_CYTOCHROME_P450      6.654348e-03
+KEGG_LYSOSOME                             8.245483e-03
+KEGG_FOCAL_ADHESION                       9.970835e-03</code></pre>
+</div>
+</div>
+</section>
+<section id="camera-1" class="slide level2">
+<h2>Camera</h2>
+<ul>
+<li>Correlations can be estimated more accurately from the data</li>
+<li>Requires the complete matrix (log-transformed), design matrix etc
+<ul>
+<li>The default (<span class="math inline">\(\rho = 0.01\)</span>) is relatively conservative</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Are genes moving together the actual signal we want?
+<ul>
+<li>When running with accurate correlations nothing is ever significant</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="closing-comments" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>Chose KEGG today for simplicity (~180 pathways)</li>
+<li>Often choose multiple sources</li>
+<li>Redundancy between gene sets can be a non-trivial problem
+<ul>
+<li>No perfect solution</li>
+<li>Pruning before testing or before presenting results?</li>
+</ul></li>
+</ul>
+</section>
+<section id="closing-comments-1" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>All methods explored today ignored pathway topology</li>
+<li>KEGG and WikiPathways include topology
+<ul>
+<li>Can give insight into a pathway being inhibited or activated</li>
+<li>Not just over-represented</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>SPIA is the a popular strategy but concerns over handling of topologies
+<ul>
+<li>For paired samples <code>sSNAPPY</code> handles topology well <span class="citation" data-cites="Liu2024-js">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2024</a>)</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-2" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>Visualisation can also be more challenging</li>
+<li>What do we want to show?
+<ul>
+<li>Results clustered by similarity?</li>
+<li>Results compared across data sets?</li>
+<li>Proportion/Number of DE genes?</li>
+<li>Expression patterns within a single gene set?</li>
+</ul></li>
+</ul>
+</section>
+<section id="closing-comments-3" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>We often use an FDR of 0.05 during DGE analysis
+<ul>
+<li>Allows ~5% of noise into our data</li>
+<li>Biological signal should swamp the noise</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Is an FDR-adjustment best for enrichment testing?</li>
+<li>Conservative approaches may be best</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Really only the beginning of the next analysis
+<ul>
+<li>Requires careful discussion with biological domain experts</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -1100,8 +1569,20 @@ ENSG00000167110
 <div id="ref-fgsea2019" class="csl-entry" role="listitem">
 Korotkevich, Gennady, Vladimir Sukhov, and Alexey Sergushichev. 2019. <span>“Fast Gene Set Enrichment Analysis.”</span> <em>bioRxiv</em>. <a href="https://doi.org/10.1101/060012">https://doi.org/10.1101/060012</a>.
 </div>
+<div id="ref-Liberzon2011-fr" class="csl-entry" role="listitem">
+Liberzon, Arthur, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir, Pablo Tamayo, and Jill P Mesirov. 2011. <span>“Molecular Signatures Database (<span>MSigDB</span>) 3.0.”</span> <em>Bioinformatics</em> 27 (12): 1739–40.
+</div>
+<div id="ref-Liu2024-js" class="csl-entry" role="listitem">
+Liu, Wenjun, Ville-Petteri Mäkinen, Wayne D Tilley, and Stephen M Pederson. 2024. <span>“<span class="nocase">sSNAPPY</span>: An <span>R/Bioconductor</span> Package for Single-Sample Directional Pathway Perturbation Analysis.”</span> <em>F1000Res.</em> 13 (628): 628.
+</div>
 <div id="ref-Subramanian2005-lx" class="csl-entry" role="listitem">
 Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L Ebert, Michael A Gillette, Amanda Paulovich, et al. 2005. <span>“Gene Set Enrichment Analysis: A Knowledge-Based Approach for Interpreting Genome-Wide Expression Profiles.”</span> <em>Proc. Natl. Acad. Sci. U. S. A.</em> 102 (43): 15545–50.
+</div>
+<div id="ref-Wu2012-jy" class="csl-entry" role="listitem">
+Wu, Di, and Gordon K Smyth. 2012. <span>“Camera: A Competitive Gene Set Test Accounting for Inter-Gene Correlation.”</span> <em>Nucleic Acids Res.</em> 40 (17): e133.
+</div>
+<div id="ref-Young2010-jw" class="csl-entry" role="listitem">
+Young, Matthew D, Matthew J Wakefield, Gordon K Smyth, and Alicia Oshlack. 2010. <span>“Gene Ontology Analysis for <span class="nocase">RNA-seq</span>: Accounting for Selection Bias.”</span> <em>Genome Biol.</em> 11 (2): R14.
 </div>
 </div>
 </section></section>

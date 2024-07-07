@@ -361,3 +361,130 @@
     url = {http://biorxiv.org/content/early/2016/06/20/060012},
     journal = {bioRxiv},
   }
+
+
+@ARTICLE{Liberzon2011-fr,
+  title    = "Molecular signatures database ({MSigDB}) 3.0",
+  author   = "Liberzon, Arthur and Subramanian, Aravind and Pinchback, Reid and
+              Thorvaldsd{\'o}ttir, Helga and Tamayo, Pablo and Mesirov, Jill P",
+  abstract = "MOTIVATION: Well-annotated gene sets representing the universe of
+              the biological processes are critical for meaningful and
+              insightful interpretation of large-scale genomic data. The
+              Molecular Signatures Database (MSigDB) is one of the most widely
+              used repositories of such sets. RESULTS: We report the
+              availability of a new version of the database, MSigDB 3.0, with
+              over 6700 gene sets, a complete revision of the collection of
+              canonical pathways and experimental signatures from publications,
+              enhanced annotations and upgrades to the web site. AVAILABILITY
+              AND IMPLEMENTATION: MSigDB is freely available for non-commercial
+              use at http://www.broadinstitute.org/msigdb.",
+  journal  = "Bioinformatics",
+  volume   =  27,
+  number   =  12,
+  pages    = "1739--1740",
+  month    =  jun,
+  year     =  2011,
+  language = "en"
+}
+
+
+@ARTICLE{Young2010-jw,
+  title    = "Gene ontology analysis for {RNA-seq}: accounting for selection
+              bias",
+  author   = "Young, Matthew D and Wakefield, Matthew J and Smyth, Gordon K and
+              Oshlack, Alicia",
+  abstract = "We present GOseq, an application for performing Gene Ontology
+              (GO) analysis on RNA-seq data. GO analysis is widely used to
+              reduce complexity and highlight biological processes in
+              genome-wide expression studies, but standard methods give biased
+              results on RNA-seq data due to over-detection of differential
+              expression for long and highly expressed transcripts. Application
+              of GOseq to a prostate cancer data set shows that GOseq
+              dramatically changes the results, highlighting categories more
+              consistent with the known biology.",
+  journal  = "Genome Biol.",
+  volume   =  11,
+  number   =  2,
+  pages    = "R14",
+  month    =  feb,
+  year     =  2010,
+  language = "en"
+}
+
+
+@ARTICLE{Wu2012-jy,
+  title    = "Camera: a competitive gene set test accounting for inter-gene
+              correlation",
+  author   = "Wu, Di and Smyth, Gordon K",
+  abstract = "Competitive gene set tests are commonly used in molecular pathway
+              analysis to test for enrichment of a particular gene annotation
+              category amongst the differential expression results from a
+              microarray experiment. Existing gene set tests that rely on gene
+              permutation are shown here to be extremely sensitive to
+              inter-gene correlation. Several data sets are analyzed to show
+              that inter-gene correlation is non-ignorable even for experiments
+              on homogeneous cell populations using genetically identical model
+              organisms. A new gene set test procedure (CAMERA) is proposed
+              based on the idea of estimating the inter-gene correlation from
+              the data, and using it to adjust the gene set test statistic. An
+              efficient procedure is developed for estimating the inter-gene
+              correlation and characterizing its precision. CAMERA is shown to
+              control the type I error rate correctly regardless of inter-gene
+              correlations, yet retains excellent power for detecting genuine
+              differential expression. Analysis of breast cancer data shows
+              that CAMERA recovers known relationships between tumor subtypes
+              in very convincing terms. CAMERA can be used to analyze specified
+              sets or as a pathway analysis tool using a database of molecular
+              signatures.",
+  journal  = "Nucleic Acids Res.",
+  volume   =  40,
+  number   =  17,
+  pages    = "e133",
+  month    =  sep,
+  year     =  2012,
+  language = "en"
+}
+
+
+@ARTICLE{Liu2024-js,
+  title     = "{sSNAPPY}: an {R/Bioconductor} package for single-sample
+               directional pathway perturbation analysis",
+  author    = "Liu, Wenjun and M{\"a}kinen, Ville-Petteri and Tilley, Wayne D
+               and Pederson, Stephen M",
+  abstract  = "A common outcome of analysing RNA-Seq data is the detection of
+               biological pathways with significantly altered activity between
+               the conditions under investigation. Whilst many strategies test
+               for over-representation of genes, showing changed expression
+               within pre-defined gene-sets, these analyses typically do not
+               account for gene-gene interactions encoded by pathway
+               topologies, and are not able to directly predict the directional
+               change of pathway activity. To address these issues we have
+               developed sSNAPPY ,now available as an R/Bioconductor package,
+               which leverages pathway topology information to compute pathway
+               perturbation scores and predict the direction of change across a
+               set of pathways. Here, we demonstrate the use of sSNAPPY by
+               applying the method to public scRNA-seq data, derived from
+               ovarian cancer patient tissues collected before and after
+               chemotherapy. Not only were we able to predict the direction of
+               pathway perturbations discussed in the original study, but
+               sSNAPPY was also able to detect significant changes of other
+               biological processes, yielding far greater insight into the
+               response to treatment. sSNAPPY represents a novel pathway
+               analysis strategy that takes into consideration pathway topology
+               to predict impacted biology pathways, both within related
+               samples and across treatment groups. In addition to not relying
+               on differentially expressed genes, the method and associated R
+               package offers important flexibility and provides powerful
+               visualisation tools. R version : R version 4.3.3 (2024-02-29)
+               Bioconductor version : 3.18 Package : 1.6.1",
+  journal   = "F1000Res.",
+  publisher = "F1000 Research Limited",
+  volume    =  13,
+  number    =  628,
+  pages     = "628",
+  month     =  jun,
+  year      =  2024,
+  keywords  = "RNA-Seq, pathway enrichment, R package, topology, KEGG,
+               Reactome, scRNA-seq",
+  language  = "en"
+}

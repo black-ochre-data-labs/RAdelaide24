@@ -120,6 +120,7 @@ library(scales)
 library(glue)
 library(ggrepel)
 library(pheatmap)
+library(parallel)
 theme_set(theme_bw())
 ```
 
@@ -149,6 +150,22 @@ genes
 ```
 
 :::
+
+## Getting Gene Lengths
+
+- The simplest way is to add the width of all exonic regions
+
+```{r}
+gene_lengths <- gtf %>% 
+  filter(type == "exon") %>% 
+  split(.$gene_id) %>% 
+  reduce() %>% 
+  width() %>% 
+  mclapply(sum, mc.cores = 4) %>% 
+  unlist()
+genes$length <- gene_lengths[genes$gene_id]
+```
+
 
 ## Loading Counts
 
@@ -1282,6 +1299,13 @@ dplyr::select(res_treatM, gene_id, logFC, FDR) %>%
 
 ## Export Results
 
+- Save the `DGEList` using the following
+
+```{r}
+write_rds(dge_filter, here::here("data/dge_filter.rds"))
+```
+
+
 - Save the `edgeR` results using the following
 
 ```{r}
@@ -1290,7 +1314,7 @@ write_rds(res_treatM, here::here("data/res_treatM.rds"))
 
 ## Conclusion
 
-- `DESeq2` data structure integrate nicely with other Bioconductor packages
+- `DESeq2` data structures integrate nicely with other Bioconductor packages
 - `edgeR` can also handle `SummarizedExperiment` objects (mostly)
 - No right or wrong method or data classes to use
     + Results were still broadly consistent
