@@ -1,0 +1,775 @@
+---
+title: "Visualisation With `ggplot2`"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-09"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro_vis.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+```{r load-pigs, echo=FALSE}
+library(tidyverse)
+pigs <- read_csv("data/pigs.csv")
+```
+
+## The Grammar of Graphics
+
+- `ggplot2` has become the industry standard for visualisation
+- Core & essential part of the `tidyverse`
+- Developed by Hadley Wickham as his PhD thesis
+- An implementation of *The Grammar of Graphics* ^[Wilkinson L. The Grammar of Graphics. Springer New York; 18 p.]
+    + Breaks visualisation into *layers*
+
+![](https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png){.absolute bottom=0 right=0 width="250"}
+
+## The Grammar of Graphics
+
+![](assets/gg_cover.png){.absolute left=0 width="375"}
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png){.absolute right=0 width="630"}
+
+::: {.aside}
+Layers image taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html
+:::
+
+## The Grammar of Graphics 
+
+Everything is added in layers
+
+:::: {.columns}
+
+
+::: {.column}
+
+::: {style="font-size: 80%;"}
+
+::: {.fragment}
+
+1. Data
+    + Usually a data.frame (or `tibble`)
+    + Can be *piped in* $\implies$ modify *on the fly*
+    
+:::
+    
+::: {.fragment}
+
+2. Aesthetics
+    + `x` & `y` co-ordinates 
+    + `colour`, `fill`, `shape`, `size`, `linetype`
+    + grouping & transparency (`alpha`)
+    
+:::
+
+
+:::
+
+:::
+
+::: {.column}
+
+::: {style="font-size: 85%;"}
+
+
+::: {.fragment}
+
+3. Geometric Objects
+    + points, lines, boxplot, histogram, bars etc
+    
+:::
+
+::: {.fragment}
+    
+4. Facets: Panels within plots
+
+:::
+
+::: {.fragment}
+    
+5. Statistics: Computed summaries
+
+:::
+
+::: {.fragment}
+    
+6. Coordinates
+    + polar, map, cartesian
+
+:::
+
+::: {.fragment}
+    
+7. Themes: overall layout
+
+:::
+
+:::
+
+:::
+
+::::
+
+## An Initial Example
+
+- Using the example dataset `cars`
+- Two columns:
+    + `speed` (mph)
+    + `distance` to stop
+- We can make a classic `x` vs `y` plot using points
+
+. . . 
+
+- The *predictor* (x) would be `speed`
+- The *response* (y) would be `distance`
+
+
+## An Initial Example
+
+- We may as well start by piping our data in
+
+```{r}
+#| eval: false
+cars %>% 
+  ggplot(aes(x = speed, y = dist))
+```
+
+. . .
+
+- We have defined the plotting *aesthetics*
+    + `x` & `y`
+    + Don't need to name if passing *in order*
+- Axis limits match the data
+
+. . .
+
+- No geometry has been specified $\implies$ nothing was drawn
+
+::: {.notes}
+- The package is `ggplot2` but the function is `ggplot()`
+:::
+
+## An Initial Example
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+    + Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| eval: false
+cars %>%
+  ggplot(aes(x = speed, y = dist)) + 
+  geom_point() 
+```
+
+## An Initial Example
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+    + Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| eval: false
+cars %>% # Layer 1: Data
+  ggplot(aes(x = speed, y = dist)) + # Layer 2: Aesthetics
+  geom_point() # Layer 3: Geometry
+```
+
+. . .
+
+- By default:
+    + Layer 4: No facets
+    + Layer 5: No summary statistics
+    + Layer 6: Cartesian co-ordinate system
+    + Layer 7: Crappy theme with grey background [&#129326;]{.fragment}
+    
+::: {.notes}
+Axis limits are automatically determined
+:::
+
+## Visualising Our Guinea Pig Data
+
+What visualisations could we produce to inspect `pigs`?
+
+::: {.notes}
+- Obviously a boxplot
+- We can also create a plot using points
+:::
+
+## Creating Our Boxplot
+
+- A starting point might be to choose `dose` as the predictor
+- `len` will always be the response variable
+
+```{r}
+#| eval: false
+pigs %>% 
+  ggplot(aes(dose, len)) +
+  geom_boxplot()
+```
+
+
+## Creating Our Boxplot
+
+- To incorporate the supp methods $\implies$ add a fill aesthetic
+    + `colour` is generally applied to shape outlines
+
+```{r}
+#| eval: false
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot()
+```
+
+
+. . .
+
+- `ggplot2` will always separate multiple values/category
+
+## Creating Our Boxplot
+
+- We could also separate by supp using `facet_wrap()`
+    + Can also set the number of rows/columns
+
+```{r}
+#| eval: false
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  facet_wrap(~supp)
+```
+
+. . .
+
+- Only one value/category so no shifting
+
+## Layering Geometries
+
+- We're not restricted to one geometry
+- The following will add points *after* drawing the boxplots
+
+```{r}
+#| eval: false
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  geom_point() +
+  facet_wrap(~supp)
+```
+
+## Layering Geometries
+
+- `geom_jitter()` will add a small amount of noise to separate points
+
+```{r}
+#| eval: false
+pigs %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1, height = 0) +
+  facet_wrap(~supp)
+```
+
+## Modifying Data Prior to Plotting
+
+- `dose` is a clearly a categorical variable with an order
+- In `R` these are known as `factors`
+    + Categories referred to as `levels`
+    + Will learn in detail tomorrow
+
+. . .
+
+- `ggplot()` will automatically place character columns in alphanumeric order
+- Manually set the order by explicitly setting as a `factor` with `levels`
+
+## Modifying Data Prior to Plotting
+
+- Notice when we do this, the column is now `fct`
+
+```{r}
+pigs %>% 
+  mutate(dose = factor(dose, levels = c("Low", "Med", "High")))
+```
+
+
+. . .
+
+- Now boxplots will appear in order
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(dose = factor(dose, levels = c("Low", "Med", "High"))) %>% 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot()
+```
+
+
+
+## Modifying Data Prior to Plotting
+
+- We can also plot quanntiles with a few prior steps
+- First rank the `len` values
+- Then turn into quantiles
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  )
+```
+
+## Modifying Data Prior to Plotting
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point()
+```
+
+
+## Modifying Data Prior to Plotting
+
+- Now we could colour points by `supp`
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q, colour = supp)) +
+  geom_point()
+```
+
+## Different Layers
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png)
+
+::: {.notes}
+We've already seen everything up to facets so let's try a summary statistic
+:::
+
+## Modifying Data Prior to Plotting
+
+- `geom_smooth()` will add a line of best fit
+    + Almost identical to `stat_smooth()`
+- Automatically chosen but can be `lm`, `loess` or `gam`
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q, colour = supp)) +
+  geom_point() +
+  geom_smooth()
+```
+
+## Modifying Geoms
+
+- Any `aesthetic` set in the call to `ggplot()` is passed to every subsequent layer
+- We can set aesthetics in a layer-specific manner
+- Shifting `colour = supp` to `geom_point()` will only colour points
+- The line of best fit will now be a single line
+
+## Modifying Geoms
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth()
+```
+
+## Modifying Geoms
+
+- Aesthetics can also be set *outside* of a call to `aes()`
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth(colour = "black")
+```
+
+## Modifying Geoms
+
+- Geoms are just regular functions with multiple arguments
+- The below turns off the `se` bands and switches to `lm`
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  geom_smooth(colour = "black", se = FALSE, method = "lm")
+```
+
+## Choosing Point Shapes
+
+- Shapes have numeric codes in `R`
+- Examples are on the `?pch` page
+- The default is 19
+- Can also be set as an `aesthetic`
+- `size` can also work either way
+
+![](assets/pch.png)
+
+## Choosing Point Shapes
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp), shape = 1, size = 3) +
+  geom_smooth(colour = "black", se = FALSE, method = "lm")
+```
+
+## Setting Scales
+
+::: {style="font-size: 95%;"}
+
+- Default scales are set for x & y axes
+    + `scale_x_continuous()` & `scale_y_continuous()`
+    + Only needed when tweaking axis names, limits, labels, breaks etc
+- Also set scales for colours, shapes, fill etc
+
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") 
+```
+
+:::
+
+::: {.notes}
+- Let's simplify by removing the regression line
+:::
+
+## Setting Scales
+
+- `scale_colour_brewer()` allows pre-defined palettes
+    + From the package `RColorBrewer`
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_brewer(palette = "Set2", direction = -1)
+```
+
+## RColorBrewer Palettes
+
+```{r echo=FALSE}
+RColorBrewer::display.brewer.all()
+```
+
+## Setting Scales
+
+- `scale_colour_viridis_b/c/d()` 
+    + colour-blind friendly palettes
+    + comes in binned (`_b()`), continuous (`_c()`) or discrete (`_d()`)
+    + excellent for heatmaps or showing differences across large range
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_viridis_d()
+```
+
+## Setting Scales
+
+- `scale_colour_manual()` takes a vector of colours
+    + Vectors are formed using `c()`
+    + RStudio helpfully shows you the colour!!!
+
+```{r}
+#| eval: false
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_manual(values = c("orange", "navyblue"))
+```
+
+# Themes {background-color="#3d3d40"}
+
+## Themes
+
+- We can modify the overall appearance of the plot using `theme()`
+- Set panel colours, fonts, legend position etc
+- Hide any features we don't want
+
+## Themes
+
+- To help us focus on the `theme()` <br>$\implies$ save the plot as the object `p`
+
+```{r}
+p <- pigs %>% 
+  mutate(
+    rank = rank(len),
+    q = rank / max(rank)
+  ) %>% 
+  ggplot(aes(len, q)) +
+  geom_point(aes(colour = supp)) +
+  scale_x_continuous(name = "Odontoblast Length") +
+  scale_y_continuous(name = "Quantile") +
+  scale_colour_manual(values = c("orange", "navyblue"))
+```
+
+- We can regenerate the plot by typing it's name
+
+## Themes
+
+- `ggplot2` supplies several complete themes
+- Applies `theme_grey()` by default
+- Try add `theme_bw()` after `p`
+    + This is my default
+
+```{r}
+#| eval: false
+p + theme_bw()
+```
+
+
+. . .
+
+- Try a few others
+    + `theme_void()`, `theme_classic()`, `theme_minimal()`
+- Some are for specific use cases 
+
+## Themes
+
+- We can also modify manually
+- Theme elements are modified using `element_*()` functions
+    + Text elements use `element_text()`
+    + Line elements use `element_line()`
+    + Box (or rectangle) elements use `element_rect()`
+    + Can disable an element entirely using `element_blank()`
+
+```{r}
+#| eval: false
+p + theme(panel.background = element_blank())
+```
+
+## Themes
+
+- The panel background is set using `element_rect()`
+    + `colour` sets the rectangle outline colour
+    + `fill` sets the rectangle fill
+
+```{r}
+#| eval: false
+p + theme(panel.background = element_rect(fill = "white", colour = "grey30"))
+```
+
+## Themes
+
+- We can set *global* text parameters using `text = element_text()`
+    + family, colour, size, face etc
+
+```{r}
+#| eval: false
+p + 
+  theme(
+    panel.background = element_rect(fill = "white", colour = "grey30"),
+    text = element_text(family = "serif", size = 14)
+  )
+```
+
+## Themes
+
+- Individual text-based parameters can be set similarly
+- Will over-ride any global setting
+
+```{r}
+#| eval: false
+p + 
+  theme(
+    panel.background = element_rect(fill = "white", colour = "grey30"),
+    text = element_text(family = "serif", size = 14),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+## Themes
+
+- Can also set a theme then modify further
+
+```{r}
+#| eval: false
+p +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+```
+
+. . .
+
+- Enormous range of setting can be controlled here
+
+## Themes
+::: {style="font-size: 95%;"}
+
+- Spend a few minutes playing with the following
+- Try commenting out lines or changing values
+- Aesthetic names can be set manually using `labs()`
+    + Won't over-write anything set in `scale_x/y_continuous()`
+
+```{r}
+#| output-location: slide
+p +
+  ggtitle("Odontoblast Length in Guinea Pigs") +
+  labs(colour = NULL) +
+  theme(
+    rect = element_rect(fill = "#204080"),
+    text = element_text(colour = "grey80", family = "Palatino", size = 14),
+    panel.background = element_rect(fill = "steelblue4", colour = "grey80"),
+    panel.grid = element_line(colour = "grey80", linetype = 2, linewidth = 1/4),
+    axis.text = element_text(colour = "grey80"),
+    legend.background = element_rect(fill = "steelblue4", colour = "grey80"),
+    legend.key = element_rect(colour = NA),
+    legend.position = "inside", 
+    legend.position.inside = c(1, 0), 
+    legend.justification = c(1, 0),
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+  )
+```
+
+
+:::
+
+::: {.notes}
+Mention `colours()`
+:::
+
+## Saving Images
+
+- The simple way is click `Export` in the `Plots` pane
+
+. . .
+
+- The way to save using code is
+
+``` r
+ggsave("myplot.png", width = 7, height = 7, units = "in")
+```
+
+- This will always save the most recent plot by default
+- Output format is determined by the suffix
+- Try saving as a pdf...
+
+## Saving Images
+
+- I think saving using code is preferable
+- Modify an analysis or data $\implies$ saved figures will also update
+    + This saves time & ensures reproducibility
+
+## Conclusion
+
+![](https://r-graphics.org/cover.jpg){width=400}
+
+A fabulous resource: https://r-graphics.org/
+

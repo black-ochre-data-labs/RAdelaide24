@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr Stevie Pederson">
+<meta name="dcterms.date" content="2024-07-11">
+
+<title>References and Ranges</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="references_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/quarto.js"></script>
+<script src="references_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/anchor.min.js"></script>
+<link href="references_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="references_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="references_slides_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="references_slides_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="references_slides_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="bodl.scss">
+<link rel="stylesheet" href="extra.css">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#reference-sequences" id="toc-reference-sequences" class="nav-link active" data-scroll-target="#reference-sequences">Reference Sequences</a></li>
+  <li><a href="#genomic-ranges" id="toc-genomic-ranges" class="nav-link" data-scroll-target="#genomic-ranges">Genomic Ranges</a></li>
+  <li><a href="#annotationhub" id="toc-annotationhub" class="nav-link" data-scroll-target="#annotationhub">AnnotationHub</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="references_slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">References and Ranges</h1>
+<p class="subtitle lead">RAdelaide 2024</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Dr Stevie Pederson </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            Telethon Kids Institute</div>
+          <p></p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 11, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="reference-sequences" class="level1" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1 data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">Reference Sequences</h1>
+<section id="fasta-files" class="level2">
+<h2 class="anchored" data-anchor-id="fasta-files">Fasta Files</h2>
+<ul>
+<li>Used for entire genomes or small, single sequences</li>
+<li>Sequence name + optional “free-form” metadata begins with <code>&gt;</code></li>
+<li>Followed by sequence with no prefix
+<ul>
+<li>Single sequences commonly wrapped on multiple lines</li>
+</ul></li>
+<li>Sequence can be DNA, RNA or Protein</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;ERCC-00002
+TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCACAGTATACGGGCGTCG
+GCATCCAGACCGTCGGCTGATCGTGGTTTTACTAGGCTAGACTAGCGTAC
+GAGCACTATGGTCAGTAATTCCTGGAGGAATAGGTACCAAGAAAAAAACG
+AACCTTTGGGTTCCAGAGCTGTACGGTCGCACTGAACTCGGATAGGTCTC
+AGAAAAACGAAATATAGGCTTACGGTAGGTCCGAATGGCACAAAGCTTGT
+TCCGTTAGCTGGCATAAGATTCCATGCCTAGATGTGATACACGTTTCTGG
+AAACTGCCTCGTCATGCGACTGTTCCCCGGGGTCAGGGCCGCTGGTATTT
+GCTGTAAAGAGGGGCGTTGAGTCCGTCCGACTTCACTGCCCCCTTTCAGC
+CTTTTGGGTCCTGTATCCCAATTCTCAGAGGTCCCGCCGTACGCTGAGGA</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>Sometimes use a standardised set of IUPAC codes</p>
+</div>
+</section>
+<section id="biostrings" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings">Biostrings</h2>
+<ul>
+<li>The Bioconductor package for handling these is <code>Biostrings</code></li>
+<li>Depending on the sequence structure<br><span class="math inline">\(\implies\)</span> <code>DNAString</code>, <code>DNAStringSet</code> or <code>DNAStringSetList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAString</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1
+[[1]] AACGT</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>By have a new class (not just characters) many operations become simplified</p>
+</div>
+</section>
+<section id="biostrings-1" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-1">Biostrings</h2>
+<ul>
+<li>General class for RNA or Proteins <span class="math inline">\(\implies\)</span> <code>XString/Set/List</code>
+<ul>
+<li><code>RNAString*</code> or <code>AAString*</code></li>
+</ul></li>
+<li><code>XStringSet</code> objects are lists of <code>XString</code> objects
+<ul>
+<li><code>XStringSetList</code> objects are lists of <code>XStringSet</code> objects</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-2" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-2">Biostrings</h2>
+<ul>
+<li>If working with complete transcripts <span class="math inline">\(\implies\)</span> <code>XStringSet</code></li>
+<li>When needing exon structure within transcripts <span class="math inline">\(\implies\)</span> <code>XStringSetList</code></li>
+</ul>
+</section>
+<section id="biostrings-3" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-3">Biostrings</h2>
+<ul>
+<li>Using some example ERCC spike-in data
+<ul>
+<li>Short, known sequences sometimes used for RNA-Seq QC + Normalisation</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ercc <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">"data/ERCC92.fa.gz"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ercc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TCCAGATTACTTCCATTTCCGCC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00002
+ [2]  1023 CAGCAGCGATTAAGGCAGAGGCG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00003
+ [3]   523 TCTTGCTTCAACAATAACGTCTC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00004
+ [4]   984 CAATGATAGGCTAGTCTCGCGCA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00009
+ [5]   994 CGAGAGATGTTTGTAGGTGCGGA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00012
+ ...   ... ...
+[88]  1022 AGGAGCTCCAGTAGTTTTCCCCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00164
+[89]   872 GATATGCGTTACGTGAGTCTGAT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00165
+[90]  1024 CCAATGAACTCAGCTATTCTTCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00168
+[91]  1023 TATTGGTGGAGGGGCACAAGTTG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00170
+[92]   505 CTGGAGATTGTCTCGTACGGTTA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-4" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-4">Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 92</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">width</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1061 1023  523  984  994  808</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ERCC-00002" "ERCC-00003" "ERCC-00004" "ERCC-00009" "ERCC-00012"
+[6] "ERCC-00013"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(ercc, <span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           G|C
+[1,] 0.5136664
+[2,] 0.3264907
+[3,] 0.3441683
+[4,] 0.4725610
+[5,] 0.5090543
+[6,] 0.4282178</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-5" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-5">Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TTTTTTTTTTTTTTTTTTTTTTT...GCGGAAATGGAAGTAATCTGGA ERCC-00002
+ [2]  1023 TTTTTTTTTTTTTTTTTTTTTTT...GCCTCTGCCTTAATCGCTGCTG ERCC-00003
+ [3]   523 TTTTTTTTTTTTTTTTTTTTTTT...AGACGTTATTGTTGAAGCAAGA ERCC-00004
+ [4]   984 TTTTTTTTTTTTTTTTTTTTTTT...GCGCGAGACTAGCCTATCATTG ERCC-00009
+ [5]   994 TTTTTTTTTTTTTTTTTTTTTTT...CCGCACCTACAAACATCTCTCG ERCC-00012
+ ...   ... ...
+[88]  1022 TTTTTTTTTTTTTTTTTTTTTTT...GGGGAAAACTACTGGAGCTCCT ERCC-00164
+[89]   872 TTTTTTTTTTTTTTTTTTTTTTT...TCAGACTCACGTAACGCATATC ERCC-00165
+[90]  1024 TTTTTTTTTTTTTTTTTTTTTTT...GAAGAATAGCTGAGTTCATTGG ERCC-00168
+[91]  1023 TTTTTTTTTTTTTTTTTTTTTTT...AACTTGTGCCCCTCCACCAATA ERCC-00170
+[92]   505 TTTTTTTTTTTTTTTTTTTTTTT...AACCGTACGAGACAATCTCCAG ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-6" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-6">Biostrings</h2>
+<ul>
+<li><code>XStringSet</code> objects are easy to subset</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(ercc, <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]    10 TCCAGATTAC                                       ERCC-00002
+ [2]    10 CAGCAGCGAT                                       ERCC-00003
+ [3]    10 TCTTGCTTCA                                       ERCC-00004
+ [4]    10 CAATGATAGG                                       ERCC-00009
+ [5]    10 CGAGAGATGT                                       ERCC-00012
+ ...   ... ...
+[88]    10 AGGAGCTCCA                                       ERCC-00164
+[89]    10 GATATGCGTT                                       ERCC-00165
+[90]    10 CCAATGAACT                                       ERCC-00168
+[91]    10 TATTGGTGGA                                       ERCC-00170
+[92]    10 CTGGAGATTG                                       ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-7" class="level2">
+<h2 class="anchored" data-anchor-id="biostrings-7">Biostrings</h2>
+<ul>
+<li>Sliding windows are simple &amp; fast on <code>XString</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Views on a 1061-letter DNAString subject
+subject: TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCA...TTTTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA
+views:
+      start end width
+  [1]     1  10    10 [TCCAGATTAC]
+  [2]     2  11    10 [CCAGATTACT]
+  [3]     3  12    10 [CAGATTACTT]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">letterFrequency</span>(<span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     G|C
+[1,] 0.4
+[2,] 0.4
+[3,] 0.3</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome-objects" class="level2">
+<h2 class="anchored" data-anchor-id="bsgenome-objects">BSgenome Objects</h2>
+<ul>
+<li>Biostrings are used to provide entire genomes <span class="math inline">\(\implies\)</span> <code>BSgenome</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSgenome.Hsapiens.UCSC.hg38)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>hg38 <span class="ot">&lt;-</span> BSgenome.Hsapiens.UCSC.hg38</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>hg38</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>| BSgenome object for Human
+| - organism: Homo sapiens
+| - provider: UCSC
+| - genome: hg38
+| - release date: 2023/01/31
+| - 711 sequence(s):
+|     chr1                    chr2                    chr3                   
+|     chr4                    chr5                    chr6                   
+|     chr7                    chr8                    chr9                   
+|     chr10                   chr11                   chr12                  
+|     chr13                   chr14                   chr15                  
+|     ...                     ...                     ...                    
+|     chr19_KV575256v1_alt    chr19_KV575257v1_alt    chr19_KV575258v1_alt   
+|     chr19_KV575259v1_alt    chr19_KV575260v1_alt    chr19_MU273387v1_alt   
+|     chr22_KN196485v1_alt    chr22_KN196486v1_alt    chr22_KQ458387v1_alt   
+|     chr22_KQ458388v1_alt    chr22_KQ759761v1_alt    chrX_KV766199v1_alt    
+|     chrX_MU273395v1_alt     chrX_MU273396v1_alt     chrX_MU273397v1_alt    
+| 
+| Tips: call 'seqnames()' on the object to get all the sequence names, call
+| 'seqinfo()' to get the full sequence info, use the '$' or '[[' operator to
+| access a given sequence, see '?BSgenome' for more information.</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome-objects-1" class="level2">
+<h2 class="anchored" data-anchor-id="bsgenome-objects-1">BSgenome Objects</h2>
+<ul>
+<li>Genomes are ‘promises’ cached on your HDD
+<ul>
+<li>Only the metadata is actually loaded</li>
+</ul></li>
+<li>Can be directly loaded into memory if needed</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>chrM <span class="ot">&lt;-</span> <span class="fu">getSeq</span>(hg38, <span class="st">"chrM"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>chrM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>16569-letter DNAString object
+seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome" class="level2">
+<h2 class="anchored" data-anchor-id="bsgenome">BSgenome</h2>
+<ul>
+<li><code>seqinfo()</code> objects provide sequence lengths &amp; build information</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(hg38)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Seqinfo object with 711 sequences (1 circular) from hg38 genome:
+  seqnames             seqlengths isCircular genome
+  chr1                  248956422      FALSE   hg38
+  chr2                  242193529      FALSE   hg38
+  chr3                  198295559      FALSE   hg38
+  chr4                  190214555      FALSE   hg38
+  chr5                  181538259      FALSE   hg38
+  ...                         ...        ...    ...
+  chr22_KQ759761v1_alt     145162      FALSE   hg38
+  chrX_KV766199v1_alt      188004      FALSE   hg38
+  chrX_MU273395v1_alt      619716      FALSE   hg38
+  chrX_MU273396v1_alt      294119      FALSE   hg38
+  chrX_MU273397v1_alt      330493      FALSE   hg38</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="genomic-ranges" class="level1" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/GenomicRanges/GenomicRanges.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1 data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/GenomicRanges/GenomicRanges.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">Genomic Ranges</h1>
+<section id="genomic-ranges-1" class="level2">
+<h2 class="anchored" data-anchor-id="genomic-ranges-1">Genomic Ranges</h2>
+<ul>
+<li>We can work with specific regions with a genome using <code>GRanges</code> objects
+<ul>
+<li>The Bioconductor equivalent of a <code>bed</code> file</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<ul>
+<li>Best practice is to always define the genome the range has been drawn from</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>, <span class="at">seqinfo =</span> sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</section>
+<section id="bed-files" class="level2">
+<h2 class="anchored" data-anchor-id="bed-files">Bed Files</h2>
+<ul>
+<li><code>bed</code> files are a common genomics format</li>
+<li>Primarily contain ranges but can include some additional fields</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>chrY    10000   2781479 .   0   .
+chrY    56887902    57217415    .   0   .</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<ul>
+<li>The columns are defined as<br><code>chrom</code>, <code>chromStart</code>, <code>chromEnd</code>, <code>name</code>, <code>score</code> &amp; <code>strand</code></li>
+<li>Empty fields (<code>name</code> &amp; <code>strand</code>) are provided as <code>.</code></li>
+<li>Additional columns for <a href="https://en.wikipedia.org/wiki/BED_(file_format)#Description">plotting parameters</a> can also be passed</li>
+</ul>
+</section>
+<section id="bed-files-1" class="level2">
+<h2 class="anchored" data-anchor-id="bed-files-1">Bed Files</h2>
+<ul>
+<li>These are simple <code>tsv</code> files (sometimes space-separated)
+<ul>
+<li>We could use <code>read_tsv()</code> if we really want</li>
+<li>Would need to use:<br><code>read_tsv("path/to/bed", col_names = c("chrom", "chromStart", "chromEnd", "name", "score", "strand"))</code></li>
+</ul></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>The package <code>rtracklayer</code> is an all-purpose -omics file import package
+<ul>
+<li>Handles 0/1-based co-ordinates easily</li>
+<li>Will prase files as <code>GRanges</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="importing-bed-files" class="level2">
+<h2 class="anchored" data-anchor-id="importing-bed-files">Importing Bed Files</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>parY <span class="ot">&lt;-</span> <span class="fu">import.bed</span>(<span class="st">"data/parY.bed"</span>, <span class="at">seqinfo =</span> sq)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>parY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        &lt;NA&gt;         0
+  [2]     chrY 56887903-57217415      * |        &lt;NA&gt;         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<ul>
+<li>Any unspecified <code>strand</code> information <span class="math inline">\(\implies\)</span> <code>*</code></li>
+</ul>
+</section>
+<section id="genomic-ranges-2" class="level2">
+<h2 class="anchored" data-anchor-id="genomic-ranges-2">Genomic Ranges</h2>
+<ul>
+<li>Note that we have and <code>mcols</code> element
+<ul>
+<li><code>DataFrame</code> with metadata about each range</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 2 rows and 2 columns
+         name     score
+  &lt;character&gt; &lt;numeric&gt;
+1          NA         0
+2          NA         0</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<ul>
+<li>Can also separate the ranges</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">granges</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 0 metadata columns:
+      seqnames            ranges strand
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chrY     10001-2781479      *
+  [2]     chrY 56887903-57217415      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</section>
+<section id="the-plyranges-package" class="level2">
+<h2 class="anchored" data-anchor-id="the-plyranges-package">The <code>plyranges</code> package</h2>
+<div style="font-size: 95%;">
+<ul>
+<li><code>plyranges</code> provides <code>dplyr</code>-like operations on <code>GRanges</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"PAR1"</span>, <span class="st">"PAR2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        PAR1         0
+  [2]     chrY 56887903-57217415      * |        PAR2         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">select</span>(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 1 metadata column:
+      seqnames            ranges strand |     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |         0
+  [2]     chrY 56887903-57217415      * |         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Not going any deeper today
+<ul>
+<li>Only for <code>GRanges</code> <span class="math inline">\(\implies\)</span> not <code>DataFrame</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="genomic-ranges-3" class="level2">
+<h2 class="anchored" data-anchor-id="genomic-ranges-3">Genomic Ranges</h2>
+<ul>
+<li>This makes extracting the genomic sequence trivial</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 2:
+      width seq
+[1] 2771479 CTAACCCTAACCCTAACCCTAACCCTAACCCTA...TCAGACCTTAGTTATAGATTAAAAGAAGTTAA
+[2]  329513 ATGTGTTTTTTGGCTGCATAAATGTCTTCTTTT...GTGGGTGTGTGGGTGTGGTGTGTGGGTGTGGT</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations">Gene And Transcript Annotations</h2>
+<ul>
+<li>Gene and transcript annotations use a co-ordinate-based system</li>
+<li>External files usually in <code>gtf</code> format
+<ul>
+<li>Columns 1-8: <code>chrom</code>, <code>source</code>, <code>type</code>, <code>start</code>, <code>end</code>, <code>score</code>, <code>strand</code>, <code>phase</code></li>
+<li>Column 9 is ‘<code>;</code>’ separated and flexible</li>
+</ul></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>Passed to <code>R</code> as a <code>GRanges</code> object with <code>mcols</code></li>
+<li><code>rtracklayer</code> provides <code>import.gff()</code>
+<ul>
+<li><code>gtf</code> files are based on v2 specifications of the <code>gff</code> format</li>
+</ul></li>
+</ul>
+</section>
+<section id="gene-and-transcript-annotations-1" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-1">Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">import.gff</span>(<span class="st">"data/gencode.v41.chrY.gtf.gz"</span>, <span class="at">genome =</span> <span class="st">"hg38"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ul>
+<li><code>plyranges</code> can be very useful for removing redundant columns</li>
+<li>Individual columns can be extracted using <code>$</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gtf<span class="sc">$</span>type <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gene"        "transcript"  "exon"        "CDS"         "start_codon"
+[6] "stop_codon"  "UTR"        </code></pre>
+</div>
+</div>
+<ul>
+<li>These are the types of features in a standard gtf
+<ul>
+<li><code>gene</code> and <code>transcript</code> annotations cover the entire range</li>
+<li>Individual exons within each transcripts are <code>exons</code></li>
+</ul></li>
+</ul>
+<div class="notes">
+<p>Notice the types of features provided in a standard gtf</p>
+</div>
+</section>
+<section id="genomic-ranges-4" class="level2">
+<h2 class="anchored" data-anchor-id="genomic-ranges-4">Genomic Ranges</h2>
+<p>This structure highlights a few unexpected features of <code>GRanges</code></p>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>There are no rownames or colnames
+<ul class="incremental">
+<li>Ranges can have <code>names()</code></li>
+<li><code>mcols()</code> have colnames</li>
+</ul></li>
+<li><code>nrow</code> and <code>ncol</code> only work on <code>mcols</code> NOT the <code>GRanges</code> object</li>
+<li>The number of ranges is obtained using <code>length()</code></li>
+</ol>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9955</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-2" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-2">Gene And Transcript Annotations</h2>
+<ul>
+<li>If we want to find the sequence of a gene or transcript <br><span class="math inline">\(\implies\)</span> can’t use these features</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"gene"</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"transcript"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ul>
+<li>Instead use exons
+<ul>
+<li>The same ranges may be annotated as multiple exons</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_by_overlaps</span>(<span class="fu">GRanges</span>(<span class="st">"chrY:284167-284314"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is a <code>plyranges</code> approach to the question
+<ul>
+<li>Still, note these are identical exons from 10 transcripts</li>
+</ul></li>
+</ul>
+</section>
+<section id="gene-and-transcript-annotations-3" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-3">Gene And Transcript Annotations</h2>
+<ul>
+<li>To find every exon associated with a gene:</li>
+</ul>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Subset our data to exons only</li>
+<li>Split into a <code>GRangesList</code> using the gene_id</li>
+<li>Merge overlapping exons</li>
+</ol>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="notes">
+<p>This is the first time we’ve seen the <code>.</code> inactions using <code>%&gt;%</code></p>
+</div>
+</section>
+<section id="grangeslist-objects" class="level2">
+<h2 class="anchored" data-anchor-id="grangeslist-objects">GRangesList Objects</h2>
+<ul>
+<li><code>GRangesList</code> objects strictly have a <code>GRanges</code> object as every element</li>
+<li>Often obtained by <em>splitting</em> a <code>GRanges</code> object based on a single <code>mcol</code></li>
+<li>Must have identical <code>seqinfo</code> elements
+<ul>
+<li>i.e.&nbsp;from the same genome</li>
+</ul></li>
+<li>Very efficient way to perform complex operations</li>
+</ul>
+</section>
+<section id="grangeslist-objects-1" class="level2">
+<h2 class="anchored" data-anchor-id="grangeslist-objects-1">GRangesList Objects</h2>
+<ul>
+<li>The function <code>reduce</code> merges overlapping ranges <span class="math inline">\(\implies\)</span> <code>mcols</code> are lost</li>
+<li>Will handle all elements of a <code>GRangesList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  GenomicRanges<span class="sc">::</span><span class="fu">reduce</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ul>
+<li>Notice that the original 107 exons for the first gene are now 15</li>
+</ul>
+<div class="notes">
+<p>Maintaining mcols is enabled using <code>reduceMC</code> from <code>extraChIPs</code> but it’s needed less often than we might think</p>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-4" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-4">Gene And Transcript Annotations</h2>
+<ul>
+<li>The above strategy could be used to return:
+<ul>
+<li>the overall coding length for a gene</li>
+<li>the overall GC content</li>
+<li>a “consensus sequence” for a gene <br><span class="math inline">\(\implies\)</span> not guaranteed to represent what’s expressed</li>
+</ul></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>To obtain transcript sequences we split by transcript_id
+<ul>
+<li>No need to reduce overlapping exons</li>
+</ul></li>
+</ul>
+</section>
+<section id="gene-and-transcript-annotations-5" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-5">Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>trans_grl <span class="ot">&lt;-</span> gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>transcript_id) </span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>trans_grl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1018
+[["ENST00000155093.8"]] AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGCCGACCGCCC...
+[["ENST00000215473.7"]] CTGGTGGTCCAGTACCTCCAAAGATATGGAATACACTCCTGAAATATCCTGAA...
+[["ENST00000244174.11_PAR_Y"]] GCTGTGCACCCAGAGATAGTTGGGTGACAAATCACCTCCAGGTTGG...
+[["ENST00000250776.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250784.13"]] CTCTTCCGTCGCAGAGTTTCGCCATG ...
+[["ENST00000250805.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250823.5"]] ATACACAGGGAGGCCAGGCAGCCTGGAGTTAGTCGACCGTTGCGAGACGTTGA...
+[["ENST00000250825.5"]] AGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAAAGCCGAGAGC...
+[["ENST00000250831.6"]] ATGATTGGCCGCTGGAGGTAGGCGGGATTTCCGGGCACGGCTTCCGGCGTCCT...
+[["ENST00000250838.6"]] GTAACAGGCAGGAAGAAAGCTTTCTGTACTACACCAGAGGGTTGGGGCTGTGG...
+...
+&lt;1008 more elements&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-6" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-6">Gene And Transcript Annotations</h2>
+<ul>
+<li>Notice that each transcript retains the exon structure</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 8:
+    width seq
+[1]   389 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCG...CGGGGGCGAGAAGGCGAAGGCTGCAGGCGTGAG
+[2]    89 GAGCTGTGACTAATGAGAATTAAAGGCCATGGAT...CACAAGAGCCAAACTCATTTTTTGATGGAATAG
+[3]   573 GAGCTGATGCTACACACATGGATGGTGATCAGAT...AAGCCAGCTGTGAGGACTACCTAATGATTTCGT
+[4]   150 TGGATGATGCTGGCAAAATAGAACATGATGGTTC...TTTTTAAAGCTGACCCTGGAGAAGATGACTTAG
+[5]   144 GTGGAACTGTAGACATTGTGGAGAGTGAACCTGA...TCAATGACTCTCAACAAGAAGATGAAGATTTAA
+[6]   153 ATGTTGCTGAAATTGCTGATGAAGTTTATATGGA...CCTTCGTACCAATTGCATGGGCAGCAGCTTATG
+[7]   141 GTAATAATTCTGATGGAATTGAAAACCGGAATGG...AGAGAAGACCTGATTCCAGGCAGTACCAAACAG
+[8]  3697 CAATAATTATTGGCCCTGATGGTCATCCTTTGAC...TTTTACTGTTAATAAATGTTTACTTGTATATGA</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-7" class="level2">
+<h2 class="anchored" data-anchor-id="gene-and-transcript-annotations-7">Gene And Transcript Annotations</h2>
+<ul>
+<li>A cleaner approach is provided by <code>GenomicFeatures</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GenomicFeatures)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">extractTranscriptSeqs</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1018:
+       width seq                                            names               
+   [1]  5336 AGTGCTCCAGAGAAAGGCCGTC...TAAATGTTTACTTGTATATGA ENST00000155093.8
+   [2]  4595 CTGGTGGTCCAGTACCTCCAAA...GAGCCCTTCAGAAGACATTCT ENST00000215473.7
+   [3]  2038 GCTGTGCACCCAGAGATAGTTG...AAAAGGGGCTTGATGGCTGTT ENST00000244174.1...
+   [4]   910 TGTCTGTCAGAGCTGTCAGCCT...AAACACTGGTATATTTCTGTT ENST00000250776.5
+   [5]  1189 CTCTTCCGTCGCAGAGTTTCGC...AAATCCTGTGGCTGTAGGAAA ENST00000250784.13
+   ...   ... ...
+[1014]   534 GGCTTTGGGCAGAGGCAGCCAG...TAAATATGATATGGGAGTGTG ENST00000700889.1
+[1015]   600 GGCTTTGGGCAGAGGCAGCCAG...AAAGCTAAATGCAATTGCATA ENST00000700898.1
+[1016]   676 GGCTTTGGGCAGAGGCAGCCAG...TAGTTTCTTAAATTTGTAAAA ENST00000700901.1
+[1017]  1048 ACTCGCGGACGATCTCTGCTCG...AAACAAAAACAAAAAAAAAAA ENST00000701084.1...
+[1018]  1591 GGAGGTGGCTCGGGCCGCGCCG...ATAAAATATTTTTTGAAACCA ENST00000701359.1...</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<ul>
+<li>We could export this as a <code>fasta</code> file using <code>writeXStringSet()</code></li>
+<li>Might become a reference transcriptome (instead of genome)</li>
+</ul>
+</section>
+</section>
+<section id="annotationhub" class="level1" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1 data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">AnnotationHub</h1>
+<section id="annotation-hub" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-hub">Annotation Hub</h2>
+<ul>
+<li>Much processing is done on an HPC when running a sequencing workflow</li>
+<li>Knowing standalone files &amp; how to import into <code>R</code> is vital</li>
+<li>Many annotations are also prepared as packages</li>
+<li>The database of these packages is <code>AnnotationHub</code>
+<ul>
+<li>Doesn’t download packages, just provides a list</li>
+</ul></li>
+</ul>
+</section>
+<section id="annotation-hub-1" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-hub-1">Annotation Hub</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="do">## This will run for a minute or two the first time you run it</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>ah</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 71634 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl, BroadInstitute, UCSC, ftp://ftp.ncbi.nlm.nih.gov/g...
+# $species: Homo sapiens, Mus musculus, Drosophila melanogaster, Rattus norv...
+# $rdataclass: GRanges, TwoBitFile, BigWigFile, EnsDb, Rle, OrgDb, SQLiteFil...
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH5012"]]' 
+
+             title                                             
+  AH5012   | Chromosome Band                                   
+  AH5013   | STS Markers                                       
+  AH5014   | FISH Clones                                       
+  AH5015   | Recomb Rate                                       
+  AH5016   | ENCODE Pilot                                      
+  ...        ...                                               
+  AH117051 | Ensembl 112 EnsDb for Xiphophorus maculatus       
+  AH117052 | Ensembl 112 EnsDb for Xenopus tropicalis          
+  AH117053 | Ensembl 112 EnsDb for Zonotrichia albicollis      
+  AH117054 | Ensembl 112 EnsDb for Zalophus californianus      
+  AH117055 | Ensembl 112 EnsDb for Zosterops lateralis melanops</code></pre>
+</div>
+</div>
+<div class="notes">
+<ul>
+<li>Data is available from multiple sources and in multiple formats</li>
+<li>GRanges</li>
+</ul>
+</div>
+</section>
+<section id="annotation-hub-2" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-hub-2">Annotation Hub</h2>
+<ul>
+<li>The full metadata can be seen by accessing the <code>mcols</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(ah)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 71634 rows and 15 columns
+                          title dataprovider                species taxonomyid
+                    &lt;character&gt;  &lt;character&gt;            &lt;character&gt;  &lt;integer&gt;
+AH5012          Chromosome Band         UCSC           Homo sapiens       9606
+AH5013              STS Markers         UCSC           Homo sapiens       9606
+AH5014              FISH Clones         UCSC           Homo sapiens       9606
+AH5015              Recomb Rate         UCSC           Homo sapiens       9606
+AH5016             ENCODE Pilot         UCSC           Homo sapiens       9606
+...                         ...          ...                    ...        ...
+AH117051 Ensembl 112 EnsDb fo..      Ensembl  Xiphophorus maculatus       8083
+AH117052 Ensembl 112 EnsDb fo..      Ensembl     Xenopus tropicalis       8364
+AH117053 Ensembl 112 EnsDb fo..      Ensembl Zonotrichia albicollis      44394
+AH117054 Ensembl 112 EnsDb fo..      Ensembl Zalophus californianus       9704
+AH117055 Ensembl 112 EnsDb fo..      Ensembl Zosterops lateralis ..    1220523
+                         genome            description coordinate_1_based
+                    &lt;character&gt;            &lt;character&gt;          &lt;integer&gt;
+AH5012                     hg19 GRanges object from ..                  1
+AH5013                     hg19 GRanges object from ..                  1
+AH5014                     hg19 GRanges object from ..                  1
+AH5015                     hg19 GRanges object from ..                  1
+AH5016                     hg19 GRanges object from ..                  1
+...                         ...                    ...                ...
+AH117051   X_maculatus-5.0-male Gene and protein ann..                  1
+AH117052          UCB_Xtro_10.0 Gene and protein ann..                  1
+AH117053 Zonotrichia_albicoll.. Gene and protein ann..                  1
+AH117054           mZalCal1.pri Gene and protein ann..                  1
+AH117055            ASM128173v1 Gene and protein ann..                  1
+                     maintainer rdatadateadded          preparerclass
+                    &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
+AH5012   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5013   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5014   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5015   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5016   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+...                         ...            ...                    ...
+AH117051 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117052 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117053 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117054 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117055 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+                                             tags  rdataclass
+                                           &lt;AsIs&gt; &lt;character&gt;
+AH5012                    cytoBand,UCSC,track,...     GRanges
+AH5013                      stsMap,UCSC,track,...     GRanges
+AH5014                  fishClones,UCSC,track,...     GRanges
+AH5015                  recombRate,UCSC,track,...     GRanges
+AH5016               encodeRegions,UCSC,track,...     GRanges
+...                                           ...         ...
+AH117051 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117052 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117053 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117054 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117055 112,Annotation,AnnotationHubSoftware,...       EnsDb
+                      rdatapath              sourceurl  sourcetype
+                    &lt;character&gt;            &lt;character&gt; &lt;character&gt;
+AH5012   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5013   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5014   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5015   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5016   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+...                         ...                    ...         ...
+AH117051 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117052 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117053 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117054 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117055 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-3" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-hub-3">Annotation Hub</h2>
+<ul>
+<li>Searching is easiest using <code>subset()</code> or <code>query()</code></li>
+<li>The following returns all EnsDb objects built on GRCh38 (hg38)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(genome <span class="sc">==</span> <span class="st">"GRCh38"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(rdataclass <span class="sc">==</span> <span class="st">"EnsDb"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 27 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl
+# $species: Homo sapiens
+# $rdataclass: EnsDb
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH53211"]]' 
+
+             title                             
+  AH53211  | Ensembl 87 EnsDb for Homo Sapiens 
+  AH53715  | Ensembl 88 EnsDb for Homo Sapiens 
+  AH56681  | Ensembl 89 EnsDb for Homo Sapiens 
+  AH57757  | Ensembl 90 EnsDb for Homo Sapiens 
+  AH60773  | Ensembl 91 EnsDb for Homo Sapiens 
+  ...        ...                               
+  AH109336 | Ensembl 108 EnsDb for Homo sapiens
+  AH109606 | Ensembl 109 EnsDb for Homo sapiens
+  AH113665 | Ensembl 110 EnsDb for Homo sapiens
+  AH116291 | Ensembl 111 EnsDb for Homo sapiens
+  AH116860 | Ensembl 112 EnsDb for Homo sapiens</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-4" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-hub-4">Annotation Hub</h2>
+<ul>
+<li>This behaves like a list <span class="math inline">\(\implies\)</span> extract elements using <code>[[]]</code>
+<ul>
+<li>Will download an entire annotation set</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>ensdb <span class="ot">&lt;-</span> ah[[<span class="st">"AH116860"</span>]]</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>ensdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EnsDb for Ensembl:
+|Backend: SQLite
+|Db type: EnsDb
+|Type of Gene ID: Ensembl Gene ID
+|Supporting package: ensembldb
+|Db created by: ensembldb package from Bioconductor
+|script_version: 0.3.10
+|Creation time: Mon Jun 17 16:14:46 2024
+|ensembl_version: 112
+|ensembl_host: localhost
+|Organism: Homo sapiens
+|taxonomy_id: 9606
+|genome_build: GRCh38
+|DBSCHEMAVERSION: 2.2
+|common_name: human
+|species: homo_sapiens
+| No. of genes: 71935.
+| No. of transcripts: 279860.
+|Protein data available.</code></pre>
+</div>
+</div>
+</section>
+<section id="ensdb-ojects" class="level2">
+<h2 class="anchored" data-anchor-id="ensdb-ojects">EnsDb Ojects</h2>
+<ul>
+<li>The first Bioconductor packages of this type were TxDb packages
+<ul>
+<li>Used UCSC annotations &amp; genome builds</li>
+</ul></li>
+<li>Contain all information about a given annotation build</li>
+<li>EnsDb packages use Ensembl resources &amp; the package <code>ensembldb</code></li>
+<li>Enormous data-mapping and information content</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(ensdb)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transcripts</span>(ensdb)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exonsBy</span>(ensdb, <span class="at">by =</span> <span class="st">"tx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ensdb-ojects-1" class="level2">
+<h2 class="anchored" data-anchor-id="ensdb-ojects-1">EnsDb Ojects</h2>
+<ul>
+<li>Can be highly beneficial for ensuring self-contained, reproducible workflows
+<ul>
+<li>No external files required</li>
+</ul></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>Notice difference in genome build to UCSC (<code>hg38</code>)</li>
+<li>Slight difference in column names to Gencode</li>
+<li>No TxDb or EnsDb packages available for Gencode gene annotations</li>
+</ul>
+</section>
+<section id="gencode-annotations" class="level2">
+<h2 class="anchored" data-anchor-id="gencode-annotations">Gencode Annotations</h2>
+<ul>
+<li>Are available as raw gff files</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> <span class="fu">subset</span>(dataprovider <span class="sc">==</span> <span class="st">"Gencode"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 31 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Gencode
+# $species: Homo sapiens, Mus musculus
+# $rdataclass: GRanges
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH49545"]]' 
+
+            title                                                    
+  AH49545 | gencode.vM6.2wayconspseudos.gff3.gz                      
+  AH49546 | gencode.vM6.annotation.gff3.gz                           
+  AH49547 | gencode.vM6.basic.annotation.gff3.gz                     
+  AH49548 | gencode.vM6.chr_patch_hapl_scaff.annotation.gff3.gz      
+  AH49549 | gencode.vM6.chr_patch_hapl_scaff.basic.annotation.gff3.gz
+  ...       ...                                                      
+  AH75126 | gencode.v31.tRNAs.gff3.gz                                
+  AH75127 | gencode.v31lift37.annotation.gff3.gz                     
+  AH75128 | gencode.v31lift37.basic.annotation.gff3.gz               
+  AH75129 | gencode.v31lift37.long_noncoding_RNAs.gff3.gz            
+  AH75130 | gencode.v31lift37.unmapped.gff3.gz                       </code></pre>
+</div>
+</div>
+</section>
+<section id="closing-comments" class="level2">
+<h2 class="anchored" data-anchor-id="closing-comments">Closing Comments</h2>
+<p>Standard (gene-level) RNA-Seq workflows:</p>
+<p>. . .</p>
+<ol type="1">
+<li>align to a reference genome
+<ul>
+<li>Produces a <code>bam</code> file for each sample</li>
+</ul></li>
+<li>count aligned reads which overlap an exon
+<ul>
+<li>Requires a GTF within exon-coordinates</li>
+</ul></li>
+</ol>
+<p>. . .</p>
+<ul>
+<li>Alignment requires preparing an index for your aligner (e.g.&nbsp;STAR, hisat2)</li>
+<li>Indexes always require a reference genome in <code>fasta</code> format</li>
+<li>Can usually obtain from UCSC, Ensembl, Gencode etc</li>
+<li>Non-standard approaches can utilise the above</li>
+</ul>
+</section>
+<section id="closing-comments-1" class="level2">
+<h2 class="anchored" data-anchor-id="closing-comments-1">Closing Comments</h2>
+<p>If aligning to a reference transcriptome</p>
+<ul>
+<li>Can download a transcriptome from Gencode etc</li>
+<li>Prepare a tailored transcriptome using the above strategy</li>
+<li>Index the transcriptome using <code>salmon</code>, <code>kallisto</code> etc</li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>GTF not needed during counting <span class="math inline">\(\implies\)</span> index preparation only</li>
+<li>No <code>bam</code> file produced <span class="math inline">\(\implies\)</span> only transcript-level counts</li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>Above allows incorporation of variants into a reference transcriptomes
+<ul>
+<li><code>transmogR</code> developed at BODL</li>
+</ul></li>
+</ul>
+</section>
+<section id="closing-comments-2" class="level2">
+<h2 class="anchored" data-anchor-id="closing-comments-2">Closing Comments</h2>
+<ul>
+<li>The above was overkill for a generic analysis</li>
+<li>Gave introductions to fundamental data structures</li>
+</ul>
+<p>. . .</p>
+<ul>
+<li><code>Biostrings</code> for DNA/RNA sequences
+<ul>
+<li><code>XString/Set/List</code> objects</li>
+</ul></li>
+<li><code>GRanges</code> for working with co-ordinates
+<ul>
+<li>Often obtained by importing <code>bed</code> or <code>gtf</code> files</li>
+</ul></li>
+<li><code>GRangesList</code> for splitting <code>GRanges</code> by some feature</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script type="text/javascript">
+  Reveal.on('ready', event => {
+    if (event.indexh === 0) {
+      document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+    }
+  });
+  Reveal.addEventListener('slidechanged', (event) => {
+    if (event.indexh === 0) {
+      Reveal.configure({ slideNumber: null });
+      document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+    }
+    if (event.indexh === 1) {
+      Reveal.configure({ slideNumber: 'c' });
+      document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+    }
+  });
+</script>
+
+
+
+
+</body></html>

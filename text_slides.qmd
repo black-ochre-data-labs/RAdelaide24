@@ -1,0 +1,538 @@
+---
+title: "Working With Text"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-09"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3c3c44"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: text.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+- Next, create the vector we'll mess around with
+
+```{r}
+x <- c("Hi Mum", "Hi Mother", "Hello Parent1")
+```
+ 
+
+## Text Manipulation
+
+- Working with `character` vectors
+- One of the most common and regular tasks
+    + Cleaning up column names
+    + Cleaning up data
+    + Tidying up text on plots
+    
+. . .
+
+- Particularly relevant when working with IDs
+    + May appear as `Run 1` in one file and `Run_001` in another
+- Data providers often have their ID formats and edit the ones provided
+    + Need to identify & extract/modify
+    
+    
+## Regular Expressions
+
+- We're mostly familiar with words
+    + Regular Expressions are incredibly powerful tools in this space
+    + `regexp` syntax is not unique to `R`
+    + `R` does have a few "quirks" though
+    
+. . .
+
+- Will progress to categorical data $\implies$ *factors*
+
+
+## Text Manipulation
+
+- The package `stringr` contains functions for text manipulation 
+- Key Functions:
+    + `str_detect()`
+    + `str_remove()`
+    + `str_extract()`
+    + `str_replace()`
+- Alternatives to `grepl()`, `grep()`, `gsub()` etc. from `base`
+
+## `stringr::str_detect()`
+
+- `str_detect()` returns a logical vector
+    + Same length as the input vector
+
+```{r}
+str_detect(string = x, pattern = "Mum")
+```
+
+. . .
+
+- In the above we used basic words for the search pattern
+- *Regular expressions* use a `.` as a wild card
+    + `*` has different meaning to many other contexts
+
+```{r}
+str_detect(x, "Mu")
+str_detect(x, "M.")
+```
+
+. . .
+
+- The wild-card value `.` obviously needed to follow `M` in this search
+
+## `stringr::str_detect()`
+
+- Alternative individual characters can be specified within `[]`
+
+```{r}
+str_detect(x, "M[ou]")
+```
+
+- Here either an `o` or `u` needed to follow the `M`
+
+. . .
+
+- Alternative sequences of letters can also be specified using `|`
+    + `|` is common across many languages for `OR`
+    
+```{r}
+str_detect(x, "Mother|Parent")
+```
+
+## `stringr::str_detect()`
+
+- We can also anchor patterns to:
+    + The start of a stringr (`^`)
+    + The end of a string (`$`)
+    
+```{r}
+str_detect(x, "r")
+str_detect(x, "r$")
+str_detect(x, "^Hi ")
+```
+
+## `stringr::str_view()`
+
+- We can check our matches in detail using `str_view()`
+
+```{r}
+str_view(x, "r")
+str_view(x, "r$")
+str_view(x, "M[ou]")
+str_view(x, "M[ou]", match = NA, html = TRUE)
+```
+
+
+## `stringr::str_extract()`
+
+- We can use `str_extract()` to extract patterns
+
+```{r}
+str_extract(string = x, pattern = "Hi")
+```
+
+. . .
+
+- The same approach to alternative sequences will also work
+
+```{r}
+str_extract(x, "Mother|Parent")
+```
+
+- If no pattern is found `NA` is returned
+    + This can be helpful if no matches are found
+    
+## `stringr::str_extract()`
+
+- Wildcards can also be used
+
+```{r}
+str_extract(x, "Hi M.")
+str_extract(x, "Hi [MP].")
+```
+
+. . .
+
+- We can be extremely flexible with characters in the `[]`
+    + In the following, we're asking for *any upper-case letter*
+
+```{r}
+str_extract(x, "Hi [A-Z].")
+```
+
+## `stringr::str_extract()`
+
+- We can extend the wildcard using `+`
+    + This means 'repeat the previous pattern 1 or more times`
+    + .` is a wildcard $\implies$ repeat the wildcard (not the match) 1 or more times
+
+```{r}
+str_extract(x, "Hi [A-Z].")
+str_extract(x, "H.+ [A-Z].")
+```
+
+. . .
+
+- We could restrict the wildcard to be only lower-case letters
+
+```{r}
+str_extract(x, "H.+ [A-Z][a-z]+")
+```
+
+. . .
+
+- Or just be even more general using `[:alpha:]`
+
+```{r}
+str_extract(x, "H.+ [:alpha:]+")
+```
+
+- The complete list of classes is at `?base::regex`
+
+## `stringr::str_extract()`
+
+- We can also specify the exact number of times for a match
+
+```{r}
+str_extract(x, "H.+ [:alpha:]{3}")
+str_extract(x, "H.+ [:alpha:]{4}")
+```
+
+. . .
+
+- `str_extract()` will only return the first match
+
+```{r}
+str_extract(x, "[Hh].")
+```
+
+## `stringr::str_extract_all()`
+
+- `str_extract_all()` returns **all matches**
+
+```{r}
+str_extract_all(x, "[Hh].")
+```
+
+. . .
+
+- Note that now we have a list of the same length as `x`
+    + Each element contains all matches within the initial string
+
+## `stringr::str_remove()`
+
+- We can use the above tricks to remove patterns within our text
+
+```{r}
+str_remove(x, "Hi ")
+str_remove(x, "[aeiou]")
+```
+
+. . . 
+
+- Notice that only the first match was removed
+    + `str_remove_all()` will remove all occurences
+
+```{r}
+str_remove_all(x, "[aeiou]")
+```
+
+. . . 
+
+Very useful for removing file suffixes etc
+
+## `stringr::str_replace()`
+
+- `str_replace()` is used for extracting/modifying text strings
+    + Even more powerful than `str_extract()`
+
+```{r}
+str_replace(x, pattern = "Mum", replacement = "Dad")
+```
+
+1. Searching the `string` "Hi Mum" for the `pattern` "Mum", and
+2. Replacing the first instance of "Mum" with "Dad"
+
+. . .
+
+- Wildcards and character sets work in the exact same manner
+
+```{r}
+str_replace(x, "M[a-z]", "Da")
+str_replace(x, "[MP].{2}", "Dad")
+str_replace(x, "[MP].+", "Dad")
+```
+
+## `stringr::str_replace()`
+
+- The use of *capturing patterns* makes this extremely flexible
+- We can capture words/phrases/patterns using `(pattern)`
+    + Captured patterns are able to be returned in numeric order of capture
+    + In the following, we capture only one pattern
+
+```{r}
+str_replace(x, "H.+ (.+)", "\\1")
+```
+
+. . . 
+
+- Now let's capture two patterns
+
+```{r}
+str_replace(x, "(H.+) ([:alpha:]+)", "\\2! \\1!")
+```
+
+. . .
+
+- To tidy up the final digit use `*`
+    + Like `+` except the match is **zero** or more times
+    
+```{r}
+str_replace(x, "(H.+) ([:alpha:]+)[0-9]*", "\\2! \\1!")
+```
+
+
+## `stringr::str_replace()`
+
+- `str_replace()` only replaces the first match in a string
+- `str_replace_all()` replaces **all** matches
+
+```{r}
+str_replace(x, "[Mm]", "b")
+str_replace_all(x, "[Mm]", "b")
+```
+
+
+## More Helpful Functions
+
+```{r}
+str_remove(x, "Hi ")
+str_count(x, "[Mm]")
+str_length(x)
+str_to_lower(x)
+str_to_upper(x)
+str_split_fixed(x, pattern = " ", n = 2)
+str_wrap(x, width = 8)
+str_starts(x, "Hi")
+str_ends(x, "[:alpha:]")
+str_flatten(x, collapse = "; ")
+str_trunc(x, width = 7)
+str_to_title("a bad example")
+```
+
+. . .
+
+- Pseudo-numeric strings are also handled well
+
+```{r}
+str_pad(c("1", "10", "100"), width = 3, pad = "0")
+str_sort(c("1", "10", "2"))
+str_sort(c("1", "10", "2"), numeric = TRUE)
+```
+
+
+## Additional Tools and Tricks
+
+- The function `paste()` is a very useful one
+    + The default separator is `" "`
+    + `paste0()` has the default separator as `""`
+
+```{r}
+paste(x, "How are you?")
+paste(x, "How are you?", sep = ". ")
+paste0(x, "!")
+paste(x, collapse = "! ")
+```
+
+## Additional Tools and Tricks
+
+- The package `glue` has revolutionised text manipulation
+    + We can pass R objects or function calls to the middle of a text string
+    + We do need to be careful with quotation marks here
+
+```{r}
+library(glue)
+glue("When they answered, I said '{x}!'")
+glue("I call them {str_remove(x, 'H.+ ')}")
+glue_collapse(letters, sep = ", ", last = " & ")
+```
+
+. . . 
+
+- Output is of class `glue`
+    + Coerces back to `character`
+    + Plays very well with advanced `tidyverse` syntax (e.g. `rlang`)
+
+
+## Some Challenges
+
+1. Given a vector of Transcript IDs with versions, remove the version number?
+
+```{r}
+ids <- c("ENST00000376207.10", "ENST00000376199.7")
+```
+
+2. Add the 'chr' prefix to these chromosomes
+
+```{r}
+chr <- c(1:22, "X", "Y", "M")
+```
+
+3. Pull the chromosome out of these cytogenetic bands
+
+```{r}
+cyto <- c("Xp11.23", "11q2.3", "2p7.1")
+```
+
+4. Convert the following genes from human to mouse
+
+```{r}
+genes <- c("FOXP3", "IL2RA", "CTLA4")
+```
+
+5. Remove the suffix ".bam" from these filenames
+
+```{r}
+bams <- c("rna_bamboo1.bam", "rna_rice1.bam", "rna_wheat1.bam")
+```
+
+6. Correct the responses to be consistent (choose the format)
+
+```{r}
+response <- c("Y", "yes", "No", "no")
+```
+
+<!-- 6. Load the `RealTimeData.xlsx` file as before. Extract the timepoint from the first column, ensuring that "h" is always lower case. -->
+
+
+
+::: {.notes}
+Most of these have multiple solutions
+:::
+
+
+## Working With Strings
+
+- Is an incredibly common and important part of working with R
+- Extract sample IDs from file names
+- Pull key information from columns
+- Remove prefixes/suffixes
+- Correct data entry errors in your spreadsheet
+- Format for pretty plotting
+
+# Factors {background-color="#3c3c44" background-image=https://forcats.tidyverse.org/logo.png background-size="50%" background-opacity="0.5"}
+
+## Factors
+
+A common data type in statistics is a *categorical variable* (i.e. a `factor`)
+
+- Can appear to be a `character` vector/column
+    + Can easily trip an unsuspecting analyst up
+- Data will be a set of common groups/categories
+
+```{r}
+pet_vec <- c("Dog", "Dog", "Cat", "Dog", "Cat")
+```
+
+- This is a `character` vector
+
+## Factors
+
+- We can simply coerce this to a vector of factors
+- Categories will automatically be assigned alphabetically
+
+```{r}
+pet_factors <- as.factor(pet_vec)
+pet_factors
+```
+
+We can manually set these categories as `levels`
+
+```{r}
+pet_factors <- factor(pet_vec, levels = c("Dog", "Cat"))
+pet_factors
+```
+
+## Factors
+
+- These are actually stored as integers
+- Each integer corresponds to a `level`
+
+```{r, results='hide'}
+str(pet_factors)
+as.integer(pet_factors)
+as.character(pet_factors)
+```
+
+## A Potential Pitfall
+
+**What would happen if we think a `factor` is a `character`, and we use it to select values from a `vector`/`matrix`/`data.frame`?**
+
+. . .
+
+```{r}
+names(pet_vec) <- pet_vec
+pet_vec
+pet_vec[pet_factors]
+```
+
+. . .
+
+- `read_csv()` and other `readr` functions always parse text as a `character`
+    + Older versions of `read.csv()` parsed text to factors by default
+    + Changed with R $\geq$ v4.0.0
+- If I want a `factor`, **I explicitly make** a `factor`
+   + During statistical analysis `character` vectors are always coerced
+
+## The package `forcats`
+
+- `forcats` is a part of the core `tidyverse`
+    + Specifically for wrangling `factors`
+    + Also plays very nicely with `stringr`
+    

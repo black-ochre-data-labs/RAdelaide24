@@ -1,0 +1,370 @@
+---
+title: "Extending Data Frame Manipulation"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-09"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: tidyr.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Using `tidyr` {background-color="#3d3d40" background-image=https://github.com/rstudio/hex-stickers/blob/main/PNG/tidyr.png?raw=true background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## The package `tidyr`
+
+- Is the next logical step from `dplyr`
+- Instead of working with data *within columns* <br>$\implies$ manipulate entire columns
+- Analogous to some pivot table operations in Excel
+- Also a core `tidyverse` package
+
+. . .
+
+- Start a new script: `TidyR.R`
+
+## A New Dataset
+
+- For this we'll use the PCR data we glimpsed earlier ^[source unknown]
+
+```{r}
+library(tidyverse)
+library(readxl)
+pcr <- read_excel("data/RealTimeData.xlsx") %>% 
+  rename(Sample = `...1`)
+```
+
+- `rename` is another `dplyr` function
+- The default empty column name `..1` is a bit weird
+    + Starting `...` makes it a bit special
+    + Needs to be enclosed within backticks
+
+## A New Dataset
+
+- These values represent *Ct* values from a RT-PCR analysis
+    + *Ct* is the PCR cycle at which the machine detects 'signal'
+    + Low numbers mean more of the RNA molecule
+- Two genes: *SLAM* & *GAPDH*
+    + *GAPDH* is a housekeeper gene
+    + Should be consistent across treatments, conditions etc
+
+## A New Dataset
+
+- The sample column also contains two pieces of information
+    + `C/INF` probably mean control or infected cells
+    + Timepoints are 24h, 72h or 120h
+- Looks like some data entry errors
+
+. . .
+
+- How to separate the cell group (C/INF) from the timepoint?
+- If wanting to make boxplots, how would we fill by gene
+    + Should have a column with gene names
+    + Another with Ct values
+
+## Cleaning Data Entry Errors
+
+There are multiple ways & steps to clean-up the `Sample` column
+
+::: {.incremental}
+1. Could use `str_extract()` to 'grab out' the information
+2. Could add spaces where needed then use `separate()`
+3. Also need to correct the 'hours' format
+:::
+
+## Adding A Space
+
+- The pattern we need can be written multiple ways
+
+::: {.incremental}
+- Find where C or F are *not* followed by a space then add one
+- Find where 1 or 7 are *not* preceded by a space then add one
+- Could capture text & numbers then restructure
+    + Let's try this method
+:::
+
+
+## Matching Patterns
+
+- First we can capture the text at the beginning of each entry
+    + NB: Using `pull()` to grab out a single column
+
+```{r}
+pcr %>% 
+  pull(Sample) %>% 
+  str_view("^[CINF]+")
+```
+
+
+## Matching Patterns
+
+- Now let's see if we can capture numbers
+
+```{r}
+pcr %>% 
+  pull(Sample) %>% 
+  str_view("[0-9]+")
+```
+
+
+## Combining Patterns
+
+::: {style="font-size: 95%;"}
+
+- The key is what we place between the captures
+- The pattern I chose was `" *"` $\implies$ match *zero or more* spaces
+
+```{r}
+pcr %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)", "\\1 \\2")
+  )
+```
+
+:::
+
+::: {.notes}
+- Notice we didn't capture the optional space
+:::
+
+## Combining Patterns
+
+::: {style="font-size: 95%;"}
+
+- Next we can tidy the final character (H/h)
+    + Not in the initial pattern $\implies$ ignored during replacement
+- Don't need to capture, just to match
+
+
+```{r}
+pcr %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+  )
+```
+
+:::
+
+## Separating Columns
+
+::: {style="font-size: 90%;"}
+
+- Now we've (finally) cleaned up the data-entry erors<br>$\implies$ can use `separate()` to split into two columns
+    + Will automatically separate using any non-alpha-numeric characters
+
+```{r}
+pcr %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+  ) %>% 
+  separate(Sample, into = c("treatment", "timepoint"))
+```
+
+:::
+
+::: {.notes}
+Notice that we used a character vector to provide the new colnames
+:::
+
+## Separating Columns
+
+- These look like categorical values $\implies$ `factor()`
+
+```{r}
+#| results: hide
+pcr %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+  ) %>% 
+  separate(Sample, into = c("treatment", "timepoint")) %>% 
+  mutate(
+    timepoint = factor(timepoint, levels = c("24hr", "72hr", "120hr")),
+    treatment = factor(treatment, levels = c("C", "INF")) %>% 
+      fct_recode(Control = "C", Infected = "INF")
+  )
+```
+
+## Adding Replicate Information
+
+- We don't really know which replicates may be related but
+    + using the `.by` argument nests the data invisibly
+    + This is why it was done in a separate call to `mutate()`
+
+```{r}
+#| results: hide
+pcr %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+  ) %>% 
+  separate(Sample, into = c("treatment", "timepoint")) %>% 
+  mutate(
+    timepoint = factor(timepoint, levels = c("24hr", "72hr", "120hr")),
+    treatment = factor(treatment, levels = c("C", "INF")) %>% 
+      fct_recode(Control = "C", Infected = "INF")
+  ) %>% 
+  mutate(
+    replicate = seq_along(SLAM), .by = c(treatment, timepoint)
+  )
+```
+
+. . .
+
+<br>
+
+**I would usually do this when I load the data**
+
+## Rewrite the Loading Steps
+
+- Re-load the data to make our life easier from here on
+
+```{r}
+pcr <- read_excel("data/RealTimeData.xlsx") %>% 
+  rename(Sample = `...1`) %>% 
+  mutate(
+    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+  ) %>% 
+  separate(Sample, into = c("treatment", "timepoint")) %>% 
+  mutate(
+    timepoint = factor(timepoint, levels = c("24hr", "72hr", "120hr")),
+    treatment = factor(treatment, levels = c("C", "INF")) %>% 
+      fct_recode(Control = "C", Infected = "INF")
+  ) %>% 
+  mutate(
+    replicate = seq_along(SLAM), .by = c(treatment, timepoint)
+  )
+```
+
+
+## Merging Columns
+
+The converse to `separate()` is `unite()`
+    + The below shows manually setting the separator
+    + Also tells `unite()` not to remove the original columns
+
+```{r}
+pcr %>% 
+  unite(
+    col = "merged", all_of(c("treatment","timepoint", "replicate")),
+    sep = ":", remove = FALSE
+  )
+```
+
+
+## Long Form
+
+::: {style="font-size: 90%;"}
+
+- If we want to plot the values of *SLAM* & *GAPDH* $\implies$ `pivot_longer()`
+    + Colloquially known as *long form*
+    + Very helpful for regression models & visualisation in `R`
+
+```{r}
+pcr %>% 
+  pivot_longer(
+    cols = all_of(c("SLAM", "GAPDH")), names_to = "gene", values_to = "Ct"
+  )
+```
+
+:::
+
+## Visualising The Data
+
+- Now we can plot each gene by timepoint and treatment
+    + Faceting by gene
+    
+```{r}
+#| eval: false
+pcr %>% 
+  pivot_longer(
+    cols = all_of(c("SLAM", "GAPDH")), names_to = "gene", values_to = "Ct"
+  ) %>% 
+  ggplot(aes(timepoint, Ct, fill = treatment)) +
+  geom_boxplot() +
+  facet_wrap(~gene, scales = "free_y")
+```
+
+## From Long To Wide
+
+- The alternative is `pivot_wider()`
+   + Not so great for plotting
+   + Can be useful for tables
+
+```{r}
+pcr %>% 
+  mutate(dCt = SLAM - GAPDH) %>% 
+  pivot_wider(
+    names_from = "replicate", values_from = "dCt",
+    id_cols = starts_with("t"), names_prefix = "rep"
+  )
+```
+
+## Closing Comments
+
+- The `tidyverse` is under constant development
+    + `gather()` $\implies$ `pivot_longer()`
+    + `spread`() $\implies$ `pivot_wider()`
+    
+. . . 
+    
+- `separate()` is now superseded
+    + `separate_wider_delim()`
+
+## Closing Comments
+
+- Additional functions are more advanced than our knowledge just yet
+- Often rely on more sophisticated data structures
+
+```{r}
+pcr %>% 
+  nest(data = all_of(c("SLAM", "GAPDH", "replicate")))
+```
+
+

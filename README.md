@@ -13,36 +13,45 @@ This will be a three day course to enable researchers to develop their
 capabilities using the language `R`. Beginners are welcome and
 intermediate users will also gain a great deal from attending.
 
-## Course Outline
+## Provisional Course Outline
 
-| Day1  | Topic                                          |
-|:------|:-----------------------------------------------|
-| 9:00  | Welcome                                        |
-| 9:30  | Introducing R & RStudio                        |
-| 10:00 | Spreadsheet-Like Data                          |
-| 10:30 | *Morning Tea*                                  |
-| 11:00 | Using `dplyr` To Perform Excel-Like Operations |
-| 12:30 | *Lunch*                                        |
-| 1:30  | Visualising Your Data with `ggplot2`           |
-| 3:00  | *Afternoon Tea*                                |
-| 3:30  | Using `stringr` to Modify Text                 |
+| Day 1 | Topic                                | Notes                                        | Estimated Duration <br>(approx) |
+|:------|:-------------------------------------|:---------------------------------------------|:--------------------------------|
+| 9:00  | Welcome To Country                   |                                              | 15min                           |
+|       | Installation Help                    |                                              | 15min                           |
+|       | Introducing R & RStudio              | [Introduction](intro.html)                   | 40min                           |
+|       | Spreadsheet-Like Data                | [Data Import](import.html)                   | 60min                           |
+| 10:30 | *Morning Tea*                        |                                              |                                 |
+| 11:00 | Spreadsheet-Like Data (continued)    |                                              |                                 |
+|       | Exploring & Manipulating Data        | [Data Exploration](exploring.html)           | 60min                           |
+| 12:30 | *Lunch*                              |                                              |                                 |
+| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 60min                           |
+|       | Using `stringr` to Modify Text       | [Working With Text](text.html)               | 30min                           |
+| 3:00  | *Afternoon Tea*                      |                                              |                                 |
+| 3:30  | Reshaping Data With `tidyr`          | [Reshaping Data](tidyr.html)                 | 20min                           |
+|       | Challenges and Bring Your Own Data   |                                              |                                 |
 
-| Day2  | Topic                              |
-|:------|:-----------------------------------|
-| 9:00  | Vectors and Data Structures in `R` |
-| 10:30 | *Morning Tea*                      |
-| 11:00 | Basic Statistical Analysis         |
-| 12:30 | *Lunch*                            |
-| 1:30  | Using Rmarkdown                    |
-| 3:00  | *Afternoon Tea*                    |
-| 3:30  | Functions                          |
+| Day 2 | Topic                              | Notes                                | Estimated Duration <br>(approx) |
+|:------|:-----------------------------------|:-------------------------------------|:--------------------------------|
+| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html)        | 80min                           |
+| 10:30 | *Morning Tea*                      |                                      |                                 |
+| 11:00 | Basic Statistical Analysis         | [Basic Statistics](basic_stats.html) | 70min                           |
+| 12:30 | *Lunch*                            |                                      |                                 |
+| 1:30  | Functions                          | [Functions](functions.html)          | 70min                           |
+|       | Using Rmarkdown                    | [RMarkdown](rmarkdown.html)          | 60min                           |
+| 3:00  | *Afternoon Tea*                    |                                      |                                 |
+| 3:30  | Using Rmarkdown (continued)        |                                      |                                 |
+|       | Challenges and Bring Your Own Data |                                      |                                 |
 
-| Day3  | Topic                 |
-|:------|:----------------------|
-| 9:00  | Bioconductor          |
-| 10:30 | *Morning Tea*         |
-| 11:00 | Bulk RNA-Seq Analysis |
-| 12:30 | *Lunch*               |
-| 1:30  | Genomic Ranges        |
-| 3:00  | *Afternoon Tea*       |
-| 3:30  | Bring Your Own Data   |
+| Day 3 | Topic                                     | Notes                                             | Estimated Duration <br>(approx) |
+|:------|:------------------------------------------|:--------------------------------------------------|:--------------------------------|
+| 9:00  | The Bioconductor Project                  | [The Bioconductor Project](intro_bioc.html)       | 40min                           |
+|       | Working with Sequences and Genomic Ranges | [References and Ranges](references.html)          | 40min                           |
+| 10:30 | *Morning Tea*                             |                                                   |                                 |
+| 11:00 | Introduction to RNA-Seq                   | [RNA-Seq](rna_seq.html)                           | 30min                           |
+|       | Bulk RNA-Seq Analysis                     | [Differential Gene Expression](deg.html)          | 120min                          |
+| 12:30 | *Lunch*                                   |                                                   |                                 |
+| 1:30  | Bulk RNA-Seq Analysis (continued)         |                                                   |                                 |
+|       | Enrichment Analysis                       | [Finding the Underlying Biology](enrichment.html) | 70min                           |
+| 3:00  | *Afternoon Tea*                           |                                                   |                                 |
+| 3:30  | Challenges & Bring Your Own Data          |                                                   |                                 |

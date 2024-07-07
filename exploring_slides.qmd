@@ -1,0 +1,750 @@
+---
+title: "Exploring Data"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-9
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: exploring.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Exploring Our Data
+
+```{r load-pigs, echo=FALSE}
+library(tidyverse)
+pigs <- read_csv("data/pigs.csv")
+```
+
+
+
+## Exploring Data
+
+Now we have loaded some data into R
+
+- What does it look like?
+- Can we obtain summary tables?
+
+. . .
+
+We'll start with some basic approaches $\rightarrow$ more sophisticated
+
+## Basic Plotting
+
+- `R` comes with some basic plotting capabilities
+- Can be easy to quickly explore $\rightarrow$ difficult to tweak
+- Later we'll thoroughly explore `ggplot2`
+    + Is now the gold standard for data visualisation
+    
+. . .
+    
+- `plot()` is useful for quick *x vs. y* plots
+- `boxplot()` is also fairly intuitive
+    
+## Basic Plotting
+
+- The values in any column can be obtained using `$`
+
+```{r}
+## Look at all of the odontoblast lengths
+pigs$len
+```
+
+- We'll discuss in great (!!!) detail later
+
+## Basic Plotting
+
+- Passing this to `plot()` will plot the values in order
+
+```{r plot-len}
+#| output-location: default
+#| fig-width: 7
+plot(pigs$len)
+```
+
+::: {.notes}
+- If we had another numeric value we could've compared in a classic x vs y
+:::
+
+## Basic Boxplots
+
+- To make a boxplot we can plot `len` as our response variable
+    + Could take either `supp` or `dose` as the predictor
+- R uses *formula syntax*
+    + `len ~ supp` $\implies$ `len` **depends on** `supp`
+
+```{r}
+#| output-location: slide
+## Show length as being dependent on supp
+boxplot(len ~ supp, data = pigs)
+```
+
+. . .
+
+- Try changing `supp` to `dose`
+
+## Basic Boxplots
+
+- We can show `len` as depending on both using `+`
+
+```{r}
+#| output-location: slide
+## Show length as being dependent on both supp & dose
+boxplot(len ~ supp + dose, data = pigs)
+```
+
+# Exploring Data Using `dplyr` {background-color="#3d3d40" background-image=https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Introducing `dplyr`
+
+- `dplyr` is a core `tidyverse` package
+    + Always loaded with `library(tidyverse)`
+- Amazingly useful for
+    + Exploring Data
+    + Cleaning (i.e. tidying) Data
+    + Modifying & Manipulating Data
+    + Summarising Data
+- Contains many *Excel-like* functions
+
+## Sorting Data
+
+- By default, `pigs` is in the order we loaded it
+- Can we sort by `len`?
+
+. . .
+
+- The function `arrange()`
+
+## Sorting Data
+
+- Here we call the function `arrange()`
+    + The `data.frame` is the first argument
+    + Any of the column names can then be passed after this
+    
+
+```{r}
+## Sort by length
+arrange(pigs, len)
+```
+
+## Sorting Data
+
+- Have we changed the original object?
+
+. . .
+
+*Hint: To create an object in `R` we use `objectName <- data`*
+
+## Sorting Data
+
+- Sorting is done in increasing order by default
+- To sort in decreasing order<br>$\implies$ wrap the column name inside the function `desc()`
+    
+
+```{r}
+## Sort by length, in descending order
+arrange(pigs, desc(len))
+```
+
+## Filtering Data
+
+- `dplyr` also contains the function `filter()`
+
+```{r}
+## Just subset to the high dose
+filter(pigs, dose == "High")
+```
+
+## Filtering Data
+
+- Behind the scenes a logical test has been applied
+- Can only return the values `TRUE` or `FALSE`
+
+```{r}
+1:5 > 2
+```
+
+. . .
+
+- The symbol `==` applies the test *is equal to*
+- The converse is `!=` $\implies$ *is NOT equal to*
+
+## Filtering Data
+
+- We could *exclude* the high dose values instead
+
+```{r}
+filter(pigs, dose != "High")
+```
+
+## Filtering Data
+
+- Multiple filters are separated by a comma
+
+```{r}
+filter(pigs, dose == "High", supp == "OJ")
+```
+
+## Filtering Data
+
+- Can also filter on numeric values
+
+```{r}
+filter(pigs, len > 20)
+```
+
+# Combining Functions {background-color="#3d3d40" background-image=assets/magrittr.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+
+## Combining Functions
+
+- Can we filter **then** sort?
+    + Without modifying the original data?
+    
+. . .
+
+- We need to pass the output of one function into the next
+
+. . .
+
+- Often referred to as *piping* data
+    + Very familiar for those who know `bash` (`|`)
+
+## Combining Functions
+
+Two options in `R`
+
+1. The native pipe `|>` 
+    + Introduced in R v4.1 (2021)
+2. The *magrittr* pipe `%>%`
+    + Introduced around 2014
+    + In the package `magrittr`
+    
+. . .
+
+- Both behave similarly
+- Code pre-2021 will always use `%>%`
+- Code post-2021 *may use either*
+
+## The package `magrittr`
+
+
+![The Treachery of Images, Rene Magritte, 1929](https://hdwallpaperim.com/wp-content/uploads/2017/08/24/113744-pipes-Ren%C3%A9_Magritte-painting-minimalism.jpg){fig-align="left"}
+
+## The package `magrittr`
+
+![](assets/magrittr.png){.absolute top=400 right=50}
+
+
+- I personally prefer `%>%` so we will use today
+- `%>%` is loaded by `dplyr` *from* the package `magrittr`
+    + The package implements some other useful functions
+    + Beyond the scope of today (probably)
+
+## Combining Functions
+
+- Both `|>` and `%>%` take the output of one function<br>$\implies$ place it as the *first argument* of a second
+- Like sticking a pipe on the output of one<br>$\implies$ connecting it to the input of another
+
+Compare the pair
+
+. . .
+
+::: {.columns}
+
+::: {.column}
+
+```{r}
+arrange(pigs, len)
+```
+
+:::
+
+::: {.column}
+
+```{r}
+pigs %>% arrange(len)
+```
+
+:::
+
+:::
+
+## Combining Functions
+
+- Now we can join multiple functions together
+
+```{r, results='hide'}
+pigs %>% 
+  filter(supp == "OJ") %>% 
+  arrange(len)
+```
+
+. . .
+
+1. Calling `pigs` returns the object `pigs`
+2. We filter this input `(supp == "OJ")`
+3. Arrange the filtered object by `len`
+
+## Combining Functions
+
+Note how I wrote every function on a new line
+
+```{r, results='hide'}
+pigs %>% 
+  filter(supp == "OJ") %>% 
+  arrange(len)
+```
+
+. . .
+
+<br>
+
+- Makes every step clear to the reader 
+- Can easily comment a line out in the middle 
+    + Shortcut is `Ctrl/Cmd + Shift + C`
+- RStudio will automatically indent
+    + You can see where the steps start<br>$\implies$ where the process continues
+    
+## Adding Columns Using `mutate()`
+
+- The function `mutate()` can be used to add columns
+    + Can also modify existing columns
+
+```{r}
+pigs %>% 
+  arrange(len) %>% 
+  mutate(
+    rank = rank(len)
+  )
+```
+
+## Adding Columns Using `mutate()`
+
+- Columns are added sequentially
+- Can refer to them when adding any further columns
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    quantile = rank / max(rank)
+  )
+```
+
+## Choosing Rows 
+
+- `slice()` can be used to choose specific rows *by position*
+- `filter()` selects rows *by values*
+
+```{r}
+pigs %>% 
+  slice(1:5)
+```
+
+## Choosing Rows 
+
+- Can easily grab values for sorted data
+
+```{r}
+pigs %>% 
+  arrange(len) %>% 
+  slice(1:5)
+```
+
+## Choosing Columns Using `select()`
+
+- The function `select()` can be used to select specific columns
+   + One of the "heavy-lifters" of `dpylr`
+
+```{r}
+pigs %>% 
+  select(len)
+```
+
+## Choosing Columns Using `select()`
+
+- Very useful for reordering columns when creating tables
+
+```{r}
+pigs %>% 
+  select(supp, dose, len)
+```
+
+
+## Choosing Columns Using `select()`
+
+- Remove columns by placing `-` before the name
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    quantile = rank / max(rank)
+  ) %>% 
+  select(-rank)
+```
+
+## Choosing Columns Using `select()`
+
+- Or we can just select everything *but* that column
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    quantile = rank / max(rank)
+  ) %>% 
+  select(supp, dose, len, quantile)
+```
+
+## Using Helpers
+
+- The package `tidyselect` provides helpers to select by pattern
+- `starts_with()`, `ends_with()`, `contains()`, `everything()`
+
+```{r}
+pigs %>% 
+  select(starts_with("d"))
+```
+
+## Using Helpers
+
+```{r, results='hide'}
+pigs %>% 
+  select(ends_with("n"))
+```
+
+. . .
+
+```{r}
+pigs %>% 
+  select(contains("e"))
+```
+
+
+## Using Helpers
+
+- `everything()` is great for putting columns first then the rest...
+
+```{r}
+pigs %>% 
+  mutate(
+    rank = rank(len),
+    quantile = rank / max(rank)
+  ) %>% 
+  select(supp, dose, everything())
+```
+
+## Removing Repeated Entries
+
+- `distinct()` will reduce the data to unique values
+    + One or more columns
+- Will drop any other columns by default
+
+```{r}
+pigs %>% 
+  distinct(supp, dose)
+```
+
+## Removing Repeated Entries
+
+- Adding `.keep_all` will keep the *first* value in all other columns
+- If we sort by `len` first<br>$\implies$ returns the lowest value for each combination
+
+```{r}
+pigs %>% 
+  arrange(len) %>% 
+  distinct(supp, dose, .keep_all = TRUE)
+```
+
+    
+## Creating Summaries
+
+- Summaries 'on-the-fly' without creating new objects
+- Filtering for OJ allows us to get some key summary statistics
+
+```{r}
+pigs %>% 
+  filter(supp == "OJ") %>% 
+  summarise(
+    mn = mean(len),
+    sd = sd(len)
+  )
+```
+
+## Creating Summaries
+
+- Summaries can be grouped
+
+```{r}
+pigs %>% 
+  summarise(
+    mn = mean(len),
+    sd = sd(len),
+    .by = supp
+  )
+```
+
+## Creating Summaries
+
+- Summaries can be grouped by multiple columns
+
+```{r}
+pigs %>% 
+  summarise(
+    mn = mean(len),
+    sd = sd(len),
+    .by = c(supp, dose)
+  )
+```
+
+. . .
+
+- Note the use of `c(supp, dose)`
+
+## Joining Values Using `c()`
+
+- In `R` the function `c()` stands for *combine*
+    + Or maybe *concatenate*...?
+    + Both are used on the help page
+- Joins multiple values into a single **vector**
+    + We'll examine vectors thoroughly tomorrow
+    
+```{r}
+c(1, 20)
+```
+
+## Summary of Main Functions
+
+- `filter()`, `arrange()` for excel-like sorting & filtering
+- `slice()` for rows and `select()` for columns
+    + helpers include: `ends_with()`, `starts_with()`, `contains()`, `everything()`
+- `mutate()` to modify or add columns
+- `distinct()` for removing repeat entries
+- `summarise()` to obtain summary tables
+
+# Joining Multiple Data Frames {background-color="#3d3d40"}
+
+## Joining Data
+
+- We often need to combine data from multiple sources
+- `bind_rows()` can join multiple data frames
+    + Must have similar structure to be relevant
+
+. . .
+
+- `left_join()` can join two data frames
+    + Looks for shared columns & common values
+    
+## Joining Data
+
+- Grabbing the first and last 5 rows as an example
+    + Probably not very useful for `pigs`
+
+```{r}
+bind_rows(
+  slice(pigs, 1:5),
+  slice(pigs, 55:60)
+)
+```
+
+## Joining Data
+
+- If we *name* the data frames $\implies$ can be added as a column
+
+```{r}
+bind_rows(
+  top5 = slice(pigs, 1:5),
+  bottom5 = slice(pigs, 55:60),
+  .id = "source"
+)
+```
+
+## Joining Data
+
+- Joining by rows assumes there's at least *some* common columns
+- Just appends data from one onto the other
+
+. . .
+
+- If adding data relevant for specific rows we use `*_join()`
+    + `left_join()`, `right_join()`
+    + `inner_join()`, `full_join()`
+- Just adding columns using `bind_cols()` $\implies$ meaningless data
+
+## Joining Data
+
+- `pigs` isn't great for this
+- We'll use two data frames already in `R`
+
+. . .
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+band_members
+```
+
+::: 
+
+::: {.column width="50%"}
+
+```{r}
+band_instruments
+```
+
+:::
+
+:::
+
+. . .
+
+<br>
+
+- These are similar and related [*but different*]{.fragment}
+
+## Joining Data
+
+- `left_join()` takes the *first* (i.e. left) data frame as the scaffold
+    + Adds the second (i.e. *right*) data frame
+    + If no data in the right df $\implies$ `NA`
+
+```{r}
+band_members %>% 
+  left_join(band_instruments)
+```
+
+::: {.notes}
+- All matching column names are used by default
+:::
+
+
+## Joining Data
+
+- `right_join()` takes the *second* (i.e. right) as the scaffold
+    + Adds the first (i.e. *left*) data frame
+    + If no data in the left df $\implies$ `NA`
+    
+```{r}
+band_members %>% 
+  right_join(band_instruments)
+```
+
+## Joining Data
+
+- `full_join()` incorporates all data combinations
+
+```{r}
+band_members %>% 
+  full_join(band_instruments)
+```
+
+## Joining Data
+
+- `inner_join()` only return complete combinations
+
+```{r}
+band_members %>% 
+  inner_join(band_instruments)
+```
+
+
+## Missing Data
+
+::: {style="font-size: 90%;"}
+
+- One final trick is `case_when()`
+- Not restricted to missing values $\implies$ use any logical test
+- Where the test is `TRUE`, the value on the RHS of "`~`" is used
+    + Test are conducted sequentially
+    + Once `TRUE` $\implies$ no more tests
+
+```{r}
+band_members %>% 
+  left_join(band_instruments) %>% 
+  mutate(
+    plays = case_when(
+      is.na(plays) ~ "the role of a man 40 years younger",
+      !is.na(plays) ~ plays
+    )
+  )
+```
+
+:::
+
+## Closing Comments
+
+::: {style="font-size: 90%;"}
+
+- Many functions here have common names:
+    + `select()`, `filter()` etc
+    + Based on SQL processes
+    
+::: {.fragment}
+
+- Other package developers have also used these names
+- Can create conflicts $\implies$ code 'inexplicably' stops working
+
+::: 
+
+::: {.fragment}
+
+- Call directly from the package using the `namespace`
+    + `dplyr::filter()` instead of `filter()`
+    + `dplyr::select()` instead of `select()`
+    
+:::
+
+:::

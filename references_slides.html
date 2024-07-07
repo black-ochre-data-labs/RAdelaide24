@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="references_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="references_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="references_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="references_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="references_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="references_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.555">
+
+  <meta name="author" content="Dr Stevie Pederson">
+  <meta name="dcterms.date" content="2024-07-11">
+  <title>References and Ranges</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="references_slides_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="references_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="references_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
+  <h1 class="title">References and Ranges</h1>
+  <p class="subtitle">RAdelaide 2024</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr Stevie Pederson 
+</div>
+        <p class="quarto-title-affiliation">
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            Telethon Kids Institute</div>
+          <p></p>
+    </div>
+</div>
+
+  <p class="date">July 11, 2024</p>
+</section>
+<section>
+<section id="reference-sequences" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Reference Sequences</h1>
+
+</section>
+<section id="fasta-files" class="slide level2">
+<h2>Fasta Files</h2>
+<ul>
+<li>Used for entire genomes or small, single sequences</li>
+<li>Sequence name + optional “free-form” metadata begins with <code>&gt;</code></li>
+<li>Followed by sequence with no prefix
+<ul>
+<li>Single sequences commonly wrapped on multiple lines</li>
+</ul></li>
+<li>Sequence can be DNA, RNA or Protein</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;ERCC-00002
+TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCACAGTATACGGGCGTCG
+GCATCCAGACCGTCGGCTGATCGTGGTTTTACTAGGCTAGACTAGCGTAC
+GAGCACTATGGTCAGTAATTCCTGGAGGAATAGGTACCAAGAAAAAAACG
+AACCTTTGGGTTCCAGAGCTGTACGGTCGCACTGAACTCGGATAGGTCTC
+AGAAAAACGAAATATAGGCTTACGGTAGGTCCGAATGGCACAAAGCTTGT
+TCCGTTAGCTGGCATAAGATTCCATGCCTAGATGTGATACACGTTTCTGG
+AAACTGCCTCGTCATGCGACTGTTCCCCGGGGTCAGGGCCGCTGGTATTT
+GCTGTAAAGAGGGGCGTTGAGTCCGTCCGACTTCACTGCCCCCTTTCAGC
+CTTTTGGGTCCTGTATCCCAATTCTCAGAGGTCCCGCCGTACGCTGAGGA</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Sometimes use a standardised set of IUPAC codes</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="biostrings" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>The Bioconductor package for handling these is <code>Biostrings</code></li>
+<li>Depending on the sequence structure<br><span class="math inline">\(\implies\)</span> <code>DNAString</code>, <code>DNAStringSet</code> or <code>DNAStringSetList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAString</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1
+[[1]] AACGT</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>By have a new class (not just characters) many operations become simplified</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="biostrings-1" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>General class for RNA or Proteins <span class="math inline">\(\implies\)</span> <code>XString/Set/List</code>
+<ul>
+<li><code>RNAString*</code> or <code>AAString*</code></li>
+</ul></li>
+<li><code>XStringSet</code> objects are lists of <code>XString</code> objects
+<ul>
+<li><code>XStringSetList</code> objects are lists of <code>XStringSet</code> objects</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-letter DNAString object
+seq: AACGT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSetList</span>(<span class="st">"AACGT"</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1:
+    width seq
+[1]     5 AACGT</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-2" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>If working with complete transcripts <span class="math inline">\(\implies\)</span> <code>XStringSet</code></li>
+<li>When needing exon structure within transcripts <span class="math inline">\(\implies\)</span> <code>XStringSetList</code></li>
+</ul>
+</section>
+<section id="biostrings-3" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>Using some example ERCC spike-in data
+<ul>
+<li>Short, known sequences sometimes used for RNA-Seq QC + Normalisation</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>ercc <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">"data/ERCC92.fa.gz"</span>)</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>ercc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TCCAGATTACTTCCATTTCCGCC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00002
+ [2]  1023 CAGCAGCGATTAAGGCAGAGGCG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00003
+ [3]   523 TCTTGCTTCAACAATAACGTCTC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00004
+ [4]   984 CAATGATAGGCTAGTCTCGCGCA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00009
+ [5]   994 CGAGAGATGTTTGTAGGTGCGGA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00012
+ ...   ... ...
+[88]  1022 AGGAGCTCCAGTAGTTTTCCCCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00164
+[89]   872 GATATGCGTTACGTGAGTCTGAT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00165
+[90]  1024 CCAATGAACTCAGCTATTCTTCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00168
+[91]  1023 TATTGGTGGAGGGGCACAAGTTG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00170
+[92]   505 CTGGAGATTGTCTCGTACGGTTA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-4" class="slide level2">
+<h2>Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 92</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">width</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1061 1023  523  984  994  808</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ERCC-00002" "ERCC-00003" "ERCC-00004" "ERCC-00009" "ERCC-00012"
+[6] "ERCC-00013"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(ercc, <span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           G|C
+[1,] 0.5136664
+[2,] 0.3264907
+[3,] 0.3441683
+[4,] 0.4725610
+[5,] 0.5090543
+[6,] 0.4282178</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-5" class="slide level2">
+<h2>Biostrings</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]  1061 TTTTTTTTTTTTTTTTTTTTTTT...GCGGAAATGGAAGTAATCTGGA ERCC-00002
+ [2]  1023 TTTTTTTTTTTTTTTTTTTTTTT...GCCTCTGCCTTAATCGCTGCTG ERCC-00003
+ [3]   523 TTTTTTTTTTTTTTTTTTTTTTT...AGACGTTATTGTTGAAGCAAGA ERCC-00004
+ [4]   984 TTTTTTTTTTTTTTTTTTTTTTT...GCGCGAGACTAGCCTATCATTG ERCC-00009
+ [5]   994 TTTTTTTTTTTTTTTTTTTTTTT...CCGCACCTACAAACATCTCTCG ERCC-00012
+ ...   ... ...
+[88]  1022 TTTTTTTTTTTTTTTTTTTTTTT...GGGGAAAACTACTGGAGCTCCT ERCC-00164
+[89]   872 TTTTTTTTTTTTTTTTTTTTTTT...TCAGACTCACGTAACGCATATC ERCC-00165
+[90]  1024 TTTTTTTTTTTTTTTTTTTTTTT...GAAGAATAGCTGAGTTCATTGG ERCC-00168
+[91]  1023 TTTTTTTTTTTTTTTTTTTTTTT...AACTTGTGCCCCTCCACCAATA ERCC-00170
+[92]   505 TTTTTTTTTTTTTTTTTTTTTTT...AACCGTACGAGACAATCTCCAG ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-6" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li><code>XStringSet</code> objects are easy to subset</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(ercc, <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 92:
+     width seq                                              names               
+ [1]    10 TCCAGATTAC                                       ERCC-00002
+ [2]    10 CAGCAGCGAT                                       ERCC-00003
+ [3]    10 TCTTGCTTCA                                       ERCC-00004
+ [4]    10 CAATGATAGG                                       ERCC-00009
+ [5]    10 CGAGAGATGT                                       ERCC-00012
+ ...   ... ...
+[88]    10 AGGAGCTCCA                                       ERCC-00164
+[89]    10 GATATGCGTT                                       ERCC-00165
+[90]    10 CCAATGAACT                                       ERCC-00168
+[91]    10 TATTGGTGGA                                       ERCC-00170
+[92]    10 CTGGAGATTG                                       ERCC-00171</code></pre>
+</div>
+</div>
+</section>
+<section id="biostrings-7" class="slide level2">
+<h2>Biostrings</h2>
+<ul>
+<li>Sliding windows are simple &amp; fast on <code>XString</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Views on a 1061-letter DNAString subject
+subject: TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCA...TTTTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA
+views:
+      start end width
+  [1]     1  10    10 [TCCAGATTAC]
+  [2]     2  11    10 [CCAGATTACT]
+  [3]     3  12    10 [CAGATTACTT]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">letterFrequency</span>(<span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     G|C
+[1,] 0.4
+[2,] 0.4
+[3,] 0.3</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome-objects" class="slide level2">
+<h2>BSgenome Objects</h2>
+<ul>
+<li>Biostrings are used to provide entire genomes <span class="math inline">\(\implies\)</span> <code>BSgenome</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSgenome.Hsapiens.UCSC.hg38)</span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>hg38 <span class="ot">&lt;-</span> BSgenome.Hsapiens.UCSC.hg38</span>
+<span id="cb30-3"><a href="" aria-hidden="true" tabindex="-1"></a>hg38</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>| BSgenome object for Human
+| - organism: Homo sapiens
+| - provider: UCSC
+| - genome: hg38
+| - release date: 2023/01/31
+| - 711 sequence(s):
+|     chr1                    chr2                    chr3                   
+|     chr4                    chr5                    chr6                   
+|     chr7                    chr8                    chr9                   
+|     chr10                   chr11                   chr12                  
+|     chr13                   chr14                   chr15                  
+|     ...                     ...                     ...                    
+|     chr19_KV575256v1_alt    chr19_KV575257v1_alt    chr19_KV575258v1_alt   
+|     chr19_KV575259v1_alt    chr19_KV575260v1_alt    chr19_MU273387v1_alt   
+|     chr22_KN196485v1_alt    chr22_KN196486v1_alt    chr22_KQ458387v1_alt   
+|     chr22_KQ458388v1_alt    chr22_KQ759761v1_alt    chrX_KV766199v1_alt    
+|     chrX_MU273395v1_alt     chrX_MU273396v1_alt     chrX_MU273397v1_alt    
+| 
+| Tips: call 'seqnames()' on the object to get all the sequence names, call
+| 'seqinfo()' to get the full sequence info, use the '$' or '[[' operator to
+| access a given sequence, see '?BSgenome' for more information.</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome-objects-1" class="slide level2">
+<h2>BSgenome Objects</h2>
+<ul>
+<li>Genomes are ‘promises’ cached on your HDD
+<ul>
+<li>Only the metadata is actually loaded</li>
+</ul></li>
+<li>Can be directly loaded into memory if needed</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>chrM <span class="ot">&lt;-</span> <span class="fu">getSeq</span>(hg38, <span class="st">"chrM"</span>)</span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>chrM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>16569-letter DNAString object
+seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG</code></pre>
+</div>
+</div>
+</section>
+<section id="bsgenome" class="slide level2">
+<h2>BSgenome</h2>
+<ul>
+<li><code>seqinfo()</code> objects provide sequence lengths &amp; build information</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>sq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(hg38)</span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>sq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Seqinfo object with 711 sequences (1 circular) from hg38 genome:
+  seqnames             seqlengths isCircular genome
+  chr1                  248956422      FALSE   hg38
+  chr2                  242193529      FALSE   hg38
+  chr3                  198295559      FALSE   hg38
+  chr4                  190214555      FALSE   hg38
+  chr5                  181538259      FALSE   hg38
+  ...                         ...        ...    ...
+  chr22_KQ759761v1_alt     145162      FALSE   hg38
+  chrX_KV766199v1_alt      188004      FALSE   hg38
+  chrX_MU273395v1_alt      619716      FALSE   hg38
+  chrX_MU273396v1_alt      294119      FALSE   hg38
+  chrX_MU273397v1_alt      330493      FALSE   hg38</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="genomic-ranges" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/GenomicRanges/GenomicRanges.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>Genomic Ranges</h1>
+
+</section>
+<section id="genomic-ranges-1" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>We can work with specific regions with a genome using <code>GRanges</code> objects
+<ul>
+<li>The Bioconductor equivalent of a <code>bed</code> file</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Best practice is to always define the genome the range has been drawn from</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>, <span class="at">seqinfo =</span> sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames      ranges strand
+         &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 10001-11000      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="bed-files" class="slide level2">
+<h2>Bed Files</h2>
+<ul>
+<li><code>bed</code> files are a common genomics format</li>
+<li>Primarily contain ranges but can include some additional fields</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>chrY    10000   2781479 .   0   .
+chrY    56887902    57217415    .   0   .</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>The columns are defined as<br><code>chrom</code>, <code>chromStart</code>, <code>chromEnd</code>, <code>name</code>, <code>score</code> &amp; <code>strand</code></li>
+<li>Empty fields (<code>name</code> &amp; <code>strand</code>) are provided as <code>.</code></li>
+<li>Additional columns for <a href="https://en.wikipedia.org/wiki/BED_(file_format)#Description">plotting parameters</a> can also be passed</li>
+</ul>
+</div>
+</section>
+<section id="bed-files-1" class="slide level2">
+<h2>Bed Files</h2>
+<ul>
+<li>These are simple <code>tsv</code> files (sometimes space-separated)
+<ul>
+<li>We could use <code>read_tsv()</code> if we really want</li>
+<li>Would need to use:<br><code>read_tsv("path/to/bed", col_names = c("chrom", "chromStart", "chromEnd", "name", "score", "strand"))</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The package <code>rtracklayer</code> is an all-purpose -omics file import package
+<ul>
+<li>Handles 0/1-based co-ordinates easily</li>
+<li>Will prase files as <code>GRanges</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="importing-bed-files" class="slide level2">
+<h2>Importing Bed Files</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="ot">&lt;-</span> <span class="fu">import.bed</span>(<span class="st">"data/parY.bed"</span>, <span class="at">seqinfo =</span> sq)</span>
+<span id="cb41-3"><a href="" aria-hidden="true" tabindex="-1"></a>parY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        &lt;NA&gt;         0
+  [2]     chrY 56887903-57217415      * |        &lt;NA&gt;         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Any unspecified <code>strand</code> information <span class="math inline">\(\implies\)</span> <code>*</code></li>
+</ul>
+</div>
+</section>
+<section id="genomic-ranges-2" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>Note that we have and <code>mcols</code> element
+<ul>
+<li><code>DataFrame</code> with metadata about each range</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 2 rows and 2 columns
+         name     score
+  &lt;character&gt; &lt;numeric&gt;
+1          NA         0
+2          NA         0</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Can also separate the ranges</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">granges</span>(parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 0 metadata columns:
+      seqnames            ranges strand
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chrY     10001-2781479      *
+  [2]     chrY 56887903-57217415      *
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-plyranges-package" class="slide level2">
+<h2>The <code>plyranges</code> package</h2>
+<div style="font-size: 95%;">
+<ul>
+<li><code>plyranges</code> provides <code>dplyr</code>-like operations on <code>GRanges</code> objects</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyranges)</span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"PAR1"</span>, <span class="st">"PAR2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 2 metadata columns:
+      seqnames            ranges strand |        name     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |        PAR1         0
+  [2]     chrY 56887903-57217415      * |        PAR2         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>parY <span class="sc">%&gt;%</span> <span class="fu">select</span>(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 2 ranges and 1 metadata column:
+      seqnames            ranges strand |     score
+         &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+  [1]     chrY     10001-2781479      * |         0
+  [2]     chrY 56887903-57217415      * |         0
+  -------
+  seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Not going any deeper today
+<ul>
+<li>Only for <code>GRanges</code> <span class="math inline">\(\implies\)</span> not <code>DataFrame</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="genomic-ranges-3" class="slide level2">
+<h2>Genomic Ranges</h2>
+<ul>
+<li>This makes extracting the genomic sequence trivial</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, parY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 2:
+      width seq
+[1] 2771479 CTAACCCTAACCCTAACCCTAACCCTAACCCTA...TCAGACCTTAGTTATAGATTAAAAGAAGTTAA
+[2]  329513 ATGTGTTTTTTGGCTGCATAAATGTCTTCTTTT...GTGGGTGTGTGGGTGTGGTGTGTGGGTGTGGT</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>Gene and transcript annotations use a co-ordinate-based system</li>
+<li>External files usually in <code>gtf</code> format
+<ul>
+<li>Columns 1-8: <code>chrom</code>, <code>source</code>, <code>type</code>, <code>start</code>, <code>end</code>, <code>score</code>, <code>strand</code>, <code>phase</code></li>
+<li>Column 9 is ‘<code>;</code>’ separated and flexible</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Passed to <code>R</code> as a <code>GRanges</code> object with <code>mcols</code></li>
+<li><code>rtracklayer</code> provides <code>import.gff()</code>
+<ul>
+<li><code>gtf</code> files are based on v2 specifications of the <code>gff</code> format</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-1" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">import.gff</span>(<span class="st">"data/gencode.v41.chrY.gtf.gz"</span>, <span class="at">genome =</span> <span class="st">"hg38"</span>)</span>
+<span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>plyranges</code> can be very useful for removing redundant columns</li>
+<li>Individual columns can be extracted using <code>$</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf<span class="sc">$</span>type <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gene"        "transcript"  "exon"        "CDS"         "start_codon"
+[6] "stop_codon"  "UTR"        </code></pre>
+</div>
+</div>
+<ul>
+<li>These are the types of features in a standard gtf
+<ul>
+<li><code>gene</code> and <code>transcript</code> annotations cover the entire range</li>
+<li>Individual exons within each transcripts are <code>exons</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Notice the types of features provided in a standard gtf</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="genomic-ranges-4" class="slide level2">
+<h2>Genomic Ranges</h2>
+<p>This structure highlights a few unexpected features of <code>GRanges</code></p>
+<div>
+<ol type="1">
+<li class="fragment">There are no rownames or colnames
+<ul>
+<li class="fragment">Ranges can have <code>names()</code></li>
+<li class="fragment"><code>mcols()</code> have colnames</li>
+</ul></li>
+<li class="fragment"><code>nrow</code> and <code>ncol</code> only work on <code>mcols</code> NOT the <code>GRanges</code> object</li>
+<li class="fragment">The number of ranges is obtained using <code>length()</code></li>
+</ol>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9955</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-2" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>If we want to find the sequence of a gene or transcript <br><span class="math inline">\(\implies\)</span> can’t use these features</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"gene"</span>)</span>
+<span id="cb58-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gtf, type <span class="sc">==</span> <span class="st">"transcript"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Instead use exons
+<ul>
+<li>The same ranges may be annotated as multiple exons</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_by_overlaps</span>(<span class="fu">GRanges</span>(<span class="st">"chrY:284167-284314"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is a <code>plyranges</code> approach to the question
+<ul>
+<li>Still, note these are identical exons from 10 transcripts</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-3" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>To find every exon associated with a gene:</li>
+</ul>
+<div>
+<ol type="1">
+<li class="fragment">Subset our data to exons only</li>
+<li class="fragment">Split into a <code>GRangesList</code> using the gene_id</li>
+<li class="fragment">Merge overlapping exons</li>
+</ol>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<aside class="notes">
+<p>This is the first time we’ve seen the <code>.</code> inactions using <code>%&gt;%</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="grangeslist-objects" class="slide level2">
+<h2>GRangesList Objects</h2>
+<ul>
+<li><code>GRangesList</code> objects strictly have a <code>GRanges</code> object as every element</li>
+<li>Often obtained by <em>splitting</em> a <code>GRanges</code> object based on a single <code>mcol</code></li>
+<li>Must have identical <code>seqinfo</code> elements
+<ul>
+<li>i.e.&nbsp;from the same genome</li>
+</ul></li>
+<li>Very efficient way to perform complex operations</li>
+</ul>
+</section>
+<section id="grangeslist-objects-1" class="slide level2">
+<h2>GRangesList Objects</h2>
+<ul>
+<li>The function <code>reduce</code> merges overlapping ranges <span class="math inline">\(\implies\)</span> <code>mcols</code> are lost</li>
+<li>Will handle all elements of a <code>GRangesList</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>gene_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a>  GenomicRanges<span class="sc">::</span><span class="fu">reduce</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Notice that the original 107 exons for the first gene are now 15</li>
+</ul>
+<aside class="notes">
+<p>Maintaining mcols is enabled using <code>reduceMC</code> from <code>extraChIPs</code> but it’s needed less often than we might think</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-4" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>The above strategy could be used to return:
+<ul>
+<li>the overall coding length for a gene</li>
+<li>the overall GC content</li>
+<li>a “consensus sequence” for a gene <br><span class="math inline">\(\implies\)</span> not guaranteed to represent what’s expressed</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>To obtain transcript sequences we split by transcript_id
+<ul>
+<li>No need to reduce overlapping exons</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-5" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>trans_grl <span class="ot">&lt;-</span> gtf <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitAsList</span>(.<span class="sc">$</span>transcript_id) </span>
+<span id="cb62-4"><a href="" aria-hidden="true" tabindex="-1"></a>trans_grl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSetList of length 1018
+[["ENST00000155093.8"]] AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGCCGACCGCCC...
+[["ENST00000215473.7"]] CTGGTGGTCCAGTACCTCCAAAGATATGGAATACACTCCTGAAATATCCTGAA...
+[["ENST00000244174.11_PAR_Y"]] GCTGTGCACCCAGAGATAGTTGGGTGACAAATCACCTCCAGGTTGG...
+[["ENST00000250776.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250784.13"]] CTCTTCCGTCGCAGAGTTTCGCCATG ...
+[["ENST00000250805.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000250823.5"]] ATACACAGGGAGGCCAGGCAGCCTGGAGTTAGTCGACCGTTGCGAGACGTTGA...
+[["ENST00000250825.5"]] AGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAAAGCCGAGAGC...
+[["ENST00000250831.6"]] ATGATTGGCCGCTGGAGGTAGGCGGGATTTCCGGGCACGGCTTCCGGCGTCCT...
+[["ENST00000250838.6"]] GTAACAGGCAGGAAGAAAGCTTTCTGTACTACACCAGAGGGTTGGGGCTGTGG...
+...
+&lt;1008 more elements&gt;</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-6" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>Notice that each transcript retains the exon structure</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 8:
+    width seq
+[1]   389 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCG...CGGGGGCGAGAAGGCGAAGGCTGCAGGCGTGAG
+[2]    89 GAGCTGTGACTAATGAGAATTAAAGGCCATGGAT...CACAAGAGCCAAACTCATTTTTTGATGGAATAG
+[3]   573 GAGCTGATGCTACACACATGGATGGTGATCAGAT...AAGCCAGCTGTGAGGACTACCTAATGATTTCGT
+[4]   150 TGGATGATGCTGGCAAAATAGAACATGATGGTTC...TTTTTAAAGCTGACCCTGGAGAAGATGACTTAG
+[5]   144 GTGGAACTGTAGACATTGTGGAGAGTGAACCTGA...TCAATGACTCTCAACAAGAAGATGAAGATTTAA
+[6]   153 ATGTTGCTGAAATTGCTGATGAAGTTTATATGGA...CCTTCGTACCAATTGCATGGGCAGCAGCTTATG
+[7]   141 GTAATAATTCTGATGGAATTGAAAACCGGAATGG...AGAGAAGACCTGATTCCAGGCAGTACCAAACAG
+[8]  3697 CAATAATTATTGGCCCTGATGGTCATCCTTTGAC...TTTTACTGTTAATAAATGTTTACTTGTATATGA</code></pre>
+</div>
+</div>
+</section>
+<section id="gene-and-transcript-annotations-7" class="slide level2">
+<h2>Gene And Transcript Annotations</h2>
+<ul>
+<li>A cleaner approach is provided by <code>GenomicFeatures</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GenomicFeatures)</span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">extractTranscriptSeqs</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DNAStringSet object of length 1018:
+       width seq                                            names               
+   [1]  5336 AGTGCTCCAGAGAAAGGCCGTC...TAAATGTTTACTTGTATATGA ENST00000155093.8
+   [2]  4595 CTGGTGGTCCAGTACCTCCAAA...GAGCCCTTCAGAAGACATTCT ENST00000215473.7
+   [3]  2038 GCTGTGCACCCAGAGATAGTTG...AAAAGGGGCTTGATGGCTGTT ENST00000244174.1...
+   [4]   910 TGTCTGTCAGAGCTGTCAGCCT...AAACACTGGTATATTTCTGTT ENST00000250776.5
+   [5]  1189 CTCTTCCGTCGCAGAGTTTCGC...AAATCCTGTGGCTGTAGGAAA ENST00000250784.13
+   ...   ... ...
+[1014]   534 GGCTTTGGGCAGAGGCAGCCAG...TAAATATGATATGGGAGTGTG ENST00000700889.1
+[1015]   600 GGCTTTGGGCAGAGGCAGCCAG...AAAGCTAAATGCAATTGCATA ENST00000700898.1
+[1016]   676 GGCTTTGGGCAGAGGCAGCCAG...TAGTTTCTTAAATTTGTAAAA ENST00000700901.1
+[1017]  1048 ACTCGCGGACGATCTCTGCTCG...AAACAAAAACAAAAAAAAAAA ENST00000701084.1...
+[1018]  1591 GGAGGTGGCTCGGGCCGCGCCG...ATAAAATATTTTTTGAAACCA ENST00000701359.1...</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>We could export this as a <code>fasta</code> file using <code>writeXStringSet()</code></li>
+<li>Might become a reference transcriptome (instead of genome)</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="annotationhub" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
+<h1>AnnotationHub</h1>
+
+</section>
+<section id="annotation-hub" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>Much processing is done on an HPC when running a sequencing workflow</li>
+<li>Knowing standalone files &amp; how to import into <code>R</code> is vital</li>
+<li>Many annotations are also prepared as packages</li>
+<li>The database of these packages is <code>AnnotationHub</code>
+<ul>
+<li>Doesn’t download packages, just provides a list</li>
+</ul></li>
+</ul>
+</section>
+<section id="annotation-hub-1" class="slide level2">
+<h2>Annotation Hub</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## This will run for a minute or two the first time you run it</span></span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>ah</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 71634 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl, BroadInstitute, UCSC, ftp://ftp.ncbi.nlm.nih.gov/g...
+# $species: Homo sapiens, Mus musculus, Drosophila melanogaster, Rattus norv...
+# $rdataclass: GRanges, TwoBitFile, BigWigFile, EnsDb, Rle, OrgDb, SQLiteFil...
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH5012"]]' 
+
+             title                                             
+  AH5012   | Chromosome Band                                   
+  AH5013   | STS Markers                                       
+  AH5014   | FISH Clones                                       
+  AH5015   | Recomb Rate                                       
+  AH5016   | ENCODE Pilot                                      
+  ...        ...                                               
+  AH117051 | Ensembl 112 EnsDb for Xiphophorus maculatus       
+  AH117052 | Ensembl 112 EnsDb for Xenopus tropicalis          
+  AH117053 | Ensembl 112 EnsDb for Zonotrichia albicollis      
+  AH117054 | Ensembl 112 EnsDb for Zalophus californianus      
+  AH117055 | Ensembl 112 EnsDb for Zosterops lateralis melanops</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Data is available from multiple sources and in multiple formats</li>
+<li>GRanges</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="annotation-hub-2" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>The full metadata can be seen by accessing the <code>mcols</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(ah)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 71634 rows and 15 columns
+                          title dataprovider                species taxonomyid
+                    &lt;character&gt;  &lt;character&gt;            &lt;character&gt;  &lt;integer&gt;
+AH5012          Chromosome Band         UCSC           Homo sapiens       9606
+AH5013              STS Markers         UCSC           Homo sapiens       9606
+AH5014              FISH Clones         UCSC           Homo sapiens       9606
+AH5015              Recomb Rate         UCSC           Homo sapiens       9606
+AH5016             ENCODE Pilot         UCSC           Homo sapiens       9606
+...                         ...          ...                    ...        ...
+AH117051 Ensembl 112 EnsDb fo..      Ensembl  Xiphophorus maculatus       8083
+AH117052 Ensembl 112 EnsDb fo..      Ensembl     Xenopus tropicalis       8364
+AH117053 Ensembl 112 EnsDb fo..      Ensembl Zonotrichia albicollis      44394
+AH117054 Ensembl 112 EnsDb fo..      Ensembl Zalophus californianus       9704
+AH117055 Ensembl 112 EnsDb fo..      Ensembl Zosterops lateralis ..    1220523
+                         genome            description coordinate_1_based
+                    &lt;character&gt;            &lt;character&gt;          &lt;integer&gt;
+AH5012                     hg19 GRanges object from ..                  1
+AH5013                     hg19 GRanges object from ..                  1
+AH5014                     hg19 GRanges object from ..                  1
+AH5015                     hg19 GRanges object from ..                  1
+AH5016                     hg19 GRanges object from ..                  1
+...                         ...                    ...                ...
+AH117051   X_maculatus-5.0-male Gene and protein ann..                  1
+AH117052          UCB_Xtro_10.0 Gene and protein ann..                  1
+AH117053 Zonotrichia_albicoll.. Gene and protein ann..                  1
+AH117054           mZalCal1.pri Gene and protein ann..                  1
+AH117055            ASM128173v1 Gene and protein ann..                  1
+                     maintainer rdatadateadded          preparerclass
+                    &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
+AH5012   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5013   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5014   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5015   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+AH5016   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
+...                         ...            ...                    ...
+AH117051 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117052 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117053 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117054 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+AH117055 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
+                                             tags  rdataclass
+                                           &lt;AsIs&gt; &lt;character&gt;
+AH5012                    cytoBand,UCSC,track,...     GRanges
+AH5013                      stsMap,UCSC,track,...     GRanges
+AH5014                  fishClones,UCSC,track,...     GRanges
+AH5015                  recombRate,UCSC,track,...     GRanges
+AH5016               encodeRegions,UCSC,track,...     GRanges
+...                                           ...         ...
+AH117051 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117052 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117053 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117054 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117055 112,Annotation,AnnotationHubSoftware,...       EnsDb
+                      rdatapath              sourceurl  sourcetype
+                    &lt;character&gt;            &lt;character&gt; &lt;character&gt;
+AH5012   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5013   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5014   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5015   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+AH5016   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
+...                         ...                    ...         ...
+AH117051 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117052 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117053 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117054 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl
+AH117055 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-3" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>Searching is easiest using <code>subset()</code> or <code>query()</code></li>
+<li>The following returns all EnsDb objects built on GRCh38 (hg38)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(genome <span class="sc">==</span> <span class="st">"GRCh38"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(rdataclass <span class="sc">==</span> <span class="st">"EnsDb"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 27 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Ensembl
+# $species: Homo sapiens
+# $rdataclass: EnsDb
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH53211"]]' 
+
+             title                             
+  AH53211  | Ensembl 87 EnsDb for Homo Sapiens 
+  AH53715  | Ensembl 88 EnsDb for Homo Sapiens 
+  AH56681  | Ensembl 89 EnsDb for Homo Sapiens 
+  AH57757  | Ensembl 90 EnsDb for Homo Sapiens 
+  AH60773  | Ensembl 91 EnsDb for Homo Sapiens 
+  ...        ...                               
+  AH109336 | Ensembl 108 EnsDb for Homo sapiens
+  AH109606 | Ensembl 109 EnsDb for Homo sapiens
+  AH113665 | Ensembl 110 EnsDb for Homo sapiens
+  AH116291 | Ensembl 111 EnsDb for Homo sapiens
+  AH116860 | Ensembl 112 EnsDb for Homo sapiens</code></pre>
+</div>
+</div>
+</section>
+<section id="annotation-hub-4" class="slide level2">
+<h2>Annotation Hub</h2>
+<ul>
+<li>This behaves like a list <span class="math inline">\(\implies\)</span> extract elements using <code>[[]]</code>
+<ul>
+<li>Will download an entire annotation set</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>ensdb <span class="ot">&lt;-</span> ah[[<span class="st">"AH116860"</span>]]</span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>ensdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EnsDb for Ensembl:
+|Backend: SQLite
+|Db type: EnsDb
+|Type of Gene ID: Ensembl Gene ID
+|Supporting package: ensembldb
+|Db created by: ensembldb package from Bioconductor
+|script_version: 0.3.10
+|Creation time: Mon Jun 17 16:14:46 2024
+|ensembl_version: 112
+|ensembl_host: localhost
+|Organism: Homo sapiens
+|taxonomy_id: 9606
+|genome_build: GRCh38
+|DBSCHEMAVERSION: 2.2
+|common_name: human
+|species: homo_sapiens
+| No. of genes: 71935.
+| No. of transcripts: 279860.
+|Protein data available.</code></pre>
+</div>
+</div>
+</section>
+<section id="ensdb-ojects" class="slide level2">
+<h2>EnsDb Ojects</h2>
+<ul>
+<li>The first Bioconductor packages of this type were TxDb packages
+<ul>
+<li>Used UCSC annotations &amp; genome builds</li>
+</ul></li>
+<li>Contain all information about a given annotation build</li>
+<li>EnsDb packages use Ensembl resources &amp; the package <code>ensembldb</code></li>
+<li>Enormous data-mapping and information content</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(ensdb)</span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">transcripts</span>(ensdb)</span>
+<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exonsBy</span>(ensdb, <span class="at">by =</span> <span class="st">"tx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ensdb-ojects-1" class="slide level2">
+<h2>EnsDb Ojects</h2>
+<ul>
+<li>Can be highly beneficial for ensuring self-contained, reproducible workflows
+<ul>
+<li>No external files required</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Notice difference in genome build to UCSC (<code>hg38</code>)</li>
+<li>Slight difference in column names to Gencode</li>
+<li>No TxDb or EnsDb packages available for Gencode gene annotations</li>
+</ul>
+</div>
+</section>
+<section id="gencode-annotations" class="slide level2">
+<h2>Gencode Annotations</h2>
+<ul>
+<li>Are available as raw gff files</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a>ah <span class="sc">%&gt;%</span> <span class="fu">subset</span>(dataprovider <span class="sc">==</span> <span class="st">"Gencode"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AnnotationHub with 31 records
+# snapshotDate(): 2024-04-30
+# $dataprovider: Gencode
+# $species: Homo sapiens, Mus musculus
+# $rdataclass: GRanges
+# additional mcols(): taxonomyid, genome, description,
+#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+#   rdatapath, sourceurl, sourcetype 
+# retrieve records with, e.g., 'object[["AH49545"]]' 
+
+            title                                                    
+  AH49545 | gencode.vM6.2wayconspseudos.gff3.gz                      
+  AH49546 | gencode.vM6.annotation.gff3.gz                           
+  AH49547 | gencode.vM6.basic.annotation.gff3.gz                     
+  AH49548 | gencode.vM6.chr_patch_hapl_scaff.annotation.gff3.gz      
+  AH49549 | gencode.vM6.chr_patch_hapl_scaff.basic.annotation.gff3.gz
+  ...       ...                                                      
+  AH75126 | gencode.v31.tRNAs.gff3.gz                                
+  AH75127 | gencode.v31lift37.annotation.gff3.gz                     
+  AH75128 | gencode.v31lift37.basic.annotation.gff3.gz               
+  AH75129 | gencode.v31lift37.long_noncoding_RNAs.gff3.gz            
+  AH75130 | gencode.v31lift37.unmapped.gff3.gz                       </code></pre>
+</div>
+</div>
+</section>
+<section id="closing-comments" class="slide level2">
+<h2>Closing Comments</h2>
+<p>Standard (gene-level) RNA-Seq workflows:</p>
+<div class="fragment">
+<ol type="1">
+<li>align to a reference genome
+<ul>
+<li>Produces a <code>bam</code> file for each sample</li>
+</ul></li>
+<li>count aligned reads which overlap an exon
+<ul>
+<li>Requires a GTF within exon-coordinates</li>
+</ul></li>
+</ol>
+</div>
+<div class="fragment">
+<ul>
+<li>Alignment requires preparing an index for your aligner (e.g.&nbsp;STAR, hisat2)</li>
+<li>Indexes always require a reference genome in <code>fasta</code> format</li>
+<li>Can usually obtain from UCSC, Ensembl, Gencode etc</li>
+<li>Non-standard approaches can utilise the above</li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-1" class="slide level2">
+<h2>Closing Comments</h2>
+<p>If aligning to a reference transcriptome</p>
+<ul>
+<li>Can download a transcriptome from Gencode etc</li>
+<li>Prepare a tailored transcriptome using the above strategy</li>
+<li>Index the transcriptome using <code>salmon</code>, <code>kallisto</code> etc</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>GTF not needed during counting <span class="math inline">\(\implies\)</span> index preparation only</li>
+<li>No <code>bam</code> file produced <span class="math inline">\(\implies\)</span> only transcript-level counts</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Above allows incorporation of variants into a reference transcriptomes
+<ul>
+<li><code>transmogR</code> developed at BODL</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="closing-comments-2" class="slide level2">
+<h2>Closing Comments</h2>
+<ul>
+<li>The above was overkill for a generic analysis</li>
+<li>Gave introductions to fundamental data structures</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>Biostrings</code> for DNA/RNA sequences
+<ul>
+<li><code>XString/Set/List</code> objects</li>
+</ul></li>
+<li><code>GRanges</code> for working with co-ordinates
+<ul>
+<li>Often obtained by importing <code>bed</code> or <code>gtf</code> files</li>
+</ul></li>
+<li><code>GRangesList</code> for splitting <code>GRanges</code> by some feature</li>
+</ul>
+<div class="quarto-auto-generated-content">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="references_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="references_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="references_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="references_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    <script type="text/javascript">
+      Reveal.on('ready', event => {
+        if (event.indexh === 0) {
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+      });
+      Reveal.addEventListener('slidechanged', (event) => {
+        if (event.indexh === 0) {
+          Reveal.configure({ slideNumber: null });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+        if (event.indexh === 1) {
+          Reveal.configure({ slideNumber: 'c' });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+        }
+      });
+    </script>
+    
+
+</body></html>

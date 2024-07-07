@@ -1,0 +1,998 @@
+---
+title: "Functions and Iteration"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-10"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1024
+    height: 768
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: functions.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Functions {background-color="#3c3c44"}
+
+## Functions
+
+- Now familiar with using functions
+- Writing our own functions is an everyday skill in `R`
+- Sometimes complex $\implies$ usually *very simple*
+- Mostly "inline" functions for simple data manipulation
+    + Very common for axis labels in `ggplot()`
+    
+```{r}
+library(tidyverse)
+```
+
+    
+## A Quick Example
+
+```{r plot-orange}
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 4
+Orange %>% 
+  ggplot(
+    aes(
+      age, circumference, 
+      colour = Tree
+    )
+  ) +
+  geom_point() +
+  scale_colour_brewer(
+    palette = "Set1"
+  ) 
+```
+
+. . .
+
+- Let's say that we wish to add the prefix 'Tree' to the legend
+
+## A Quick Example
+
+```{r plot-orange2}
+#| output-location: column
+#| fig-width: 5
+#| fig-height: 4
+#| code-line-numbers: "11"
+Orange %>% 
+  ggplot(
+    aes(
+      age, circumference,
+      colour = Tree
+    )
+  ) +
+  geom_point() +
+  scale_colour_brewer(
+    palette = "Set1",
+    labels = \(x) paste("Tree", x)
+  )
+```
+
+
+. . .
+
+- `\(x)` is shorthand for `function(x)` (since R v4.1)
+- All labels are passed to the function as `x`
+
+::: {.notes}
+- New function notation was introduced in R v4.1 (2021)
+:::
+
+## Inline Functions
+
+- This is often referred to as an *inline function*
+- Usually very simple, single line functions
+    + Often `\(x)` using `x` as the underlying value
+- We could've modified the underlying data (but didn't)
+- Also very useful when using `mutate()` to modify columns
+
+## Inline Functions
+
+- A common step I use when modifying labels might be
+
+```{r}
+flagstats <- c("properly_paired_reads", "unique_alignments")
+flagstats %>% 
+  str_replace_all("_", " ") %>% # Add spaces
+  str_to_title() %>% # Capitalise the 1st letter
+  str_wrap(12) # Add line breaks (\n) to a given width
+```
+
+. . .
+
+<br>
+
+- When modifying x-axis labels this might lead to:
+
+``` r
+scale_x_discrete(
+  labels = \(x) x %>% str_replace_all("_", " ") %>% str_to_title() %>% str_wrap(12)
+)
+```
+
+::: {.notes}
+Piping like this is OK but up to you
+:::
+
+## Understanding Functions
+
+A function really has multiple aspects
+
+::: {.incremental}
+1. The `formals()` $\implies$ the *arguments* we pass
+2. The `body()` $\implies$ the code that does stuff
+3. The `environment()` where calculations take place
+
+:::
+
+::: {.fragment}
+Let's look through `sd()` starting at the help page `?sd`
+:::
+
+## Understanding Functions
+
+```{r}
+formals(sd)
+```
+
+. . .
+
+- These are the arguments (or formals) required by the function
+- `na.rm` has a default value (`FALSE`)
+
+## Understanding Functions
+
+```{r}
+body(sd)
+```
+
+. . .
+
+Re-formatted that might be
+
+``` r
+sqrt(
+  var(
+    if (is.vector(x) || is.factor(x)) x else as.double(x), 
+    na.rm = na.rm
+  )
+)
+```
+
+## Understanding Functions
+
+So the full function might be written as:
+
+``` r
+sd <- function(x, na.rm = FALSE) {
+  sqrt(
+    var(
+      if (is.vector(x) || is.factor(x)) x else as.double(x), 
+      na.rm = na.rm
+    )
+  )
+}
+```
+
+::: {.notes}
+No need to write this function
+:::
+
+
+## Understanding Functions
+
+To make this more understandable
+
+``` r
+sd <- function(x, na.rm = FALSE) {
+  ## Coerce to a double, only if needed
+  if (!is.vector(x) || is.factor(x)) x <- as.double(x)
+  ## Calculate the variance
+  var_x <- var(x, na.rm = na.rm)
+  ## Return the square root of the variance
+  sqrt(var_x)
+}
+```
+
+## Writing Our Function
+
+- Let's write that function for modifying labels
+- Start by deciding what the function might be called
+    + Also what arguments we need
+
+```{r}
+modify_labels <- function(x) {
+  
+}
+```
+
+## Writing Our Function
+
+- The first step is to change `"_"` to spaces
+    + The last line will be returned by default
+
+```{r}
+modify_labels <- function(x) {
+  str_replace_all(x, "_", " ")
+}
+modify_labels(flagstats)
+```
+
+## Writing Our Function
+
+- We're going to modify that again $\implies$ let's form an object
+    + Then return the new object
+
+```{r}
+modify_labels <- function(x) {
+  new_x <- str_replace_all(x, "_", " ")
+  new_x
+}
+modify_labels(flagstats)
+```
+
+## Looking Inside the Function
+
+- Why are we referring to `flagstats` as `x`?
+
+. . .
+
+- When we pass it to the function is temporarily renamed `x`<br>$\implies$ *But where is it called x?*
+
+. . .
+
+- Each function has it's own environment
+    + Within the `GlobalEnvironment` but separate
+    
+## Looking Inside the Function
+
+- If we add a `browser()` command, we can enter the function at that exact point
+
+```{r, eval = FALSE}
+modify_labels <- function(x) {
+  browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x
+}
+modify_labels(flagstats)
+```
+
+- You should have been jumped to the `Environnment` Tab
+- The Console should also say `Browse[1]>`
+
+::: {.notes}
+This played up when testing both locally & on posit cloud
+:::
+
+
+## Looking Inside the Function
+
+- We're now looking inside the environment within the function
+- By passing `flagstats` as `x` $\implies$ this is it's name **within** this environment
+- Modifying *within the function* will not change the object in the *Global Environment*
+
+. . .
+
+- Within the browser execute<br>`new_x <- str_replace_all(x, "_", " ")`
+
+. . .
+
+- What happened?
+
+
+::: {.notes}
+- Should've seen the new object created in the function environment
+:::
+
+
+## Writing Our Function
+
+- Exit the `browser()` by typing `Q`
+- Remove the `browser()` line by adding a comment (`#`) to the start
+
+. . .
+
+- Now we can finish the function
+
+```{r}
+modify_labels <- function(x) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, 12)
+  new_x
+}
+modify_labels(flagstats)
+```
+
+. . .
+
+*Why didn't I use a pipe?*
+
+## Extending Our Function
+
+- Can we also control the width at which the text wraps
+    + Hard-wired to `12` internally
+
+. . .
+
+- Add an extra argument called `width` with default value of 12
+    + Now this can be changed any time we call the function
+
+```{r}
+modify_labels <- function(x, width = 12) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, width)
+  new_x
+}
+modify_labels(flagstats)
+modify_labels(flagstats, 80)
+```
+
+## Extending Our Function
+
+- In many help pages you may see `...` as a function argument
+- This allows for passing arguments to internal functions
+    + Are *not required* to be set specifically
+- Check the help page `?str_wrap`
+
+. . .
+
+- Notice there are four additional arguments:
+    + `width`, `indent`, `exdent` and `whitespace_only`
+
+## Extending Our Function
+
+- Let's remove width from our list of formal arguments
+- Replace with `...`
+- Pass `...` inside `str_wrap`
+
+```{r}
+modify_labels <- function(x, ...) {
+  # browser()
+  new_x <- str_replace_all(x, "_", " ")
+  new_x <- str_to_title(new_x)
+  new_x <- str_wrap(new_x, ...)
+  new_x
+}
+modify_labels(flagstats)
+modify_labels(flagstats, width = 12)
+```
+
+
+## Extending Our Function
+
+- The default values will now be applied by `str_wrap()` *unless* we change them
+- The following would indent the first line by 2 spaces
+    + May be a little pointless ...
+
+```{r}
+modify_labels(flagstats, width = 12, indent = 2)
+```
+
+. . .
+
+- When writing functions need to choose target function carefully
+
+## Finishing Our Function
+
+- This is a more formal implementation of the original process
+- These two are functionally identical
+    - One more suited for *inline* use as a one-off
+    - The other may be more useful if using repeatedly
+
+```{r}
+one_liner <- \(x, ...) x %>% str_replace_all("_", " ") %>% str_to_title() %>% str_wrap(...)
+one_liner(flagstats, width = 12)
+modify_labels(flagstats, width = 12)
+```
+
+. . .
+
+*What else could we have done?*
+
+::: {.notes}
+- Added comments to explain each line
+- Added checks like `stopifnot(is.character(x))`
+:::
+
+# Iteration {background-color="#3c3c44"}
+
+## Iteration
+
+- `R` sees everything as vectors
+- We didn't need to modify each value of `flagstats`
+    + Not the case for most languages
+    + `python`, `C`, `C++`. `perl` etc *step* through vectors<br>$\implies$process one value at a time
+    
+## Iteration
+
+- A python-like process might've been
+
+```{r}
+new_x <- c()
+for (x in flagstats) {
+  new_x <- c(new_x, modify_labels(x, width = 12))
+}
+new_x
+```
+
+. . .
+
+1. We formed an empty object
+2. Stepped through every value in flagstats
+3. Modified values one at a time & added to `new_x`
+
+. . .
+
+*Stupidly slow in R*
+
+## Iteration
+
+- Each value was called `x` as we stepped through it
+- `x` is just a convention $\implies$ can be anything (`i`, `bob` etc)
+
+```{r}
+for (x in flagstats) {
+  print(x)
+}
+for (i in flagstats) {
+  print(i)
+}
+for (bob in flagstats) {
+  print(bob)
+}
+```
+
+## Iteration
+
+- Because `R` works on vectors $\implies$ rarely need to iterate on vectors
+
+. . .
+
+- Lists however...
+
+. . .
+
+- How would we get the length for each list element?
+
+```{r}
+vals <- list(letters = letters, num = rnorm(1000))
+```
+
+. . .
+
+<br>
+*Iteration is probably our first, best guess...*
+
+## Iteration
+
+```{r}
+len <- list()
+for (x in vals) {
+  len <- c(len, length(x))
+}
+names(len) <- names(vals)
+len
+```
+
+
+::: {.incremental}
+
+The above
+
+1. Initialises an empty list `len`
+2. Steps through each element calling it `x`
+3. Finds the length of `x` and extends `len`
+4. Adds the names so we know which value goes with which element
+
+:::
+
+## The `R` Way to Iterate
+
+- Conventional iteration is very slow in `R`
+- Provides the function `lapply`
+    + Stands for *list apply*
+    + Applies a function to each element of a list
+    
+. . .
+
+- Syntax is `lapply(list, function, ...)` 
+
+. . .
+    
+```{r}
+lapply(vals, length)
+```
+
+- No `...` arguments needed here
+
+::: {.notes}
+Much simpler way to work & is faster
+:::
+
+## The `R` Way to Iterate
+
+A quick example using the `...`
+
+```{r}
+lapply(vals, head, n = 4)
+```
+
+
+## The `R` Way to Iterate
+
+- `lapply()` will always return a list
+- Safest option
+    + Calling `head` gave two elements of different types
+    + Calling `length` gave two `integer` elements
+    
+. . .
+
+- We could've coerced the lengths into a vector
+
+```{r}
+lapply(vals, length) %>% unlist()
+```
+
+. . .
+
+- Only useful *if returning a common type*
+
+## The `R` Way to Iterate
+
+- If we know what we'll get$\implies$ `map_*()` functions
+- Part of `purrr` $\implies$ core `tidyverse` package
+
+```{r}
+map_int(vals, length)
+```
+
+. . .
+
+- Alternatives are `map_chr()`, `map_lgl()`, `map_dbl()`
+- Will error if setting the wrong type
+- Only used when single values are returned
+
+# Getting Real {background-color="#3c3c44"}
+
+## SNP Data
+
+- For the rest of this session we'll look at some genotype data
+- Will put all the day's material into practice
+- Everyone will have very different applications
+- Hopefully will help you figure out best approach for your data
+
+. . .
+
+- Simulated data
+- Based on surviving moths after exposure to freezing temperature
+
+
+## SNP Data
+
+```{r load-snps}
+snps <- read_csv("data/snps.csv")
+dim(snps)
+snps[1:6, 1:10]
+```
+
+. . .
+
+- Each row represents a surviving moth
+- We have `r nrow(snps)` moths with `r ncol(snps) - 1` SNP genotypes
+
+## SNP Data
+
+Our task is to:
+
+- Perform Fisher's Exact Test on each SNP locus
+    + Tests for association between genotype and survival
+    + Could be allele count or genotypes
+    + Dominant or recessive model
+- Decide which values to return
+    + Probably a p-value
+    + Do we want genotype counts? Odds Ratios?
+    
+. . .
+
+- `lapply()` and functions will be our friends
+
+## SNP Data
+
+- First let's check our population sizes
+
+```{r}
+snps %>% summarise(n = dplyr::n(), .by = Population)
+```
+
+
+## Missing Genotypes
+
+- Check the missing genotypes
+
+. . .
+
+- Know we know functions $\implies$ `across()`
+- Is a `dplyr` function
+    + Enables us to apply a function *across* zero or more columns
+    + Uses `tidyselect` helpers
+- The help page has lots of information
+    + Lets use it first
+
+## Missing Genotypes
+
+- Apply the function `is.na()` *across* all columns that *start_with* "SNP"
+
+```{r}
+snps %>% 
+  mutate(across(starts_with("SNP"), is.na)) %>% 
+  dplyr::select(1:10)
+```
+
+## Missing Genotypes
+
+- If we pass to `summarise()` we can count these accross all SNPs
+    + Perfect opportunity for an inline function
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  dplyr::select(1:10)
+```
+
+## Missing Genotypes
+
+- This gives the missing count for all `r ncol(snps) - 1` loci
+- Maybe `pivot_longer()` might help
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  pivot_longer(everything(), names_to = "locus", values_to = "missing")
+```
+
+## Missing Genotypes
+
+- Now we can summarise again
+- Will make a nice descriptive table in our `rmarkdown` report
+
+```{r}
+snps %>% 
+  summarise(
+    across(starts_with("SNP"), \(x) sum(is.na(x)))
+  ) %>% 
+  pivot_longer(everything(), names_to = "locus", values_to = "missing") %>% 
+  summarise(n = dplyr::n(), .by = missing) %>% 
+  arrange(desc(n))
+```
+
+## Performing an Analysis
+
+- Let's see if the `A` allele acts in a dominant manner
+- Compare the numbers with A alleles across populations
+
+. . .
+
+- Classic Fisher's Exact Test using a 2x2 table
+
+|    | A_TRUE | A_FALSE |
+|:-- | ------ | ------- |
+| Control | *a* | *b*|
+| Treat | *c* | *d*|
+
+
+. . .
+
+- No right or wrong strategy
+
+## Performing an Analysis
+
+- Start by converting to long form
+
+```{r, eval=FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") 
+```
+
+. . . 
+
+- Can easily remove the missing genotypes
+
+
+```{r, eval=FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype))
+```
+
+## Performing an Analysis
+
+- Check for the presence of an `A` allele
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) 
+```
+
+
+## Performing an Analysis
+
+- Now count by presence of A
+   + Set the grouping to be by Population, locus & `A` status
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A))
+```
+
+## Performing an Analysis
+
+- Move the counts into `TRUE/FALSE` columns
+    + The 2x2 tables now start to appear
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  arrange(locus)
+```
+
+## Performing an Analysis
+
+- We can form a nested `tibble` for each locus
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_")))
+```
+
+## Nesting Columns
+
+- This is a new idea $\implies$ we now have a `list` column
+- Look at the first one to see what the elements look like
+    + Not part of the analysis
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  slice(1) %>% pull(df)
+```
+
+## Using `lapply()` On Nested Columns
+
+- We can use `lapply()` to perform an analysis on every nested df
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")]))
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- We now have a new list column with a list of results from each test
+- Objects of class `htest`
+- Will have an element called `p.value`
+- This is a `double` (i.e. `numeric`)
+
+. . .
+
+- We can use `map_dbl()` to grab these values
+
+## Using `lapply()` On Nested Columns
+
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    p = map_dbl(ft, \(x) x$p.value),
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- How about an Odds Ratio?
+    + The OR is in an element called `estimate`
+
+. . .
+
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    OR = map_dbl(ft, \(x) x$estimate),
+    p = map_dbl(ft, \(x) x$p.value),
+  )
+```
+
+## Using `lapply()` On Nested Columns
+
+- Getting counts will require using `df` again
+
+. . .
+
+```{r, eval = FALSE}
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["A_TRUE"]]),
+    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["A_TRUE"]]),
+    OR = map_dbl(ft, \(x) x$estimate),
+    p = map_dbl(ft, \(x) x$p.value),
+  )
+```
+
+## The Final Analysis
+
+```{r}
+#| output-location: slide
+snps %>% 
+  pivot_longer(starts_with("SNP"), names_to = "locus", values_to = "genotype") %>% 
+  dplyr::filter(!is.na(genotype)) %>% 
+  mutate(A = str_detect(genotype, "A")) %>% 
+  summarise(n = dplyr::n(), .by = c(Population, locus, A)) %>% 
+  pivot_wider(
+    names_from = "A", values_from = "n", values_fill = 0, names_prefix = "A_"
+  ) %>% 
+  nest(df = c(Population, starts_with("A_"))) %>% 
+  mutate(
+    ft = lapply(df, \(x) fisher.test(x[, c("A_TRUE", "A_FALSE")])),
+    Control = map_int(df, \(x) dplyr::filter(x, Population == "Control")[["A_TRUE"]]),
+    Treat = map_int(df, \(x) dplyr::filter(x, Population == "Treat")[["A_TRUE"]]),
+    OR = map_dbl(ft, \(x) x$estimate),
+    p = map_dbl(ft, \(x) x$p.value),
+    adj_p = p.adjust(p, "bonferroni")
+  ) %>% 
+  arrange(p)
+```
+
+::: {.notes}
+For those with an OR > 1 the A allele might be a dominant susceptibility locus
+:::
+
+## Summary
+
+- We could save this as a final object
+- Select our important columns and prepare a table
+
+## Summary
+
+For this we needed to understand
+
+- When to use `pivot_longer()` and `pivot_wider()`
+- What is a `list`, `vector` and `data.frame`?
+- Difference between `integer` and `double` values
+- `tidyselect` helper functions + `dplyr`
+- How to use `lapply()` with inline functions
+- Extending `lapply()` using `map_*()` to produce vector output
+
+## Summary
+
+- Alternatives to `map_*()` are `sapply()` and `vapply()`
+    + `sapply()` is slightly unpredictable
+    + `vapply()` is a bit more clunky but powerful
+    
+. . .    
+    
+- Could've use `unlist(lapply(...))`
+
+*Why didn't we?*
+
+::: {.notes}
+Specifying the exact type will error if we're wrong. This is good
+:::

@@ -1,0 +1,490 @@
+
+@ARTICLE{Baldoni2024-zf,
+  title    = "Dividing out quantification uncertainty allows efficient
+              assessment of differential transcript expression with edgeR",
+  author   = "Baldoni, Pedro L and Chen, Yunshun and Hediyeh-Zadeh, Soroor and
+              Liao, Yang and Dong, Xueyi and Ritchie, Matthew E and Shi, Wei
+              and Smyth, Gordon K",
+  abstract = "Differential expression analysis of RNA-seq is one of the most
+              commonly performed bioinformatics analyses. Transcript-level
+              quantifications are inherently more uncertain than gene-level
+              read counts because of ambiguous assignment of sequence reads to
+              transcripts. While sequence reads can usually be assigned
+              unambiguously to a gene, reads are very often compatible with
+              multiple transcripts for that gene, particularly for genes with
+              many isoforms. Software tools designed for gene-level
+              differential expression do not perform optimally on transcript
+              counts because the read-to-transcript ambiguity (RTA) disrupts
+              the mean-variance relationship normally observed for gene level
+              RNA-seq data and interferes with the efficiency of the empirical
+              Bayes dispersion estimation procedures. The pseudoaligners
+              kallisto and Salmon provide bootstrap samples from which
+              quantification uncertainty can be assessed. We show that the
+              overdispersion arising from RTA can be elegantly estimated by
+              fitting a quasi-Poisson model to the bootstrap counts for each
+              transcript. The technical overdispersion arising from RTA can
+              then be divided out of the transcript counts, leading to scaled
+              counts that can be input for analysis by established gene-level
+              software tools with full statistical efficiency. Comprehensive
+              simulations and test data show that an edgeR analysis of the
+              scaled counts is more powerful and efficient than previous
+              differential transcript expression pipelines while providing
+              correct control of the false discovery rate. Simulations explore
+              a wide range of scenarios including the effects of paired vs
+              single-end reads, different read lengths and different numbers of
+              replicates.",
+  journal  = "Nucleic Acids Res.",
+  volume   =  52,
+  number   =  3,
+  pages    = "e13",
+  month    =  feb,
+  year     =  2024,
+  language = "en"
+}
+
+
+@ARTICLE{Liu2023-qu,
+  title    = "{SARS-CoV-2} viral genes Nsp6, Nsp8, and {M} compromise cellular
+              {ATP} levels to impair survival and function of human pluripotent
+              stem cell-derived cardiomyocytes",
+  author   = "Liu, Juli and Wu, Shiyong and Zhang, Yucheng and Wang, Cheng and
+              Liu, Sheng and Wan, Jun and Yang, Lei",
+  abstract = "BACKGROUND: Cardiovascular complications significantly augment
+              the overall COVID-19 mortality, largely due to the susceptibility
+              of human cardiomyocytes (CMs) to SARS-CoV-2 virus. SARS-CoV-2
+              virus encodes 27 genes, whose specific impacts on CM health are
+              not fully understood. This study elucidates the deleterious
+              effects of SARS-CoV-2 genes Nsp6, M, and Nsp8 on human CMs.
+              METHODS: CMs were derived from human pluripotent stem cells
+              (hPSCs), including human embryonic stem cells and induced
+              pluripotent stem cells, using 2D and 3D differentiation methods.
+              We overexpressed Nsp6, M, or Nsp8 in hPSCs and then applied whole
+              mRNA-seq and mass spectrometry for multi-omics analysis.
+              Co-immunoprecipitation mass spectrometry was utilized to map the
+              protein interaction networks of Nsp6, M, and Nsp8 within host
+              hiPSC-CMs. RESULTS: Nsp6, Nsp8, and M globally perturb the
+              transcriptome and proteome of hPSC-CMs. SARS-CoV-2 infection and
+              the overexpression of Nsp6, Nsp8, or M coherently upregulated
+              genes associated with apoptosis and immune/inflammation pathways,
+              whereas downregulated genes linked to heart contraction and
+              functions. Global interactome analysis revealed interactions
+              between Nsp6, Nsp8, and M with ATPase subunits. Overexpression of
+              Nsp6, Nsp8, or M significantly reduced cellular ATP levels,
+              markedly increased apoptosis, and compromised Ca2+ handling in
+              hPSC-CMs. Importantly, administration of FDA-approved drugs,
+              ivermectin and meclizine, could restore ATP levels, thereby
+              mitigating apoptosis and dysfunction in hPSC-CMs overexpressing
+              Nsp6, Nsp8, or M. CONCLUSION: Overall, our findings uncover the
+              extensive damaging effects of Nsp6, Nsp8, and M on hPSC-CMs,
+              underlining the crucial role of ATP homeostasis in CM death and
+              functional abnormalities induced by these SARS-CoV-2 genes, and
+              reveal the potential therapeutic strategies to alleviate these
+              detrimental effects with FDA-approved drugs.",
+  journal  = "Stem Cell Res. Ther.",
+  volume   =  14,
+  number   =  1,
+  pages    = "249",
+  month    =  sep,
+  year     =  2023,
+  keywords = "Apoptosis; COVID-19; Cardiac dysfunction; Cardiomyocyte; Human
+              pluripotent stem cells; SARS-CoV-2",
+  language = "en"
+}
+
+
+@ARTICLE{Liao2014-gy,
+  title    = "featureCounts: an efficient general purpose program for assigning
+              sequence reads to genomic features",
+  author   = "Liao, Yang and Smyth, Gordon K and Shi, Wei",
+  abstract = "MOTIVATION: Next-generation sequencing technologies generate
+              millions of short sequence reads, which are usually aligned to a
+              reference genome. In many applications, the key information
+              required for downstream analysis is the number of reads mapping
+              to each genomic feature, for example to each exon or each gene.
+              The process of counting reads is called read summarization. Read
+              summarization is required for a great variety of genomic analyses
+              but has so far received relatively little attention in the
+              literature. RESULTS: We present featureCounts, a read
+              summarization program suitable for counting reads generated from
+              either RNA or genomic DNA sequencing experiments. featureCounts
+              implements highly efficient chromosome hashing and feature
+              blocking techniques. It is considerably faster than existing
+              methods (by an order of magnitude for gene-level summarization)
+              and requires far less computer memory. It works with either
+              single or paired-end reads and provides a wide range of options
+              appropriate for different sequencing applications. AVAILABILITY
+              AND IMPLEMENTATION: featureCounts is available under GNU General
+              Public License as part of the Subread
+              (http://subread.sourceforge.net) or Rsubread
+              (http://www.bioconductor.org) software packages.",
+  journal  = "Bioinformatics",
+  volume   =  30,
+  number   =  7,
+  pages    = "923--930",
+  month    =  apr,
+  year     =  2014,
+  language = "en"
+}
+
+
+@Article{edgeR2010,
+    title = {edgeR: a Bioconductor package for differential expression analysis of digital gene expression data},
+    author = {Mark D Robinson and Davis J McCarthy and Gordon K Smyth},
+    journal = {Bioinformatics},
+    volume = {26},
+    number = {1},
+    pages = {139-140},
+    year = {2010},
+    doi = {10.1093/bioinformatics/btp616},
+  }
+
+@Article{DESeq22014,
+    title = {Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2},
+    author = {Michael I. Love and Wolfgang Huber and Simon Anders},
+    year = {2014},
+    journal = {Genome Biology},
+    doi = {10.1186/s13059-014-0550-8},
+    volume = {15},
+    issue = {12},
+    pages = {550},
+  }
+
+
+
+@ARTICLE{Robinson2010-qp,
+  title    = "A scaling normalization method for differential expression
+              analysis of {RNA-seq} data",
+  author   = "Robinson, Mark D and Oshlack, Alicia",
+  abstract = "The fine detail provided by sequencing-based transcriptome
+              surveys suggests that RNA-seq is likely to become the platform of
+              choice for interrogating steady state RNA. In order to discover
+              biologically important changes in expression, we show that
+              normalization continues to be an essential step in the analysis.
+              We outline a simple and effective method for performing
+              normalization and show dramatically improved results for
+              inferring differential expression in simulated and publicly
+              available data sets.",
+  journal  = "Genome Biol.",
+  volume   =  11,
+  number   =  3,
+  pages    = "R25",
+  month    =  mar,
+  year     =  2010,
+  language = "en"
+}
+
+
+@ARTICLE{Smyth2004-hl,
+  title    = "Linear models and empirical bayes methods for assessing
+              differential expression in microarray experiments",
+  author   = "Smyth, Gordon K",
+  abstract = "The problem of identifying differentially expressed genes in
+              designed microarray experiments is considered. Lonnstedt and
+              Speed (2002) derived an expression for the posterior odds of
+              differential expression in a replicated two-color experiment
+              using a simple hierarchical parametric model. The purpose of this
+              paper is to develop the hierarchical model of Lonnstedt and Speed
+              (2002) into a practical approach for general microarray
+              experiments with arbitrary numbers of treatments and RNA samples.
+              The model is reset in the context of general linear models with
+              arbitrary coefficients and contrasts of interest. The approach
+              applies equally well to both single channel and two color
+              microarray experiments. Consistent, closed form estimators are
+              derived for the hyperparameters in the model. The estimators
+              proposed have robust behavior even for small numbers of arrays
+              and allow for incomplete data arising from spot filtering or spot
+              quality weights. The posterior odds statistic is reformulated in
+              terms of a moderated t-statistic in which posterior residual
+              standard deviations are used in place of ordinary standard
+              deviations. The empirical Bayes approach is equivalent to
+              shrinkage of the estimated sample variances towards a pooled
+              estimate, resulting in far more stable inference when the number
+              of arrays is small. The use of moderated t-statistics has the
+              advantage over the posterior odds that the number of
+              hyperparameters which need to estimated is reduced; in
+              particular, knowledge of the non-null prior for the fold changes
+              are not required. The moderated t-statistic is shown to follow a
+              t-distribution with augmented degrees of freedom. The moderated t
+              inferential approach extends to accommodate tests of composite
+              null hypotheses through the use of moderated F-statistics. The
+              performance of the methods is demonstrated in a simulation study.
+              Results are presented for two publicly available data sets.",
+  journal  = "Stat. Appl. Genet. Mol. Biol.",
+  volume   =  3,
+  pages    = "Article3",
+  month    =  feb,
+  year     =  2004,
+  language = "en"
+}
+
+
+@ARTICLE{Lund2012-xo,
+  title    = "Detecting differential expression in {RNA-sequence} data using
+              quasi-likelihood with shrunken dispersion estimates",
+  author   = "Lund, Steven P and Nettleton, Dan and McCarthy, Davis J and
+              Smyth, Gordon K",
+  abstract = "Next generation sequencing technology provides a powerful tool
+              for measuring gene expression (mRNA) levels in the form of
+              RNA-sequence data. Method development for identifying
+              differentially expressed (DE) genes from RNA-seq data, which
+              frequently includes many low-count integers and can exhibit
+              severe overdispersion relative to Poisson or binomial
+              distributions, is a popular area of ongoing research. Here we
+              present quasi-likelihood methods with shrunken dispersion
+              estimates based on an adaptation of Smyth's (2004) approach to
+              estimating gene-specific error variances for microarray data. Our
+              suggested methods are computationally simple, analogous to ANOVA
+              and compare favorably versus competing methods in detecting DE
+              genes and estimating false discovery rates across a variety of
+              simulations based on real data.",
+  journal  = "Stat. Appl. Genet. Mol. Biol.",
+  volume   =  11,
+  number   =  5,
+  month    =  oct,
+  year     =  2012,
+  language = "en"
+}
+
+
+@ARTICLE{McCarthy2009-qf,
+  title    = "Testing significance relative to a fold-change threshold is a
+              {TREAT}",
+  author   = "McCarthy, Davis J and Smyth, Gordon K",
+  abstract = "MOTIVATION: Statistical methods are used to test for the
+              differential expression of genes in microarray experiments. The
+              most widely used methods successfully test whether the true
+              differential expression is different from zero, but give no
+              assurance that the differences found are large enough to be
+              biologically meaningful. RESULTS: We present a method, t-tests
+              relative to a threshold (TREAT), that allows researchers to test
+              formally the hypothesis (with associated p-values) that the
+              differential expression in a microarray experiment is greater
+              than a given (biologically meaningful) threshold. We have
+              evaluated the method using simulated data, a dataset from a
+              quality control experiment for microarrays and data from a
+              biological experiment investigating histone deacetylase
+              inhibitors. When the magnitude of differential expression is
+              taken into account, TREAT improves upon the false discovery rate
+              of existing methods and identifies more biologically relevant
+              genes. AVAILABILITY: R code implementing our methods is
+              contributed to the software package limma available at
+              http://www.bioconductor.org.",
+  journal  = "Bioinformatics",
+  volume   =  25,
+  number   =  6,
+  pages    = "765--771",
+  month    =  mar,
+  year     =  2009,
+  language = "en"
+}
+
+
+
+@ARTICLE{Zhu2019-kg,
+  title    = "Heavy-tailed prior distributions for sequence count data:
+              removing the noise and preserving large differences",
+  author   = "Zhu, Anqi and Ibrahim, Joseph G and Love, Michael I",
+  abstract = "MOTIVATION: In RNA-seq differential expression analysis,
+              investigators aim to detect those genes with changes in
+              expression level across conditions, despite technical and
+              biological variability in the observations. A common task is to
+              accurately estimate the effect size, often in terms of a
+              logarithmic fold change (LFC). RESULTS: When the read counts are
+              low or highly variable, the maximum likelihood estimates for the
+              LFCs has high variance, leading to large estimates not
+              representative of true differences, and poor ranking of genes by
+              effect size. One approach is to introduce filtering thresholds
+              and pseudocounts to exclude or moderate estimated LFCs. Filtering
+              may result in a loss of genes from the analysis with true
+              differences in expression, while pseudocounts provide a limited
+              solution that must be adapted per dataset. Here, we propose the
+              use of a heavy-tailed Cauchy prior distribution for effect sizes,
+              which avoids the use of filter thresholds or pseudocounts. The
+              proposed method, Approximate Posterior Estimation for generalized
+              linear model, apeglm, has lower bias than previously proposed
+              shrinkage estimators, while still reducing variance for those
+              genes with little information for statistical inference.
+              AVAILABILITY AND IMPLEMENTATION: The apeglm package is available
+              as an R/Bioconductor package at
+              https://bioconductor.org/packages/apeglm, and the methods can be
+              called from within the DESeq2 software. SUPPLEMENTARY
+              INFORMATION: Supplementary data are available at Bioinformatics
+              online.",
+  journal  = "Bioinformatics",
+  volume   =  35,
+  number   =  12,
+  pages    = "2084--2092",
+  month    =  jun,
+  year     =  2019,
+  language = "en"
+}
+
+
+
+@ARTICLE{Subramanian2005-lx,
+  title    = "Gene set enrichment analysis: a knowledge-based approach for
+              interpreting genome-wide expression profiles",
+  author   = "Subramanian, Aravind and Tamayo, Pablo and Mootha, Vamsi K and
+              Mukherjee, Sayan and Ebert, Benjamin L and Gillette, Michael A
+              and Paulovich, Amanda and Pomeroy, Scott L and Golub, Todd R and
+              Lander, Eric S and Mesirov, Jill P",
+  abstract = "Although genomewide RNA expression analysis has become a routine
+              tool in biomedical research, extracting biological insight from
+              such information remains a major challenge. Here, we describe a
+              powerful analytical method called Gene Set Enrichment Analysis
+              (GSEA) for interpreting gene expression data. The method derives
+              its power by focusing on gene sets, that is, groups of genes that
+              share common biological function, chromosomal location, or
+              regulation. We demonstrate how GSEA yields insights into several
+              cancer-related data sets, including leukemia and lung cancer.
+              Notably, where single-gene analysis finds little similarity
+              between two independent studies of patient survival in lung
+              cancer, GSEA reveals many biological pathways in common. The GSEA
+              method is embodied in a freely available software package,
+              together with an initial database of 1,325 biologically defined
+              gene sets.",
+  journal  = "Proc. Natl. Acad. Sci. U. S. A.",
+  volume   =  102,
+  number   =  43,
+  pages    = "15545--15550",
+  month    =  oct,
+  year     =  2005,
+  language = "en"
+}
+
+@Article{fgsea2019,
+    author = {Gennady Korotkevich and Vladimir Sukhov and Alexey Sergushichev},
+    title = {Fast gene set enrichment analysis},
+    year = {2019},
+    doi = {10.1101/060012},
+    publisher = {Cold Spring Harbor Labs Journals},
+    url = {http://biorxiv.org/content/early/2016/06/20/060012},
+    journal = {bioRxiv},
+  }
+
+
+@ARTICLE{Liberzon2011-fr,
+  title    = "Molecular signatures database ({MSigDB}) 3.0",
+  author   = "Liberzon, Arthur and Subramanian, Aravind and Pinchback, Reid and
+              Thorvaldsd{\'o}ttir, Helga and Tamayo, Pablo and Mesirov, Jill P",
+  abstract = "MOTIVATION: Well-annotated gene sets representing the universe of
+              the biological processes are critical for meaningful and
+              insightful interpretation of large-scale genomic data. The
+              Molecular Signatures Database (MSigDB) is one of the most widely
+              used repositories of such sets. RESULTS: We report the
+              availability of a new version of the database, MSigDB 3.0, with
+              over 6700 gene sets, a complete revision of the collection of
+              canonical pathways and experimental signatures from publications,
+              enhanced annotations and upgrades to the web site. AVAILABILITY
+              AND IMPLEMENTATION: MSigDB is freely available for non-commercial
+              use at http://www.broadinstitute.org/msigdb.",
+  journal  = "Bioinformatics",
+  volume   =  27,
+  number   =  12,
+  pages    = "1739--1740",
+  month    =  jun,
+  year     =  2011,
+  language = "en"
+}
+
+
+@ARTICLE{Young2010-jw,
+  title    = "Gene ontology analysis for {RNA-seq}: accounting for selection
+              bias",
+  author   = "Young, Matthew D and Wakefield, Matthew J and Smyth, Gordon K and
+              Oshlack, Alicia",
+  abstract = "We present GOseq, an application for performing Gene Ontology
+              (GO) analysis on RNA-seq data. GO analysis is widely used to
+              reduce complexity and highlight biological processes in
+              genome-wide expression studies, but standard methods give biased
+              results on RNA-seq data due to over-detection of differential
+              expression for long and highly expressed transcripts. Application
+              of GOseq to a prostate cancer data set shows that GOseq
+              dramatically changes the results, highlighting categories more
+              consistent with the known biology.",
+  journal  = "Genome Biol.",
+  volume   =  11,
+  number   =  2,
+  pages    = "R14",
+  month    =  feb,
+  year     =  2010,
+  language = "en"
+}
+
+
+@ARTICLE{Wu2012-jy,
+  title    = "Camera: a competitive gene set test accounting for inter-gene
+              correlation",
+  author   = "Wu, Di and Smyth, Gordon K",
+  abstract = "Competitive gene set tests are commonly used in molecular pathway
+              analysis to test for enrichment of a particular gene annotation
+              category amongst the differential expression results from a
+              microarray experiment. Existing gene set tests that rely on gene
+              permutation are shown here to be extremely sensitive to
+              inter-gene correlation. Several data sets are analyzed to show
+              that inter-gene correlation is non-ignorable even for experiments
+              on homogeneous cell populations using genetically identical model
+              organisms. A new gene set test procedure (CAMERA) is proposed
+              based on the idea of estimating the inter-gene correlation from
+              the data, and using it to adjust the gene set test statistic. An
+              efficient procedure is developed for estimating the inter-gene
+              correlation and characterizing its precision. CAMERA is shown to
+              control the type I error rate correctly regardless of inter-gene
+              correlations, yet retains excellent power for detecting genuine
+              differential expression. Analysis of breast cancer data shows
+              that CAMERA recovers known relationships between tumor subtypes
+              in very convincing terms. CAMERA can be used to analyze specified
+              sets or as a pathway analysis tool using a database of molecular
+              signatures.",
+  journal  = "Nucleic Acids Res.",
+  volume   =  40,
+  number   =  17,
+  pages    = "e133",
+  month    =  sep,
+  year     =  2012,
+  language = "en"
+}
+
+
+@ARTICLE{Liu2024-js,
+  title     = "{sSNAPPY}: an {R/Bioconductor} package for single-sample
+               directional pathway perturbation analysis",
+  author    = "Liu, Wenjun and M{\"a}kinen, Ville-Petteri and Tilley, Wayne D
+               and Pederson, Stephen M",
+  abstract  = "A common outcome of analysing RNA-Seq data is the detection of
+               biological pathways with significantly altered activity between
+               the conditions under investigation. Whilst many strategies test
+               for over-representation of genes, showing changed expression
+               within pre-defined gene-sets, these analyses typically do not
+               account for gene-gene interactions encoded by pathway
+               topologies, and are not able to directly predict the directional
+               change of pathway activity. To address these issues we have
+               developed sSNAPPY ,now available as an R/Bioconductor package,
+               which leverages pathway topology information to compute pathway
+               perturbation scores and predict the direction of change across a
+               set of pathways. Here, we demonstrate the use of sSNAPPY by
+               applying the method to public scRNA-seq data, derived from
+               ovarian cancer patient tissues collected before and after
+               chemotherapy. Not only were we able to predict the direction of
+               pathway perturbations discussed in the original study, but
+               sSNAPPY was also able to detect significant changes of other
+               biological processes, yielding far greater insight into the
+               response to treatment. sSNAPPY represents a novel pathway
+               analysis strategy that takes into consideration pathway topology
+               to predict impacted biology pathways, both within related
+               samples and across treatment groups. In addition to not relying
+               on differentially expressed genes, the method and associated R
+               package offers important flexibility and provides powerful
+               visualisation tools. R version : R version 4.3.3 (2024-02-29)
+               Bioconductor version : 3.18 Package : 1.6.1",
+  journal   = "F1000Res.",
+  publisher = "F1000 Research Limited",
+  volume    =  13,
+  number    =  628,
+  pages     = "628",
+  month     =  jun,
+  year      =  2024,
+  keywords  = "RNA-Seq, pathway enrichment, R package, topology, KEGG,
+               Reactome, scRNA-seq",
+  language  = "en"
+}

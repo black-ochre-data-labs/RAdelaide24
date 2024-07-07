@@ -1,0 +1,620 @@
+---
+title: "References and Ranges"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: references.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Reference Sequences {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Fasta Files
+
+- Used for entire genomes or small, single sequences
+- Sequence name + optional "free-form" metadata begins with `>`
+- Followed by sequence with no prefix
+    + Single sequences commonly wrapped on multiple lines
+- Sequence can be DNA, RNA or Protein
+
+```{r read-fa, results='markup', echo=FALSE}
+readLines("data/ERCC92.fa.gz", n = 10) |> cat(sep = "\n")
+```
+
+::: {.notes}
+Sometimes use a standardised set of IUPAC codes
+:::
+
+## Biostrings
+
+- The Bioconductor package for handling these is `Biostrings`
+- Depending on the sequence structure<br>$\implies$ `DNAString`, `DNAStringSet` or `DNAStringSetList`
+
+
+```{r}
+library(Biostrings)
+DNAString("AACGT")
+DNAStringSet("AACGT")
+DNAStringSetList("AACGT")
+```
+
+::: {.notes}
+By have a new class (not just characters) many operations become simplified
+:::
+
+## Biostrings
+
+- General class for RNA or Proteins $\implies$ `XString/Set/List`
+    + `RNAString*` or `AAString*`
+- `XStringSet` objects are lists of `XString` objects
+    + `XStringSetList` objects are lists of `XStringSet` objects
+    
+```{r}
+DNAStringSet("AACGT") |> unlist()
+DNAStringSetList("AACGT") |> unlist()
+```
+
+## Biostrings
+
+- If working with complete transcripts $\implies$ `XStringSet`
+- When needing exon structure within transcripts $\implies$ `XStringSetList`
+
+    
+## Biostrings
+
+- Using some example ERCC spike-in data
+    + Short, known sequences sometimes used for RNA-Seq QC + Normalisation
+    
+```{r}
+ercc <- readDNAStringSet("data/ERCC92.fa.gz")
+ercc
+```
+
+## Biostrings
+
+```{r}
+length(ercc)
+width(ercc) |> head()
+names(ercc) |> head()
+letterFrequency(ercc, "GC", as.prob = TRUE) |> head()
+```
+
+## Biostrings
+
+```{r}
+reverseComplement(ercc)
+```
+
+
+## Biostrings
+
+- `XStringSet` objects are easy to subset
+
+```{r}
+subseq(ercc, 1, width = 10)
+```
+
+
+## Biostrings
+
+- Sliding windows are simple & fast on `XString` objects
+
+```{r}
+Views(ercc[[1]], start = 1:3, width = 10) 
+Views(ercc[[1]], start = 1:3, width = 10) |> letterFrequency("GC", as.prob = TRUE)
+```
+
+    
+## BSgenome Objects
+
+- Biostrings are used to provide entire genomes $\implies$ `BSgenome` objects
+
+```{r}
+library(BSgenome.Hsapiens.UCSC.hg38)
+hg38 <- BSgenome.Hsapiens.UCSC.hg38
+hg38
+```
+
+## BSgenome Objects
+
+- Genomes are 'promises' cached on your HDD
+    + Only the metadata is actually loaded
+- Can be directly loaded into memory if needed
+
+```{r}
+chrM <- getSeq(hg38, "chrM")
+chrM
+```
+
+
+## BSgenome
+
+- `seqinfo()` objects provide sequence lengths & build information
+
+```{r}
+sq <- seqinfo(hg38)
+sq
+```
+
+# Genomic Ranges {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/GenomicRanges/GenomicRanges.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Genomic Ranges
+
+- We can work with specific regions with a genome using `GRanges` objects
+    + The Bioconductor equivalent of a `bed` file
+
+```{r}
+GRanges("chr1:10001-11000")
+```
+
+
+. . .
+
+- Best practice is to always define the genome the range has been drawn from
+
+```{r}
+GRanges("chr1:10001-11000", seqinfo = sq)
+```
+
+## Bed Files
+
+- `bed` files are a common genomics format
+- Primarily contain ranges but can include some additional fields
+
+```{r read-pary, echo=FALSE}
+readLines("data/parY.bed") |> cat(sep = "\n")
+```
+
+. . .
+
+- The columns are defined as<br>`chrom`, `chromStart`, `chromEnd`, `name`, `score` & `strand`
+- Empty fields (`name` & `strand`) are provided as `.`
+- Additional columns for [plotting parameters](https://en.wikipedia.org/wiki/BED_(file_format)#Description) can also be passed
+
+## Bed Files
+
+- These are simple `tsv` files (sometimes space-separated)
+    + We could use `read_tsv()` if we really want
+    + Would need to use:<br>`read_tsv("path/to/bed", col_names = c("chrom", "chromStart", "chromEnd", "name", "score", "strand"))`
+    
+. . .
+
+- The package `rtracklayer` is an all-purpose -omics file import package
+    + Handles 0/1-based co-ordinates easily
+    + Will prase files as `GRanges`
+
+## Importing Bed Files
+
+```{r}
+library(rtracklayer)
+parY <- import.bed("data/parY.bed", seqinfo = sq)
+parY
+```
+
+. . .
+
+- Any unspecified `strand` information $\implies$ `*`
+
+## Genomic Ranges
+
+- Note that we have and `mcols` element
+    + `DataFrame` with metadata about each range
+
+```{r}
+mcols(parY)
+```
+
+. . .
+
+- Can also separate the ranges
+
+```{r}
+granges(parY)
+```
+
+## The `plyranges` package
+
+::: {style="font-size: 95%;"}
+
+- `plyranges` provides `dplyr`-like operations on `GRanges` objects
+
+```{r}
+library(plyranges)
+parY %>% mutate(name = c("PAR1", "PAR2"))
+parY %>% select(score)
+```
+
+::: {.fragment}
+
+- Not going any deeper today
+    + Only for `GRanges` $\implies$ not `DataFrame`
+
+:::
+
+:::
+
+## Genomic Ranges
+
+- This makes extracting the genomic sequence trivial
+
+```{r}
+getSeq(hg38, parY)
+```
+
+## Gene And Transcript Annotations
+
+- Gene and transcript annotations use a co-ordinate-based system
+- External files usually in `gtf` format
+    + Columns 1-8: `chrom`, `source`, `type`, `start`, `end`, `score`, `strand`, `phase`
+    + Column 9 is '`;`' separated and flexible
+    
+. . .
+
+- Passed to `R` as a `GRanges` object with `mcols`
+- `rtracklayer` provides `import.gff()`
+    + `gtf` files are based on v2 specifications of the `gff` format
+    
+## Gene And Transcript Annotations
+
+```{r results='hide'}
+gtf <- import.gff("data/gencode.v41.chrY.gtf.gz", genome = "hg38")
+gtf
+```
+
+. . .
+
+- `plyranges` can be very useful for removing redundant columns
+- Individual columns can be extracted using `$`
+
+```{r}
+gtf$type %>% levels()
+```
+
+- These are the types of features in a standard gtf
+    + `gene` and `transcript` annotations cover the entire range
+    + Individual exons within each transcripts are `exons`
+
+::: {.notes}
+Notice the types of features provided in a standard gtf
+:::
+
+## Genomic Ranges
+
+This structure highlights a few unexpected features of `GRanges`
+
+::: {.incremental}
+
+1. There are no rownames or colnames
+    + Ranges can have `names()`
+    + `mcols()` have colnames
+2. `nrow` and `ncol` only work on `mcols` NOT the `GRanges` object
+3. The number of ranges is obtained using `length()`
+
+::: {.fragment}
+
+```{r}
+length(gtf)
+```
+
+:::
+
+:::
+
+## Gene And Transcript Annotations
+
+- If we want to find the sequence of a gene or transcript <br>$\implies$ can't use these features
+
+```{r, results='hide'}
+subset(gtf, type == "gene")
+subset(gtf, type == "transcript")
+```
+
+. . .
+
+- Instead use exons
+    + The same ranges may be annotated as multiple exons
+    
+```{r, results='hide'}
+gtf %>% 
+  filter(type == "exon") %>% 
+  filter_by_overlaps(GRanges("chrY:284167-284314"))
+```
+
+- This is a `plyranges` approach to the question
+    + Still, note these are identical exons from 10 transcripts
+    
+## Gene And Transcript Annotations
+
+- To find every exon associated with a gene:
+
+::: {.incremental}
+
+1. Subset our data to exons only
+2. Split into a `GRangesList` using the gene_id
+3. Merge overlapping exons
+
+:::
+
+::: {.fragment}
+
+```{r, results='hide'}
+gtf %>% 
+  filter(type == "exon") %>% 
+  splitAsList(.$gene_id)
+```
+
+:::
+
+::: {.notes}
+This is the first time we've seen the `.` inactions using `%>%`
+:::
+
+## GRangesList Objects
+
+- `GRangesList` objects strictly have a `GRanges` object as every element
+- Often obtained by *splitting* a `GRanges` object based on a single `mcol`
+- Must have identical `seqinfo` elements
+    + i.e. from the same genome
+- Very efficient way to perform complex operations
+
+## GRangesList Objects
+
+- The function `reduce` merges overlapping ranges $\implies$ `mcols` are lost
+- Will handle all elements of a `GRangesList`
+
+```{r, results='hide'}
+gtf %>% 
+  filter(type == "exon") %>% 
+  splitAsList(.$gene_id) %>% 
+  GenomicRanges::reduce()
+```
+
+. . .
+
+- Notice that the original 107 exons for the first gene are now 15
+
+::: {.notes}
+Maintaining mcols is enabled using `reduceMC` from `extraChIPs` but it's needed less often than we might think
+:::
+
+## Gene And Transcript Annotations
+
+- The above strategy could be used to return:
+    + the overall coding length for a gene
+    + the overall GC content
+    + a "consensus sequence" for a gene <br>$\implies$ not guaranteed to represent what's expressed
+    
+. . .
+
+- To obtain transcript sequences we split by transcript_id
+    + No need to reduce overlapping exons
+    
+## Gene And Transcript Annotations
+
+```{r, results='hide'}
+trans_grl <- gtf %>% 
+  filter(type == "exon") %>% 
+  splitAsList(.$transcript_id) 
+trans_grl
+```
+
+. . .
+
+```{r}
+getSeq(hg38, trans_grl)
+```
+
+## Gene And Transcript Annotations
+
+- Notice that each transcript retains the exon structure
+
+```{r}
+getSeq(hg38, trans_grl)[[1]]
+```
+
+## Gene And Transcript Annotations
+
+- A cleaner approach is provided by `GenomicFeatures`
+
+```{r}
+library(GenomicFeatures)
+extractTranscriptSeqs(hg38, trans_grl)
+```
+
+. . .
+
+- We could export this as a `fasta` file using `writeXStringSet()`
+- Might become a reference transcriptome (instead of genome)
+
+# AnnotationHub {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/AnnotationHub/AnnotationHub.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Annotation Hub
+
+- Much processing is done on an HPC when running a sequencing workflow
+- Knowing standalone files & how to import into `R` is vital
+- Many annotations are also prepared as packages
+- The database of these packages is `AnnotationHub`
+    + Doesn't download packages, just provides a list
+
+## Annotation Hub
+
+```{r ah, cache=TRUE}
+library(AnnotationHub)
+## This will run for a minute or two the first time you run it
+ah <- AnnotationHub()
+ah
+```
+
+::: {.notes}
+- Data is available from multiple sources and in multiple formats
+- GRanges
+:::
+
+## Annotation Hub
+
+- The full metadata can be seen by accessing the `mcols`
+
+```{r}
+mcols(ah)
+```
+
+## Annotation Hub
+
+- Searching is easiest using `subset()` or `query()`
+- The following returns all EnsDb objects built on GRCh38 (hg38)
+
+```{r subset-ah, cache=TRUE}
+ah %>% 
+  subset(genome == "GRCh38") %>%
+  subset(rdataclass == "EnsDb") 
+```
+
+## Annotation Hub
+
+- This behaves like a list $\implies$ extract elements using `[[]]`
+    + Will download an entire annotation set
+
+```{r ensdb, cache=TRUE}
+ensdb <- ah[["AH116860"]]
+ensdb
+```
+
+## EnsDb Ojects
+
+- The first Bioconductor packages of this type were TxDb packages
+    + Used UCSC annotations & genome builds
+- Contain all information about a given annotation build
+- EnsDb packages use Ensembl resources & the package `ensembldb`
+- Enormous data-mapping and information content
+
+```{r ensdb2, eval=FALSE}
+genes(ensdb)
+transcripts(ensdb)
+exonsBy(ensdb, by = "tx")
+```
+
+## EnsDb Ojects
+
+- Can be highly beneficial for ensuring self-contained, reproducible workflows
+    + No external files required
+
+. . .
+
+- Notice difference in genome build to UCSC (`hg38`)
+- Slight difference in column names to Gencode
+- No TxDb or EnsDb packages available for Gencode gene annotations
+
+## Gencode Annotations
+
+- Are available as raw gff files
+
+```{r}
+ah %>% subset(dataprovider == "Gencode")
+```
+
+
+
+
+## Closing Comments
+
+Standard (gene-level) RNA-Seq workflows:
+
+. . .
+
+1. align to a reference genome 
+    + Produces a `bam` file for each sample
+2. count aligned reads which overlap an exon
+    + Requires a GTF within exon-coordinates
+
+. . .
+
+- Alignment requires preparing an index for your aligner (e.g. STAR, hisat2)
+- Indexes always require a reference genome in `fasta` format
+- Can usually obtain from UCSC, Ensembl, Gencode etc
+- Non-standard approaches can utilise the above
+
+## Closing Comments
+
+If aligning to a reference transcriptome
+
+- Can download a transcriptome from Gencode etc
+- Prepare a tailored transcriptome using the above strategy
+- Index the transcriptome using `salmon`, `kallisto` etc
+
+. . .
+
+- GTF not needed during counting $\implies$ index preparation only
+- No `bam` file produced $\implies$ only transcript-level counts
+
+. . .
+
+- Above allows incorporation of variants into a reference transcriptomes
+    + `transmogR` developed at BODL
+
+## Closing Comments
+
+- The above was overkill for a generic analysis
+- Gave introductions to fundamental data structures
+
+. . .
+
+- `Biostrings` for DNA/RNA sequences
+    + `XString/Set/List` objects
+- `GRanges` for working with co-ordinates
+    + Often obtained by importing `bed` or `gtf` files
+- `GRangesList` for splitting `GRanges` by some feature
+
+
+
+
