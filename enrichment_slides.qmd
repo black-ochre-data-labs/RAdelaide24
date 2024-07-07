@@ -1,0 +1,413 @@
+---
+title: "Finding the Underlying Biology"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-11"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format:
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html:
+    css: [bodl.scss, extra.css]
+    output-file: enrichment.html
+    embed-resources: true
+    toc: true
+    toc-depth: 1
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) {
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+knitr:
+  opts_chunk:
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center
+    fig.height: 6
+    fig.width: 8
+---
+
+# Enrichment Analysis {background-color="#3c3c44"}
+
+## What is Enrichment Analysis
+
+- Often in transcriptomics and genomics we have large lists of results
+- May be genes, genomic positions etc
+- How do we interpret these?
+    + Should we cherry pick known *high-quality* candidates?
+    + Should we try look for patterns within the list?
+    
+. . .
+
+- Enrichment analysis is one strategy for looking for patterns
+    + Network analysis is another approach
+- Generally rely on genes can be organised into "gene sets" 
+    + Multiple Databases depending on your question
+    
+## Multiple Approaches
+
+- Take a ranked list of results<br>$\implies$Are gene-sets clustered around either end
+
+. . .
+
+- Are genes from a specific gene-set enriched within significant results
+    + Hypergeometric testing
+    
+. . .
+
+- Can we obtain an overall value of significance for all genes within a gene-set
+
+::: {.notes}
+- No method is perfect & all have limitations
+- Gene expression also appears to be highly correlated & subject to bias
+:::
+    
+## Gene Ontology
+
+- Gene Ontology (GO) Database https://www.geneontology.org/
+- Restricted and highly controlled set of descriptive terms
+- Terms are grouped into 3 main categories
+    1. Biological Process (BP)
+    2. Molecular Function (MF)
+    3. Cellular Component (CC)
+- Hierarchical interconnected structure within each category
+
+
+## Gene Ontology
+
+![Taken from https://www.geneontology.org](https://www.geneontology.org/assets/ontology-browse-tree.jpg)
+
+::: {.notes}
+- Knowing how to filter results with heavily related terms can be a challenge
+- Multiple pruning strategies exist
+:::
+
+## Gene Ontology
+
+- An example using the QuickGO tool is [here](https://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0002253)
+
+## KEGG
+
+- Kyoto Encyclopedia of Genes and Genomes (KEGG)
+- Exhaustive list of manually curated pathways
+    1. Metabolism
+    2. Genetic Information Processing
+    3. Environmental Information Processing
+    4. Cellular Processes
+    5. Organismal Systems
+    6. Human Diseases
+    7. Drug Development
+- Role in pathway (e.g. activation of inhibition) included
+    
+## KEGG
+
+![https://www.genome.jp/pathway/hsa04010](assets/kegg_mapk.png){fig-align="left"}
+
+## Other Databases
+
+- WikiPathways is an open-source analog to KEGG
+    + https://www.wikipathways.org
+- Reactome is highly curated, peer-reviewed database
+    + https://reactome.org
+    
+. . .
+
+- Can also use custom gene-sets
+    + Results from an internal study
+    + Genes matching custom genomic features
+    
+## MSigDB
+
+- The Molecular Signatures Database (MSigDB) collects multiple databases
+    + https://www.gsea-msigdb.org/gsea/msigdb/index.jsp
+    + Collected simply as gene sets without functional annotation
+
+. . .
+
+- H: Hallmark Gene Sets are unique to MSigDB
+
+## Gene Sets and Pathways in R
+
+- Bioconductor provides multiple packages and tools for obtaining gene sets
+    + `GO.db`, `KEGGREST`, `biomaRt`
+- My preferred strategy is `msigdbr`
+    + Parses MSigDb gene sets as a `tibble`
+    + Not really built on existing Bioconductor object classes
+- Best annotations are for human/mouse
+    
+## `msigdbr`
+
+```{r}
+#| output-location: column
+library(tidyverse)
+theme_set(theme_bw())
+library(msigdbr)
+msigdbr_collections()
+```
+
+## `msigdbr`
+
+```{r}
+msigdbr_species()
+```
+
+## Setting Up An Object
+
+- Let's choose KEGG pathways for our analysis
+
+```{r}
+kegg_tbl <- msigdbr(subcategory = "CP:KEGG")
+glimpse(kegg_tbl)
+```
+
+## Setting Up An Object
+
+- Every mapping between a gene ID and KEGG pathway is here
+- Gene IDs are provided using Ensembl (EBI) and EntrezGene (NCBI)
+- Gene set IDs match the specific database
+- URLs are also provided
+    + But can get out of date when databases reconfigure
+    
+## Comparing To Our Data
+
+::: {style="font-size: 95%;"}
+
+```{r}
+res_treatM <- read_rds("data/res_treatM.rds") %>% 
+  mutate(ensembl_gene = str_extract(gene_id, "ENSG[0-9]+")) # Remove version numbers
+kegg_tbl %>% 
+  summarise(
+    gs_size = dplyr::n(),
+    detected = sum(ensembl_gene %in% res_treatM$ensembl_gene),
+    .by = gs_name
+  ) %>% 
+  mutate(prop_detected = detected / gs_size) %>% 
+  arrange(prop_detected)
+```
+
+:::
+
+## Comparing To Our Data
+
+- Gene sets should be chosen wisely
+    + If few genes from a gene set are detected<br>$\implies$may not be suitable for cell-type under investigation
+- Should we restrict gene-sets to genes detected in our data?
+
+. . .
+
+- This can impact the analysis depending on the approach taken
+
+::: {.notes}
+- My take is that we should. For enrichment testing then we're comparing changed vs unchanged in the candidate genes. Otherwise, we're confounding detected with changed
+:::
+
+## Cleaning The Database
+
+```{r}
+kegg_tbl <- kegg_tbl %>% 
+  dplyr::filter(
+    sum(ensembl_gene %in% res_treatM$ensembl_gene) >  0.05 * dplyr::n(),
+    .by = gs_name
+  ) %>% 
+  dplyr::filter(
+    ensembl_gene %in% res_treatM$ensembl_gene
+  )
+```
+
+## A Cautionary Limitation
+
+- Not all genes are annotated to a gene set or pathway
+- Well-studied genes are annotated to gene sets <br>$\implies$ their pathways become interesting <br>$\implies$ studied further<br>$\implies$ rinse & repeat
+
+. . .
+
+```{r}
+dplyr::filter(kegg_tbl, gene_symbol == "SNAP91") %>% nrow()
+dplyr::filter(kegg_tbl, gene_symbol == "DUSP26") %>% nrow()
+```
+
+. . .
+
+- This doesn't mean these genes play an unimportant biological role!
+
+::: {.notes}
+- We can only use the available information
+- Poorly studied genes can be revelations but take large sums of money
+:::
+
+# GSEA {background-color="#3c3c44"}
+
+## Gene Set Enrichment Analysis
+
+- GSEA is a formally defined algorithm [@Subramanian2005-lx]
+    + Not commonly used in reference to the wider type of analysis
+- Doesn't require DEGs $\implies$ uses a ranked list
+    + Ranks based on significance only or incorporating direction
+    
+. . .
+    
+- Walks along the gene list obtaining a cumulative sum
+    + Can be set to start from either end
+    + Genes in a gene-set return a +ve score
+    + Genes not in a gene-set return a -ve score
+- Compared to permuted values to return $p$-values
+    + Results can change on repeat runs
+
+## Gene Set Enrichment Analysis
+
+- Can be run as a stand-alone tools
+- `R` implementation is `fgsea` [@fgsea2019]
+- Requires two inputs
+    + A `list` with genes separated by gene set
+    + A ranked-list of genes
+
+```{r}
+library(fgsea)
+kegg_by_gs <- kegg_tbl %>% 
+  split(.$gs_name) %>% 
+  lapply(pull, "ensembl_gene")
+length(kegg_by_gs)
+```
+
+## Gene Set Enrichment Analysis
+
+- To make a directional ranked list
+    + Multiply $-\log_{10}p$ by the sign of logFC
+
+```{r}
+ranks_treatM <- res_treatM %>% 
+  mutate(
+    rank = -sign(logFC) * log10(PValue),
+    rank = setNames(rank, ensembl_gene)
+  ) %>% 
+  arrange(rank) %>% 
+  pull(rank)
+head(ranks_treatM)
+```
+
+## Gene Set Enrichment Analysis
+
+```{r}
+set.seed(101)
+gsea_treatM <- fgsea(kegg_by_gs, ranks_treatM)
+gsea_treatM %>% arrange(pval)
+```
+
+::: {.notes}
+- Using `set.seed()` can aid reproducibility as the same random seed is used for permutations
+:::
+
+## Gene Set Enrichment Analysis
+
+- Adjusted p-values are FDR-adjusted by default
+- Enrichment Score (ES) is the peak value from the cumulative sum
+    + ES < 0 $\implies$ result is for genes at the negative end
+- Normalised Enrichment Score (NES) normalises across pathways
+- The size of the gene set is also given
+- The Leading Edge lists the genes more beyond the peak ES
+    + Might need to convert to gene names
+
+## Gene Set Enrichment Analysis
+
+- The enrichment score can be seen for any pathway
+
+```{r lysosome-barcode}
+plotEnrichment(kegg_by_gs$KEGG_LYSOSOME, ranks_treatM) +
+  ggtitle("KEGG_LYSOSOME")
+```
+
+## Gene Set Enrichment Analysis
+
+- Manual inspection can help us decide if we really believe the result
+   + GSEA tends *always* find something $\implies$ be conservative with results
+
+```{r all-dir-barcode}
+#| output-location: slide
+library(patchwork)
+gsea_treatM %>% 
+  arrange(pval) %>% 
+  dplyr::filter(padj < 0.05) %>% 
+  dplyr::slice(1:9) %>% # Ensure we don't get more than 9
+  pull(pathway) %>% 
+  lapply(
+    \(x) {
+      lab <- str_remove_all(x, "KEGG_")
+      plotEnrichment(kegg_by_gs[[x]], ranks_treatM) + ggtitle(lab)
+    }
+  ) %>% 
+  wrap_plots()
+```
+
+## Gene Set Enrichment Analysis
+
+::: {style="font-size: 90%;"}
+
+- A quick summary of the results
+
+```{r}
+id2symbol <- kegg_tbl %>% 
+  distinct(ensembl_gene, gene_symbol) %>% 
+  mutate(gene_symbol = setNames(gene_symbol, ensembl_gene)) %>% 
+  pull(gene_symbol)
+gsea_treatM %>% 
+  arrange(pval) %>% 
+  dplyr::filter(padj < 0.05) %>% 
+  mutate(leSize = map_int(leadingEdge, length)) %>% 
+  dplyr::select(pathway, NES, FDR = padj, size, leSize, leadingEdge) %>% 
+  mutate(
+    leadingEdge = lapply(leadingEdge, \(x) id2symbol[x])
+  )
+```
+
+:::
+
+::: {.notes}
+- ECM_RECEPTOR_INTERACTION and FOCAL_ADHESION seem to be capturing a similar gene set
+:::
+
+## Gene Set Enrichment Analysis
+
+- This approach has assumed that clustering by direction is biologically relevant
+- Implies that up-regulated genes $\implies$ pathway activation
+- Ranks can also be prepared using significance only ($-\log_{10}p$)
+    + Effectively detects *perturbed* gene sets with genes at both ends
+
+``` r
+fgsea(kegg_by_gs, ranks_by_sig, scoreType = "pos")
+```
+
+
+    
+## References

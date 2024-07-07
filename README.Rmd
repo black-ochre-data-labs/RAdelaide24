@@ -66,6 +66,6 @@ Beginners are welcome and intermediate users will also gain a great deal from at
 |  | Bulk RNA-Seq Analysis | [Differential Gene Expression](deg.html) | `r getTiming("deg_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
 | 1:30 | Bulk RNA-Seq Analysis (continued) | |  |
-| | Enrichment Analysis | | |
+| | Enrichment Analysis | [Finding the Underlying Biology](enrichment.html) | `r getTiming("enrichment_slides.qmd", 1.5)` |
 | 3:00  | *Afternoon Tea* | | |
 | 3:30  | Bring Your Own Data | | |
