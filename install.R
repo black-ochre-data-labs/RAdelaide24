@@ -1,18 +1,12 @@
 # Very basic installation script
 pkg <- c(
-  "AnnotationHub",
-  "Biostrings","BSgenome.Hsapiens.UCSC.hg38",
-  "cqn",
-  "DESeq2",
-  "edgeR", "ensembldb", "extraChIPs",
-  "GenomicFeatures", "Gviz", "glue", "ggrepel",
-  "here", "IRanges",
-  "lme4", "lmerTest",
-  "msigdbr",
-  "pander", "pheatmap", "plyranges",
-  "readxl", "remotes", "rtracklayer",
-  "S4Vectors",
-  "tidyverse"
+  "AnnotationHub", "Biostrings","BSgenome.Hsapiens.UCSC.hg38",
+  "cqn", "DESeq2",
+  "edgeR", "ensembldb", "extraChIPs", "fgsea",
+  "GenomicFeatures", "Gviz", "glue", "ggrepel","goseq",
+  "here", "IRanges", "lme4", "lmerTest", "msigdbr",
+  "pander", "patchwork", "pheatmap", "plyranges",
+  "readxl", "remotes", "rtracklayer", "S4Vectors", "tidyverse"
 )
 
 install.packages("BiocManager")
@@ -27,4 +21,4 @@ if (length(missing)) {
   stop("Exiting installation")
 }
 
-message("All packages appear to be installed")
+message("All packages appear to have installed successfully")
