@@ -5,8 +5,9 @@ author: "Dr Stevie Pederson"
 institute: |
   | Black Ochre Data Labs
   | Telethon Kids Institute
-date: "2024-07-9
+date: "2024-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -99,7 +100,7 @@ We'll start with some basic approaches $\rightarrow$ more sophisticated
 pigs$len
 ```
 
-- We'll discuss in great (!!!) detail later
+- We'll discuss in great (!!!) detail tomorrow
 
 ## Basic Plotting
 
@@ -123,7 +124,7 @@ plot(pigs$len)
     + `len ~ supp` $\implies$ `len` **depends on** `supp`
 
 ```{r}
-#| output-location: slide
+#| fig-show: hide
 ## Show length as being dependent on supp
 boxplot(len ~ supp, data = pigs)
 ```
@@ -137,10 +138,26 @@ boxplot(len ~ supp, data = pigs)
 - We can show `len` as depending on both using `+`
 
 ```{r}
-#| output-location: slide
-## Show length as being dependent on both supp & dose
+#| output-location: column
+## Show length as being dependent on 
+## both supp & dose
 boxplot(len ~ supp + dose, data = pigs)
 ```
+
+## Basic Plotting
+
+- Many more options e.g. `hist()`
+
+```{r}
+#| output-location: column
+#| fig-height: 5
+p <- c(runif(1e5), rbeta(1e4, 0.5, 1))
+hist(p, breaks = 100)
+```
+
+. . .
+
+- `ggplot2` is generally superior
 
 # Exploring Data Using `dplyr` {background-color="#3d3d40" background-image=https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
@@ -187,7 +204,7 @@ arrange(pigs, len)
 ## Sorting Data
 
 - Sorting is done in increasing order by default
-- To sort in decreasing order<br>$\implies$ wrap the column name inside the function `desc()`
+- To sort in descending order<br>$\implies$ wrap the column name inside the function `desc()`
     
 
 ```{r}
@@ -216,7 +233,19 @@ filter(pigs, dose == "High")
 . . .
 
 - The symbol `==` applies the test *is equal to*
+
+```{r}
+1:5 == 2
+```
+
+. . .
+
 - The converse is `!=` $\implies$ *is NOT equal to*
+
+```{r}
+1:5 != 2
+```
+
 
 ## Filtering Data
 
@@ -228,7 +257,7 @@ filter(pigs, dose != "High")
 
 ## Filtering Data
 
-- Multiple filters are separated by a comma
+- Multiple filters can be separated by a comma
 
 ```{r}
 filter(pigs, dose == "High", supp == "OJ")
@@ -242,7 +271,7 @@ filter(pigs, dose == "High", supp == "OJ")
 filter(pigs, len > 20)
 ```
 
-# Combining Functions {background-color="#3d3d40" background-image=assets/magrittr.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+# Combining Functions {background-color="#3d3d40" background-image=assets/magrittr.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 
 ## Combining Functions
@@ -266,8 +295,7 @@ Two options in `R`
 1. The native pipe `|>` 
     + Introduced in R v4.1 (2021)
 2. The *magrittr* pipe `%>%`
-    + Introduced around 2014
-    + In the package `magrittr`
+    + Introduced in the package `magrittr` (2014)
     
 . . .
 
@@ -293,7 +321,7 @@ Two options in `R`
 ## Combining Functions
 
 - Both `|>` and `%>%` take the output of one function<br>$\implies$ place it as the *first argument* of a second
-- Like sticking a pipe on the output of one<br>$\implies$ connecting it to the input of another
+- Like sticking a pipe on the output of one $\rightarrow$ connecting it to the input of another
 
 Compare the pair
 
@@ -332,8 +360,8 @@ pigs %>%
 . . .
 
 1. Calling `pigs` returns the object `pigs`
-2. We filter this input `(supp == "OJ")`
-3. Arrange the filtered object by `len`
+2. We filter this input `filter(supp == "OJ")`
+3. Arrange the filtered object by `arrange(len)`
 
 ## Combining Functions
 
@@ -353,7 +381,7 @@ pigs %>%
 - Can easily comment a line out in the middle 
     + Shortcut is `Ctrl/Cmd + Shift + C`
 - RStudio will automatically indent
-    + You can see where the steps start<br>$\implies$ where the process continues
+    + You can see where the steps start >$\implies$ where the process continues
     
 ## Adding Columns Using `mutate()`
 
@@ -363,9 +391,7 @@ pigs %>%
 ```{r}
 pigs %>% 
   arrange(len) %>% 
-  mutate(
-    rank = rank(len)
-  )
+  mutate(rank = rank(len))
 ```
 
 ## Adding Columns Using `mutate()`
@@ -381,9 +407,14 @@ pigs %>%
   )
 ```
 
+::: {.notes}
+When adding multiple columns $\implies$ each on a new line 
+:::
+
 ## Choosing Rows 
 
 - `slice()` can be used to choose specific rows *by position*
+    + Will never select rows beyond the range of the data
 - `filter()` selects rows *by values*
 
 ```{r}
@@ -393,7 +424,7 @@ pigs %>%
 
 ## Choosing Rows 
 
-- Can easily grab values for sorted data
+- Can easily grab values for sorted data<br>$\implies$ the 5 with shortest odontoblasts
 
 ```{r}
 pigs %>% 
@@ -459,18 +490,19 @@ pigs %>%
 
 ## Using Helpers
 
-```{r, results='hide'}
+```{r}
+#| output-location: column
 pigs %>% 
   select(ends_with("n"))
 ```
 
-. . .
+## Using Helpers
 
 ```{r}
+#| output-location: column
 pigs %>% 
   select(contains("e"))
 ```
-
 
 ## Using Helpers
 
@@ -499,7 +531,7 @@ pigs %>%
 ## Removing Repeated Entries
 
 - Adding `.keep_all` will keep the *first* value in all other columns
-- If we sort by `len` first<br>$\implies$ returns the lowest value for each combination
+- If we sort by `len` first >$\implies$ returns the lowest value for each combination
 
 ```{r}
 pigs %>% 
@@ -524,7 +556,7 @@ pigs %>%
 
 ## Creating Summaries
 
-- Summaries can be grouped
+- Summaries can be grouped by using the `.by` argument
 
 ```{r}
 pigs %>% 
@@ -556,7 +588,7 @@ pigs %>%
 
 - In `R` the function `c()` stands for *combine*
     + Or maybe *concatenate*...?
-    + Both are used on the help page
+    + Both terms are used on the help page
 - Joins multiple values into a single **vector**
     + We'll examine vectors thoroughly tomorrow
     
@@ -573,23 +605,25 @@ c(1, 20)
 - `distinct()` for removing repeat entries
 - `summarise()` to obtain summary tables
 
-# Joining Multiple Data Frames {background-color="#3d3d40"}
+# Combining Multiple Data Frames {background-color="#3d3d40"}
 
-## Joining Data
+## Combining Data Frames
 
 - We often need to combine data from multiple sources
-- `bind_rows()` can join multiple data frames
+- `bind_rows()` can combine the rows from multiple data frames
+    + Like stacking them on top of each other
     + Must have similar structure to be relevant
+    + Use case may be separate measurement sets held in different csv files
 
 . . .
 
 - `left_join()` can join two data frames
     + Looks for shared columns & common values
+    + Appends extra columns onto an existing object
     
-## Joining Data
+## Combining Data Frames
 
-- Grabbing the first and last 5 rows as an example
-    + Probably not very useful for `pigs`
+- Grabbing the first and last 5 rows as an example<br>(Probably not very useful for `pigs`...)
 
 ```{r}
 bind_rows(
@@ -598,7 +632,7 @@ bind_rows(
 )
 ```
 
-## Joining Data
+## Combining Data Frames
 
 - If we *name* the data frames $\implies$ can be added as a column
 
@@ -610,19 +644,22 @@ bind_rows(
 )
 ```
 
-## Joining Data
+## Joining Data Frames
 
-- Joining by rows assumes there's at least *some* common columns
-- Just appends data from one onto the other
+- Joining (or merging) uses shared columns between data frames
+    + Finds common values in the shared columns
+    + Best for names, labels etc (not numbers)
+- Appends data from one `data.frame` onto the other
 
 . . .
 
 - If adding data relevant for specific rows we use `*_join()`
     + `left_join()`, `right_join()`
     + `inner_join()`, `full_join()`
-- Just adding columns using `bind_cols()` $\implies$ meaningless data
+- If adding independent columns $\implies$ `bind_cols()`
+    + Will be no connection between data frames
 
-## Joining Data
+## Joining Data Frames
 
 - `pigs` isn't great for this
 - We'll use two data frames already in `R`
@@ -653,13 +690,14 @@ band_instruments
 
 <br>
 
-- These are similar and related [*but different*]{.fragment}
+- These are similar and related 
+- Some shared values but some differences
 
 ## Joining Data
 
-- `left_join()` takes the *first* (i.e. left) data frame as the scaffold
-    + Adds the second (i.e. *right*) data frame
-    + If no data in the right df $\implies$ `NA`
+- `left_join()` takes the *first* (i.e. left) `data.frame` as the scaffold
+    + Adds the second (i.e. *right*) `data.frame`
+    + If no matching values in the right `data.frame` $\implies$ `NA`
 
 ```{r}
 band_members %>% 
@@ -674,8 +712,8 @@ band_members %>%
 ## Joining Data
 
 - `right_join()` takes the *second* (i.e. right) as the scaffold
-    + Adds the first (i.e. *left*) data frame
-    + If no data in the left df $\implies$ `NA`
+    + Adds the first (i.e. *left*) `data.frame`
+    + If no matching values in the left `data.frame` $\implies$ `NA`
     
 ```{r}
 band_members %>% 
@@ -706,8 +744,8 @@ band_members %>%
 ::: {style="font-size: 90%;"}
 
 - One final trick is `case_when()`
-- Not restricted to missing values $\implies$ use any logical test
-- Where the test is `TRUE`, the value on the RHS of "`~`" is used
+    + Like a multi-level `if else` statement
+- Where the logical test is `TRUE`, the value on the RHS of "`~`" is used
     + Test are conducted sequentially
     + Once `TRUE` $\implies$ no more tests
 
@@ -724,13 +762,17 @@ band_members %>%
 
 :::
 
-## Closing Comments
+::: {.notes}
 
-::: {style="font-size: 90%;"}
+- Not restricted to missing values $\implies$ use any logical test
+
+:::
+
+## Closing Comments
 
 - Many functions here have common names:
     + `select()`, `filter()` etc
-    + Based on SQL processes
+    + Based on long-established SQL processes
     
 ::: {.fragment}
 
@@ -739,12 +781,18 @@ band_members %>%
 
 ::: 
 
-::: {.fragment}
+## Closing Comments
 
 - Call directly from the package using the `namespace`
     + `dplyr::filter()` instead of `filter()`
     + `dplyr::select()` instead of `select()`
-    
-:::
+    + `dplyr::slice()` instead of `slice()`
+- I use these three *every time* to be safe
 
-:::
+. . .
+
+- A `namespace` is simply the list of functions made visible in a package
+- Calling directly from a `namespace` is quite acceptable
+    + Can look clunky but is efficient & good practice
+    + Very common inside package functions
+

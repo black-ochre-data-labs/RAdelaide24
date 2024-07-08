@@ -86,7 +86,7 @@ http://blackochrelabs.au/RAdelaide24
     + MCMC Engine written in C & R (No R Studio. No `Rcpp`)
     
 ::: {.notes}
-Make sure to acknowledge Kaurna Land!!!
+- Best week ever: NAIDOC week, NB Awareness Week + R coding
 :::
 
 ## Who Am I? 

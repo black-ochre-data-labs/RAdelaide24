@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Dr Stevie Pederson">
-  <meta name="dcterms.date" content="2024-07-11">
+  <meta name="dcterms.date" content="2024-07-09">
   <title>Exploring Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -407,7 +407,7 @@ Dr Stevie Pederson
     </div>
 </div>
 
-  <p class="date">July 11, 2024</p>
+  <p class="date">July 9, 2024</p>
 </section>
 <section>
 <section id="exploring-our-data" class="title-slide slide level1 center">
@@ -458,7 +458,7 @@ Dr Stevie Pederson
 </div>
 </div>
 <ul>
-<li>We’ll discuss in great (!!!) detail later</li>
+<li>We’ll discuss in great (!!!) detail tomorrow</li>
 </ul>
 </section>
 <section id="basic-plotting-2" class="slide level2">
@@ -502,32 +502,23 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Show length as being dependent on supp</span></span>
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(len <span class="sc">~</span> supp, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
 <div class="fragment">
 <ul>
 <li>Try changing <code>supp</code> to <code>dose</code></li>
 </ul>
 </div>
 </section>
-<section id="basic-boxplots-output" class="slide level2 output-location-slide"><h2>Basic Boxplots</h2><div class="cell output-location-slide" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="exploring_slides_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-</figure>
-</div>
-</div>
-</div></section><section id="basic-boxplots-1" class="slide level2">
+<section id="basic-boxplots-1" class="slide level2">
 <h2>Basic Boxplots</h2>
 <ul>
 <li>We can show <code>len</code> as depending on both using <code>+</code></li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Show length as being dependent on both supp &amp; dose</span></span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-</section><section id="basic-boxplots-1-output" class="slide level2 output-location-slide"><h2>Basic Boxplots</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Show length as being dependent on </span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## both supp &amp; dose</span></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -535,7 +526,34 @@ Dr Stevie Pederson
 </figure>
 </div>
 </div>
-</div></section></section>
+</div>
+</div>
+</section>
+<section id="basic-plotting-3" class="slide level2">
+<h2>Basic Plotting</h2>
+<ul>
+<li>Many more options e.g.&nbsp;<code>hist()</code></li>
+</ul>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="fl">1e5</span>), <span class="fu">rbeta</span>(<span class="fl">1e4</span>, <span class="fl">0.5</span>, <span class="dv">1</span>))</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(p, <span class="at">breaks =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exploring_slides_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>ggplot2</code> is generally superior</li>
+</ul>
+</div>
+</section></section>
 <section>
 <section id="exploring-data-using-dplyr" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
 <h1>Exploring Data Using <code>dplyr</code></h1>
@@ -580,8 +598,8 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Sort by length</span></span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Sort by length</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
      len supp  dose 
@@ -613,11 +631,11 @@ Dr Stevie Pederson
 <h2>Sorting Data</h2>
 <ul>
 <li>Sorting is done in increasing order by default</li>
-<li>To sort in decreasing order<br><span class="math inline">\(\implies\)</span> wrap the column name inside the function <code>desc()</code></li>
+<li>To sort in descending order<br><span class="math inline">\(\implies\)</span> wrap the column name inside the function <code>desc()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Sort by length, in descending order</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, <span class="fu">desc</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Sort by length, in descending order</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, <span class="fu">desc</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
      len supp  dose 
@@ -642,8 +660,8 @@ Dr Stevie Pederson
 <li><code>dplyr</code> also contains the function <code>filter()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Just subset to the high dose</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">==</span> <span class="st">"High"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Just subset to the high dose</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">==</span> <span class="st">"High"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
      len supp  dose 
@@ -678,7 +696,7 @@ Dr Stevie Pederson
 <li>Can only return the values <code>TRUE</code> or <code>FALSE</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">&gt;</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">&gt;</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
 </div>
@@ -686,8 +704,24 @@ Dr Stevie Pederson
 <div class="fragment">
 <ul>
 <li>The symbol <code>==</code> applies the test <em>is equal to</em></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">==</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE  TRUE FALSE FALSE FALSE</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
 <li>The converse is <code>!=</code> <span class="math inline">\(\implies\)</span> <em>is NOT equal to</em></li>
 </ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">!=</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+</div>
+</div>
 </div>
 </section>
 <section id="filtering-data-2" class="slide level2">
@@ -696,7 +730,7 @@ Dr Stevie Pederson
 <li>We could <em>exclude</em> the high dose values instead</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">!=</span> <span class="st">"High"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">!=</span> <span class="st">"High"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 40 × 3
      len supp  dose 
@@ -718,10 +752,10 @@ Dr Stevie Pederson
 <section id="filtering-data-3" class="slide level2">
 <h2>Filtering Data</h2>
 <ul>
-<li>Multiple filters are separated by a comma</li>
+<li>Multiple filters can be separated by a comma</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">==</span> <span class="st">"High"</span>, supp <span class="sc">==</span> <span class="st">"OJ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, dose <span class="sc">==</span> <span class="st">"High"</span>, supp <span class="sc">==</span> <span class="st">"OJ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
      len supp  dose 
@@ -745,7 +779,7 @@ Dr Stevie Pederson
 <li>Can also filter on numeric values</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, len <span class="sc">&gt;</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(pigs, len <span class="sc">&gt;</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 28 × 3
      len supp  dose 
@@ -765,7 +799,7 @@ Dr Stevie Pederson
 </div>
 </section></section>
 <section>
-<section id="combining-functions" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="assets/magrittr.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="70% 50%">
+<section id="combining-functions" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="assets/magrittr.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="80% 50%">
 <h1>Combining Functions</h1>
 
 </section>
@@ -801,8 +835,7 @@ Dr Stevie Pederson
 </ul></li>
 <li>The <em>magrittr</em> pipe <code>%&gt;%</code>
 <ul>
-<li>Introduced around 2014</li>
-<li>In the package <code>magrittr</code></li>
+<li>Introduced in the package <code>magrittr</code> (2014)</li>
 </ul></li>
 </ol>
 <div class="fragment">
@@ -833,14 +866,14 @@ Dr Stevie Pederson
 <h2>Combining Functions</h2>
 <ul>
 <li>Both <code>|&gt;</code> and <code>%&gt;%</code> take the output of one function<br><span class="math inline">\(\implies\)</span> place it as the <em>first argument</em> of a second</li>
-<li>Like sticking a pipe on the output of one<br><span class="math inline">\(\implies\)</span> connecting it to the input of another</li>
+<li>Like sticking a pipe on the output of one <span class="math inline">\(\rightarrow\)</span> connecting it to the input of another</li>
 </ul>
 <p>Compare the pair</p>
 <div class="fragment">
 <div class="columns">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(pigs, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
      len supp  dose 
@@ -860,7 +893,7 @@ Dr Stevie Pederson
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
      len supp  dose 
@@ -888,15 +921,15 @@ Dr Stevie Pederson
 <li>Now we can join multiple functions together</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ol type="1">
 <li>Calling <code>pigs</code> returns the object <code>pigs</code></li>
-<li>We filter this input <code>(supp == "OJ")</code></li>
-<li>Arrange the filtered object by <code>len</code></li>
+<li>We filter this input <code>filter(supp == "OJ")</code></li>
+<li>Arrange the filtered object by <code>arrange(len)</code></li>
 </ol>
 </div>
 </section>
@@ -904,9 +937,9 @@ Dr Stevie Pederson
 <h2>Combining Functions</h2>
 <p>Note how I wrote every function on a new line</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -918,7 +951,7 @@ Dr Stevie Pederson
 </ul></li>
 <li>RStudio will automatically indent
 <ul>
-<li>You can see where the steps start<br><span class="math inline">\(\implies\)</span> where the process continues</li>
+<li>You can see where the steps start &gt;<span class="math inline">\(\implies\)</span> where the process continues</li>
 </ul></li>
 </ul>
 </div>
@@ -932,11 +965,9 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len)</span>
-<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 4
      len supp  dose   rank
@@ -962,11 +993,11 @@ Dr Stevie Pederson
 <li>Can refer to them when adding any further columns</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
-<span id="cb28-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
-<span id="cb28-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
+<span id="cb33-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
+<span id="cb33-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 5
      len supp  dose   rank quantile
@@ -984,16 +1015,32 @@ Dr Stevie Pederson
 # ℹ 50 more rows</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>When adding multiple columns <span class="math inline">\(\implies\)</span> each on a new line</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="choosing-rows" class="slide level2">
 <h2>Choosing Rows</h2>
 <ul>
-<li><code>slice()</code> can be used to choose specific rows <em>by position</em></li>
+<li><code>slice()</code> can be used to choose specific rows <em>by position</em>
+<ul>
+<li>Will never select rows beyond the range of the data</li>
+</ul></li>
 <li><code>filter()</code> selects rows <em>by values</em></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     len supp  dose 
@@ -1009,12 +1056,12 @@ Dr Stevie Pederson
 <section id="choosing-rows-1" class="slide level2">
 <h2>Choosing Rows</h2>
 <ul>
-<li>Can easily grab values for sorted data</li>
+<li>Can easily grab values for sorted data<br><span class="math inline">\(\implies\)</span> the 5 with shortest odontoblasts</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     len supp  dose 
@@ -1036,8 +1083,8 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 1
      len
@@ -1062,8 +1109,8 @@ Dr Stevie Pederson
 <li>Very useful for reordering columns when creating tables</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
    supp  dose    len
@@ -1088,12 +1135,12 @@ Dr Stevie Pederson
 <li>Remove columns by placing <code>-</code> before the name</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
-<span id="cb38-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
-<span id="cb38-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
+<span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 4
      len supp  dose  quantile
@@ -1118,12 +1165,12 @@ Dr Stevie Pederson
 <li>Or we can just select everything <em>but</em> that column</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
-<span id="cb40-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
-<span id="cb40-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, len, quantile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
+<span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
+<span id="cb45-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, len, quantile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 4
    supp  dose    len quantile
@@ -1149,8 +1196,8 @@ Dr Stevie Pederson
 <li><code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>, <code>everything()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 1
    dose 
@@ -1171,14 +1218,37 @@ Dr Stevie Pederson
 </section>
 <section id="using-helpers-1" class="slide level2">
 <h2>Using Helpers</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">"n"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">"n"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 1
+     len
+   &lt;dbl&gt;
+ 1   4.2
+ 2  11.5
+ 3   7.3
+ 4   5.8
+ 5   6.4
+ 6  10  
+ 7  11.2
+ 8  11.2
+ 9   5.2
+10   7  
+# ℹ 50 more rows</code></pre>
 </div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"e"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="using-helpers-2" class="slide level2">
+<h2>Using Helpers</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"e"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 2
      len dose 
@@ -1198,18 +1268,18 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="using-helpers-2" class="slide level2">
+<section id="using-helpers-3" class="slide level2">
 <h2>Using Helpers</h2>
 <ul>
 <li><code>everything()</code> is great for putting columns first then the rest…</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
-<span id="cb47-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
-<span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">rank</span>(len),</span>
+<span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile =</span> rank <span class="sc">/</span> <span class="fu">max</span>(rank)</span>
+<span id="cb53-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(supp, dose, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 5
    supp  dose    len  rank quantile
@@ -1238,8 +1308,8 @@ Dr Stevie Pederson
 <li>Will drop any other columns by default</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(supp, dose)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(supp, dose)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   supp  dose 
@@ -1257,12 +1327,12 @@ Dr Stevie Pederson
 <h2>Removing Repeated Entries</h2>
 <ul>
 <li>Adding <code>.keep_all</code> will keep the <em>first</em> value in all other columns</li>
-<li>If we sort by <code>len</code> first<br><span class="math inline">\(\implies\)</span> returns the lowest value for each combination</li>
+<li>If we sort by <code>len</code> first &gt;<span class="math inline">\(\implies\)</span> returns the lowest value for each combination</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(supp, dose, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(len) <span class="sc">%&gt;%</span> </span>
+<span id="cb57-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(supp, dose, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
     len supp  dose 
@@ -1283,12 +1353,12 @@ Dr Stevie Pederson
 <li>Filtering for OJ allows us to get some key summary statistics</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
-<span id="cb53-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len)</span>
-<span id="cb53-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(supp <span class="sc">==</span> <span class="st">"OJ"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb59-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
+<span id="cb59-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len)</span>
+<span id="cb59-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
      mn    sd
@@ -1300,15 +1370,15 @@ Dr Stevie Pederson
 <section id="creating-summaries-1" class="slide level2">
 <h2>Creating Summaries</h2>
 <ul>
-<li>Summaries can be grouped</li>
+<li>Summaries can be grouped by using the <code>.by</code> argument</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
-<span id="cb55-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len),</span>
-<span id="cb55-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> supp</span>
-<span id="cb55-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
+<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len),</span>
+<span id="cb61-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> supp</span>
+<span id="cb61-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   supp     mn    sd
@@ -1324,12 +1394,12 @@ Dr Stevie Pederson
 <li>Summaries can be grouped by multiple columns</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
-<span id="cb57-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb57-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
-<span id="cb57-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len),</span>
-<span id="cb57-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
-<span id="cb57-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mn =</span> <span class="fu">mean</span>(len),</span>
+<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(len),</span>
+<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
+<span id="cb63-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   supp  dose     mn    sd
@@ -1354,7 +1424,7 @@ Dr Stevie Pederson
 <li>In <code>R</code> the function <code>c()</code> stands for <em>combine</em>
 <ul>
 <li>Or maybe <em>concatenate</em>…?</li>
-<li>Both are used on the help page</li>
+<li>Both terms are used on the help page</li>
 </ul></li>
 <li>Joins multiple values into a single <strong>vector</strong>
 <ul>
@@ -1362,7 +1432,7 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1 20</code></pre>
 </div>
@@ -1382,17 +1452,19 @@ Dr Stevie Pederson
 </ul>
 </section></section>
 <section>
-<section id="joining-multiple-data-frames" class="title-slide slide level1 center" data-background-color="#3d3d40">
-<h1>Joining Multiple Data Frames</h1>
+<section id="combining-multiple-data-frames" class="title-slide slide level1 center" data-background-color="#3d3d40">
+<h1>Combining Multiple Data Frames</h1>
 
 </section>
-<section id="joining-data" class="slide level2">
-<h2>Joining Data</h2>
+<section id="combining-data-frames" class="slide level2">
+<h2>Combining Data Frames</h2>
 <ul>
 <li>We often need to combine data from multiple sources</li>
-<li><code>bind_rows()</code> can join multiple data frames
+<li><code>bind_rows()</code> can combine the rows from multiple data frames
 <ul>
+<li>Like stacking them on top of each other</li>
 <li>Must have similar structure to be relevant</li>
+<li>Use case may be separate measurement sets held in different csv files</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -1400,23 +1472,21 @@ Dr Stevie Pederson
 <li><code>left_join()</code> can join two data frames
 <ul>
 <li>Looks for shared columns &amp; common values</li>
+<li>Appends extra columns onto an existing object</li>
 </ul></li>
 </ul>
 </div>
 </section>
-<section id="joining-data-1" class="slide level2">
-<h2>Joining Data</h2>
+<section id="combining-data-frames-1" class="slide level2">
+<h2>Combining Data Frames</h2>
 <ul>
-<li>Grabbing the first and last 5 rows as an example
-<ul>
-<li>Probably not very useful for <code>pigs</code></li>
-</ul></li>
+<li>Grabbing the first and last 5 rows as an example<br>(Probably not very useful for <code>pigs</code>…)</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(pigs, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(pigs, <span class="dv">55</span><span class="sc">:</span><span class="dv">60</span>)</span>
-<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(pigs, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(pigs, <span class="dv">55</span><span class="sc">:</span><span class="dv">60</span>)</span>
+<span id="cb67-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 3
      len supp  dose 
@@ -1435,17 +1505,17 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="joining-data-2" class="slide level2">
-<h2>Joining Data</h2>
+<section id="combining-data-frames-2" class="slide level2">
+<h2>Combining Data Frames</h2>
 <ul>
 <li>If we <em>name</em> the data frames <span class="math inline">\(\implies\)</span> can be added as a column</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">top5 =</span> <span class="fu">slice</span>(pigs, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">bottom5 =</span> <span class="fu">slice</span>(pigs, <span class="dv">55</span><span class="sc">:</span><span class="dv">60</span>),</span>
-<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"source"</span></span>
-<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">top5 =</span> <span class="fu">slice</span>(pigs, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">bottom5 =</span> <span class="fu">slice</span>(pigs, <span class="dv">55</span><span class="sc">:</span><span class="dv">60</span>),</span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"source"</span></span>
+<span id="cb69-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 4
    source    len supp  dose 
@@ -1464,11 +1534,15 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="joining-data-3" class="slide level2">
-<h2>Joining Data</h2>
+<section id="joining-data-frames" class="slide level2">
+<h2>Joining Data Frames</h2>
 <ul>
-<li>Joining by rows assumes there’s at least <em>some</em> common columns</li>
-<li>Just appends data from one onto the other</li>
+<li>Joining (or merging) uses shared columns between data frames
+<ul>
+<li>Finds common values in the shared columns</li>
+<li>Best for names, labels etc (not numbers)</li>
+</ul></li>
+<li>Appends data from one <code>data.frame</code> onto the other</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -1477,12 +1551,15 @@ Dr Stevie Pederson
 <li><code>left_join()</code>, <code>right_join()</code></li>
 <li><code>inner_join()</code>, <code>full_join()</code></li>
 </ul></li>
-<li>Just adding columns using <code>bind_cols()</code> <span class="math inline">\(\implies\)</span> meaningless data</li>
+<li>If adding independent columns <span class="math inline">\(\implies\)</span> <code>bind_cols()</code>
+<ul>
+<li>Will be no connection between data frames</li>
+</ul></li>
 </ul>
 </div>
 </section>
-<section id="joining-data-4" class="slide level2">
-<h2>Joining Data</h2>
+<section id="joining-data-frames-1" class="slide level2">
+<h2>Joining Data Frames</h2>
 <ul>
 <li><code>pigs</code> isn’t great for this</li>
 <li>We’ll use two data frames already in <code>R</code></li>
@@ -1491,7 +1568,7 @@ Dr Stevie Pederson
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name  band   
@@ -1503,7 +1580,7 @@ Dr Stevie Pederson
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name  plays 
@@ -1519,22 +1596,23 @@ Dr Stevie Pederson
 <div class="fragment">
 <p><br></p>
 <ul>
-<li>These are similar and related <span class="fragment"><em>but different</em></span></li>
+<li>These are similar and related</li>
+<li>Some shared values but some differences</li>
 </ul>
 </div>
 </section>
-<section id="joining-data-5" class="slide level2">
+<section id="joining-data" class="slide level2">
 <h2>Joining Data</h2>
 <ul>
-<li><code>left_join()</code> takes the <em>first</em> (i.e.&nbsp;left) data frame as the scaffold
+<li><code>left_join()</code> takes the <em>first</em> (i.e.&nbsp;left) <code>data.frame</code> as the scaffold
 <ul>
-<li>Adds the second (i.e.&nbsp;<em>right</em>) data frame</li>
-<li>If no data in the right df <span class="math inline">\(\implies\)</span> <code>NA</code></li>
+<li>Adds the second (i.e.&nbsp;<em>right</em>) <code>data.frame</code></li>
+<li>If no matching values in the right <code>data.frame</code> <span class="math inline">\(\implies\)</span> <code>NA</code></li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
-<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   name  band    plays 
@@ -1560,18 +1638,18 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="joining-data-6" class="slide level2">
+<section id="joining-data-1" class="slide level2">
 <h2>Joining Data</h2>
 <ul>
 <li><code>right_join()</code> takes the <em>second</em> (i.e.&nbsp;right) as the scaffold
 <ul>
-<li>Adds the first (i.e.&nbsp;<em>left</em>) data frame</li>
-<li>If no data in the left df <span class="math inline">\(\implies\)</span> <code>NA</code></li>
+<li>Adds the first (i.e.&nbsp;<em>left</em>) <code>data.frame</code></li>
+<li>If no matching values in the left <code>data.frame</code> <span class="math inline">\(\implies\)</span> <code>NA</code></li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
-<span id="cb71-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   name  band    plays 
@@ -1582,14 +1660,14 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="joining-data-7" class="slide level2">
+<section id="joining-data-2" class="slide level2">
 <h2>Joining Data</h2>
 <ul>
 <li><code>full_join()</code> incorporates all data combinations</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
-<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
+<span id="cb79-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name  band    plays 
@@ -1601,14 +1679,14 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="joining-data-8" class="slide level2">
+<section id="joining-data-3" class="slide level2">
 <h2>Joining Data</h2>
 <ul>
 <li><code>inner_join()</code> only return complete combinations</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
-<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
+<span id="cb81-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(band_instruments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   name  band    plays 
@@ -1622,23 +1700,25 @@ Dr Stevie Pederson
 <h2>Missing Data</h2>
 <div style="font-size: 90%;">
 <ul>
-<li>One final trick is <code>case_when()</code></li>
-<li>Not restricted to missing values <span class="math inline">\(\implies\)</span> use any logical test</li>
-<li>Where the test is <code>TRUE</code>, the value on the RHS of “<code>~</code>” is used
+<li>One final trick is <code>case_when()</code>
+<ul>
+<li>Like a multi-level <code>if else</code> statement</li>
+</ul></li>
+<li>Where the logical test is <code>TRUE</code>, the value on the RHS of “<code>~</code>” is used
 <ul>
 <li>Test are conducted sequentially</li>
 <li>Once <code>TRUE</code> <span class="math inline">\(\implies\)</span> no more tests</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
-<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(band_instruments) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb77-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">plays =</span> <span class="fu">case_when</span>(</span>
-<span id="cb77-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(plays) <span class="sc">~</span> <span class="st">"the role of a man 40 years younger"</span>,</span>
-<span id="cb77-6"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(plays) <span class="sc">~</span> plays</span>
-<span id="cb77-7"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb77-8"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="" aria-hidden="true" tabindex="-1"></a>band_members <span class="sc">%&gt;%</span> </span>
+<span id="cb83-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(band_instruments) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb83-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">plays =</span> <span class="fu">case_when</span>(</span>
+<span id="cb83-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(plays) <span class="sc">~</span> <span class="st">"the role of a man 40 years younger"</span>,</span>
+<span id="cb83-6"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(plays) <span class="sc">~</span> plays</span>
+<span id="cb83-7"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb83-8"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   name  band    plays                             
@@ -1649,15 +1729,29 @@ Dr Stevie Pederson
 </div>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>Not restricted to missing values <span class="math inline">\(\implies\)</span> use any logical test</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="closing-comments" class="slide level2">
 <h2>Closing Comments</h2>
-<div style="font-size: 90%;">
 <ul>
 <li>Many functions here have common names:
 <ul>
 <li><code>select()</code>, <code>filter()</code> etc</li>
-<li>Based on SQL processes</li>
+<li>Based on long-established SQL processes</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -1666,20 +1760,32 @@ Dr Stevie Pederson
 <li>Can create conflicts <span class="math inline">\(\implies\)</span> code ‘inexplicably’ stops working</li>
 </ul>
 </div>
-<div class="fragment">
+</section>
+<section id="closing-comments-1" class="slide level2">
+<h2>Closing Comments</h2>
 <ul>
 <li>Call directly from the package using the <code>namespace</code>
 <ul>
 <li><code>dplyr::filter()</code> instead of <code>filter()</code></li>
 <li><code>dplyr::select()</code> instead of <code>select()</code></li>
+<li><code>dplyr::slice()</code> instead of <code>slice()</code></li>
+</ul></li>
+<li>I use these three <em>every time</em> to be safe</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>A <code>namespace</code> is simply the list of functions made visible in a package</li>
+<li>Calling directly from a <code>namespace</code> is quite acceptable
+<ul>
+<li>Can look clunky but is efficient &amp; good practice</li>
+<li>Very common inside package functions</li>
 </ul></li>
 </ul>
-</div>
-</div>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
+</div>
 </div>
 </div>
 </section></section>

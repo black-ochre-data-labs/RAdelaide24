@@ -22,7 +22,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00  | Welcome To Country                   |                                              | 15min                           |
 |       | Installation Help                    |                                              | 15min                           |
 |       | Introducing R & RStudio              | [Introduction](intro.html)                   | 40min                           |
-|       | Spreadsheet-Like Data                | [Data Import](import.html)                   | 60min                           |
+|       | Spreadsheet-Like Data                | [Data Import](import.html)                   | 50min                           |
 | 10:30 | *Morning Tea*                        |                                              |                                 |
 | 11:00 | Spreadsheet-Like Data (continued)    |                                              |                                 |
 |       | Exploring & Manipulating Data        | [Data Exploration](exploring.html)           | 60min                           |
