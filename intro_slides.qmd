@@ -155,6 +155,7 @@ Thanks to everyone for sending your information through regarding dietary needs 
     + Understanding Data
 - Enable use of modern analytic approaches <br>$\implies$ reproducible research
 - Not just *how* $\implies$ a deep understanding of underlying structures
+- The more code you type the more you learn
 
 # A Brief Introduction to R {background-color="#3d3d40" background-image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png background-size="40%" background-opacity="0.5" background-position='80% 50%'}
 

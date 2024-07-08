@@ -1,5 +1,5 @@
 ---
-title: "Visualisation With `ggplot2`"
+title: "Introductory Visualisation"
 subtitle: "RAdelaide 2024"
 author: "Dr Stevie Pederson"
 institute: |
@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2024-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -17,8 +18,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -54,9 +55,11 @@ knitr:
     warning: false
     message: false
     fig.align: center  
-    fig.height: 8
-    fig.width: 10
+    fig.height: 6
+    fig.width: 8
 ---
+
+# Visualisation With<br>`ggplot2` {background-color="#3d3d40" background-image=https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 ```{r load-pigs, echo=FALSE}
 library(tidyverse)
@@ -65,23 +68,34 @@ pigs <- read_csv("data/pigs.csv")
 
 ## The Grammar of Graphics
 
-- `ggplot2` has become the industry standard for visualisation
+- `ggplot2` has become the industry standard for visualisation [@wickham2016-gg]
 - Core & essential part of the `tidyverse`
 - Developed by Hadley Wickham as his PhD thesis
-- An implementation of *The Grammar of Graphics* ^[Wilkinson L. The Grammar of Graphics. Springer New York; 18 p.]
+- An implementation of *The Grammar of Graphics* [@Wilkinson2005-ku]
     + Breaks visualisation into *layers*
 
-![](https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png){.absolute bottom=0 right=0 width="250"}
 
 ## The Grammar of Graphics
 
+:::: {.columns}
+
+::: {.column}
+
 ![](assets/gg_cover.png){.absolute left=0 width="375"}
 
-![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png){.absolute right=0 width="630"}
-
-::: {.aside}
-Layers image taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html
 :::
+
+::: {.column}
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png){.absolute right=0 top=150 width="630"}
+
+::: {style="font-size: 60%;"}
+Taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html
+:::
+
+:::
+
+::::
 
 ## The Grammar of Graphics 
 
@@ -92,7 +106,7 @@ Everything is added in layers
 
 ::: {.column}
 
-::: {style="font-size: 80%;"}
+::: {style="font-size: 85%;"}
 
 ::: {.fragment}
 
@@ -111,6 +125,12 @@ Everything is added in layers
     
 :::
 
+::: {.fragment}
+
+3. Geometric Objects
+    + points, lines, boxplot, histogram, bars etc
+    
+:::
 
 :::
 
@@ -121,12 +141,7 @@ Everything is added in layers
 ::: {style="font-size: 85%;"}
 
 
-::: {.fragment}
 
-3. Geometric Objects
-    + points, lines, boxplot, histogram, bars etc
-    
-:::
 
 ::: {.fragment}
     
@@ -143,13 +158,15 @@ Everything is added in layers
 ::: {.fragment}
     
 6. Coordinates
-    + polar, map, cartesian
+    + polar, map, cartesian etc
+    + defaults to cartesian
 
 :::
 
 ::: {.fragment}
     
 7. Themes: overall layout
+    + default themes automatically applied
 
 :::
 
@@ -164,7 +181,7 @@ Everything is added in layers
 - Using the example dataset `cars`
 - Two columns:
     + `speed` (mph)
-    + `distance` to stop
+    + `distance` each car takes to stop
 - We can make a classic `x` vs `y` plot using points
 
 . . . 
@@ -228,7 +245,7 @@ cars %>% # Layer 1: Data
     + Layer 4: No facets
     + Layer 5: No summary statistics
     + Layer 6: Cartesian co-ordinate system
-    + Layer 7: Crappy theme with grey background [&#129326;]{.fragment}
+    + Layer 7: Crappy theme with grey background &#129326;
     
 ::: {.notes}
 Axis limits are automatically determined
@@ -322,7 +339,7 @@ pigs %>%
 - `dose` is a clearly a categorical variable with an order
 - In `R` these are known as `factors`
     + Categories referred to as `levels`
-    + Will learn in detail tomorrow
+    + Will learn in detail in the next session
 
 . . .
 
@@ -331,7 +348,7 @@ pigs %>%
 
 ## Modifying Data Prior to Plotting
 
-- Notice when we do this, the column is now `fct`
+- Notice the column is now described as `fct`
 
 ```{r}
 pigs %>% 
@@ -339,7 +356,7 @@ pigs %>%
 ```
 
 
-. . .
+## Modifying Data Prior to Plotting
 
 - Now boxplots will appear in order
 
@@ -355,9 +372,8 @@ pigs %>%
 
 ## Modifying Data Prior to Plotting
 
-- We can also plot quanntiles with a few prior steps
-- First rank the `len` values
-- Then turn into quantiles
+- We can also plot quantiles with a few prior steps
+- First rank the `len` values $\implies$ turn into quantiles
 
 ```{r}
 pigs %>% 
@@ -407,7 +423,7 @@ We've already seen everything up to facets so let's try a summary statistic
 ## Modifying Data Prior to Plotting
 
 - `geom_smooth()` will add a line of best fit
-    + Almost identical to `stat_smooth()`
+    + Aliases `stat_smooth()`
 - Automatically chosen but can be `lm`, `loess` or `gam`
 
 ```{r}
@@ -550,7 +566,7 @@ pigs %>%
 
 ## RColorBrewer Palettes
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.align='left'}
 RColorBrewer::display.brewer.all()
 ```
 
@@ -773,3 +789,4 @@ ggsave("myplot.png", width = 7, height = 7, units = "in")
 
 A fabulous resource: https://r-graphics.org/
 
+## References

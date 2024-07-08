@@ -59,7 +59,7 @@ knitr:
     fig.width: 8
 ---
 
-# Exploring Our Data
+# Exploring Our Data {background-color="#3d3d40"}
 
 ```{r load-pigs, echo=FALSE}
 library(tidyverse)
