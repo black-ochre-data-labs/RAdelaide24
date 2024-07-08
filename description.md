@@ -14,7 +14,7 @@ As an active member of the wider Bioconductor community, Stevie has also helped 
 Their research primarily focuses on transcriptomics and gene regulation as part of the PROPHECY project, investigating Type II Diabetes and complications within the Indigenous Australian community.
 Stevie was also Coordinator of the Bioinformatics Hub at the University of Adelaide from 2014-2020.
 
-Additional support will be provided by A/Prof Jimmy Breen, Dr Liza Kretzschmar and Holly Massacci (Black Ochre Data Labs, Telethon Kids Institute), as well as Dr Paul Wang and Dr John Salomon (South Australian Genomics Centre)
+Additional support will be provided by A/Prof Jimmy Breen, Dr Liza Kretzschmar and Holly Massacci (Black Ochre Data Labs, Telethon Kids Institute), as well as Dr Paul Wang and Dr John Salamon (South Australian Genomics Centre)
 
 
 ## Course Outline
