@@ -13,6 +13,8 @@ This will be a three day course to enable researchers to develop their
 capabilities using the language `R`. Beginners are welcome and
 intermediate users will also gain a great deal from attending.
 
+Data for the workshop is available as a zip file [here](data.zip)
+
 ## Provisional Course Outline
 
 | Day 1 | Topic                                | Notes                                        | Estimated Duration <br>(approx) |
