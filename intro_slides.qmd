@@ -119,7 +119,7 @@ Make sure to acknowledge Kaurna Land!!!
 ## Today's Tutors
 
 - Dr Jimmy Breen, Dr Liza Kretzschmar & Dr Alastair Ludington (Black Ochre Data Labs)
-- Dr Paul Wang, Dr John Salomon (SAGC)
+- Dr Paul Wang, Dr John Salamon (SAGC)
 
 ::: {.fragment}
 
