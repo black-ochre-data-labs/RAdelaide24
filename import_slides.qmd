@@ -1,12 +1,13 @@
 ---
-title: "Spreadsheet-Like Data"
+title: "Importing Spreadsheet-Like Data"
 subtitle: "RAdelaide 2024"
 author: "Dr Stevie Pederson"
 institute: |
   | Black Ochre Data Labs
   | Telethon Kids Institute
-date: "2024-07-9"
+date: "2024-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -17,8 +18,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -63,7 +64,7 @@ knitr:
 - Working with data in R is **very different** to Excel
 - Can have complicated structures or be simple (e.g. `x <- 1:5`)
 - Spreadsheet-like data is very common
-    - The `R` equivalent is known as a `data.frame`
+- The `R` equivalent to a spreadsheet is known as a `data.frame`
     - A common subtype is known as a `tibble` 
     + These were originally called `tbl_df` objects referring to SQL tables
     + Is just a `data.frame` with pretty bows & ribbons
@@ -133,15 +134,13 @@ Then get the data for this exercise.
 
 1. Download the file `data.zip` from the workshop homepage
 2. Place in your directory `RAdelaide24`
-3. Extract to create a folder named `data`
-4. This should contain all of today's files
+3. Extract which should create a folder named `data`
+    + Make sure your files are in `data` not in `data/data`
+4. This should contain all files for the workshop
 5. Navigate to the `data` directory using the `Files` pane
 
-(You should see `pigs.csv` in there)
+(You should see `pigs.csv` in `data`)
 
-::: {.notes}
-(Make sure people haven't accidentally created `data/data`)
-:::
 
 # Import Using the GUI {background-color="#3d3d40"}
 
@@ -171,9 +170,9 @@ Then get the data for this exercise.
 
 ::: {style="font-size:95%"}
 
-Click on the `pigs.csv` and choose `Import Dataset` then **stop**! &#128721;
+Click on `pigs.csv`, choose `Import Dataset` then **stop**! &#128721;
 
-![](assets/importGUI.png){width="1000px"}
+![](assets/importGUI.png){width="950px"}
 
 
 <p style="text-align: center;">(Click `Update` if you don't see this)</p>
@@ -184,20 +183,22 @@ Click on the `pigs.csv` and choose `Import Dataset` then **stop**! &#128721;
 
 <br>
 
-![We have a preview of the data](assets/importGUI_preview.png){width="1000px"}
+![We have a preview of the data](assets/importGUI_preview.png){width="950px" fig-align='left'}
 
 ::: {.notes}
+
 - This is another preview of the data before we import it
 - There are 3 columns: `len`, `supp` and `dose`
     + `len` is a double (numeric)
     + The other two are character columns
+    
 :::
 
 ## The Preview Window
 
 <br>
 
-![We also have a preview of the code we're about to execute](assets/importGUI_code.png){width="1000px"}
+![We also have a preview of the code we're about to execute](assets/importGUI_code.png){width="950px" fig-align='left'}
 
 
 ## The Preview Window
@@ -212,7 +213,7 @@ Click on the `pigs.csv` and choose `Import Dataset` then **stop**! &#128721;
 . . .
 
 3. Magic happens!!!
-    + Ignore the red/blue text. This is just 'helpful' information
+    + Ignore the coloured text. This is just 'helpful information'
     
 . . . 
 
@@ -249,7 +250,7 @@ View(pigs)
 ```
 
 - This line actually loads the data into your `R Environment`
-- It created an object named `pigs` by using the file name (pigs.csv)
+- It creates an object named `pigs` by using the file name (pigs.csv)
 - Can change this name if we wish
 
 
@@ -278,7 +279,7 @@ Close the preview by clicking the cross
 
 ## Let's Demonstrate
 
-1. In the `Environment Tab` click the broom &#129529;
+1. In the `Environment Tab` click the broom icon &#129529;
     + This will delete everything from your `R Environment`
     + It won't unload the packages
     
@@ -302,7 +303,7 @@ Realistically we only need to preview it the first time. Having that preview ope
 ## Our First R Script
 
 - This is now our first R script
-    + These are plain text files
+    + An R script is a plain text file
     + No objects are stored
     
 . . .    
@@ -341,8 +342,9 @@ Realistically we only need to preview it the first time. Having that preview ope
 - The object `pigs` is known as a `data.frame`
     + Very similar to an SQL table
 - `R` equivalent to a spreadsheet
+    - **Must** have column names
+    - row names becoming less common (sometimes just the row numbers)
     - Missing values (blank cells) are usually filled with `NA`
-    - **Must** have column names $\implies$ row names becoming less common
 
 ## Data Frame Objects
 
@@ -404,6 +406,8 @@ I personally find this more informative than `View()`
 
 ## The Tidyverse
 
+::: {style="font-size:95%"}
+
 - The `tidyverse` is a collection of *thematically-linked* packages
     + Produced by developers from RStudio/Posit
     + Often referred to as *tidy*-programming or similar
@@ -411,13 +415,16 @@ I personally find this more informative than `View()`
     + $>$ 30 convenient packages in one line
     + `readr` is one of these $\implies$ usually just load the tidyverse
     
-. . .
+::: {.fragment}
 
 ```{r load-tidyverse}
 library(tidyverse)
 tidyverse_packages()
 ```
 
+:::
+
+:::
 
 ## The Tidyverse
 
@@ -455,14 +462,14 @@ head(pigs)
 glimpse(pigs)
 ```
 
-- Here we have called the functions 1) `head()` and 2) `glimpse()`
+- Here we have called the functions `head()` and `glimpse()`
     + They were both executed on the object `pigs`
 
 . . .
 
 - Call the help page for `head()`
 
-```r
+``` r
 ?head
 ```
 
@@ -497,13 +504,13 @@ Lower down the page you'll see
 
 . . .
 
-- Some of the rest is technical detail (sometimes *very helpful*)
+- Some of the rest is technical detail (can sometimes be *very helpful*)
 
 
 ## Function Arguments
 
 - `head()` prints the *first part* of an object
-- Useful for very large objects (e.g. if we had 1000 pigs)
+- Useful for very large objects (e.g. if we had 1000 guinea pigs)
 
 . . .
 
@@ -553,11 +560,11 @@ head(n = 4, x = pigs)
 
 ## Understanding `read_csv()` 
 
-::: {style="font-size: 85%;"}
+::: {style="font-size: 90%;"}
 
 ```r
 read_csv(
-  file,
+  file, 
   col_names = TRUE, col_types = NULL, col_select = NULL,
   id = NULL, locale = default_locale(), 
   na = c("", "NA"), quoted_na = TRUE,
@@ -574,11 +581,20 @@ read_csv(
 )
 ```
 
-- This function has $\approx \infty$ *arguments* (`file`, `col_names` etc.)
+- This function has way too many *arguments* (`file`, `col_names` etc.)
+
+::: {.fragment}
+
 - Most have default values given
     + All were defined *somewhere in the GUI*
     + Default assumes column names are the first row (`col_names = TRUE`)
 
+:::
+
+:::
+
+::: {.notes}
+- Ask which arguments have default before moving to the fragment...
 :::
 
 ## Understanding `read_csv()` 
@@ -589,16 +605,10 @@ All `arguments` were defined somewhere in the GUI.
 2. Uncheck the `First Row as Names` checkbox
 
 
-![](assets/importGUI.png){width="900px"}
+. . .
 
-## Understanding `read_csv()` 
-
-All `arguments` were defined somewhere in the GUI.
-
-1. Open the GUI Preview by clicking on the file again
-2. Uncheck the `First Row as Names` checkbox
-    + *What happened to the code?*
-    + *How did the columns change?*
+- *What happened to the code?*
+- *How did the columns change?*
     
 . . . 
 
@@ -622,19 +632,25 @@ pigs <- read_csv("data/pigs.csv", col_types = "ncc")
 
 ## `read_csv()` Vs `read.csv()`
 
+::: {style="font-size: 95%;"}
+
 - `RStudio` now uses `read_csv()` from `readr` **by default**
-- You will often see `read.csv()` in older scripts (from `utils`)
+- You will often see `read.csv()` (from `utils`) in older scripts 
 - The newer (`readr`) version is:
     + slightly faster
     + **more user-friendly**
+    + handles large files more efficiently via indexing
     + gives informative messages
     
-. . .    
-    
+::: {.fragment}
+
 - Earlier functions in `utils` are `read.*()` (csv, delim etc.)
 - `readr` has the functions `read_*()` (csv, tsv, delim etc.)
 - I *always* use the newer ones
 
+:::
+
+:::
 
 ## Reading Help Pages: Bonus Slide {visibility='hidden'}
 
