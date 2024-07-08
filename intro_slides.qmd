@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2024-07-9"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -17,8 +18,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -120,14 +121,19 @@ Make sure to acknowledge Kaurna Land!!!
 
 - Dr Jimmy Breen, Dr Liza Kretzschmar & Dr Alastair Ludington (Black Ochre Data Labs)
 - Dr Paul Wang, Dr John Salamon (SAGC)
+- Dr Na (Charlotte) Sai (University of Adelaide)
 
 ::: {.fragment}
 
 ### Housekeeping
 
-- Toilets
-- Catering
+- Toilets are back near the lifts
+- Catering will be downstairs in the foyer
 
+:::
+
+::: {.notes}
+Thanks to everyone for sending your information through regarding dietary needs and existing knowledge
 :::
     
 ## Homepage and Material
@@ -138,6 +144,8 @@ Make sure to acknowledge Kaurna Land!!!
 - Links to notes available
     + Slides are directly re-formatted as a simple webpage
     + Slides are visible by clicking the `RevealJS` link below the TOC
+- Group communication can be done through https://bioinformaticshubsa.slack.com/
+    + Join the #radelaide24 channel
 
 ## Course Aims
 
@@ -168,6 +176,7 @@ I regularly work with data containing millions of lines
 ## Why use R?
     
 - **Reproducible Research!!!**
+    - Keep records (i.e. scripts) of every step of every analysis
     - Transparent methods
     - Integration with version control such as `git`
 - Avoids common Excel pitfalls [(almost) never modify files on disk!]{.fragment}
@@ -177,12 +186,12 @@ I regularly work with data containing millions of lines
 Experience is the best teacher $\implies$ please practice your skills
 
 ::: {.notes}
-- Discuss column sorting with Simon
+- Discuss column sorting with Simon although I believe it's improved
 :::
 
 ## What is R?
 
-- Derivative of `S` (*John Chambers et al*, Bell Labs 1976)
+- Derivative of `S` [@Chambers1977-ry]
 
 ::: {.fragment}
 ![](assets/chambers.png)
@@ -191,13 +200,13 @@ Experience is the best teacher $\implies$ please practice your skills
     
 ## What is R?
 
-- Derivative of `S` (*John Chambers et al*, Bell Labs 1976)
+- Derivative of `S` [@Chambers1977-ry]
 - `R` first appeared in 1993
     - **R**oss Ihaka and **R**obert Gentleman (U of Auckland)
     - Disentangled some proprietary `S` code $\implies$ *open-source*
-    - `S` ceased development in early 2000s
+    - `S` ceased development in early 2000s (Chambers retired in 2005)
     - Now estimated >2 million users
-    - Nice history article [here](https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf)
+    - Nice history article [here](https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf) [@Chambers2020-tc]
 
 ::: {.notes}
 - Ross Ihaka is of NZ Maori descent
@@ -222,7 +231,7 @@ Experience is the best teacher $\implies$ please practice your skills
 
 :::: {.column width='25%'}
 
-![Extending R, Chambers (2016)](https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg){width="250px"}
+![Extending R, Chambers (2016)](https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg){width="300px"}
 
 ::::
 
@@ -316,7 +325,7 @@ Also gave me an opportunity to have some great conversations with Winston Chang
     
 - Do not open ![](https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png){width="100px"} 
 
-![](assets/RTerminal.png){width="50%"}
+![](assets/RTerminal.png){width="470px"}
 
 ::: {.notes}
 - This is the 'ugly, old-school' way of using R
@@ -324,6 +333,8 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 :::
 
 ## The R Console
+
+::: {style="font-size: 95%;"}
 
 - This is often referred to as the `R Console` 
 - At it's simplest `R` is just a calculator (Press Enter)
@@ -334,7 +345,7 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 2 ^ 3
 ```
 
-. . .
+::: {.fragment}
 
 - `R` has many standard functions
 
@@ -343,9 +354,16 @@ sqrt(2)
 log10(1000)
 ```
 
-. . .
 
-- NB: We placed the value *inside* the brackets *after* the function name
+::: 
+
+::: {.fragment}
+
+- We place the value *inside* the brackets *after* the function name
+
+:::
+
+:::
 
 ::: {.notes}
 I never use a calculator program on my laptop, always R
@@ -366,6 +384,10 @@ x <- 5
     - Was a single key on keyboards in the 1970s
 
 ![*An APL Keyboard from the 1970s*](assets/APL-keybd2.png){width=60% fig-align="left"}
+
+::: {.notes}
+Object names can be anything but should start with a letter not a number or special character
+:::
 
 
 ## The R Console
@@ -421,7 +443,7 @@ x > 1
 . . .
 
 - `R` *does all the calculations, manages the data, generates plots*
-    + i.e. the heavy lifting
+    + i.e. gets us to our destination
     
 . . .
 
@@ -482,7 +504,7 @@ We want RStudio to be looking in our new directory (`RAdelaide24`) <br>$\implies
 
 `File` > `New Project` > `Existing Directory` <br>
 
-```{r, echo = FALSE, fig.align='center', out.width='40%'}
+```{r, echo = FALSE, fig.align='left', out.width='35%'}
 knitr::include_graphics("assets/RProject.png")
 ```
 
@@ -686,3 +708,4 @@ Page 2 has lots of hints:
 - `Ctrl + 3` places focus on the Help Tab
     
 
+## References

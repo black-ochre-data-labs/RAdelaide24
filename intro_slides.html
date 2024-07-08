@@ -8,10 +8,10 @@
 <link href="intro_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="intro_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="intro_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
+  <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Dr Stevie Pederson">
-  <meta name="dcterms.date" content="2024-07-11">
+  <meta name="dcterms.date" content="2024-07-09">
   <title>Welcome &amp; Introduction</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,27 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="intro_slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="intro_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="intro_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -222,7 +242,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -390,7 +411,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-color="#3c3c44" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
+<section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
   <h1 class="title">Welcome &amp; Introduction</h1>
   <p class="subtitle">RAdelaide 2024</p>
 
@@ -400,13 +421,13 @@
 Dr Stevie Pederson 
 </div>
         <p class="quarto-title-affiliation">
-            </p><p>Black Ochre Data Labs<br>
-            Telethon Kids Institute</p>
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            Telethon Kids Institute</div>
           <p></p>
     </div>
 </div>
 
-  <p class="date">July 11, 2024</p>
+  <p class="date">July 9, 2024</p>
 </section>
 <section class="slide level2">
 
@@ -416,7 +437,7 @@ Dr Stevie Pederson
 </div>
 </section>
 <section>
-<section id="introduction" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<section id="introduction" class="title-slide slide level1 center" data-background-color="#3d3d40">
 <h1>Introduction</h1>
 
 </section>
@@ -482,15 +503,29 @@ Dr Stevie Pederson
 <ul>
 <li>Dr Jimmy Breen, Dr Liza Kretzschmar &amp; Dr Alastair Ludington (Black Ochre Data Labs)</li>
 <li>Dr Paul Wang, Dr John Salamon (SAGC)</li>
+<li>Dr Na (Charlotte) Sai (University of Adelaide)</li>
 </ul>
 <div class="fragment">
 <!-- -->
 <h3 id="housekeeping">Housekeeping</h3>
 <ul>
-<li>Toilets</li>
-<li>Catering</li>
+<li>Toilets are back near the lifts</li>
+<li>Catering will be downstairs in the foyer</li>
 </ul>
 </div>
+<aside class="notes">
+<p>Thanks to everyone for sending your information through regarding dietary needs and existing knowledge</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="homepage-and-material" class="slide level2">
 <h2>Homepage and Material</h2>
@@ -504,6 +539,10 @@ Dr Stevie Pederson
 <ul>
 <li>Slides are directly re-formatted as a simple webpage</li>
 <li>Slides are visible by clicking the <code>RevealJS</code> link below the TOC</li>
+</ul></li>
+<li>Group communication can be done through https://bioinformaticshubsa.slack.com/
+<ul>
+<li>Join the #radelaide24 channel</li>
 </ul></li>
 </ul>
 </section>
@@ -521,7 +560,7 @@ Dr Stevie Pederson
 </ul>
 </section></section>
 <section>
-<section id="a-brief-introduction-to-r" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="80% 50%">
+<section id="a-brief-introduction-to-r" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="80% 50%">
 <h1>A Brief Introduction to R</h1>
 
 </section>
@@ -560,6 +599,7 @@ Dr Stevie Pederson
 <ul>
 <li><strong>Reproducible Research!!!</strong>
 <ul>
+<li>Keep records (i.e.&nbsp;scripts) of every step of every analysis</li>
 <li>Transparent methods</li>
 <li>Integration with version control such as <code>git</code></li>
 </ul></li>
@@ -569,7 +609,7 @@ Dr Stevie Pederson
 <p>Experience is the best teacher <span class="math inline">\(\implies\)</span> please practice your skills</p>
 <aside class="notes">
 <ul>
-<li>Discuss column sorting with Simon</li>
+<li>Discuss column sorting with Simon although I believe it’s improved</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -587,7 +627,7 @@ Dr Stevie Pederson
 <section id="what-is-r" class="slide level2">
 <h2>What is R?</h2>
 <ul>
-<li>Derivative of <code>S</code> (<em>John Chambers et al</em>, Bell Labs 1976)</li>
+<li>Derivative of <code>S</code> <span class="citation" data-cites="Chambers1977-ry">(<a href="#/references" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
 </ul>
 <div class="fragment">
 <p><img data-src="assets/chambers.png"></p>
@@ -596,14 +636,14 @@ Dr Stevie Pederson
 <section id="what-is-r-1" class="slide level2">
 <h2>What is R?</h2>
 <ul>
-<li>Derivative of <code>S</code> (<em>John Chambers et al</em>, Bell Labs 1976)</li>
+<li>Derivative of <code>S</code> <span class="citation" data-cites="Chambers1977-ry">(<a href="#/references" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
 <li><code>R</code> first appeared in 1993
 <ul>
 <li><strong>R</strong>oss Ihaka and <strong>R</strong>obert Gentleman (U of Auckland)</li>
 <li>Disentangled some proprietary <code>S</code> code <span class="math inline">\(\implies\)</span> <em>open-source</em></li>
-<li><code>S</code> ceased development in early 2000s</li>
+<li><code>S</code> ceased development in early 2000s (Chambers retired in 2005)</li>
 <li>Now estimated &gt;2 million users</li>
-<li>Nice history article <a href="https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf">here</a></li>
+<li>Nice history article <a href="https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf">here</a> <span class="citation" data-cites="Chambers2020-tc">(<a href="#/references" role="doc-biblioref" onclick="">Chambers 2020</a>)</span></li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -646,7 +686,7 @@ Dr Stevie Pederson
 </div><div class="column" style="width:25%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg" width="250"></p>
+<p><img data-src="https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg" width="300"></p>
 <figcaption>Extending R, Chambers (2016)</figcaption>
 </figure>
 </div>
@@ -754,7 +794,7 @@ Dr Stevie Pederson
       }</style></aside>
 </section></section>
 <section>
-<section id="using-r" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="70% 50%">
+<section id="using-r" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="70% 50%">
 <h1>Using R</h1>
 
 </section>
@@ -769,7 +809,7 @@ Dr Stevie Pederson
 </ul></li>
 <li>Do not open <img data-src="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" width="100"></li>
 </ul>
-<p><img data-src="assets/RTerminal.png" style="width:50.0%"></p>
+<p><img data-src="assets/RTerminal.png" width="470"></p>
 <aside class="notes">
 <ul>
 <li>This is the ‘ugly, old-school’ way of using R</li>
@@ -789,20 +829,21 @@ Dr Stevie Pederson
 </section>
 <section id="the-r-console-1" class="slide level2">
 <h2>The R Console</h2>
+<div style="font-size: 95%;">
 <ul>
 <li>This is often referred to as the <code>R Console</code></li>
 <li>At it’s simplest <code>R</code> is just a calculator (Press Enter)</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">^</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">^</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8</code></pre>
 </div>
@@ -812,11 +853,11 @@ Dr Stevie Pederson
 <li><code>R</code> has many standard functions</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.414214</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -824,8 +865,10 @@ Dr Stevie Pederson
 </div>
 <div class="fragment">
 <ul>
-<li>NB: We placed the value <em>inside</em> the brackets <em>after</em> the function name</li>
+<li>We place the value <em>inside</em> the brackets <em>after</em> the function name</li>
 </ul>
+</div>
+</div>
 <aside class="notes">
 <p>I never use a calculator program on my laptop, always R</p>
 <style type="text/css">
@@ -839,13 +882,12 @@ Dr Stevie Pederson
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="the-r-console-2" class="slide level2">
 <h2>The R Console</h2>
 <p>We can create objects with names</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -861,6 +903,19 @@ Dr Stevie Pederson
 <figcaption><em>An APL Keyboard from the 1970s</em></figcaption>
 </figure>
 </div>
+<aside class="notes">
+<p>Object names can be anything but should start with a letter not a number or special character</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="the-r-console-3" class="slide level2">
@@ -869,7 +924,7 @@ Dr Stevie Pederson
 <li>View the contents of the object by entering it’s name in the <code>Console</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -882,19 +937,19 @@ Dr Stevie Pederson
 <li>We can pass objects to functions and perform operations on them</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.236068</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 25</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -921,7 +976,7 @@ Dr Stevie Pederson
 </div>
 </section></section>
 <section>
-<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
 <h1>R Studio</h1>
 
 </section>
@@ -944,7 +999,7 @@ Dr Stevie Pederson
 <ul>
 <li><code>R</code> <em>does all the calculations, manages the data, generates plots</em>
 <ul>
-<li>i.e.&nbsp;the heavy lifting</li>
+<li>i.e.&nbsp;gets us to our destination</li>
 </ul></li>
 </ul>
 </div>
@@ -1035,7 +1090,7 @@ Dr Stevie Pederson
 <p>(Not needed for any using the Posit cloud)</p>
 <p><code>File</code> &gt; <code>New Project</code> &gt; <code>Existing Directory</code> <br></p>
 
-<img data-src="assets/RProject.png" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="assets/RProject.png" class="quarto-figure quarto-figure-left r-stretch" style="width:35.0%"><ul>
 <li>Browse to your <code>RAdelaide24</code> directory <span class="math inline">\(\implies\)</span> <code>Create Project</code></li>
 </ul>
 </section>
@@ -1079,7 +1134,7 @@ Dr Stevie Pederson
 <section id="rstudio" class="slide level2">
 <h2>RStudio</h2>
 
-<img data-src="assets/RStudio.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p>This is the basic layout we often work with</p>
+<img data-src="assets/RStudio.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><p>This is the basic layout we often work with</p>
 </section>
 <section id="the-script-window" class="slide level2">
 <h2>The Script Window</h2>
@@ -1096,7 +1151,7 @@ Dr Stevie Pederson
 <section id="the-r-console-5" class="slide level2">
 <h2>The R Console</h2>
 
-<img data-src="assets/RStudio.png" width="900" class="r-stretch quarto-figure-center"></section>
+<img data-src="assets/RStudio.png" class="quarto-figure quarto-figure-center r-stretch" width="900"></section>
 <section id="the-r-console-6" class="slide level2">
 <h2>The R Console</h2>
 <ul>
@@ -1154,7 +1209,7 @@ Dr Stevie Pederson
 <h2>The R Environment</h2>
 <p>Like we did earlier, in the R Console type:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><em><strong>Where have we created the object <code>x</code>?</strong></em></p>
@@ -1205,7 +1260,7 @@ Dr Stevie Pederson
 <section id="accessing-help" class="slide level2">
 <h2>Accessing Help</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>This will take you to the <code>Help</code> pane for the <code>sqrt()</code> function
@@ -1281,7 +1336,7 @@ Dr Stevie Pederson
 <li>Plots appear in the <strong>Plots</strong> pane</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="other-panes" class="slide level2">
@@ -1315,9 +1370,22 @@ Dr Stevie Pederson
 <li><code>Ctrl + 2</code> places focus on the Console</li>
 <li><code>Ctrl + 3</code> places focus on the Help Tab</li>
 </ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div class="quarto-auto-generated-content">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
 
-<img src="assets/bodl_logo_white_background.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
-
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Chambers1977-ry" class="csl-entry" role="listitem">
+Chambers, John M. 1977. <em>Computational Methods for Data Analysis</em>. New York: Wiley.
+</div>
+<div id="ref-Chambers2020-tc" class="csl-entry" role="listitem">
+———. 2020. <span>“S, r, and Data Science.”</span> <em>Proc. ACM Program. Lang.</em> 4 (HOPL): 1–17.
+</div>
 </div>
 </section></section>
     </div>
@@ -1346,7 +1414,6 @@ Dr Stevie Pederson
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1497,9 +1564,9 @@ Dr Stevie Pederson
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1024,
+        width: 1280,
 
-        height: 768,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -1645,10 +1712,27 @@ Dr Stevie Pederson
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1658,8 +1742,17 @@ Dr Stevie Pederson
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1673,7 +1766,11 @@ Dr Stevie Pederson
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {
