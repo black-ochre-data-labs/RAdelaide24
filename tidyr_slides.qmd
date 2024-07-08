@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2024-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -17,8 +18,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -138,6 +139,7 @@ There are multiple ways & steps to clean-up the `Sample` column
     + NB: Using `pull()` to grab out a single column
 
 ```{r}
+#| output-location: column
 pcr %>% 
   pull(Sample) %>% 
   str_view("^[CINF]+")
@@ -149,6 +151,7 @@ pcr %>%
 - Now let's see if we can capture numbers
 
 ```{r}
+#| output-location: column
 pcr %>% 
   pull(Sample) %>% 
   str_view("[0-9]+")
@@ -163,9 +166,12 @@ pcr %>%
 - The pattern I chose was `" *"` $\implies$ match *zero or more* spaces
 
 ```{r}
+#| output-location: column
 pcr %>% 
   mutate(
-    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)", "\\1 \\2")
+    Sample = str_replace_all(
+      Sample, "^([CINF]+) *([0-9]+)", "\\1 \\2"
+    )
   )
 ```
 
@@ -185,9 +191,12 @@ pcr %>%
 
 
 ```{r}
+#| output-location: column
 pcr %>% 
   mutate(
-    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+    Sample = str_replace_all(
+      Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr"
+    )
   )
 ```
 
@@ -201,9 +210,12 @@ pcr %>%
     + Will automatically separate using any non-alpha-numeric characters
 
 ```{r}
+#| output-location: column
 pcr %>% 
   mutate(
-    Sample = str_replace_all(Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr")
+    Sample = str_replace_all(
+      Sample, "^([CINF]+) *([0-9]+)[Hh]", "\\1 \\2hr"
+    )
   ) %>% 
   separate(Sample, into = c("treatment", "timepoint"))
 ```
@@ -285,7 +297,7 @@ pcr <- read_excel("data/RealTimeData.xlsx") %>%
 
 ## Merging Columns
 
-The converse to `separate()` is `unite()`
+- The converse to `separate()` is `unite()`
     + The below shows manually setting the separator
     + Also tells `unite()` not to remove the original columns
 
@@ -294,13 +306,18 @@ pcr %>%
   unite(
     col = "merged", all_of(c("treatment","timepoint", "replicate")),
     sep = ":", remove = FALSE
-  )
+  ) %>% 
+  head()
 ```
 
+::: {.notes}
+- `all_of()` is another helper related to `any_of()`
+- Takes a character vector
+:::
 
 ## Long Form
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 95%;"}
 
 - If we want to plot the values of *SLAM* & *GAPDH* $\implies$ `pivot_longer()`
     + Colloquially known as *long form*
@@ -367,4 +384,6 @@ pcr %>%
   nest(data = all_of(c("SLAM", "GAPDH", "replicate")))
 ```
 
+. . .
 
+- This has created separate $3\times3$ data frames for each combination

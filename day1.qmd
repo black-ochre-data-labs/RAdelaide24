@@ -1,0 +1,84 @@
+---
+title: "Day 1 Challenges"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-09"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: day1.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Some Challenges
+
+## Working With Text Strings
+
+1. Given a vector of Transcript IDs with versions, remove the version number?
+
+```{r}
+ids <- c("ENST00000376207.10", "ENST00000376199.7")
+```
+
+2. Add the 'chr' prefix to these chromosomes
+
+```{r}
+chr <- c(1:22, "X", "Y", "M")
+```
+
+3. Pull the chromosome out of these cytogenetic bands
+
+```{r}
+cyto <- c("Xp11.23", "11q2.3", "2p7.1")
+```
+
+4. Convert the following genes from human to mouse
+
+```{r}
+genes <- c("FOXP3", "IL2RA", "CTLA4")
+```
+
+5. Remove the suffix ".bam" from these filenames
+
+```{r}
+bams <- c("rna_bamboo1.bam", "rna_rice1.bam", "rna_wheat1.bam")
+```
+
+6. Correct the responses to be consistent (choose the format)
+
+```{r}
+response <- c("Y", "yes", "No", "no")
+```
+
+## Loading and Manipulating Data
+
+1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance]
+
+2. Load the main data sheet from this file
+
+3. How would you compare measurements for the species across different sites
+    + Try using tables
+    + How can you visualise this?
+

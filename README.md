@@ -27,11 +27,11 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 11:00 | Spreadsheet-Like Data (continued)    |                                              |                                 |
 |       | Exploring & Manipulating Data        | [Data Exploration](exploring.html)           | 60min                           |
 | 12:30 | *Lunch*                              |                                              |                                 |
-| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 60min                           |
+| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 70min                           |
 |       | Using `stringr` to Modify Text       | [Working With Text](text.html)               | 30min                           |
 | 3:00  | *Afternoon Tea*                      |                                              |                                 |
 | 3:30  | Reshaping Data With `tidyr`          | [Reshaping Data](tidyr.html)                 | 20min                           |
-|       | Challenges and Bring Your Own Data   |                                              |                                 |
+| 4:00  | Challenges and Bring Your Own Data   | [Day1](day1.html)                            |                                 |
 
 | Day 2 | Topic                              | Notes                                | Estimated Duration <br>(approx) |
 |:------|:-----------------------------------|:-------------------------------------|:--------------------------------|
@@ -43,7 +43,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 |       | Using Rmarkdown                    | [RMarkdown](rmarkdown.html)          | 60min                           |
 | 3:00  | *Afternoon Tea*                    |                                      |                                 |
 | 3:30  | Using Rmarkdown (continued)        |                                      |                                 |
-|       | Challenges and Bring Your Own Data |                                      |                                 |
+| 4:00  | Challenges and Bring Your Own Data |                                      |                                 |
 
 | Day 3 | Topic                                     | Notes                                             | Estimated Duration <br>(approx) |
 |:------|:------------------------------------------|:--------------------------------------------------|:--------------------------------|
@@ -56,4 +56,5 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 1:30  | Bulk RNA-Seq Analysis (continued)         |                                                   |                                 |
 |       | Enrichment Analysis                       | [Finding the Underlying Biology](enrichment.html) | 70min                           |
 | 3:00  | *Afternoon Tea*                           |                                                   |                                 |
-| 3:30  | Challenges & Bring Your Own Data          |                                                   |                                 |
+| 3:30  | Enrichment Analysis (continued)           |                                                   |                                 |
+| 4:00  | Challenges & Bring Your Own Data          |                                                   |                                 |

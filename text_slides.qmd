@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2024-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3c3c44"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -17,8 +18,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -47,11 +48,23 @@ include-after: |
       }
     });
   </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    results: hide
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8  
 ---
 
-```{r}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Text Strings {background-color="#3c3c44" background-image=https://stringr.tidyverse.org/logo.png background-size="40%" background-opacity="0.5" background-position="75% 30%"}
+
+## Text Manipulation
+
+- Start a new R script: `text.R`
 
 ```{r}
 library(tidyverse)
@@ -83,9 +96,9 @@ x <- c("Hi Mum", "Hi Mother", "Hello Parent1")
 ## Regular Expressions
 
 - We're mostly familiar with words
-    + Regular Expressions are incredibly powerful tools in this space
+    + Regular Expressions (`regexp`) are incredibly powerful tools in this space
     + `regexp` syntax is not unique to `R`
-    + `R` does have a few "quirks" though
+    + `R` does have a few unique "quirks" though
     
 . . .
 
@@ -111,7 +124,7 @@ x <- c("Hi Mum", "Hi Mother", "Hello Parent1")
 str_detect(string = x, pattern = "Mum")
 ```
 
-. . .
+## `stringr::str_detect()`
 
 - In the above we used basic words for the search pattern
 - *Regular expressions* use a `.` as a wild card
@@ -225,7 +238,7 @@ str_extract(x, "H.+ [A-Z].")
 str_extract(x, "H.+ [A-Z][a-z]+")
 ```
 
-. . .
+## `stringr::str_extract()`
 
 - Or just be even more general using `[:alpha:]`
 
@@ -235,7 +248,7 @@ str_extract(x, "H.+ [:alpha:]+")
 
 - The complete list of classes is at `?base::regex`
 
-## `stringr::str_extract()`
+. . .
 
 - We can also specify the exact number of times for a match
 
@@ -244,7 +257,8 @@ str_extract(x, "H.+ [:alpha:]{3}")
 str_extract(x, "H.+ [:alpha:]{4}")
 ```
 
-. . .
+
+## `stringr::str_extract_all()`
 
 - `str_extract()` will only return the first match
 
@@ -252,7 +266,7 @@ str_extract(x, "H.+ [:alpha:]{4}")
 str_extract(x, "[Hh].")
 ```
 
-## `stringr::str_extract_all()`
+. . .
 
 - `str_extract_all()` returns **all matches**
 
@@ -264,6 +278,10 @@ str_extract_all(x, "[Hh].")
 
 - Note that now we have a list of the same length as `x`
     + Each element contains all matches within the initial string
+
+::: {.notes}
+Will talk in detail about lists tomorrow
+:::
 
 ## `stringr::str_remove()`
 
@@ -299,7 +317,7 @@ str_replace(x, pattern = "Mum", replacement = "Dad")
 1. Searching the `string` "Hi Mum" for the `pattern` "Mum", and
 2. Replacing the first instance of "Mum" with "Dad"
 
-. . .
+## `stringr::str_replace()`
 
 - Wildcards and character sets work in the exact same manner
 
@@ -328,7 +346,7 @@ str_replace(x, "H.+ (.+)", "\\1")
 str_replace(x, "(H.+) ([:alpha:]+)", "\\2! \\1!")
 ```
 
-. . .
+## `stringr::str_replace()`
 
 - To tidy up the final digit use `*`
     + Like `+` except the match is **zero** or more times
@@ -410,63 +428,16 @@ glue_collapse(letters, sep = ", ", last = " & ")
     + Plays very well with advanced `tidyverse` syntax (e.g. `rlang`)
 
 
-## Some Challenges
-
-1. Given a vector of Transcript IDs with versions, remove the version number?
-
-```{r}
-ids <- c("ENST00000376207.10", "ENST00000376199.7")
-```
-
-2. Add the 'chr' prefix to these chromosomes
-
-```{r}
-chr <- c(1:22, "X", "Y", "M")
-```
-
-3. Pull the chromosome out of these cytogenetic bands
-
-```{r}
-cyto <- c("Xp11.23", "11q2.3", "2p7.1")
-```
-
-4. Convert the following genes from human to mouse
-
-```{r}
-genes <- c("FOXP3", "IL2RA", "CTLA4")
-```
-
-5. Remove the suffix ".bam" from these filenames
-
-```{r}
-bams <- c("rna_bamboo1.bam", "rna_rice1.bam", "rna_wheat1.bam")
-```
-
-6. Correct the responses to be consistent (choose the format)
-
-```{r}
-response <- c("Y", "yes", "No", "no")
-```
-
-<!-- 6. Load the `RealTimeData.xlsx` file as before. Extract the timepoint from the first column, ensuring that "h" is always lower case. -->
-
-
-
-::: {.notes}
-Most of these have multiple solutions
-:::
-
-
 ## Working With Strings
 
 - Is an incredibly common and important part of working with R
 - Extract sample IDs from file names
 - Pull key information from columns
 - Remove prefixes/suffixes
-- Correct data entry errors in your spreadsheet
+- Correct data entry errors
 - Format for pretty plotting
 
-# Factors {background-color="#3c3c44" background-image=https://forcats.tidyverse.org/logo.png background-size="50%" background-opacity="0.5"}
+# Factors {background-color="#3c3c44" background-image=https://forcats.tidyverse.org/logo.png background-size="40%" background-opacity="0.5" background-position="75% 30%"}
 
 ## Factors
 
@@ -477,7 +448,7 @@ A common data type in statistics is a *categorical variable* (i.e. a `factor`)
 - Data will be a set of common groups/categories
 
 ```{r}
-pet_vec <- c("Dog", "Dog", "Cat", "Dog", "Cat")
+pet_vec <- c("Dog", "Dog", "Cat", "Dog", "Bird", "Bird")
 ```
 
 - This is a `character` vector
@@ -485,17 +456,17 @@ pet_vec <- c("Dog", "Dog", "Cat", "Dog", "Cat")
 ## Factors
 
 - We can simply coerce this to a vector of factors
-- Categories will automatically be assigned alphabetically
+- Categories will automatically be assigned alphabetically using `as.factor()`
 
 ```{r}
 pet_factors <- as.factor(pet_vec)
 pet_factors
 ```
 
-We can manually set these categories as `levels`
+We can manually set these categories as `levels` using `factor()`
 
 ```{r}
-pet_factors <- factor(pet_vec, levels = c("Dog", "Cat"))
+pet_factors <- factor(pet_vec, levels = c("Dog", "Cat", "Bird"))
 pet_factors
 ```
 
@@ -536,3 +507,45 @@ pet_vec[pet_factors]
     + Specifically for wrangling `factors`
     + Also plays very nicely with `stringr`
     
+## Some Handy Tricks
+
+- `fct_inorder()` sets categories in the order they appear
+    + Sort your `data.frame` then apply `fct_inorder()` for nice structured plots
+    
+```{r}
+fct_inorder(pet_vec)
+```
+    
+. . .
+    
+- `fct_infreq()` sets categories by their frequency
+
+```{r}
+fct_infreq(pet_vec)
+```
+    
+    
+## Some Handy Tricks
+
+- Collapse categories with fewer than `n` entries
+
+```{r}
+fct_lump_min(pet_vec, min = 3)
+```
+
+. . .
+
+- Collapse categories with fewer than `p` entries
+
+```{r}
+fct_lump_prop(pet_vec, prop = 0.3)
+```
+
+. . .
+
+- Reverse the order (will automatically coerce to a factor)
+
+```{r}
+fct_rev(pet_vec)
+```
+
