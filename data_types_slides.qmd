@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -58,19 +58,16 @@ knitr:
     fig.width: 10
 ---
 
-# `R` Objects {background-color="#3d3d40"}
-
 
 ## Recap Of Day 1
 
 We learned how to:
 
 1. Load a csv using `readr::read_csv()`
-2. Look through & summarise a `data.frame`
+2. Work with a `data.frame`
 3. Use the magrittr (`%>%`)
 4. Generate plots with `ggplot2`
 5. Wrangle text
-6. Write reports with `rmarkdown`
 
 ## Today's Material
 
@@ -91,6 +88,7 @@ We learned how to:
 - Each column has *the same type of data*, <br>e.g. `numeric`, `character` etc.
 - The columns can be different types to each other
 - In `R` each column is a `vector`
+- Start a new R script called `vectors.R`
 
 ::: {.notes}
 Went to considerable effort to avoid referring to vectors
@@ -658,7 +656,9 @@ Finally!
 - Analogous to matrices, but are **specifically for heterogeneous data**
 - Have many of the same attributes as matrices
     + `dim()`, `nrow()`, `ncol()`, `rownames()`, `colnames()`
-- `colnames()` & `rownames()` are **NOT** optional <br>$\implies$ are assigned by default
+- `colnames()` & `rownames()` are **NOT** optional $\implies$ assigned by default
+    + `tibble` variants have simple row numbers as rownames
+    + `tibble` objects explicitly *hide* the rownames so we think they're not there
 
 ## Data Frames
 
@@ -753,7 +753,7 @@ pigs[5]
 ```
 
 ::: {.fragment}
-<span style="color:red; font-family: 'Courier New', monospace;">Error: Column index must be at most 3 if positive, not 5</span>
+<span style="color:red; font-family: 'Courier New', monospace; font-size: 60%">Error: Column index must be at most 3 if positive, not 5</span>
 :::
 
 # Working With `R` Objects {background-color="#3d3d40"}
@@ -877,7 +877,7 @@ names(my_df) == colnames(my_df)
 
 ## Data Frames
 
-__What happens if we try to add components that aren't the same length?__
+__What happens if we try to combine components that aren't the same length?__
 
 ```{r, eval=FALSE}
 my_df <- data.frame(

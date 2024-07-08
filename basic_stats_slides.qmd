@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -54,11 +54,11 @@ knitr:
     warning: false
     message: false
     fig.align: center  
-    fig.height: 8
-    fig.width: 10
+    fig.height: 6
+    fig.width: 8
 ---
 
-# Statistics in R
+# Statistics in R {background-color="#3d3d40"}
 
 ## Introduction
 
@@ -100,6 +100,37 @@ library(pander)
 ?Distributions
 ```
 
+## Distributions 
+
+::: {.panel-tabset}
+
+### PDF
+
+```{r pdf-norm}
+#| output-location: column
+## dnorm gives the classic bell-curve
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = dnorm(x))) + 
+  geom_line()
+```
+
+### CDF
+
+```{r cdf-norm}
+#| output-location: column
+## pnorm gives the area under the 
+## bell-curve (which sums to 1)
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = pnorm(x))) + 
+  geom_line()
+```
+
+
+:::
 
 ## Distributions
 
@@ -236,8 +267,8 @@ $$
 We could use two vectors (i.e. `x` & `y`)
 
 ```{r}
-vc <- pigs$len[pigs$supp == "VC"]
-oj <- pigs$len[pigs$supp == "OJ"]
+vc <- dplyr::filter(pigs, supp == "VC")$len
+oj <- dplyr::filter(pigs, supp == "OJ")$len
 t.test(x = vc, y = oj)
 ```
 
@@ -453,6 +484,7 @@ Are we happy with our model assumptions?
 3. Linear relationship
 
 ```{r}
+#| eval: false
 plot(lm_pigs_full)
 ```
 
@@ -462,14 +494,20 @@ plot(lm_pigs_full)
 - To show them all on the same panel
 
 ```{r}
+#| output-location: column
 par(mfrow = c(2, 2))
 plot(lm_pigs_full)
+```
+
+## Visualising Residuals
+
+- `mfrow()` stands for *multi-frame row*
+- Needs to be reset to a single frame
+
+```{r}
 par(mfrow = c(1, 1))
 ```
 
-. . .
-
-- Stands for *multi-frame rows*
 
 ## Automated Model Selection
 
@@ -492,6 +530,8 @@ Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
 - We need to specify two columns to the model
     - One represents successes, the other failures
     - This is `binomial` data, $\pi$ is the probability of success
+
+<!-- ### NOT TRUE PLEASE FIX -->
 
 ```{r}
 pass_df <- as.data.frame(pass) %>%
