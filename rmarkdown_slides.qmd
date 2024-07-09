@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
@@ -241,8 +241,7 @@ Lines 8 to 10 are a code `chunk`
     
 . . .
 
-- Other parameters are set in the chunk header
-    + e.g. do we show/hide the code
+- Other parameters are set in the chunk header (e.g. do we show/hide the code)
     + The master reference is [here](https://yihui.org/knitr/options/#chunk-options)
 
 ## Looking At The File
@@ -437,17 +436,15 @@ Replace the number 60 in your description with  \``r` `nrow(pigs)`\`
 
 ## Visualising The Data
 
-The next step might be to visualise the data using a boxplot
-
-1. Start a new chunk
-2. Name it `boxplot-data`
+- The next step might be to visualise the data using a boxplot
+- Start a new chunk with \`\`\`{r boxplot-data}
 
 . . .
 
 
 ```{r boxplot-data}
 #| output-location: column-fragment
-pigs |>
+pigs %>% 
     ggplot(aes(dose, len, fill = supp)) +
     geom_boxplot() +
     labs(
@@ -461,7 +458,7 @@ pigs |>
 
 ## Visualising the Data
 
-- We can control the figure size using `fig.height` or `fig.width`
+<!-- - We can control the figure size using `fig.height` or `fig.width` -->
 - Type a description of the figure in the `fig.cap` section of the chunk header
     + This will need to be placed inside quotation marks
     
@@ -487,18 +484,18 @@ My example text:
 ```{r}
 #| output-location: column
 #| results: markup
-pigs |>
+pigs %>%
     summarise(
         n = n(),
         mn_len = mean(len), 
         sd_len = sd(len),
         .by = c(supp, dose)
-    ) |>
+    ) %>%
     mutate(
         mn_len = round(mn_len, 2),
         sd_len = round(sd_len, 2),
         len = paste0(mn_len, " &#177;", sd_len)
-    ) |>
+    ) %>%
     dplyr::select(supp, dose, n, len)
 ```
 
@@ -529,20 +526,20 @@ library(pander)
 ```{r}
 #| results: asis
 #| output-location: slide
-pigs |>
+pigs %>%
     summarise(
         n = n(), 
         mn_len = mean(len), 
         sd_len = sd(len),
         .by = c(supp, dose)
-    ) |>
+    ) %>%
     mutate(
         mn_len = round(mn_len, 2),
         sd_len = round(sd_len, 2),
         len = paste0(mn_len, " &#177;", sd_len)
-    ) |>
-    dplyr::select(supp, dose, n, len) |>
-    rename_with(str_to_title) |>
+    ) %>%
+    dplyr::select(supp, dose, n, len) %>%
+    rename_with(str_to_title) %>%
     pander(
         caption = "Odontoblast length for each group shown as mean&#177;SD"
     )
@@ -561,7 +558,6 @@ pigs |>
 ::: {.fragment}
 
 - The function `lm()` is used to perform linear regression
-    + We'll perform an analysis remembering that `~` means 'depends on'
     
 ::: 
 
@@ -569,7 +565,7 @@ pigs |>
     
 ```{r}
 #| results: markup
-lm(len ~ supp + dose + supp:dose, data = pigs) |>
+lm(len ~ supp + dose + supp:dose, data = pigs) %>%
     summary()
 ```
 
@@ -585,8 +581,9 @@ lm(len ~ supp + dose + supp:dose, data = pigs) |>
 
 ```{r}
 #| results: asis
-lm(len ~ supp + dose + supp:dose, data = pigs) |>
-    summary() |>
+#| output-location: slide
+lm(len ~ supp + dose + supp:dose, data = pigs) %>%
+    summary() %>%
     pander(add.significance.stars = TRUE)
 ```
 
@@ -620,7 +617,7 @@ Interpretation:
 
 ```{r}
 #| results: markup
-lm(len ~ supp + dose + supp:dose, data = pigs) |>
+lm(len ~ supp + dose + supp:dose, data = pigs) %>%
     broom::tidy()
 ```
 
@@ -638,7 +635,7 @@ knitr::opts_chunk$set(eval = FALSE)
 - `xtable` is excellent for $\LaTeX$ output
 
     
-## Other Chunk Options
+## Other Chunk Options {visibility="hidden"}
 
 - Here's my `setup` chunk for this presentation
 
@@ -680,7 +677,7 @@ This basic process is incredibly useful
 I learned using R scripts but now I only use these in formal packages, or if defining functions to use across multiple analyses
 :::
 
-## Advanced Options
+## Advanced Options {visibility="hidden"}
 
 - The `R` package `workflowr` is very helpful for larger workflows
     + Can include multiple HTML pages
@@ -696,9 +693,9 @@ I learned using R scripts but now I only use these in formal packages, or if def
 - An example of a larger analysis using all `Rmd` files is at<br>[https://smped.github.io/PRJNA509779/](https://smped.github.io/PRJNA509779/)
     
     
-# Bonus Challenge
+# Bonus Challenge {visibility="hidden"}
 
-## A Challenge
+## A Challenge {visibility="hidden"}
 
 1. Import `PCR.xlsx` with all corrections
 2. Describe the data using inline code

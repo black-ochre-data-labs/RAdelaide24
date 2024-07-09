@@ -46,15 +46,19 @@ Data for the workshop is available as a zip file [here](data.zip)
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)` |
+| 9:00 | Day 1 Challenges | [Day1](day1.html) | 30min|
+| 9:30 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 15min |
+| 9:45 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
+| 10:05 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
+| 11:00 | Using Rmarkdown (continued) | | |
+| 11:30  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)` |
 | 12:30 | *Lunch* | | |
-| 1:30  | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.2)` |
-|  | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 3:00  | *Afternoon Tea* | | |
-| 3:30  | Using Rmarkdown (continued) | | |
-| 4:00 | Challenges and Bring Your Own Data  | | |
+| 3:30  | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.2)` |
+
+
 
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |

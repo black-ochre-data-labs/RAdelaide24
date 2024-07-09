@@ -58,42 +58,6 @@ knitr:
     fig.width: 10
 ---
 
-
-## Recap Of Day 1
-
-We learned how to:
-
-1. Load a csv using `readr::read_csv()`
-2. Work with a `data.frame`
-3. Use the magrittr (`%>%`)
-4. Generate plots with `ggplot2`
-5. Wrangle text
-
-## Today's Material
-
-- Understand what we did yesterday
-- How does R *really* see data?
-- Statistical Analysis
-
-. . . 
-
-- Build a strong foundation for our own work
-
-
-
-## `R` Objects
-
-- Main data type so far has been a `data.frame` 
-    - `tibble` $\equiv$ `data.frame` with nice wrapping paper
-- Each column has *the same type of data*, <br>e.g. `numeric`, `character` etc.
-- The columns can be different types to each other
-- In `R` each column is a `vector`
-- Start a new R script called `vectors.R`
-
-::: {.notes}
-Went to considerable effort to avoid referring to vectors
-:::
-
 # Vectors {background-color="#3d3d40"}
 
 ## Vectors
@@ -211,7 +175,7 @@ These are the basic building blocks for all `R` objects
 . . .
 
 - There are two more rare types we'll ignore: `complex` & `raw`
-- All `R` data structures are built on these
+- **All** `R` data structures are built on these 6 vector types
 
 
 ## Properties of a vector 
@@ -324,6 +288,10 @@ y[[2]]
 
 If you tried `y[[1:3]]` you would receive an error message
 
+::: {.notes}
+Unless you're the Seurat package developers...
+:::
+
 ## Subsetting Vectors
 
 If a vector has name attributes, we can call values by name
@@ -370,12 +338,12 @@ Things to consider:
 **What is really happening in this line?**
 
 ```{r}
-euro[1:3]
+euro[1:5]
 ```
 
 . . .
 
-We are using the integer vector `1:3` to extract values from `euro`
+We are using the integer vector `1:5` to extract values from `euro`
 
 . . .
 
@@ -574,7 +542,7 @@ testResults
 
 NB: There is a function (`print.htest()`) that tells `R` how to print the results to the Console
 
-## Lists
+## Lists {visibility="hidden"}
 
 Explore the various attributes of the object `testResults`
 
@@ -623,8 +591,9 @@ typeof(testResults[[1]])
 
 *When would we use either method?*
 
-## Subsetting Lists
+. . .
 
+<br>
 We can also use names instead of positions
 
 ```{r, results='hide'}
@@ -633,7 +602,7 @@ testResults[["statistic"]]
 ```
 
 
-## Lists
+## Lists {visibility="hidden"}
 
 - Note also the **Environment** Tab in the top right of RStudio
 - Click the arrow next to `testResults` to expand the entry
@@ -658,7 +627,6 @@ Finally!
     + `dim()`, `nrow()`, `ncol()`, `rownames()`, `colnames()`
 - `colnames()` & `rownames()` are **NOT** optional $\implies$ assigned by default
     + `tibble` variants have simple row numbers as rownames
-    + `tibble` objects explicitly *hide* the rownames so we think they're not there
 
 ## Data Frames
 

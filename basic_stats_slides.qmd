@@ -132,77 +132,6 @@ tibble(
 
 :::
 
-## Distributions
-
-- Let's take a random sample from a few important distributions
-    + All have mean $\mu = 1$ and sd $\sigma = 1$
-
-```{r randomSamples}
-library(tidyverse)
-randomSamples <- tibble(
-	Normal = rnorm(1000, mean = 1, sd = 1),
-	Uniform = runif(1000, min = -0.732, max = 2.732),
-	Exponential = rexp(1000, rate = 1),
-	Poisson = rpois(1000, lambda = 1)
-)
-```
-
-## Distributions 
-
-- Check our sample means
-
-```{r means, echo=FALSE, include=TRUE, results='asis'}
-randomSamples %>% 
-	summarise_all(funs(mean)) %>%
-	as.data.frame() %>%
-	pander(justify = "rrrr")
-```
-
-<br>
-**Why are the means not exactly equal to 1?**
-
-## Distributions
-
-- Check our sample variances
-
-```{r vars,  echo=FALSE, results='asis'}
-randomSamples %>% 
-	summarise_all(funs(var)) %>% 
-	as.data.frame() %>%
-	pander(justify = "rrrr")
-```
-
-<br>Let's quickly look through them
-
-## Distributions
-
-```{r plot-distributions, echo = FALSE, fig.align='left', fig.height=6}
-randomSamples %>%
-  pivot_longer(everything(), names_to = "distribution") %>%
-  ggplot(aes(value, fill = distribution)) +
-  geom_histogram(colour = "black") +
-  geom_vline(xintercept = 1) +
-  facet_wrap(~distribution, ncol = 2, scales = "free") +
-  theme_bw()
-```
-
-::: {.notes}
-Discuss where you might find each type:
-- Exponential: time between occurrences, rainfall etc
-- Poisson: Read counts, mutations/Mb etc
-:::
-
-## Distributions
-
-```{r boxplot-distributions, echo = FALSE, fig.align='left'}
-randomSamples %>%
-  pivot_longer(everything(), names_to = "distribution") %>%
-  ggplot(aes(distribution, value, fill = distribution)) +
-  geom_boxplot() +
-  geom_hline(yintercept = 1) +
-  theme_bw()
-```
-
 
 # Basic Tests {background-color="#3d3d40"}
 
@@ -508,53 +437,68 @@ plot(lm_pigs_full)
 par(mfrow = c(1, 1))
 ```
 
+## Logistic Regression
+
+- Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
+- We can specify two columns to the model
+    - One would represent total successes, the other failures
+    - This is `binomial` data, $\pi$ is the probability of success
+
+. . .
+
+- Alternatively the response might be a vector of `TRUE/FALSE` or `0/1`
+
+## Logistic Regression
+
+- The probability of admission to a PhD^[Taken from https://stats.oarc.ucla.edu]
+    + Graduate Record Exam scores
+    + Grade Point Average
+    + Prestige of admitting institution (1 is most prestigous)
+
+```{r}
+#| results: markup
+admissions <- read_csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+glimpse(admissions)
+```
+
+## Logistic Regression
+
+```{r}
+#| results: markup
+glm(admit ~ gre + gpa + rank, data = admissions) %>% 
+  summary()
+```
+
+## Logistic Regression
+
+- Probabilities are fit on the *logit* scale
+- Transforms 0 < $\pi$ < 1 to $-\infty$ < logit($\pi$) < $\infty$
+
+$$
+\text{logit}(\pi) = \log(\frac{\pi}{1-\pi})
+$$
+
 
 ## Automated Model Selection
 
-- One strategy is to fit a heavily parameterised model
+- One strategy during model fitting is to fit a heavily parameterised model
 - `R` can remove terms as required using Akaike's Information Criterion (AIC)
     + The function is `step()`
-- No point here really but...
+    
 
 . . .
 
 ```{r}
-step(lm_pigs_full)
-```
-
-
-## Logistic Regression
-
-Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
-
-- We need to specify two columns to the model
-    - One represents successes, the other failures
-    - This is `binomial` data, $\pi$ is the probability of success
-
-<!-- ### NOT TRUE PLEASE FIX -->
-
-```{r}
-pass_df <- as.data.frame(pass) %>%
-	rownames_to_column("Attendance")
-```
-
-## Logistic Regression
-
-Does attendance affect the probability of passing?
-
-- `glm()` can take numerous families (e.g. `Poisson`)
-    + Generalised Linear Model
-
-```{r}
-glmPass <- glm(
-  cbind(Pass, Fail) ~ Attendance, data = pass_df, family = binomial()
-)
-summary(glmPass)
+#| results: hide
+glm(admit ~ (gre + gpa + rank)^2, data = admissions) %>% 
+  step() %>% 
+  summary()
 ```
 
 . . .
 
-- To fit a Poisson dataset set `family = poisson()`
+- Here we do end up with the same model
+
 
 ## Mixed Effects Models
 
@@ -663,7 +607,6 @@ p.adjust.methods
 
 . . .
 
-<br>
 
 ```{r}
 lm_pigs_full %>% 

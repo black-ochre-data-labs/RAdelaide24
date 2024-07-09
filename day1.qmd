@@ -34,6 +34,12 @@ knitr:
 
 # Some Challenges
 
+```{r, echo=FALSE}
+library(tidyverse)
+library(readxl)
+```
+
+
 ## Working With Text Strings
 
 1. Given a vector of Transcript IDs with versions, remove the version number?
@@ -72,13 +78,24 @@ bams <- c("rna_bamboo1.bam", "rna_rice1.bam", "rna_wheat1.bam")
 response <- c("Y", "yes", "No", "no")
 ```
 
-## Loading and Manipulating Data
+7. Load the pcr data using the following code then create create two additional columns
+    1. `treatment`: containing the CONTROL/INFECTED status
+    2. `timepoint`: with all times ending in 'hr'
 
-1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance]
+```{r}
+pcr <- read_excel("data/RealTimeData.xlsx") %>% 
+  dplyr::rename(sample = `...1`)
+```
 
-2. Load the main data sheet from this file
 
-3. How would you compare measurements for the species across different sites
-    + Try using tables
-    + How can you visualise this?
+
+<!-- ## Loading and Manipulating Data -->
+
+<!-- 1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance] -->
+
+<!-- 2. Load the main data sheet from this file -->
+
+<!-- 3. How would you compare measurements for the species across different sites -->
+<!--     + Try using tables -->
+<!--     + How can you visualise this? -->
 

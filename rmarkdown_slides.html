@@ -8,10 +8,10 @@
 <link href="rmarkdown_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="rmarkdown_slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="rmarkdown_slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
+  <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Dr Stevie Pederson">
-  <meta name="dcterms.date" content="2024-07-11">
+  <meta name="dcterms.date" content="2024-07-10">
   <title>R Markdown</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -222,7 +222,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -400,19 +401,24 @@
 Dr Stevie Pederson 
 </div>
         <p class="quarto-title-affiliation">
-            </p><p>Black Ochre Data Labs<br>
-            Telethon Kids Institute</p>
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            Telethon Kids Institute</div>
           <p></p>
     </div>
 </div>
 
-  <p class="date">July 11, 2024</p>
+  <p class="date">July 10, 2024</p>
 </section>
 <section>
 <section id="r-markdown" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://raw.githubusercontent.com/rstudio/rmarkdown/main/man/figures/logo.png" data-background-size="35%" data-background-opacity="0.4" data-background-position="70% 50%">
 <h1>R Markdown</h1>
 
-</section>
+<div class="quarto-auto-generated-content">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></section>
 <section id="writing-reports-using-rmarkdown" class="slide level2">
 <h2>Writing Reports Using <code>rmarkdown</code></h2>
 <ul>
@@ -639,9 +645,8 @@ Dr Stevie Pederson
 </div>
 <div class="fragment">
 <ul>
-<li>Other parameters are set in the chunk header
+<li>Other parameters are set in the chunk header (e.g.&nbsp;do we show/hide the code)
 <ul>
-<li>e.g.&nbsp;do we show/hide the code</li>
 <li>The master reference is <a href="https://yihui.org/knitr/options/#chunk-options">here</a></li>
 </ul></li>
 </ul>
@@ -830,11 +835,11 @@ Dr Stevie Pederson
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">dose =</span> <span class="fu">factor</span>(dose, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Med"</span>, <span class="st">"High"</span>)),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">supp =</span> <span class="fu">factor</span>(supp, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"VC"</span>, <span class="st">"OJ"</span>))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pigs.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">dose =</span> <span class="fu">factor</span>(dose, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Med"</span>, <span class="st">"High"</span>)),</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">supp =</span> <span class="fu">factor</span>(supp, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"VC"</span>, <span class="st">"OJ"</span>))</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>Chunks can be run interactively using <code>Ctrl+Alt+Shift+P</code></p>
@@ -884,29 +889,28 @@ Dr Stevie Pederson
 </section>
 <section id="visualising-the-data" class="slide level2">
 <h2>Visualising The Data</h2>
-<p>The next step might be to visualise the data using a boxplot</p>
-<ol type="1">
-<li>Start a new chunk</li>
-<li>Name it <code>boxplot-data</code></li>
-</ol>
+<ul>
+<li>The next step might be to visualise the data using a boxplot</li>
+<li>Start a new chunk with ```{r boxplot-data}</li>
+</ul>
 <div class="fragment">
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(dose, len, <span class="at">fill =</span> supp)) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Dose"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Odontoblast Length (pm)"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Method"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(dose, len, <span class="at">fill =</span> supp)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Dose"</span>,</span>
+<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Odontoblast Length (pm)"</span>, </span>
+<span id="cb2-7"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Method"</span></span>
+<span id="cb2-8"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rmarkdown_slides_files/figure-revealjs/boxplot-data-1.png" width="960"></p>
+<p><img data-src="rmarkdown_slides_files/figure-revealjs/boxplot-data-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -916,8 +920,8 @@ Dr Stevie Pederson
 </section>
 <section id="visualising-the-data-1" class="slide level2">
 <h2>Visualising the Data</h2>
+<!-- - We can control the figure size using `fig.height` or `fig.width` -->
 <ul>
-<li>We can control the figure size using <code>fig.height</code> or <code>fig.width</code></li>
 <li>Type a description of the figure in the <code>fig.cap</code> section of the chunk header
 <ul>
 <li>This will need to be placed inside quotation marks</li>
@@ -948,19 +952,19 @@ Dr Stevie Pederson
 </ul>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">mean</span>(len), </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">sd</span>(len),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">round</span>(mn_len, <span class="dv">2</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">round</span>(sd_len, <span class="dv">2</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">len =</span> <span class="fu">paste0</span>(mn_len, <span class="st">" &amp;#177;"</span>, sd_len)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(supp, dose, n, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">mean</span>(len), </span>
+<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">sd</span>(len),</span>
+<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
+<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">round</span>(mn_len, <span class="dv">2</span>),</span>
+<span id="cb3-10"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">round</span>(sd_len, <span class="dv">2</span>),</span>
+<span id="cb3-11"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">len =</span> <span class="fu">paste0</span>(mn_len, <span class="st">" &amp;#177;"</span>, sd_len)</span>
+<span id="cb3-12"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a href="" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(supp, dose, n, len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
@@ -988,7 +992,7 @@ Dr Stevie Pederson
 <div class="fragment">
 <p>Add the following to your <code>load-packages</code> chunk</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -996,30 +1000,29 @@ Dr Stevie Pederson
 <h2>Producing Tables</h2>
 <div style="font-size: 90%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">mean</span>(len), </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">sd</span>(len),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">round</span>(mn_len, <span class="dv">2</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">round</span>(sd_len, <span class="dv">2</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">len =</span> <span class="fu">paste0</span>(mn_len, <span class="st">" &amp;#177;"</span>, sd_len)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(supp, dose, n, len) <span class="sc">|&gt;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_with</span>(str_to_title) <span class="sc">|&gt;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pander</span>(</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Odontoblast length for each group shown as mean&amp;#177;SD"</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">mean</span>(len), </span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">sd</span>(len),</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">.by =</span> <span class="fu">c</span>(supp, dose)</span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb6-9"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">mn_len =</span> <span class="fu">round</span>(mn_len, <span class="dv">2</span>),</span>
+<span id="cb6-10"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_len =</span> <span class="fu">round</span>(sd_len, <span class="dv">2</span>),</span>
+<span id="cb6-11"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">len =</span> <span class="fu">paste0</span>(mn_len, <span class="st">" &amp;#177;"</span>, sd_len)</span>
+<span id="cb6-12"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(supp, dose, n, len) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_with</span>(str_to_title) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pander</span>(</span>
+<span id="cb6-16"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Odontoblast length for each group shown as mean&amp;#177;SD"</span></span>
+<span id="cb6-17"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </div>
 </section>
 <section id="producing-tables-output" class="slide level2 output-location-slide"><h2>Producing Tables</h2><div class="cell output-location-slide" data-layout-align="center">
-<div class="cell-output-display">
-<table style="width:53%;">
+<table class="caption-top" style="width:53%;">
 <caption>Odontoblast length for each group shown as mean±SD</caption>
 <colgroup>
 <col style="width: 9%">
@@ -1074,7 +1077,6 @@ Dr Stevie Pederson
 </tr>
 </tbody>
 </table>
-</div>
 </div></section><section id="analysing-data" class="slide level2">
 <h2>Analysing Data</h2>
 <div style="font-size:85%">
@@ -1083,16 +1085,13 @@ Dr Stevie Pederson
 </ul>
 <div class="fragment">
 <ul>
-<li>The function <code>lm()</code> is used to perform linear regression
-<ul>
-<li>We’ll perform an analysis remembering that <code>~</code> means ‘depends on’</li>
-</ul></li>
+<li>The function <code>lm()</code> is used to perform linear regression</li>
 </ul>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1128,11 +1127,34 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><code>pander</code> can again be used to ‘tidy up’ the output from <code>lm</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pander</span>(<span class="at">add.significance.stars =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table style="width:100%;">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pander</span>(<span class="at">add.significance.stars =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+<aside class="notes">
+<p>Interpretation:</p>
+<ul>
+<li>At Low Dose, OJ increases length by 5.25 above VC</li>
+<li>Both Med &amp; High increase length for VC</li>
+<li>The difference in length for OJ is the same for Med as for Low</li>
+<li>The gains for length by OJ are completely lost at High Dose</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="analysing-data-1-output" class="slide level2 output-location-slide"><h2>Analysing Data</h2><div class="cell output-location-slide" data-layout-align="center">
+<table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 28%">
 <col style="width: 14%">
@@ -1202,7 +1224,7 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tr>
 </tbody>
 </table>
-<table style="width:88%;">
+<table class="caption-top" style="width:88%;">
 <caption>Fitting linear model: len ~ supp + dose + supp:dose</caption>
 <colgroup>
 <col style="width: 20%">
@@ -1227,30 +1249,7 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Interpretation:</p>
-<ul>
-<li>At Low Dose, OJ increases length by 5.25 above VC</li>
-<li>Both Med &amp; High increase length for VC</li>
-<li>The difference in length for OJ is the same for Med as for Low</li>
-<li>The gains for length by OJ are completely lost at High Dose</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="creating-summary-tables" class="slide level2">
+</div></section><section id="creating-summary-tables" class="slide level2">
 <h2>Creating Summary Tables</h2>
 <ul>
 <li>Multiple other packages exist for table creation
@@ -1274,8 +1273,8 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(len <span class="sc">~</span> supp <span class="sc">+</span> dose <span class="sc">+</span> supp<span class="sc">:</span>dose, <span class="at">data =</span> pigs) <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   term            estimate std.error statistic  p.value
@@ -1302,22 +1301,7 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><code>xtable</code> is excellent for <span class="math inline">\(\LaTeX\)</span> output</li>
 </ul>
 </section>
-<section id="other-chunk-options" class="slide level2">
-<h2>Other Chunk Options</h2>
-<ul>
-<li>Here’s my <code>setup</code> chunk for this presentation</li>
-</ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">include =</span> <span class="cn">TRUE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">"center"</span>, <span class="at">results =</span> <span class="st">'hide'</span>, <span class="at">fig.show =</span> <span class="st">"asis"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.width =</span> <span class="dv">6</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<ul>
-<li>When you’ve seen my results, I’ve set <code>results = 'asis'</code> in that chunk header</li>
-</ul>
-</div>
-</section>
+
 <section id="complete-the-analysis" class="slide level2">
 <h2>Complete the Analysis</h2>
 <p>After you’re happy with the way your analysis looks</p>
@@ -1352,46 +1336,10 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="advanced-options" class="slide level2">
-<h2>Advanced Options</h2>
-<ul>
-<li>The <code>R</code> package <code>workflowr</code> is very helpful for larger workflows
-<ul>
-<li>Can include multiple HTML pages</li>
-<li>Strong integration with <code>git</code></li>
-</ul></li>
-<li>Highly customisable output
-<ul>
-<li>Code folding</li>
-<li>Bootstrap themes etc.</li>
-<li>Can use custom <code>css</code> files</li>
-<li>Interactive plots using <code>plotly</code></li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>An example of a larger analysis using all <code>Rmd</code> files is at<br><a href="https://smped.github.io/PRJNA509779/">https://smped.github.io/PRJNA509779/</a></li>
-</ul>
-</div>
-</section></section>
+</section>
 <section>
-<section id="bonus-challenge" class="title-slide slide level1 center">
-<h1>Bonus Challenge</h1>
 
 </section>
-<section id="a-challenge" class="slide level2">
-<h2>A Challenge</h2>
-<ol type="1">
-<li>Import <code>PCR.xlsx</code> with all corrections</li>
-<li>Describe the data using inline code</li>
-<li>Create some exploratory plots</li>
-<li>Determine the most appropriate response &amp; predictor variables <span class="math inline">\(\implies\)</span> analyse</li>
-</ol>
-
-<img src="assets/bodl_logo_white_background.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
-
-</div>
-</section></section>
     </div>
   </div>
 
@@ -1418,7 +1366,6 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1569,9 +1516,9 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1024,
+        width: 1280,
 
-        height: 768,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -1717,10 +1664,27 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1730,8 +1694,17 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1745,7 +1718,11 @@ F-statistic: 41.56 on 5 and 54 DF,  p-value: &lt; 2.2e-16</code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

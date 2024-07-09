@@ -481,7 +481,7 @@ as.integer(pet_factors)
 as.character(pet_factors)
 ```
 
-## A Potential Pitfall
+## A Potential Pitfall {visibility="hidden"}
 
 **What would happen if we think a `factor` is a `character`, and we use it to select values from a `vector`/`matrix`/`data.frame`?**
 

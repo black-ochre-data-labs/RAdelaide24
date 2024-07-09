@@ -914,30 +914,7 @@ Dr Stevie Pederson
 <span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(pet_factors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="a-potential-pitfall" class="slide level2">
-<h2>A Potential Pitfall</h2>
-<p><strong>What would happen if we think a <code>factor</code> is a <code>character</code>, and we use it to select values from a <code>vector</code>/<code>matrix</code>/<code>data.frame</code>?</strong></p>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pet_vec) <span class="ot">&lt;-</span> pet_vec</span>
-<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec</span>
-<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec[pet_factors]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li><code>read_csv()</code> and other <code>readr</code> functions always parse text as a <code>character</code>
-<ul>
-<li>Older versions of <code>read.csv()</code> parsed text to factors by default</li>
-<li>Changed with R <span class="math inline">\(\geq\)</span> v4.0.0</li>
-</ul></li>
-<li>If I want a <code>factor</code>, <strong>I explicitly make</strong> a <code>factor</code>
-<ul>
-<li>During statistical analysis <code>character</code> vectors are always coerced</li>
-</ul></li>
-</ul>
-</div>
-</section>
+
 <section id="the-package-forcats" class="slide level2">
 <h2>The package <code>forcats</code></h2>
 <ul>

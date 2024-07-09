@@ -3085,7 +3085,6 @@ display: none;
   <li><a href="#some-challenges" id="toc-some-challenges" class="nav-link active" data-scroll-target="#some-challenges">Some Challenges</a>
   <ul class="collapse">
   <li><a href="#working-with-text-strings" id="toc-working-with-text-strings" class="nav-link" data-scroll-target="#working-with-text-strings">Working With Text Strings</a></li>
-  <li><a href="#loading-and-manipulating-data" id="toc-loading-and-manipulating-data" class="nav-link" data-scroll-target="#loading-and-manipulating-data">Loading and Manipulating Data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3172,28 +3171,27 @@ display: none;
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;No&quot;</span>, <span class="st">&quot;no&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="loading-and-manipulating-data" class="level2">
-<h2 class="anchored" data-anchor-id="loading-and-manipulating-data">Loading and Manipulating Data</h2>
+<ol start="7" type="1">
+<li>Load the pcr data using the following code then create create two additional columns
 <ol type="1">
-<li><p>Find which sheets are in the file “data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx” <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
-<li><p>Load the main data sheet from this file</p></li>
-<li><p>How would you compare measurements for the species across different sites</p>
-<ul>
-<li>Try using tables</li>
-<li>How can you visualise this?</li>
-</ul></li>
+<li><code>treatment</code>: containing the CONTROL/INFECTED status</li>
+<li><code>timepoint</code>: with all times ending in ‘hr’</li>
+</ol></li>
 </ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pcr <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/RealTimeData.xlsx&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">sample =</span> <span class="st">`</span><span class="at">...1</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- ## Loading and Manipulating Data -->
+<!-- 1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance] -->
+<!-- 2. Load the main data sheet from this file -->
+<!-- 3. How would you compare measurements for the species across different sites -->
+<!--     + Try using tables -->
+<!--     + How can you visualise this? -->
 </section>
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Obtained from https://portal.tern.org.au/results?topicTerm=surveillance<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main>
+</main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

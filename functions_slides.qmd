@@ -17,8 +17,8 @@ format:
   revealjs:
     theme: [bodl.scss]
     code-line-numbers: false
-    width: 1024
-    height: 768
+    width: 1280
+    height: 720
     sansfont: Times New Roman
     logo: assets/bodl_logo_white_background.jpg
     slide-number: c
