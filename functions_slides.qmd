@@ -197,39 +197,6 @@ body(sd)
 
 . . .
 
-Re-formatted that might be
-
-``` r
-sqrt(
-  var(
-    if (is.vector(x) || is.factor(x)) x else as.double(x), 
-    na.rm = na.rm
-  )
-)
-```
-
-## Understanding Functions
-
-So the full function might be written as:
-
-``` r
-sd <- function(x, na.rm = FALSE) {
-  sqrt(
-    var(
-      if (is.vector(x) || is.factor(x)) x else as.double(x), 
-      na.rm = na.rm
-    )
-  )
-}
-```
-
-::: {.notes}
-No need to write this function
-:::
-
-
-## Understanding Functions
-
 To make this more understandable
 
 ``` r
@@ -258,11 +225,11 @@ modify_labels <- function(x) {
 ## Writing Our Function
 
 - The first step is to change `"_"` to spaces
-    + The last line will be returned by default
+    + The last line of a function will be returned by default
 
 ```{r}
 modify_labels <- function(x) {
-  str_replace_all(x, "_", " ")
+  str_replace_all(x, "_", " ") # Replace all '_' with spaces
 }
 modify_labels(flagstats)
 ```
@@ -274,13 +241,13 @@ modify_labels(flagstats)
 
 ```{r}
 modify_labels <- function(x) {
-  new_x <- str_replace_all(x, "_", " ")
-  new_x
+  new_x <- str_replace_all(x, "_", " ") # Replace all '_' with spaces
+  new_x # Return our final object
 }
 modify_labels(flagstats)
 ```
 
-## Looking Inside the Function
+## Writing Our Function
 
 - Why are we referring to `flagstats` as `x`?
 
@@ -290,18 +257,18 @@ modify_labels(flagstats)
 
 . . .
 
-- Each function has it's own environment
-    + Within the `GlobalEnvironment` but separate
+- Each function has it's own internal environment
+    + Nested within the `GlobalEnvironment` but like "a separate bubble"
     
-## Looking Inside the Function
+## Looking Inside the Function {visibility="hidden"}
 
 - If we add a `browser()` command, we can enter the function at that exact point
 
 ```{r, eval = FALSE}
 modify_labels <- function(x) {
   browser()
-  new_x <- str_replace_all(x, "_", " ")
-  new_x
+  new_x <- str_replace_all(x, "_", " ") # Replace all '_' with spaces
+  new_x # Return our final object
 }
 modify_labels(flagstats)
 ```
@@ -314,7 +281,7 @@ This played up when testing both locally & on posit cloud
 :::
 
 
-## Looking Inside the Function
+## Looking Inside the Function {visibility="hidden"}
 
 - We're now looking inside the environment within the function
 - By passing `flagstats` as `x` $\implies$ this is it's name **within** this environment
@@ -336,27 +303,23 @@ This played up when testing both locally & on posit cloud
 
 ## Writing Our Function
 
-- Exit the `browser()` by typing `Q`
-- Remove the `browser()` line by adding a comment (`#`) to the start
+<!-- - Exit the `browser()` by typing `Q` -->
+<!-- - Remove the `browser()` line by adding a comment (`#`) to the start -->
 
-. . .
+<!-- . . . -->
 
-- Now we can finish the function
+- To complete the function
 
 ```{r}
 modify_labels <- function(x) {
-  # browser()
-  new_x <- str_replace_all(x, "_", " ")
-  new_x <- str_to_title(new_x)
-  new_x <- str_wrap(new_x, 12)
-  new_x
+  new_x <- str_replace_all(x, "_", " ") # Replace all '_' with spaces
+  new_x <- str_to_title(new_x) # Start each word with an uppercase letter
+  new_x <- str_wrap(new_x, width = 12) # Add line breaks after 12 characters
+  new_x # Return our final object
 }
 modify_labels(flagstats)
 ```
 
-. . .
-
-*Why didn't I use a pipe?*
 
 ## Extending Our Function
 
@@ -370,11 +333,10 @@ modify_labels(flagstats)
 
 ```{r}
 modify_labels <- function(x, width = 12) {
-  # browser()
-  new_x <- str_replace_all(x, "_", " ")
-  new_x <- str_to_title(new_x)
-  new_x <- str_wrap(new_x, width)
-  new_x
+  new_x <- str_replace_all(x, "_", " ") # Replace all '_' with spaces
+  new_x <- str_to_title(new_x) # Start each word with an uppercase letter
+  new_x <- str_wrap(new_x, width = width) # Add line breaks where requested
+  new_x # Return our final object
 }
 modify_labels(flagstats)
 modify_labels(flagstats, 80)
@@ -382,8 +344,8 @@ modify_labels(flagstats, 80)
 
 ## Extending Our Function
 
-- In many help pages you may see `...` as a function argument
-- This allows for passing arguments to internal functions
+- In many help pages $\implies$ `...` as a function argument
+- This allows for passing arguments to internal function calls
     + Are *not required* to be set specifically
 - Check the help page `?str_wrap`
 
@@ -399,19 +361,20 @@ modify_labels(flagstats, 80)
 - Pass `...` inside `str_wrap`
 
 ```{r}
+#| results: hide
 modify_labels <- function(x, ...) {
-  # browser()
-  new_x <- str_replace_all(x, "_", " ")
-  new_x <- str_to_title(new_x)
-  new_x <- str_wrap(new_x, ...)
-  new_x
+  new_x <- str_replace_all(x, "_", " ") # Replace all '_' with spaces
+  new_x <- str_to_title(new_x) # Start each word with an upper-case letter
+  new_x <- str_wrap(new_x, ...) # Add line breaks where requested
+  new_x # Return our final object
 }
 modify_labels(flagstats)
 modify_labels(flagstats, width = 12)
+modify_labels(flagstats, width = 12, indent = 5)
 ```
 
 
-## Extending Our Function
+## Extending Our Function {visibility="hidden"}
 
 - The default values will now be applied by `str_wrap()` *unless* we change them
 - The following would indent the first line by 2 spaces
@@ -425,7 +388,7 @@ modify_labels(flagstats, width = 12, indent = 2)
 
 - When writing functions need to choose target function carefully
 
-## Finishing Our Function
+## Finishing Our Function {visibility="hidden"}
 
 - This is a more formal implementation of the original process
 - These two are functionally identical
@@ -454,9 +417,9 @@ modify_labels(flagstats, width = 12)
 - `R` sees everything as vectors
 - We didn't need to modify each value of `flagstats`
     + Not the case for most languages
-    + `python`, `C`, `C++`. `perl` etc *step* through vectors<br>$\implies$process one value at a time
+    + `python`, `C`, `C++`, `perl` etc *step* through vectors<br>$\implies$process one value at a time
     
-## Iteration
+## Iteration {visibility="hidden"}
 
 - A python-like process might've been
 
@@ -480,13 +443,20 @@ new_x
 
 ## Iteration
 
-- Each value was called `x` as we stepped through it
+```{r}
+# No need to type this code. Just look at my dumb examples
+for (x in flagstats) {
+  print(x) 
+}
+```
+
+- Each value was called x as we stepped through it
 - `x` is just a convention $\implies$ can be anything (`i`, `bob` etc)
 
+. . .
+
 ```{r}
-for (x in flagstats) {
-  print(x)
-}
+# More dumb examples
 for (i in flagstats) {
   print(i)
 }
@@ -497,7 +467,7 @@ for (bob in flagstats) {
 
 ## Iteration
 
-- Because `R` works on vectors $\implies$ rarely need to iterate on vectors
+- Because `R` works on vectors<br>$\implies$ almost never need to iterate on vectors
 
 . . .
 
@@ -519,23 +489,22 @@ vals <- list(letters = letters, num = rnorm(1000))
 ## Iteration
 
 ```{r}
-len <- list()
-for (x in vals) {
-  len <- c(len, length(x))
+# Never do this. It's just an example...
+len <- c() # Initialise an empty object
+for (x in vals) { # Step through 'vals' calling each element 'x'
+  len <- c(len, length(x)) # Add the values as we step through
 }
-names(len) <- names(vals)
 len
 ```
 
 
 ::: {.incremental}
 
-The above
+The above:
 
-1. Initialises an empty list `len`
+1. Initialises an empty vector `len`
 2. Steps through each element calling it `x`
 3. Finds the length of `x` and extends `len`
-4. Adds the names so we know which value goes with which element
 
 :::
 
@@ -548,7 +517,7 @@ The above
     
 . . .
 
-- Syntax is `lapply(list, function, ...)` 
+- Basic syntax is `lapply(list, function)` 
 
 . . .
     
@@ -556,7 +525,6 @@ The above
 lapply(vals, length)
 ```
 
-- No `...` arguments needed here
 
 ::: {.notes}
 Much simpler way to work & is faster
@@ -564,7 +532,8 @@ Much simpler way to work & is faster
 
 ## The `R` Way to Iterate
 
-A quick example using the `...`
+- Additional arguments can also be passed
+- The full syntax is `lapply(list, function, ...)`
 
 ```{r}
 lapply(vals, head, n = 4)
@@ -603,7 +572,7 @@ map_int(vals, length)
 
 - Alternatives are `map_chr()`, `map_lgl()`, `map_dbl()`
 - Will error if setting the wrong type
-- Only used when single values are returned
+- **Only used when single values are returned**
 
 # Getting Real {background-color="#3c3c44"}
 

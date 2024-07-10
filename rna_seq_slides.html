@@ -835,10 +835,16 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII&gt;IIIII-I)8I</cod
 <h2>Bam Files</h2>
 <ul>
 <li>The Bioconductor interface to <code>bam</code> files is <code>Rsamtools</code></li>
-<li>Sequences loaded as <code>DNAStringSet</code>s</li>
-<li>Alignment co-ordinates as <code>GRanges</code> objects</li>
+<li>We define <code>BamFile</code> or <code>BamFileList</code> objects</li>
+<li>Are a simple connection to the file (including checks)</li>
+<li>We don’t load anything when created
+<ul>
+<li>Instead define specific subsets to load for a specific task</li>
+</ul></li>
 </ul>
-<div class="fragment">
+</section>
+<section id="bam-files-3" class="slide level2">
+<h2>Bam Files</h2>
 <ul>
 <li>When loading a subset of reads set <code>ScanBamParam()</code></li>
 <li>Enables loading alignments:
@@ -847,6 +853,11 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII&gt;IIIII-I)8I</cod
 <li>with specific tags or flags</li>
 </ul></li>
 <li>Controls which columns are returned</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Sequences loaded as <code>DNAStringSet</code>s</li>
+<li>Alignment co-ordinates as <code>GRanges</code> objects</li>
 </ul>
 </div>
 </section>
@@ -882,19 +893,7 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII6IBIIIIIIIIIIIIIIIIIIIIIIIGII&gt;IIIII-I)8I</cod
 </ul></li>
 </ul>
 </section>
-<section id="trancriptomic-pseudo-aligners" class="slide level2">
-<h2>Trancriptomic Pseudo-Aligners</h2>
-<ul>
-<li><code>salmon</code> and <code>kallisto</code> perform pseudo-alignments to the transcriptome (i.e.&nbsp;<em>not</em> the genome)</li>
-<li>Don’t produce <code>bam</code> files <span class="math inline">\(\implies\)</span> only transcript-level counts</li>
-<li>Transcript-level counts have explicit uncertainty due to multi-mapping
-<ul>
-<li>Can now be modelled confidently</li>
-</ul></li>
-<li>Can be simply summed to obtain gene-level counts</li>
-<li>Becoming increasingly popular</li>
-</ul>
-</section>
+
 <section id="reference-annotations" class="slide level2">
 <h2>Reference Annotations</h2>
 <ul>

@@ -58,6 +58,10 @@ knitr:
     fig.width: 10
 ---
 
+```{r, echo=FALSE}
+options(width = 100)
+```
+
 # The Bioconductor Project {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Bioconductor/Bioconductor5.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 ## Today's Outline
@@ -95,11 +99,7 @@ knitr:
 - Submission involves passing technical checks
     + Tests across OSX, Windows & Linux
     + Correct directory/file structures
-    
-. . .
 
-- No checks for statistics that are methodologically sound
-    + Usually publications associated $\implies$ peer-review
     
 ## Packages
 
@@ -121,22 +121,23 @@ knitr:
 
 . . .
 
-- Packages checked for programming consistency<br>$\implies$ not methodology
+- Packages checked for programming consistency $\implies$ not methodology
     + Expected to integrate with other Bioconductor packages
-- Packages tested nightly on OSX, Windows, Debian Linux + Arch Linux
 - All packages require a vignette explaining how to use the package
-    + Checked for clarity/helpfulness during package submission
+    + Checked manually for clarity/helpfulness during package submission
+- Packages tested nightly on OSX, Windows, Debian Linux + Arch Linux
     
 ## Bioconductor
 
 - Essentially represents a *community* of developers & users
 - Strongly encourages & supports diversity
-    + No longer on Twitter
+    + No longer on Twitter $\implies$ not a safe space
 - Has a [Code of Conduct](https://bioconductor.org/about/code-of-conduct/)
 - Consciously supporting those from emerging countries
     + Actively trying to translate resources to other languages
-- Also tries to find ways to engage with support developers & users
+- Also tries to find ways to engage with & support both developers & users
     + support.bioconductor.org & slack.bioconductor.org
+    + Members of R Core regularly post on the Bioconductor slack
 
 ## Bioconductor Structure
 
@@ -168,21 +169,20 @@ knitr:
     
 ## Bioconductor Packages
 
-- `R` generally has bi-annual releases
-    + With patch-fixes as needed
-    + Latest release 4.4.1 (14^th^ Jun, 2024)
+- `R` generally has bi-annual releases (R 4.4.0 April 24^th^, 2024)
+    + Patch-fixes as needed $\implies$ release 4.4.1 (14^th^ Jun, 2024)
 - CRAN packages continually update
 
-. . .
+## Bioconductor Packages
 
 - Bioconductor has two releases per year
 - Tested to a set R version (or later)
 - Bug-fixes also released as needed
     + Generally new features added to packages at Bioc releases
 - Latest Bioconductor release is 3.19 (May 1^st^ 2024)
-    + Was tested on R v4.4.0
+    + Was tested on R 4.4.0
 
-## Bioconductor Packages
+## Bioconductor Package Installation
 
 - `BiocManager()` is a CRAN package
 - Enables installation from CRAN *and* Bioconductor
@@ -222,7 +222,7 @@ BiocManager::install(c("pkg1", "user/pkg2"))
     
 ## BiocViews
 
-- [BiocViews](https://bioconductor.org/packages/release/BiocViews.html#___Software) provides on overview of all Bioconductor packages
+- [BiocViews](https://bioconductor.org/packages/release/BiocViews.html#___Software) provide an overview of all Bioconductor packages
 - Can be very helpful when looking for a resource
 - Most packages are software (for analysis)
 - Also annotation packages:
@@ -245,7 +245,8 @@ R has two common types of objects
     + Usually list-type objects e.g. results from `lm()` or `t.test()`
 - `S4` introduced in '90s
     + Focus on Object-Oriented Programming (OOP)  
-- Other less common classes (e.g. `R6` etc)
+- Biconductor packages rely heavily on `S4` objects
+    + Also common in spatial packages on CRAN (i.e. making maps etc)
 
 ## Objects and Methods
 
@@ -259,7 +260,7 @@ R has two common types of objects
 
 ``` r
 summary(letters)
-summary(mtcars)
+summary(cars)
 ```
 
 . . .
@@ -293,7 +294,8 @@ Those marked with an asterisk are hidden
 ## Objects and Methods
 
 - `summary.data.frame()` <br>$\implies$ used when `summary()` is called on a `data.frame`
-- `summary.lm()` <br>$\implies$ for an object produced by `lm()`
+- `summary.lm()` <br>$\implies$ for an object of class `lm` (produced by `lm()`)
+- `summary.prcomp()` <br>$\implies$ for an object of class `prcomp` (produced by `prcomp()`)
 
 . . .
 
@@ -312,7 +314,7 @@ methods(class = "data.frame")
 
 ## Objects and Methods   
 
-- Loading a new package may introduce new methods
+- Loading a new package will often introduce new methods
 
 ```{r, results='hide'}
 library(tidyverse)
@@ -436,17 +438,16 @@ Rle(test)
 ?DataFrame
 ```
 
-
 - An `S4` version
-    + Doesn't work with the `tidyverse`
+    + Doesn't work with the `tidyverse` (`dplyr`, `ggplot2` etc)
     + Still missing from `tidyomics`
 
 ::: {.fragment}
     
 - Until 2021 couldn't coerce to a `tibble` directly
-- I hated that so wrote `extraChIPs::as_tibble()`
+- I hated that so wrote `as_tibble()` for `DataFrame` objects
+    + In the package `extraChIPs`
     + Enables passing `S4` objects to `ggplot()`
-    + Not as straight-forward as you might think
     + Please test & find any bugs I haven't found yet
     
 :::
@@ -470,7 +471,7 @@ Rle(test)
     - `S4` lists can be *typed* $\implies$ memory efficiency
     - `List` objects can exist in a compressed form $\implies$ memory efficiency
 - `DataFrame` objects can have `S4` objects as columns
-    - `S3` data frames *cannot*
+    - `S3` data frames (including tibbles) *cannot*
     
 ::: {.notes}
 By typing a list we only need to record the type once, instead of once for each element.
@@ -506,7 +507,7 @@ as_tibble(DF)
 
 ## `DataFrame` objects
 
-- Metadata can be added to `DataFrame` objects
+- Object-level metadata can be added to `DataFrame` objects
 - Must be a `list`
 
 ```{r}
@@ -535,7 +536,7 @@ mcols(DF)
 . . .
 
 ```{r}
-glimpse(DF)
+glimpse(DF) # This is in the @elementMetadata slot
 ```
 
 
@@ -547,8 +548,13 @@ glimpse(DF)
 - These are fixed and mandatory for every `S4` class
     + Can still be empty (`NULL`) objects
     + Can be `S3` or `S4` objects
-- Enforces a strict structure with checks as objects formed
+- Enforces a strict structure with checks *as objects formed*
     + Saves time performing checks within functions
+    + Makes structure strict, rigid & hard to break
+
+::: {.notes}
+S3 objects are easy to break. Just change the class attribute...
+:::
 
 ## `S4` Object Structure
 

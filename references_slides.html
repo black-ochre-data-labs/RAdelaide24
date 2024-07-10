@@ -538,18 +538,18 @@ seq: AACGT</code></pre>
 <span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>ercc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 92:
-     width seq                                              names               
- [1]  1061 TCCAGATTACTTCCATTTCCGCC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00002
- [2]  1023 CAGCAGCGATTAAGGCAGAGGCG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00003
- [3]   523 TCTTGCTTCAACAATAACGTCTC...AAAAAAAAAAAAAAAAAAAAAA ERCC-00004
- [4]   984 CAATGATAGGCTAGTCTCGCGCA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00009
- [5]   994 CGAGAGATGTTTGTAGGTGCGGA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00012
+     width seq                                                                  names               
+ [1]  1061 TCCAGATTACTTCCATTTCCGCCCAAGCTGCTC...TTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00002
+ [2]  1023 CAGCAGCGATTAAGGCAGAGGCGTTTGTATCTG...CACAAGATAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00003
+ [3]   523 TCTTGCTTCAACAATAACGTCTCTTTCAGAAGG...AGGCACATAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00004
+ [4]   984 CAATGATAGGCTAGTCTCGCGCAGTACATGGTA...ACCGATATAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00009
+ [5]   994 CGAGAGATGTTTGTAGGTGCGGAATGTGTGCGG...CTATGGACAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00012
  ...   ... ...
-[88]  1022 AGGAGCTCCAGTAGTTTTCCCCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00164
-[89]   872 GATATGCGTTACGTGAGTCTGAT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00165
-[90]  1024 CCAATGAACTCAGCTATTCTTCT...AAAAAAAAAAAAAAAAAAAAAA ERCC-00168
-[91]  1023 TATTGGTGGAGGGGCACAAGTTG...AAAAAAAAAAAAAAAAAAAAAA ERCC-00170
-[92]   505 CTGGAGATTGTCTCGTACGGTTA...AAAAAAAAAAAAAAAAAAAAAA ERCC-00171</code></pre>
+[88]  1022 AGGAGCTCCAGTAGTTTTCCCCTCAAAAATTCC...TTGGTGGTTAAAAAAAAAAAAAAAAAAAAAAA ERCC-00164
+[89]   872 GATATGCGTTACGTGAGTCTGATAGCAGTTCAC...CGTATGTGAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00165
+[90]  1024 CCAATGAACTCAGCTATTCTTCTTAACAAATAA...ATGAGGTAAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00168
+[91]  1023 TATTGGTGGAGGGGCACAAGTTGCTGAAGTTGC...CTTAGGTTAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00170
+[92]   505 CTGGAGATTGTCTCGTACGGTTAAGAGCCTCCG...AGAACGAGAAAAAAAAAAAAAAAAAAAAAAAA ERCC-00171</code></pre>
 </div>
 </div>
 </section>
@@ -566,8 +566,7 @@ seq: AACGT</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ercc) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ERCC-00002" "ERCC-00003" "ERCC-00004" "ERCC-00009" "ERCC-00012"
-[6] "ERCC-00013"</code></pre>
+<pre><code>[1] "ERCC-00002" "ERCC-00003" "ERCC-00004" "ERCC-00009" "ERCC-00012" "ERCC-00013"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(ercc, <span class="st">"GC"</span>, <span class="at">as.prob =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -587,18 +586,18 @@ seq: AACGT</code></pre>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(ercc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 92:
-     width seq                                              names               
- [1]  1061 TTTTTTTTTTTTTTTTTTTTTTT...GCGGAAATGGAAGTAATCTGGA ERCC-00002
- [2]  1023 TTTTTTTTTTTTTTTTTTTTTTT...GCCTCTGCCTTAATCGCTGCTG ERCC-00003
- [3]   523 TTTTTTTTTTTTTTTTTTTTTTT...AGACGTTATTGTTGAAGCAAGA ERCC-00004
- [4]   984 TTTTTTTTTTTTTTTTTTTTTTT...GCGCGAGACTAGCCTATCATTG ERCC-00009
- [5]   994 TTTTTTTTTTTTTTTTTTTTTTT...CCGCACCTACAAACATCTCTCG ERCC-00012
+     width seq                                                                  names               
+ [1]  1061 TTTTTTTTTTTTTTTTTTTTTTTTAAGGGTAAA...AGCAGCTTGGGCGGAAATGGAAGTAATCTGGA ERCC-00002
+ [2]  1023 TTTTTTTTTTTTTTTTTTTTTTTTATCTTGTGG...AGATACAAACGCCTCTGCCTTAATCGCTGCTG ERCC-00003
+ [3]   523 TTTTTTTTTTTTTTTTTTTTTTTTATGTGCCTG...CTTCTGAAAGAGACGTTATTGTTGAAGCAAGA ERCC-00004
+ [4]   984 TTTTTTTTTTTTTTTTTTTTTTTTATATCGGTA...ACCATGTACTGCGCGAGACTAGCCTATCATTG ERCC-00009
+ [5]   994 TTTTTTTTTTTTTTTTTTTTTTTTGTCCATAGT...CGCACACATTCCGCACCTACAAACATCTCTCG ERCC-00012
  ...   ... ...
-[88]  1022 TTTTTTTTTTTTTTTTTTTTTTT...GGGGAAAACTACTGGAGCTCCT ERCC-00164
-[89]   872 TTTTTTTTTTTTTTTTTTTTTTT...TCAGACTCACGTAACGCATATC ERCC-00165
-[90]  1024 TTTTTTTTTTTTTTTTTTTTTTT...GAAGAATAGCTGAGTTCATTGG ERCC-00168
-[91]  1023 TTTTTTTTTTTTTTTTTTTTTTT...AACTTGTGCCCCTCCACCAATA ERCC-00170
-[92]   505 TTTTTTTTTTTTTTTTTTTTTTT...AACCGTACGAGACAATCTCCAG ERCC-00171</code></pre>
+[88]  1022 TTTTTTTTTTTTTTTTTTTTTTTAACCACCAAA...GAATTTTTGAGGGGAAAACTACTGGAGCTCCT ERCC-00164
+[89]   872 TTTTTTTTTTTTTTTTTTTTTTTTCACATACGC...TGAACTGCTATCAGACTCACGTAACGCATATC ERCC-00165
+[90]  1024 TTTTTTTTTTTTTTTTTTTTTTTTTACCTCATT...TATTTGTTAAGAAGAATAGCTGAGTTCATTGG ERCC-00168
+[91]  1023 TTTTTTTTTTTTTTTTTTTTTTTTAACCTAAGA...CAACTTCAGCAACTTGTGCCCCTCCACCAATA ERCC-00170
+[92]   505 TTTTTTTTTTTTTTTTTTTTTTTTCTCGTTCTT...GGAGGCTCTTAACCGTACGAGACAATCTCCAG ERCC-00171</code></pre>
 </div>
 </div>
 </section>
@@ -611,18 +610,18 @@ seq: AACGT</code></pre>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(ercc, <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 92:
-     width seq                                              names               
- [1]    10 TCCAGATTAC                                       ERCC-00002
- [2]    10 CAGCAGCGAT                                       ERCC-00003
- [3]    10 TCTTGCTTCA                                       ERCC-00004
- [4]    10 CAATGATAGG                                       ERCC-00009
- [5]    10 CGAGAGATGT                                       ERCC-00012
+     width seq                                                                  names               
+ [1]    10 TCCAGATTAC                                                           ERCC-00002
+ [2]    10 CAGCAGCGAT                                                           ERCC-00003
+ [3]    10 TCTTGCTTCA                                                           ERCC-00004
+ [4]    10 CAATGATAGG                                                           ERCC-00009
+ [5]    10 CGAGAGATGT                                                           ERCC-00012
  ...   ... ...
-[88]    10 AGGAGCTCCA                                       ERCC-00164
-[89]    10 GATATGCGTT                                       ERCC-00165
-[90]    10 CCAATGAACT                                       ERCC-00168
-[91]    10 TATTGGTGGA                                       ERCC-00170
-[92]    10 CTGGAGATTG                                       ERCC-00171</code></pre>
+[88]    10 AGGAGCTCCA                                                           ERCC-00164
+[89]    10 GATATGCGTT                                                           ERCC-00165
+[90]    10 CCAATGAACT                                                           ERCC-00168
+[91]    10 TATTGGTGGA                                                           ERCC-00170
+[92]    10 CTGGAGATTG                                                           ERCC-00171</code></pre>
 </div>
 </div>
 </section>
@@ -635,7 +634,7 @@ seq: AACGT</code></pre>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(ercc[[<span class="dv">1</span>]], <span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">width =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Views on a 1061-letter DNAString subject
-subject: TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCA...TTTTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA
+subject: TCCAGATTACTTCCATTTCCGCCCAAGCTGCTCACAGTATACGG...GGTGCTTGCGTTTTACCCTTAAAAAAAAAAAAAAAAAAAAAAAA
 views:
       start end width
   [1]     1  10    10 [TCCAGATTAC]
@@ -679,9 +678,9 @@ views:
 |     chr22_KQ458388v1_alt    chr22_KQ759761v1_alt    chrX_KV766199v1_alt    
 |     chrX_MU273395v1_alt     chrX_MU273396v1_alt     chrX_MU273397v1_alt    
 | 
-| Tips: call 'seqnames()' on the object to get all the sequence names, call
-| 'seqinfo()' to get the full sequence info, use the '$' or '[[' operator to
-| access a given sequence, see '?BSgenome' for more information.</code></pre>
+| Tips: call 'seqnames()' on the object to get all the sequence names, call 'seqinfo()' to get the
+| full sequence info, use the '$' or '[[' operator to access a given sequence, see '?BSgenome' for
+| more information.</code></pre>
 </div>
 </div>
 </section>
@@ -699,7 +698,7 @@ views:
 <span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>chrM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>16569-letter DNAString object
-seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG</code></pre>
+seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCAT...AAGCCTAAATAGCCCACACGTTCCCCTTAAATAAGACATCACGATG</code></pre>
 </div>
 </div>
 </section>
@@ -752,9 +751,11 @@ seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG
   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="genomic-ranges-2" class="slide level2">
+<h2>Genomic Ranges</h2>
 <ul>
-<li>Best practice is to always define the genome the range has been drawn from</li>
+<li>Best practice is to define which genome the range has been drawn from</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">GRanges</span>(<span class="st">"chr1:10001-11000"</span>, <span class="at">seqinfo =</span> sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -765,7 +766,6 @@ seq: GATCACAGGTCTATCACCCTATTAACCACTCACGGG...AGCCCACACGTTCCCCTTAAATAAGACATCACGATG
   [1]     chr1 10001-11000      *
   -------
   seqinfo: 711 sequences (1 circular) from hg38 genome</code></pre>
-</div>
 </div>
 </div>
 </section>
@@ -803,7 +803,7 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <li>The package <code>rtracklayer</code> is an all-purpose -omics file import package
 <ul>
 <li>Handles 0/1-based co-ordinates easily</li>
-<li>Will prase files as <code>GRanges</code></li>
+<li>Will parse files as <code>GRanges</code></li>
 </ul></li>
 </ul>
 </div>
@@ -830,10 +830,10 @@ chrY    56887902    57217415    .   0   .</code></pre>
 </ul>
 </div>
 </section>
-<section id="genomic-ranges-2" class="slide level2">
+<section id="genomic-ranges-3" class="slide level2">
 <h2>Genomic Ranges</h2>
 <ul>
-<li>Note that we have and <code>mcols</code> element
+<li>Note that we have an <code>mcols</code> element
 <ul>
 <li><code>DataFrame</code> with metadata about each range</li>
 </ul></li>
@@ -897,15 +897,12 @@ chrY    56887902    57217415    .   0   .</code></pre>
 </div>
 <div class="fragment">
 <ul>
-<li>Not going any deeper today
-<ul>
 <li>Only for <code>GRanges</code> <span class="math inline">\(\implies\)</span> not <code>DataFrame</code></li>
-</ul></li>
 </ul>
 </div>
 </div>
 </section>
-<section id="genomic-ranges-3" class="slide level2">
+<section id="genomic-ranges-4" class="slide level2">
 <h2>Genomic Ranges</h2>
 <ul>
 <li>This makes extracting the genomic sequence trivial</li>
@@ -915,8 +912,8 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 2:
       width seq
-[1] 2771479 CTAACCCTAACCCTAACCCTAACCCTAACCCTA...TCAGACCTTAGTTATAGATTAAAAGAAGTTAA
-[2]  329513 ATGTGTTTTTTGGCTGCATAAATGTCTTCTTTT...GTGGGTGTGTGGGTGTGGTGTGTGGGTGTGGT</code></pre>
+[1] 2771479 CTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTCTGAA...TCCTCAGGACTCAGACCTTAGTTATAGATTAAAAGAAGTTAA
+[2]  329513 ATGTGTTTTTTGGCTGCATAAATGTCTTCTTTTGAGAAGTGTC...GGGTGTGGGTGTGGGTGTGTGGGTGTGGTGTGTGGGTGTGGT</code></pre>
 </div>
 </div>
 </section>
@@ -954,8 +951,8 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>gtf<span class="sc">$</span>type <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "gene"        "transcript"  "exon"        "CDS"         "start_codon"
-[6] "stop_codon"  "UTR"        </code></pre>
+<pre><code>[1] "gene"        "transcript"  "exon"        "CDS"         "start_codon" "stop_codon" 
+[7] "UTR"        </code></pre>
 </div>
 </div>
 <ul>
@@ -980,7 +977,7 @@ chrY    56887902    57217415    .   0   .</code></pre>
       }</style></aside>
 </div>
 </section>
-<section id="genomic-ranges-4" class="slide level2">
+<section id="genomic-ranges-5" class="slide level2">
 <h2>Genomic Ranges</h2>
 <p>This structure highlights a few unexpected features of <code>GRanges</code></p>
 <div>
@@ -1027,7 +1024,7 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <ul>
 <li>This is a <code>plyranges</code> approach to the question
 <ul>
-<li>Still, note these are identical exons from 10 transcripts</li>
+<li>Still, note these are identical exons annotated for 10 transcripts</li>
 </ul></li>
 </ul>
 </div>
@@ -1074,6 +1071,7 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <ul>
 <li>i.e.&nbsp;from the same genome</li>
 </ul></li>
+<li>Must have <code>mcols</code> with common names and types</li>
 <li>Very efficient way to perform complex operations</li>
 </ul>
 </section>
@@ -1140,16 +1138,16 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSeq</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSetList of length 1018
-[["ENST00000155093.8"]] AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGCCGACCGCCC...
-[["ENST00000215473.7"]] CTGGTGGTCCAGTACCTCCAAAGATATGGAATACACTCCTGAAATATCCTGAA...
-[["ENST00000244174.11_PAR_Y"]] GCTGTGCACCCAGAGATAGTTGGGTGACAAATCACCTCCAGGTTGG...
-[["ENST00000250776.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
+[["ENST00000155093.8"]] AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGCCGACCGCCCGCACATCCGTCGGGTGAGTC...
+[["ENST00000215473.7"]] CTGGTGGTCCAGTACCTCCAAAGATATGGAATACACTCCTGAAATATCCTGAAACCTTTTTTTTTTCAGAATC...
+[["ENST00000244174.11_PAR_Y"]] GCTGTGCACCCAGAGATAGTTGGGTGACAAATCACCTCCAGGTTGGGGATGCCTCAGACTTGTGAT...
+[["ENST00000250776.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTGCAGCCTGGTAGCGAGAAAAA...
 [["ENST00000250784.13"]] CTCTTCCGTCGCAGAGTTTCGCCATG ...
-[["ENST00000250805.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTG...
-[["ENST00000250823.5"]] ATACACAGGGAGGCCAGGCAGCCTGGAGTTAGTCGACCGTTGCGAGACGTTGA...
-[["ENST00000250825.5"]] AGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAAAGCCGAGAGC...
-[["ENST00000250831.6"]] ATGATTGGCCGCTGGAGGTAGGCGGGATTTCCGGGCACGGCTTCCGGCGTCCT...
-[["ENST00000250838.6"]] GTAACAGGCAGGAAGAAAGCTTTCTGTACTACACCAGAGGGTTGGGGCTGTGG...
+[["ENST00000250805.5"]] TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAGAGTAAAATGGTACAGGCAGTGCAGCCTGGTAGCGAGAAAAA...
+[["ENST00000250823.5"]] ATACACAGGGAGGCCAGGCAGCCTGGAGTTAGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAA...
+[["ENST00000250825.5"]] AGTCGACCGTTGCGAGACGTTGAGCTGCGGCAGATGAGTCCAAAGCCGAGAGCCTCGGGACCTCCGGCCAAGG...
+[["ENST00000250831.6"]] ATGATTGGCCGCTGGAGGTAGGCGGGATTTCCGGGCACGGCTTCCGGCGTCCTTCCCTCTCAGGGTAGCTCCA...
+[["ENST00000250838.6"]] GTAACAGGCAGGAAGAAAGCTTTCTGTACTACACCAGAGGGTTGGGGCTGTGGATTTAGCTACTCTCACCTGA...
 ...
 &lt;1008 more elements&gt;</code></pre>
 </div>
@@ -1166,14 +1164,14 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 8:
     width seq
-[1]   389 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCG...CGGGGGCGAGAAGGCGAAGGCTGCAGGCGTGAG
-[2]    89 GAGCTGTGACTAATGAGAATTAAAGGCCATGGAT...CACAAGAGCCAAACTCATTTTTTGATGGAATAG
-[3]   573 GAGCTGATGCTACACACATGGATGGTGATCAGAT...AAGCCAGCTGTGAGGACTACCTAATGATTTCGT
-[4]   150 TGGATGATGCTGGCAAAATAGAACATGATGGTTC...TTTTTAAAGCTGACCCTGGAGAAGATGACTTAG
-[5]   144 GTGGAACTGTAGACATTGTGGAGAGTGAACCTGA...TCAATGACTCTCAACAAGAAGATGAAGATTTAA
-[6]   153 ATGTTGCTGAAATTGCTGATGAAGTTTATATGGA...CCTTCGTACCAATTGCATGGGCAGCAGCTTATG
-[7]   141 GTAATAATTCTGATGGAATTGAAAACCGGAATGG...AGAGAAGACCTGATTCCAGGCAGTACCAAACAG
-[8]  3697 CAATAATTATTGGCCCTGATGGTCATCCTTTGAC...TTTTACTGTTAATAAATGTTTACTTGTATATGA</code></pre>
+[1]   389 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACCCGCCGCTGTCGC...GGGCACGGCACGGGGGCGAGAAGGCGAAGGCTGCAGGCGTGAG
+[2]    89 GAGCTGTGACTAATGAGAATTAAAGGCCATGGATGAAGATGAATTTGAATTGCAGCCACAAGAGCCAAACTCATTTTTTGATGGAATAG
+[3]   573 GAGCTGATGCTACACACATGGATGGTGATCAGATTGTTGTGGAA...GATAATGACAAAGCCAGCTGTGAGGACTACCTAATGATTTCGT
+[4]   150 TGGATGATGCTGGCAAAATAGAACATGATGGTTCCACTGGAGTG...AAGGTGTACATTTTTAAAGCTGACCCTGGAGAAGATGACTTAG
+[5]   144 GTGGAACTGTAGACATTGTGGAGAGTGAACCTGAAAATGATCAT...TATATGACTGTCAATGACTCTCAACAAGAAGATGAAGATTTAA
+[6]   153 ATGTTGCTGAAATTGCTGATGAAGTTTATATGGAAGTGATCGTA...GAAATGAAAACCTTCGTACCAATTGCATGGGCAGCAGCTTATG
+[7]   141 GTAATAATTCTGATGGAATTGAAAACCGGAATGGCACTGCAAGT...CCAAAGAAAAAGAGAAGACCTGATTCCAGGCAGTACCAAACAG
+[8]  3697 CAATAATTATTGGCCCTGATGGTCATCCTTTGACTGTCTATCCT...AAAAATAATATTTTACTGTTAATAAATGTTTACTTGTATATGA</code></pre>
 </div>
 </div>
 </section>
@@ -1187,18 +1185,18 @@ chrY    56887902    57217415    .   0   .</code></pre>
 <span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">extractTranscriptSeqs</span>(hg38, trans_grl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 1018:
-       width seq                                            names               
-   [1]  5336 AGTGCTCCAGAGAAAGGCCGTC...TAAATGTTTACTTGTATATGA ENST00000155093.8
-   [2]  4595 CTGGTGGTCCAGTACCTCCAAA...GAGCCCTTCAGAAGACATTCT ENST00000215473.7
-   [3]  2038 GCTGTGCACCCAGAGATAGTTG...AAAAGGGGCTTGATGGCTGTT ENST00000244174.1...
-   [4]   910 TGTCTGTCAGAGCTGTCAGCCT...AAACACTGGTATATTTCTGTT ENST00000250776.5
-   [5]  1189 CTCTTCCGTCGCAGAGTTTCGC...AAATCCTGTGGCTGTAGGAAA ENST00000250784.13
+       width seq                                                                names               
+   [1]  5336 AGTGCTCCAGAGAAAGGCCGTCCTGCAGCACC...TTACTGTTAATAAATGTTTACTTGTATATGA ENST00000155093.8
+   [2]  4595 CTGGTGGTCCAGTACCTCCAAAGATATGGAAT...AAGGTATTTTGAGCCCTTCAGAAGACATTCT ENST00000215473.7
+   [3]  2038 GCTGTGCACCCAGAGATAGTTGGGTGACAAAT...TCTAGAGATTAAAAGGGGCTTGATGGCTGTT ENST00000244174.1...
+   [4]   910 TGTCTGTCAGAGCTGTCAGCCTGCTTAAGCAG...AAAGACAATTAAACACTGGTATATTTCTGTT ENST00000250776.5
+   [5]  1189 CTCTTCCGTCGCAGAGTTTCGCCATGGCCCGG...GGTAGAAATTAAATCCTGTGGCTGTAGGAAA ENST00000250784.13
    ...   ... ...
-[1014]   534 GGCTTTGGGCAGAGGCAGCCAG...TAAATATGATATGGGAGTGTG ENST00000700889.1
-[1015]   600 GGCTTTGGGCAGAGGCAGCCAG...AAAGCTAAATGCAATTGCATA ENST00000700898.1
-[1016]   676 GGCTTTGGGCAGAGGCAGCCAG...TAGTTTCTTAAATTTGTAAAA ENST00000700901.1
-[1017]  1048 ACTCGCGGACGATCTCTGCTCG...AAACAAAAACAAAAAAAAAAA ENST00000701084.1...
-[1018]  1591 GGAGGTGGCTCGGGCCGCGCCG...ATAAAATATTTTTTGAAACCA ENST00000701359.1...</code></pre>
+[1014]   534 GGCTTTGGGCAGAGGCAGCCAGGGCGCCGGAA...AAGGAGCAAATAAATATGATATGGGAGTGTG ENST00000700889.1
+[1015]   600 GGCTTTGGGCAGAGGCAGCCAGGGCGCCGGAA...TAATGTTAATAAAGCTAAATGCAATTGCATA ENST00000700898.1
+[1016]   676 GGCTTTGGGCAGAGGCAGCCAGGGCGCCGGAA...ATATTAAAATTAGTTTCTTAAATTTGTAAAA ENST00000700901.1
+[1017]  1048 ACTCGCGGACGATCTCTGCTCGCCTTGGGCGC...ATAACTCGGAAAACAAAAACAAAAAAAAAAA ENST00000701084.1...
+[1018]  1591 GGAGGTGGCTCGGGCCGCGCCGAGGGGACCAC...ATTCCAGAAAATAAAATATTTTTTGAAACCA ENST00000701359.1...</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1296,45 +1294,32 @@ AH117052 Ensembl 112 EnsDb fo..      Ensembl     Xenopus tropicalis       8364
 AH117053 Ensembl 112 EnsDb fo..      Ensembl Zonotrichia albicollis      44394
 AH117054 Ensembl 112 EnsDb fo..      Ensembl Zalophus californianus       9704
 AH117055 Ensembl 112 EnsDb fo..      Ensembl Zosterops lateralis ..    1220523
-                         genome            description coordinate_1_based
-                    &lt;character&gt;            &lt;character&gt;          &lt;integer&gt;
-AH5012                     hg19 GRanges object from ..                  1
-AH5013                     hg19 GRanges object from ..                  1
-AH5014                     hg19 GRanges object from ..                  1
-AH5015                     hg19 GRanges object from ..                  1
-AH5016                     hg19 GRanges object from ..                  1
-...                         ...                    ...                ...
-AH117051   X_maculatus-5.0-male Gene and protein ann..                  1
-AH117052          UCB_Xtro_10.0 Gene and protein ann..                  1
-AH117053 Zonotrichia_albicoll.. Gene and protein ann..                  1
-AH117054           mZalCal1.pri Gene and protein ann..                  1
-AH117055            ASM128173v1 Gene and protein ann..                  1
-                     maintainer rdatadateadded          preparerclass
-                    &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
-AH5012   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
-AH5013   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
-AH5014   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
-AH5015   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
-AH5016   Marc Carlson &lt;mcarls..     2013-03-26 UCSCFullTrackImportP..
-...                         ...            ...                    ...
-AH117051 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
-AH117052 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
-AH117053 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
-AH117054 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
-AH117055 Johannes Rainer &lt;joh..     2024-04-30               AHEnsDbs
-                                             tags  rdataclass
-                                           &lt;AsIs&gt; &lt;character&gt;
-AH5012                    cytoBand,UCSC,track,...     GRanges
-AH5013                      stsMap,UCSC,track,...     GRanges
-AH5014                  fishClones,UCSC,track,...     GRanges
-AH5015                  recombRate,UCSC,track,...     GRanges
-AH5016               encodeRegions,UCSC,track,...     GRanges
-...                                           ...         ...
-AH117051 112,Annotation,AnnotationHubSoftware,...       EnsDb
-AH117052 112,Annotation,AnnotationHubSoftware,...       EnsDb
-AH117053 112,Annotation,AnnotationHubSoftware,...       EnsDb
-AH117054 112,Annotation,AnnotationHubSoftware,...       EnsDb
-AH117055 112,Annotation,AnnotationHubSoftware,...       EnsDb
+                         genome            description coordinate_1_based             maintainer
+                    &lt;character&gt;            &lt;character&gt;          &lt;integer&gt;            &lt;character&gt;
+AH5012                     hg19 GRanges object from ..                  1 Marc Carlson &lt;mcarls..
+AH5013                     hg19 GRanges object from ..                  1 Marc Carlson &lt;mcarls..
+AH5014                     hg19 GRanges object from ..                  1 Marc Carlson &lt;mcarls..
+AH5015                     hg19 GRanges object from ..                  1 Marc Carlson &lt;mcarls..
+AH5016                     hg19 GRanges object from ..                  1 Marc Carlson &lt;mcarls..
+...                         ...                    ...                ...                    ...
+AH117051   X_maculatus-5.0-male Gene and protein ann..                  1 Johannes Rainer &lt;joh..
+AH117052          UCB_Xtro_10.0 Gene and protein ann..                  1 Johannes Rainer &lt;joh..
+AH117053 Zonotrichia_albicoll.. Gene and protein ann..                  1 Johannes Rainer &lt;joh..
+AH117054           mZalCal1.pri Gene and protein ann..                  1 Johannes Rainer &lt;joh..
+AH117055            ASM128173v1 Gene and protein ann..                  1 Johannes Rainer &lt;joh..
+         rdatadateadded          preparerclass                                     tags  rdataclass
+            &lt;character&gt;            &lt;character&gt;                                   &lt;AsIs&gt; &lt;character&gt;
+AH5012       2013-03-26 UCSCFullTrackImportP..                  cytoBand,UCSC,track,...     GRanges
+AH5013       2013-03-26 UCSCFullTrackImportP..                    stsMap,UCSC,track,...     GRanges
+AH5014       2013-03-26 UCSCFullTrackImportP..                fishClones,UCSC,track,...     GRanges
+AH5015       2013-03-26 UCSCFullTrackImportP..                recombRate,UCSC,track,...     GRanges
+AH5016       2013-03-26 UCSCFullTrackImportP..             encodeRegions,UCSC,track,...     GRanges
+...                 ...                    ...                                      ...         ...
+AH117051     2024-04-30               AHEnsDbs 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117052     2024-04-30               AHEnsDbs 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117053     2024-04-30               AHEnsDbs 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117054     2024-04-30               AHEnsDbs 112,Annotation,AnnotationHubSoftware,...       EnsDb
+AH117055     2024-04-30               AHEnsDbs 112,Annotation,AnnotationHubSoftware,...       EnsDb
                       rdatapath              sourceurl  sourcetype
                     &lt;character&gt;            &lt;character&gt; &lt;character&gt;
 AH5012   goldenpath/hg19/data.. rtracklayer://hgdown..  UCSC track
@@ -1467,9 +1452,8 @@ AH117055 AHEnsDbs/v112/EnsDb... http://www.ensembl.org     ensembl</code></pre>
 # $dataprovider: Gencode
 # $species: Homo sapiens, Mus musculus
 # $rdataclass: GRanges
-# additional mcols(): taxonomyid, genome, description,
-#   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
-#   rdatapath, sourceurl, sourcetype 
+# additional mcols(): taxonomyid, genome, description, coordinate_1_based, maintainer,
+#   rdatadateadded, preparerclass, tags, rdatapath, sourceurl, sourcetype 
 # retrieve records with, e.g., 'object[["AH49545"]]' 
 
             title                                                    

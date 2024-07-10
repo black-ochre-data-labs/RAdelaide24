@@ -466,14 +466,6 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 </div>
-<div class="fragment">
-<ul>
-<li>No checks for statistics that are methodologically sound
-<ul>
-<li>Usually publications associated <span class="math inline">\(\implies\)</span> peer-review</li>
-</ul></li>
-</ul>
-</div>
 </section>
 <section id="packages" class="slide level2">
 <h2>Packages</h2>
@@ -500,15 +492,15 @@ Dr Stevie Pederson
 </ul>
 <div class="fragment">
 <ul>
-<li>Packages checked for programming consistency<br><span class="math inline">\(\implies\)</span> not methodology
+<li>Packages checked for programming consistency <span class="math inline">\(\implies\)</span> not methodology
 <ul>
 <li>Expected to integrate with other Bioconductor packages</li>
 </ul></li>
-<li>Packages tested nightly on OSX, Windows, Debian Linux + Arch Linux</li>
 <li>All packages require a vignette explaining how to use the package
 <ul>
-<li>Checked for clarity/helpfulness during package submission</li>
+<li>Checked manually for clarity/helpfulness during package submission</li>
 </ul></li>
+<li>Packages tested nightly on OSX, Windows, Debian Linux + Arch Linux</li>
 </ul>
 </div>
 </section>
@@ -518,16 +510,17 @@ Dr Stevie Pederson
 <li>Essentially represents a <em>community</em> of developers &amp; users</li>
 <li>Strongly encourages &amp; supports diversity
 <ul>
-<li>No longer on Twitter</li>
+<li>No longer on Twitter <span class="math inline">\(\implies\)</span> not a safe space</li>
 </ul></li>
 <li>Has a <a href="https://bioconductor.org/about/code-of-conduct/">Code of Conduct</a></li>
 <li>Consciously supporting those from emerging countries
 <ul>
 <li>Actively trying to translate resources to other languages</li>
 </ul></li>
-<li>Also tries to find ways to engage with support developers &amp; users
+<li>Also tries to find ways to engage with &amp; support both developers &amp; users
 <ul>
 <li>support.bioconductor.org &amp; slack.bioconductor.org</li>
+<li>Members of R Core regularly post on the Bioconductor slack</li>
 </ul></li>
 </ul>
 </section>
@@ -573,14 +566,15 @@ Dr Stevie Pederson
 <section id="bioconductor-packages" class="slide level2">
 <h2>Bioconductor Packages</h2>
 <ul>
-<li><code>R</code> generally has bi-annual releases
+<li><code>R</code> generally has bi-annual releases (R 4.4.0 April 24<sup>th</sup>, 2024)
 <ul>
-<li>With patch-fixes as needed</li>
-<li>Latest release 4.4.1 (14<sup>th</sup> Jun, 2024)</li>
+<li>Patch-fixes as needed <span class="math inline">\(\implies\)</span> release 4.4.1 (14<sup>th</sup> Jun, 2024)</li>
 </ul></li>
 <li>CRAN packages continually update</li>
 </ul>
-<div class="fragment">
+</section>
+<section id="bioconductor-packages-1" class="slide level2">
+<h2>Bioconductor Packages</h2>
 <ul>
 <li>Bioconductor has two releases per year</li>
 <li>Tested to a set R version (or later)</li>
@@ -590,13 +584,12 @@ Dr Stevie Pederson
 </ul></li>
 <li>Latest Bioconductor release is 3.19 (May 1<sup>st</sup> 2024)
 <ul>
-<li>Was tested on R v4.4.0</li>
+<li>Was tested on R 4.4.0</li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="bioconductor-packages-1" class="slide level2">
-<h2>Bioconductor Packages</h2>
+<section id="bioconductor-package-installation" class="slide level2">
+<h2>Bioconductor Package Installation</h2>
 <ul>
 <li><code>BiocManager()</code> is a CRAN package</li>
 <li>Enables installation from CRAN <em>and</em> Bioconductor
@@ -650,7 +643,7 @@ Dr Stevie Pederson
 <section id="biocviews" class="slide level2">
 <h2>BiocViews</h2>
 <ul>
-<li><a href="https://bioconductor.org/packages/release/BiocViews.html#___Software">BiocViews</a> provides on overview of all Bioconductor packages</li>
+<li><a href="https://bioconductor.org/packages/release/BiocViews.html#___Software">BiocViews</a> provide an overview of all Bioconductor packages</li>
 <li>Can be very helpful when looking for a resource</li>
 <li>Most packages are software (for analysis)</li>
 <li>Also annotation packages:
@@ -683,7 +676,10 @@ Dr Stevie Pederson
 <li>Focus on Object-Oriented Programming (OOP)<br>
 </li>
 </ul></li>
-<li>Other less common classes (e.g.&nbsp;<code>R6</code> etc)</li>
+<li>Biconductor packages rely heavily on <code>S4</code> objects
+<ul>
+<li>Also common in spatial packages on CRAN (i.e.&nbsp;making maps etc)</li>
+</ul></li>
 </ul>
 </section>
 <section id="objects-and-methods" class="slide level2">
@@ -700,7 +696,7 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(letters)</span>
-<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><em>How does <code>summary()</code> know what to do for different data structures?</em></p>
@@ -769,7 +765,8 @@ see '?methods' for accessing help and source code</code></pre>
 <h2>Objects and Methods</h2>
 <ul>
 <li><code>summary.data.frame()</code> <br><span class="math inline">\(\implies\)</span> used when <code>summary()</code> is called on a <code>data.frame</code></li>
-<li><code>summary.lm()</code> <br><span class="math inline">\(\implies\)</span> for an object produced by <code>lm()</code></li>
+<li><code>summary.lm()</code> <br><span class="math inline">\(\implies\)</span> for an object of class <code>lm</code> (produced by <code>lm()</code>)</li>
+<li><code>summary.prcomp()</code> <br><span class="math inline">\(\implies\)</span> for an object of class <code>prcomp</code> (produced by <code>prcomp()</code>)</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -790,18 +787,16 @@ see '?methods' for accessing help and source code</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">"data.frame"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] [             [[            [[&lt;-          [&lt;-           $&lt;-          
- [6] aggregate     anyDuplicated anyNA         as.data.frame as.list      
-[11] as.matrix     as.vector     by            cbind         coerce       
-[16] dim           dimnames      dimnames&lt;-    droplevels    duplicated   
-[21] edit          format        formula       head          initialize   
-[26] is.na         Math          merge         na.exclude    na.omit      
-[31] Ops           plot          print         prompt        rbind        
-[36] row.names     row.names&lt;-   rowsum        show          slotsFromS3  
-[41] sort_by       split         split&lt;-       stack         str          
-[46] subset        summary       Summary       t             tail         
-[51] transform     type.convert  unique        unstack       within       
-[56] xtfrm        
+<pre><code> [1] [             [[            [[&lt;-          [&lt;-           $&lt;-           aggregate    
+ [7] anyDuplicated anyNA         as.data.frame as.list       as.matrix     as.vector    
+[13] by            cbind         coerce        dim           dimnames      dimnames&lt;-   
+[19] droplevels    duplicated    edit          format        formula       head         
+[25] initialize    is.na         Math          merge         na.exclude    na.omit      
+[31] Ops           plot          print         prompt        rbind         row.names    
+[37] row.names&lt;-   rowsum        show          slotsFromS3   sort_by       split        
+[43] split&lt;-       stack         str           subset        summary       Summary      
+[49] t             tail          transform     type.convert  unique        unstack      
+[55] within        xtfrm        
 see '?methods' for accessing help and source code</code></pre>
 </div>
 </div>
@@ -809,7 +804,7 @@ see '?methods' for accessing help and source code</code></pre>
 <section id="objects-and-methods-5" class="slide level2">
 <h2>Objects and Methods</h2>
 <ul>
-<li>Loading a new package may introduce new methods</li>
+<li>Loading a new package will often introduce new methods</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -849,8 +844,7 @@ see '?methods' for accessing help and source code</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(band_members)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "tbl_df"     "tbl"        "data.frame" "list"       "oldClass"  
-[6] "vector"    </code></pre>
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame" "list"       "oldClass"   "vector"    </code></pre>
 </div>
 </div>
 </div>
@@ -985,17 +979,17 @@ see '?methods' for accessing help and source code</code></pre>
 <ul>
 <li>An <code>S4</code> version
 <ul>
-<li>Doesn’t work with the <code>tidyverse</code></li>
+<li>Doesn’t work with the <code>tidyverse</code> (<code>dplyr</code>, <code>ggplot2</code> etc)</li>
 <li>Still missing from <code>tidyomics</code></li>
 </ul></li>
 </ul>
 <div class="fragment">
 <ul>
 <li>Until 2021 couldn’t coerce to a <code>tibble</code> directly</li>
-<li>I hated that so wrote <code>extraChIPs::as_tibble()</code>
+<li>I hated that so wrote <code>as_tibble()</code> for <code>DataFrame</code> objects
 <ul>
+<li>In the package <code>extraChIPs</code></li>
 <li>Enables passing <code>S4</code> objects to <code>ggplot()</code></li>
-<li>Not as straight-forward as you might think</li>
 <li>Please test &amp; find any bugs I haven’t found yet</li>
 </ul></li>
 </ul>
@@ -1027,7 +1021,7 @@ see '?methods' for accessing help and source code</code></pre>
 </ul></li>
 <li><code>DataFrame</code> objects can have <code>S4</code> objects as columns
 <ul>
-<li><code>S3</code> data frames <em>cannot</em></li>
+<li><code>S3</code> data frames (including tibbles) <em>cannot</em></li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -1089,7 +1083,7 @@ see '?methods' for accessing help and source code</code></pre>
 <section id="dataframe-objects-4" class="slide level2">
 <h2><code>DataFrame</code> objects</h2>
 <ul>
-<li>Metadata can be added to <code>DataFrame</code> objects</li>
+<li>Object-level metadata can be added to <code>DataFrame</code> objects</li>
 <li>Must be a <code>list</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -1148,7 +1142,7 @@ Transcripts Made-up transcripts</code></pre>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(DF) <span class="co"># This is in the @elementMetadata slot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Formal class 'DFrame' [package "S4Vectors"] with 6 slots
   ..@ rownames       : NULL
@@ -1176,11 +1170,25 @@ Transcripts Made-up transcripts</code></pre>
 <li>Can still be empty (<code>NULL</code>) objects</li>
 <li>Can be <code>S3</code> or <code>S4</code> objects</li>
 </ul></li>
-<li>Enforces a strict structure with checks as objects formed
+<li>Enforces a strict structure with checks <em>as objects formed</em>
 <ul>
 <li>Saves time performing checks within functions</li>
+<li>Makes structure strict, rigid &amp; hard to break</li>
 </ul></li>
 </ul>
+<aside class="notes">
+<p>S3 objects are easy to break. Just change the class attribute…</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="s4-object-structure-1" class="slide level2">
 <h2><code>S4</code> Object Structure</h2>
@@ -1229,8 +1237,8 @@ CharacterList of length 2
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slotNames</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "rownames"        "nrows"           "elementType"     "elementMetadata"
-[5] "metadata"        "listData"       </code></pre>
+<pre><code>[1] "rownames"        "nrows"           "elementType"     "elementMetadata" "metadata"       
+[6] "listData"       </code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1240,10 +1248,10 @@ CharacterList of length 2
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">getSlots</span>(<span class="st">"DFrame"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           rownames               nrows         elementType     elementMetadata 
-"character_OR_NULL"           "integer"         "character" "DataFrame_OR_NULL" 
-           metadata            listData 
-             "list"              "list" </code></pre>
+<pre><code>           rownames               nrows         elementType     elementMetadata            metadata 
+"character_OR_NULL"           "integer"         "character" "DataFrame_OR_NULL"              "list" 
+           listData 
+             "list" </code></pre>
 </div>
 </div>
 </div>
@@ -1281,10 +1289,9 @@ CharacterList of length 2
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "DFrame"            "DataFrame"         "SimpleList"       
- [4] "RectangularData"   "List"              "DataFrame_OR_NULL"
- [7] "Vector"            "list_OR_List"      "Annotated"        
-[10] "vector_OR_Vector" </code></pre>
+<pre><code> [1] "DFrame"            "DataFrame"         "SimpleList"        "RectangularData"  
+ [5] "List"              "DataFrame_OR_NULL" "Vector"            "list_OR_List"     
+ [9] "Annotated"         "vector_OR_Vector" </code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1325,7 +1332,7 @@ CharacterList of length 2
 
 function (x) 
 x@nrows
-&lt;bytecode: 0x5624741dca50&gt;
+&lt;bytecode: 0x55649b071c30&gt;
 &lt;environment: namespace:S4Vectors&gt;
 
 Signatures:

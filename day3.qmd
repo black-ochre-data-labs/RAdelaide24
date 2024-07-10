@@ -1,0 +1,88 @@
+---
+title: "Day 1 & 2 Questions"
+subtitle: "RAdelaide 2024"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2024-07-09"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: day3.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+## Questions
+
+1. Are there rules for naming R objects?
+
+- Names cannot include spaces!
+- Should start with an alphabetic character
+- Can start with symbols & numbers but that takes special effort and makes your life extremely hard. Don't do it (!!!) unless you have very, very good reason to
+
+- Two common naming **conventions** are
+    1. camelCase: first word starts with lower case, subsequent words start with upper
+    2. snake_case: All lower case with underscores separating words
+- I'm inconsistent...
+
+2. How do we select multiple values/columns/rows using `[]`
+
+- I usually use `1:5` as a simple example
+- This is an integer vector $\implies$ we can use any integer vector
+
+```{r}
+x <- rnorm(20)
+mat <- matrix(x, ncol = 5)
+mat
+mat[,c(1, 3)]
+```
+
+- We can call in any order at all
+
+```{r}
+euro
+euro[c(6, 9, 1)]
+```
+
+- If we have column (or row) names, can be a character vector
+
+```{r}
+colnames(mat) <- paste0("C", 1:5)
+mat
+mat[,c("C1", "C3")]
+```
+
+3. Why do we use a character vector using `[]` but not using `select()`?
+
+- R objects must be called without quotations but when calling column/row names we need a character vector, because these values are saved as character vectors
+- The `tidyverse` has done same really fancy innovation so that we don't need quotes in their functions.
+This partially mimics using the `list$element_name` syntax and effectively considers each list element of a data frame as an `R` object able to be called by name. This is genuinely confusing to many and has been a complete revolution & paradigm shift over the last few years. However, it does use some really convoluted concepts & fancy code under the hood
+
+## Other Comments & Tips
+
+1. Sorry to hear that some versions of RStudio don't show a preview of colours in the editor...
+
+2. Remember that typing code in a script doesn't execute code. Code must be sent to the Console to make sure all objects are created. It does take some getting used to. Keep going. It'll become instinctive soon
+
+3. Is my dark theme in RStudio confusing anyone?
+

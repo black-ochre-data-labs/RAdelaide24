@@ -58,6 +58,10 @@ knitr:
     fig.width: 8
 ---
 
+```{r, echo=FALSE}
+options(width = 100)
+```
+
 # Reference Sequences {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Biostrings/Biostrings.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 ## Fasta Files
@@ -199,13 +203,14 @@ GRanges("chr1:10001-11000")
 ```
 
 
-. . .
+## Genomic Ranges
 
-- Best practice is to always define the genome the range has been drawn from
+- Best practice is to define which genome the range has been drawn from
 
 ```{r}
 GRanges("chr1:10001-11000", seqinfo = sq)
 ```
+
 
 ## Bed Files
 
@@ -232,7 +237,7 @@ readLines("data/parY.bed") |> cat(sep = "\n")
 
 - The package `rtracklayer` is an all-purpose -omics file import package
     + Handles 0/1-based co-ordinates easily
-    + Will prase files as `GRanges`
+    + Will parse files as `GRanges`
 
 ## Importing Bed Files
 
@@ -246,9 +251,10 @@ parY
 
 - Any unspecified `strand` information $\implies$ `*`
 
+
 ## Genomic Ranges
 
-- Note that we have and `mcols` element
+- Note that we have an `mcols` element
     + `DataFrame` with metadata about each range
 
 ```{r}
@@ -277,8 +283,7 @@ parY %>% select(score)
 
 ::: {.fragment}
 
-- Not going any deeper today
-    + Only for `GRanges` $\implies$ not `DataFrame`
+- Only for `GRanges` $\implies$ not `DataFrame`
 
 :::
 
@@ -372,7 +377,7 @@ gtf %>%
 ```
 
 - This is a `plyranges` approach to the question
-    + Still, note these are identical exons from 10 transcripts
+    + Still, note these are identical exons annotated for 10 transcripts
     
 ## Gene And Transcript Annotations
 
@@ -406,6 +411,7 @@ This is the first time we've seen the `.` inactions using `%>%`
 - Often obtained by *splitting* a `GRanges` object based on a single `mcol`
 - Must have identical `seqinfo` elements
     + i.e. from the same genome
+- Must have `mcols` with common names and types
 - Very efficient way to perform complex operations
 
 ## GRangesList Objects

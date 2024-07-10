@@ -601,51 +601,16 @@ $na.rm
 </div>
 </div>
 <div class="fragment">
-<p>Re-formatted that might be</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(</span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var</span>(</span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.vector</span>(x) <span class="sc">||</span> <span class="fu">is.factor</span>(x)) x <span class="cf">else</span> <span class="fu">as.double</span>(x), </span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> na.rm</span>
-<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="understanding-functions-3" class="slide level2">
-<h2>Understanding Functions</h2>
-<p>So the full function might be written as:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">var</span>(</span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">is.vector</span>(x) <span class="sc">||</span> <span class="fu">is.factor</span>(x)) x <span class="cf">else</span> <span class="fu">as.double</span>(x), </span>
-<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.rm =</span> na.rm</span>
-<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>No need to write this function</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="understanding-functions-4" class="slide level2">
-<h2>Understanding Functions</h2>
 <p>To make this more understandable</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Coerce to a double, only if needed</span></span>
-<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.vector</span>(x) <span class="sc">||</span> <span class="fu">is.factor</span>(x)) x <span class="ot">&lt;-</span> <span class="fu">as.double</span>(x)</span>
-<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Calculate the variance</span></span>
-<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>  var_x <span class="ot">&lt;-</span> <span class="fu">var</span>(x, <span class="at">na.rm =</span> na.rm)</span>
-<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Return the square root of the variance</span></span>
-<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(var_x)</span>
-<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Coerce to a double, only if needed</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.vector</span>(x) <span class="sc">||</span> <span class="fu">is.factor</span>(x)) x <span class="ot">&lt;-</span> <span class="fu">as.double</span>(x)</span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Calculate the variance</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  var_x <span class="ot">&lt;-</span> <span class="fu">var</span>(x, <span class="at">na.rm =</span> na.rm)</span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Return the square root of the variance</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(var_x)</span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="writing-our-function" class="slide level2">
 <h2>Writing Our Function</h2>
@@ -657,9 +622,9 @@ $na.rm
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="writing-our-function-1" class="slide level2">
@@ -667,14 +632,14 @@ $na.rm
 <ul>
 <li>The first step is to change <code>"_"</code> to spaces
 <ul>
-<li>The last line will be returned by default</li>
+<li>The last line of a function will be returned by default</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="co"># Replace all '_' with spaces</span></span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "properly paired reads" "unique alignments"    </code></pre>
 </div>
@@ -689,18 +654,18 @@ $na.rm
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
-<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="co"># Replace all '_' with spaces</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="co"># Return our final object</span></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "properly paired reads" "unique alignments"    </code></pre>
 </div>
 </div>
 </section>
-<section id="looking-inside-the-function" class="slide level2">
-<h2>Looking Inside the Function</h2>
+<section id="writing-our-function-3" class="slide level2">
+<h2>Writing Our Function</h2>
 <ul>
 <li>Why are we referring to <code>flagstats</code> as <code>x</code>?</li>
 </ul>
@@ -711,103 +676,34 @@ $na.rm
 </div>
 <div class="fragment">
 <ul>
-<li>Each function has it’s own environment
+<li>Each function has it’s own internal environment
 <ul>
-<li>Within the <code>GlobalEnvironment</code> but separate</li>
+<li>Nested within the <code>GlobalEnvironment</code> but like “a separate bubble”</li>
 </ul></li>
 </ul>
 </div>
 </section>
-<section id="looking-inside-the-function-1" class="slide level2">
-<h2>Looking Inside the Function</h2>
-<ul>
-<li>If we add a <code>browser()</code> command, we can enter the function at that exact point</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">browser</span>()</span>
-<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
-<span id="cb19-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>You should have been jumped to the <code>Environnment</code> Tab</li>
-<li>The Console should also say <code>Browse[1]&gt;</code></li>
-</ul>
-<aside class="notes">
-<p>This played up when testing both locally &amp; on posit cloud</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="looking-inside-the-function-2" class="slide level2">
-<h2>Looking Inside the Function</h2>
-<ul>
-<li>We’re now looking inside the environment within the function</li>
-<li>By passing <code>flagstats</code> as <code>x</code> <span class="math inline">\(\implies\)</span> this is it’s name <strong>within</strong> this environment</li>
-<li>Modifying <em>within the function</em> will not change the object in the <em>Global Environment</em></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Within the browser execute<br><code>new_x &lt;- str_replace_all(x, "_", " ")</code></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>What happened?</li>
-</ul>
-<aside class="notes">
-<ul>
-<li>Should’ve seen the new object created in the function environment</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="writing-our-function-3" class="slide level2">
+
+
+<section id="writing-our-function-4" class="slide level2">
 <h2>Writing Our Function</h2>
+<!-- - Exit the `browser()` by typing `Q` -->
+<!-- - Remove the `browser()` line by adding a comment (`#`) to the start -->
+<!-- . . . -->
 <ul>
-<li>Exit the <code>browser()</code> by typing <code>Q</code></li>
-<li>Remove the <code>browser()</code> line by adding a comment (<code>#</code>) to the start</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Now we can finish the function</li>
+<li>To complete the function</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
-<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, <span class="dv">12</span>)</span>
-<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
-<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="co"># Replace all '_' with spaces</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x) <span class="co"># Start each word with an uppercase letter</span></span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, <span class="at">width =</span> <span class="dv">12</span>) <span class="co"># Add line breaks after 12 characters</span></span>
+<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="co"># Return our final object</span></span>
+<span id="cb18-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
 </div>
-</div>
-</div>
-<div class="fragment">
-<p><em>Why didn’t I use a pipe?</em></p>
 </div>
 </section>
 <section id="extending-our-function" class="slide level2">
@@ -826,18 +722,17 @@ $na.rm
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">width =</span> <span class="dv">12</span>) {</span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
-<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, width)</span>
-<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
-<span id="cb22-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">width =</span> <span class="dv">12</span>) {</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="co"># Replace all '_' with spaces</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x) <span class="co"># Start each word with an uppercase letter</span></span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, <span class="at">width =</span> width) <span class="co"># Add line breaks where requested</span></span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="co"># Return our final object</span></span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="dv">80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="dv">80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Properly Paired Reads" "Unique Alignments"    </code></pre>
 </div>
@@ -847,8 +742,8 @@ $na.rm
 <section id="extending-our-function-1" class="slide level2">
 <h2>Extending Our Function</h2>
 <ul>
-<li>In many help pages you may see <code>...</code> as a function argument</li>
-<li>This allows for passing arguments to internal functions
+<li>In many help pages <span class="math inline">\(\implies\)</span> <code>...</code> as a function argument</li>
+<li>This allows for passing arguments to internal function calls
 <ul>
 <li>Are <em>not required</em> to be set specifically</li>
 </ul></li>
@@ -871,85 +766,19 @@ $na.rm
 <li>Pass <code>...</code> inside <code>str_wrap</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># browser()</span></span>
-<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>)</span>
-<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x)</span>
-<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, ...)</span>
-<span id="cb26-6"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x</span>
-<span id="cb26-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly Paired Reads" "Unique Alignments"    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>modify_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(x, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="co"># Replace all '_' with spaces</span></span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(new_x) <span class="co"># Start each word with an upper-case letter</span></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">str_wrap</span>(new_x, ...) <span class="co"># Add line breaks where requested</span></span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="co"># Return our final object</span></span>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats)</span>
+<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span>
+<span id="cb24-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">indent =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="extending-our-function-3" class="slide level2">
-<h2>Extending Our Function</h2>
-<ul>
-<li>The default values will now be applied by <code>str_wrap()</code> <em>unless</em> we change them</li>
-<li>The following would indent the first line by 2 spaces
-<ul>
-<li>May be a little pointless …</li>
-</ul></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">indent =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "  Properly\nPaired Reads" "  Unique\nAlignments"    </code></pre>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>When writing functions need to choose target function carefully</li>
-</ul>
-</div>
+
 </section>
-<section id="finishing-our-function" class="slide level2">
-<h2>Finishing Our Function</h2>
-<ul>
-<li>This is a more formal implementation of the original process</li>
-<li>These two are functionally identical
-<ul>
-<li>One more suited for <em>inline</em> use as a one-off</li>
-<li>The other may be more useful if using repeatedly</li>
-</ul></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>one_liner <span class="ot">&lt;-</span> \(x, ...) x <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>() <span class="sc">%&gt;%</span> <span class="fu">str_wrap</span>(...)</span>
-<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">one_liner</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">modify_labels</span>(flagstats, <span class="at">width =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
-</div>
-</div>
-<div class="fragment">
-<p><em>What else could we have done?</em></p>
-<aside class="notes">
-<ul>
-<li>Added comments to explain each line</li>
-<li>Added checks like <code>stopifnot(is.character(x))</code></li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section></section>
 <section>
 <section id="iteration" class="title-slide slide level1 center" data-background-color="#3c3c44">
 <h1>Iteration</h1>
@@ -962,70 +791,51 @@ $na.rm
 <li>We didn’t need to modify each value of <code>flagstats</code>
 <ul>
 <li>Not the case for most languages</li>
-<li><code>python</code>, <code>C</code>, <code>C++</code>. <code>perl</code> etc <em>step</em> through vectors<br><span class="math inline">\(\implies\)</span>process one value at a time</li>
+<li><code>python</code>, <code>C</code>, <code>C++</code>, <code>perl</code> etc <em>step</em> through vectors<br><span class="math inline">\(\implies\)</span>process one value at a time</li>
 </ul></li>
 </ul>
 </section>
-<section id="iteration-2" class="slide level2">
-<h2>Iteration</h2>
-<ul>
-<li>A python-like process might’ve been</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> flagstats) {</span>
-<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">c</span>(new_x, <span class="fu">modify_labels</span>(x, <span class="at">width =</span> <span class="dv">12</span>))</span>
-<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a>new_x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Properly\nPaired Reads" "Unique\nAlignments"    </code></pre>
-</div>
-</div>
-<div class="fragment">
-<ol type="1">
-<li>We formed an empty object</li>
-<li>Stepped through every value in flagstats</li>
-<li>Modified values one at a time &amp; added to <code>new_x</code></li>
-</ol>
-</div>
-<div class="fragment">
-<p><em>Stupidly slow in R</em></p>
-</div>
-</section>
+
 <section id="iteration-3" class="slide level2">
 <h2>Iteration</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># No need to type this code. Just look at my dumb examples</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> flagstats) {</span>
+<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x) </span>
+<span id="cb33-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "properly_paired_reads"
+[1] "unique_alignments"</code></pre>
+</div>
+</div>
 <ul>
-<li>Each value was called <code>x</code> as we stepped through it</li>
+<li>Each value was called x as we stepped through it</li>
 <li><code>x</code> is just a convention <span class="math inline">\(\implies\)</span> can be anything (<code>i</code>, <code>bob</code> etc)</li>
 </ul>
+<div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> flagstats) {</span>
-<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># More dumb examples</span></span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> flagstats) {</span>
+<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "properly_paired_reads"
 [1] "unique_alignments"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> flagstats) {</span>
-<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
-<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (bob <span class="cf">in</span> flagstats) {</span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(bob)</span>
+<span id="cb37-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "properly_paired_reads"
 [1] "unique_alignments"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (bob <span class="cf">in</span> flagstats) {</span>
-<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(bob)</span>
-<span id="cb42-3"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "properly_paired_reads"
-[1] "unique_alignments"</code></pre>
 </div>
 </div>
 </section>
 <section id="iteration-4" class="slide level2">
 <h2>Iteration</h2>
 <ul>
-<li>Because <code>R</code> works on vectors <span class="math inline">\(\implies\)</span> rarely need to iterate on vectors</li>
+<li>Because <code>R</code> works on vectors<br><span class="math inline">\(\implies\)</span> almost never need to iterate on vectors</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -1037,7 +847,7 @@ $na.rm
 <li>How would we get the length for each list element?</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">letters =</span> letters, <span class="at">num =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">letters =</span> letters, <span class="at">num =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1047,27 +857,22 @@ $na.rm
 <section id="iteration-5" class="slide level2">
 <h2>Iteration</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>len <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> vals) {</span>
-<span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>  len <span class="ot">&lt;-</span> <span class="fu">c</span>(len, <span class="fu">length</span>(x))</span>
-<span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb45-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(len) <span class="ot">&lt;-</span> <span class="fu">names</span>(vals)</span>
-<span id="cb45-6"><a href="" aria-hidden="true" tabindex="-1"></a>len</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Never do this. It's just an example...</span></span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>len <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># Initialise an empty object</span></span>
+<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (x <span class="cf">in</span> vals) { <span class="co"># Step through 'vals' calling each element 'x'</span></span>
+<span id="cb40-4"><a href="" aria-hidden="true" tabindex="-1"></a>  len <span class="ot">&lt;-</span> <span class="fu">c</span>(len, <span class="fu">length</span>(x)) <span class="co"># Add the values as we step through</span></span>
+<span id="cb40-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-6"><a href="" aria-hidden="true" tabindex="-1"></a>len</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>$letters
-[1] 26
-
-$num
-[1] 1000</code></pre>
+<pre><code>[1]   26 1000</code></pre>
 </div>
 </div>
 <div>
-<p>The above</p>
+<p>The above:</p>
 <ol type="1">
-<li class="fragment">Initialises an empty list <code>len</code></li>
+<li class="fragment">Initialises an empty vector <code>len</code></li>
 <li class="fragment">Steps through each element calling it <code>x</code></li>
 <li class="fragment">Finds the length of <code>x</code> and extends <code>len</code></li>
-<li class="fragment">Adds the names so we know which value goes with which element</li>
 </ol>
 </div>
 </section>
@@ -1083,12 +888,12 @@ $num
 </ul>
 <div class="fragment">
 <ul>
-<li>Syntax is <code>lapply(list, function, ...)</code></li>
+<li>Basic syntax is <code>lapply(list, function)</code></li>
 </ul>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$letters
 [1] 26
@@ -1097,9 +902,6 @@ $num
 [1] 1000</code></pre>
 </div>
 </div>
-<ul>
-<li>No <code>...</code> arguments needed here</li>
-</ul>
 <aside class="notes">
 <p>Much simpler way to work &amp; is faster</p>
 <style type="text/css">
@@ -1117,15 +919,18 @@ $num
 </section>
 <section id="the-r-way-to-iterate-1" class="slide level2">
 <h2>The <code>R</code> Way to Iterate</h2>
-<p>A quick example using the <code>...</code></p>
+<ul>
+<li>Additional arguments can also be passed</li>
+<li>The full syntax is <code>lapply(list, function, ...)</code></li>
+</ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, head, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, head, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$letters
 [1] "a" "b" "c" "d"
 
 $num
-[1] -1.9564562 -2.0358667 -0.1679722 -0.5465096</code></pre>
+[1] 0.04135964 1.42256234 0.17197915 1.60996354</code></pre>
 </div>
 </div>
 </section>
@@ -1144,7 +949,7 @@ $num
 <li>We could’ve coerced the lengths into a vector</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(vals, length) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>letters     num 
      26    1000 </code></pre>
@@ -1164,7 +969,7 @@ $num
 <li>Part of <code>purrr</code> <span class="math inline">\(\implies\)</span> core <code>tidyverse</code> package</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">map_int</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">map_int</span>(vals, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>letters     num 
      26    1000 </code></pre>
@@ -1174,7 +979,7 @@ $num
 <ul>
 <li>Alternatives are <code>map_chr()</code>, <code>map_lgl()</code>, <code>map_dbl()</code></li>
 <li>Will error if setting the wrong type</li>
-<li>Only used when single values are returned</li>
+<li><strong>Only used when single values are returned</strong></li>
 </ul>
 </div>
 </section></section>
@@ -1201,12 +1006,12 @@ $num
 <section id="snp-data-1" class="slide level2">
 <h2>SNP Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/snps.csv"</span>)</span>
-<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(snps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/snps.csv"</span>)</span>
+<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(snps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  104 2001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 10
   Population SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 
@@ -1254,7 +1059,7 @@ $num
 <li>First let’s check our population sizes</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Population     n
@@ -1290,9 +1095,9 @@ $num
 <li>Apply the function <code>is.na()</code> <em>across</em> all columns that <em>start_with</em> “SNP”</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), is.na)) <span class="sc">%&gt;%</span> </span>
-<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), is.na)) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 104 × 10
    Population SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 
@@ -1320,11 +1125,11 @@ $num
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb58-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb58-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-5"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 10
    SNP1  SNP2  SNP3  SNP4  SNP5  SNP6  SNP7  SNP8  SNP9 SNP10
@@ -1340,11 +1145,11 @@ $num
 <li>Maybe <code>pivot_longer()</code> might help</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb65-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb65-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb60-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 2
    locus missing
@@ -1370,13 +1175,13 @@ $num
 <li>Will make a nice descriptive table in our <code>rmarkdown</code> report</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb67-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> missing) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb62-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"missing"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> missing) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 2
   missing     n
@@ -1435,17 +1240,17 @@ $num
 <li>Start by converting to long form</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
 <li>Can easily remove the missing genotypes</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb70-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb70-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1455,10 +1260,10 @@ $num
 <li>Check for the presence of an <code>A</code> allele</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb71-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="performing-an-analysis-3" class="slide level2">
@@ -1470,11 +1275,11 @@ $num
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb72-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="performing-an-analysis-4" class="slide level2">
@@ -1486,15 +1291,15 @@ $num
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb73-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb73-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(locus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb68-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb68-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(locus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="performing-an-analysis-5" class="slide level2">
@@ -1503,15 +1308,15 @@ $num
 <li>We can form a nested <code>tibble</code> for each locus</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb74-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb74-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb74-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb69-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb69-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="nesting-columns" class="slide level2">
@@ -1524,16 +1329,16 @@ $num
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb75-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb75-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb70-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb70-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb70-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-lapply-on-nested-columns" class="slide level2">
@@ -1542,18 +1347,18 @@ $num
 <li>We can use <code>lapply()</code> to perform an analysis on every nested df</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb76-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb76-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb76-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb76-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)]))</span>
-<span id="cb76-12"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb71-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb71-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb71-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)]))</span>
+<span id="cb71-12"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-lapply-on-nested-columns-1" class="slide level2">
@@ -1573,19 +1378,19 @@ $num
 <section id="using-lapply-on-nested-columns-2" class="slide level2">
 <h2>Using <code>lapply()</code> On Nested Columns</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb77-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb77-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb77-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
-<span id="cb77-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
-<span id="cb77-13"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb72-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb72-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb72-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
+<span id="cb72-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb72-13"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-lapply-on-nested-columns-3" class="slide level2">
@@ -1598,20 +1403,20 @@ $num
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb78-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb78-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb78-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb78-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb78-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
-<span id="cb78-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
-<span id="cb78-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
-<span id="cb78-14"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb73-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb73-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb73-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
+<span id="cb73-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
+<span id="cb73-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb73-14"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1622,46 +1427,46 @@ $num
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb79-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb79-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb79-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb79-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
-<span id="cb79-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Control =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Control"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
-<span id="cb79-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treat =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Treat"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
-<span id="cb79-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
-<span id="cb79-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
-<span id="cb79-16"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb74-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb74-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb74-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
+<span id="cb74-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Control =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Control"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
+<span id="cb74-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treat =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Treat"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
+<span id="cb74-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
+<span id="cb74-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb74-16"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="the-final-analysis" class="slide level2">
 <h2>The Final Analysis</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
-<span id="cb80-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb80-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
-<span id="cb80-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb80-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
-<span id="cb80-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Control =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Control"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
-<span id="cb80-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treat =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Treat"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
-<span id="cb80-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
-<span id="cb80-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
-<span id="cb80-16"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">adj_p =</span> <span class="fu">p.adjust</span>(p, <span class="st">"bonferroni"</span>)</span>
-<span id="cb80-17"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-18"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a>snps <span class="sc">%&gt;%</span> </span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"SNP"</span>), <span class="at">names_to =</span> <span class="st">"locus"</span>, <span class="at">values_to =</span> <span class="st">"genotype"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotype)) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="fu">str_detect</span>(genotype, <span class="st">"A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(Population, locus, A)) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb75-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"A"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>, <span class="at">names_prefix =</span> <span class="st">"A_"</span></span>
+<span id="cb75-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">df =</span> <span class="fu">c</span>(Population, <span class="fu">starts_with</span>(<span class="st">"A_"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb75-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ft =</span> <span class="fu">lapply</span>(df, \(x) <span class="fu">fisher.test</span>(x[, <span class="fu">c</span>(<span class="st">"A_TRUE"</span>, <span class="st">"A_FALSE"</span>)])),</span>
+<span id="cb75-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Control =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Control"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
+<span id="cb75-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treat =</span> <span class="fu">map_int</span>(df, \(x) dplyr<span class="sc">::</span><span class="fu">filter</span>(x, Population <span class="sc">==</span> <span class="st">"Treat"</span>)[[<span class="st">"A_TRUE"</span>]]),</span>
+<span id="cb75-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">OR =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>estimate),</span>
+<span id="cb75-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">map_dbl</span>(ft, \(x) x<span class="sc">$</span>p.value),</span>
+<span id="cb75-16"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">adj_p =</span> <span class="fu">p.adjust</span>(p, <span class="st">"bonferroni"</span>)</span>
+<span id="cb75-17"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-18"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside class="notes">

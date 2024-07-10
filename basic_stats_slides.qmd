@@ -465,7 +465,7 @@ glimpse(admissions)
 
 ```{r}
 #| results: markup
-glm(admit ~ gre + gpa + rank, data = admissions) %>% 
+glm(admit ~ gre + gpa + rank, data = admissions, family = "binomial") %>% 
   summary()
 ```
 
@@ -490,7 +490,7 @@ $$
 
 ```{r}
 #| results: hide
-glm(admit ~ (gre + gpa + rank)^2, data = admissions) %>% 
+glm(admit ~ (gre + gpa + rank)^2, data = admissions, family = "binomial") %>% 
   step() %>% 
   summary()
 ```

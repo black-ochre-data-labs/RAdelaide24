@@ -59,7 +59,7 @@ knitr:
     fig.width: 8
 ---
 
-# Differential Gene Expression {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+# Differential Gene<br>Expression {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/edgeR/edgeR.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
 
 ```{r, echo=FALSE}
 options(width = 100)

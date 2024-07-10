@@ -331,16 +331,24 @@ SAM files are plain text whilst BAM are compressed to save storage
 ## Bam Files
 
 - The Bioconductor interface to `bam` files is `Rsamtools`
-- Sequences loaded as `DNAStringSet`s
-- Alignment co-ordinates as `GRanges` objects
+- We define `BamFile` or `BamFileList` objects
+- Are a simple connection to the file (including checks)
+- We don't load anything when created
+    + Instead define specific subsets to load for a specific task
 
-. . .
+## Bam Files
 
 - When loading a subset of reads set `ScanBamParam()`
 - Enables loading alignments:
     + from specific ranges (using `GRanges`)
     + with specific tags or flags
 - Controls which columns are returned
+
+. . .
+
+- Sequences loaded as `DNAStringSet`s
+- Alignment co-ordinates as `GRanges` objects
+
 
 
 ## Read Counting
@@ -363,7 +371,7 @@ SAM files are plain text whilst BAM are compressed to save storage
     + Would avoid doing at the start of every R script
 
 
-## Trancriptomic Pseudo-Aligners
+## Trancriptomic Pseudo-Aligners {visibility="hidden"}
 
 - `salmon` and `kallisto` perform pseudo-alignments to the transcriptome (i.e. *not* the genome)
 - Don't produce `bam` files $\implies$ only transcript-level counts
